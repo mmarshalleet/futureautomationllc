@@ -127,24 +127,32 @@
         <label for="system">System / equipment</label>
         <input id="system" name="system" type="text" placeholder="Line, machine, PLC, drive, etc.">
       </div>
-  <div class="field span-2">
-  <label for="attachments">
-    Upload photos / screenshots (optional)
-  </label>
+ <div class="field span-2">
+  <label>Upload photos / screenshots (optional)</label>
 
-  <input
-    id="attachments"
-    name="attachments"
-    type="file"
-    multiple
-    accept=".jpg,.jpeg,.png,.pdf"
-  >
+    <label class="dropzone" id="dropzone">
+      <input
+      id="attachments"
+      name="attachments"
+      type="file"
+      multiple
+      accept=".jpg,.jpeg,.png,.pdf"
+     >
+     <div class="dz-title">Drag & drop files here</div>
+     <div class="dz-sub">…or tap to choose files (JPG/PNG/PDF, ~10MB total)</div>
+     <div class="dz-files" id="dzFiles"></div>
+    </label>
+
+    <div class="help">
+    Fault screens, drive displays, panel photos, wiring, nameplates — anything that saves time.
+    </div>
+ </div>
 
   <div class="help">
     Upload photos of fault screens, drive displays, panels, or wiring.
     JPG, PNG, or PDF.
   </div>
-</div>
+ </div>
       <div class="field span-2">
         <label for="details">What’s happening?</label>
         <textarea id="details" name="details" required
