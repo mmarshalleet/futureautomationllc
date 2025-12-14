@@ -77,8 +77,7 @@
           <option value="Running but unstable / frequent trips">⚠️ Running but unstable / frequent trips</option>
           <option value="Planned work / improvement project">ℹ️ Planned work / improvement project</option>
         </select>
-        <div class="help">If production is stopped, pick the first option.</div>
-      </div>
+  </div>
 <div class="field">
   <label for="remote_access">Remote access available?</label>
   <select id="remote_access" name="remote_access" required>
@@ -87,7 +86,6 @@
     <option value="No - onsite only">No — onsite only</option>
     <option value="Not sure yet">Not sure yet</option>
   </select>
-  <div class="help">If yes, include method and who can grant access in the notes.</div>
 </div>
       <div class="field">
         <label for="platform">Controls platform</label>
@@ -129,20 +127,18 @@
       </div>
  <div class="field span-2">
   <label>Upload photos / screenshots (optional)</label>
-
     <label class="dropzone" id="dropzone">
-      <input
-      id="attachments"
-      name="attachments"
-      type="file"
-      multiple
-      accept=".jpg,.jpeg,.png,.pdf"
-     >
-     <div class="dz-title">Drag & drop files here</div>
+      <div class="dz-title">Drag & drop files here</div>
      <div class="dz-sub">…or tap to choose files (JPG/PNG/PDF, ~10MB total)</div>
+       <input
+        id="attachments"
+        name="attachments"
+        type="file"
+        multiple
+        accept=".jpg,.jpeg,.png,.pdf"
+     >
      <div class="dz-files" id="dzFiles"></div>
     </label>
-
     <div class="help">
     Fault screens, drive displays, panel photos, wiring, nameplates — anything that saves time.
     </div>
@@ -163,12 +159,11 @@
     <div class="form-actions">
       <button class="submit" type="submit">Send request</button>
       <a class="email" href="mailto:engineering@futureautomationllc.com?subject=Downtime%20Support%20Request">
-        Email engineering instead
       </a>
     </div>
 
     <div class="form-note" style="margin-top:1rem;">
-      For urgent downtime, emailing <strong>engineering@futureautomationllc.com</strong> is the fastest backup if the form is having a bad day.
+      For urgent downtime, emailing <strong>mmarshall@futureautomationllc.com</strong> is the fastest backup option for support.
     </div>
   </form>
 </div>
@@ -204,7 +199,7 @@
     const input = document.getElementById('attachments');
     const list = document.getElementById('dzFiles');
 
-    function renderFiles(files){
+    function renderFiles(files) {
       if (!files || !files.length){
         list.innerHTML = '';
         return;
