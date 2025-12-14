@@ -79,7 +79,16 @@
         </select>
         <div class="help">If production is stopped, pick the first option.</div>
       </div>
-
+<div class="field">
+  <label for="remote_access">Remote access available?</label>
+  <select id="remote_access" name="remote_access" required>
+    <option value="">Select…</option>
+    <option value="Yes - VPN / TeamViewer / AnyDesk / ScreenConnect">Yes — remote access available</option>
+    <option value="No - onsite only">No — onsite only</option>
+    <option value="Not sure yet">Not sure yet</option>
+  </select>
+  <div class="help">If yes, include method and who can grant access in the notes.</div>
+</div>
       <div class="field">
         <label for="platform">Controls platform</label>
         <select id="platform" name="platform">
