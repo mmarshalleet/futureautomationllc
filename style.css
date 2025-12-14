@@ -94,7 +94,108 @@ label{ font-weight:800; color:#cbd5e1; }
   color:var(--muted);
   font-size:.9rem;
 }
+/* --- Form styling to match site --- */
+form { margin-top: 0.6rem; }
 
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0.9rem;
+}
+@media(min-width:900px){
+  .form-grid{ grid-template-columns:1fr 1fr; }
+  .span-2{ grid-column:1 / -1; }
+}
+
+.field label{
+  display:block;
+  font-weight:800;
+  color:#cbd5e1;
+  margin-bottom:0.35rem;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  padding:0.75rem;
+  border:1px solid var(--border);
+  background:#0b1220;
+  color:var(--text);
+  border-radius:8px;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
+}
+
+.field textarea{ min-height:140px; resize:vertical; }
+
+.help{
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-top:0.35rem;
+}
+
+.form-actions{
+  display:flex;
+  gap:0.8rem;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top:0.6rem;
+}
+
+.form-actions button{
+  padding:0.85rem 1.1rem;
+  border:none;
+  border-radius:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.form-actions .submit{
+  background: var(--accent);
+  color:#020617;
+}
+
+.form-actions .email{
+  display:inline-block;
+  padding:0.85rem 1.1rem;
+  border-radius:8px;
+  font-weight:900;
+  text-decoration:none;
+  background:#111827;
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.badge{
+  display:inline-block;
+  padding:.35rem .65rem;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#0b1220;
+  color:#cbd5e1;
+  font-size:.9rem;
+  font-weight:800;
+}
+
+.badge.down{ border-color: rgba(248,113,113,0.55); }
+.badge.warn{ border-color: rgba(251,191,36,0.55); }
+.badge.plan{ border-color: rgba(56,189,248,0.55); }
+
+.form-note{
+  border:1px solid var(--border);
+  background:#0b1220;
+  border-radius:10px;
+  padding:0.9rem 1rem;
+  color:var(--muted);
+  font-size:0.9rem;
+}
 .product{
   border:1px solid var(--border);
   background:var(--card);
