@@ -89,7 +89,6 @@
           <option value="Other / Unknown">Other / Unknown</option>
         </select>
       </div>
-
       <div class="field">
         <label for="plant">Plant / Company</label>
         <input id="plant" name="plant" type="text" placeholder="Plant name" required>
@@ -119,15 +118,31 @@
         <label for="system">System / equipment</label>
         <input id="system" name="system" type="text" placeholder="Line, machine, PLC, drive, etc.">
       </div>
+  <div class="field span-2">
+  <label for="attachments">
+    Upload photos / screenshots (optional)
+  </label>
 
+  <input
+    id="attachments"
+    name="attachments"
+    type="file"
+    multiple
+    accept=".jpg,.jpeg,.png,.pdf"
+  >
+
+  <div class="help">
+    Upload photos of fault screens, drive displays, panels, or wiring.
+    JPG, PNG, or PDF.
+  </div>
+</div>
       <div class="field span-2">
         <label for="details">What’s happening?</label>
         <textarea id="details" name="details" required
           placeholder="Symptoms, alarms/fault codes, what changed, what you tried…"></textarea>
         <div class="help">Include fault codes, PLC/drive model numbers, and what changed right before the issue.</div>
-      </div>
-    </div>
-
+</div>
+  </div>
     <div class="form-actions">
       <button class="submit" type="submit">Send request</button>
       <a class="email" href="mailto:engineering@futureautomationllc.com?subject=Downtime%20Support%20Request">
