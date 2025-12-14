@@ -47,6 +47,62 @@
   </style>
 </head>
 <body>
+  <section id="support">
+  <h2>Downtime Support Request</h2>
+  <p>
+    If your plant is experiencing downtime or control issues, submit the form
+    below and an engineer will respond as soon as possible.
+  </p>
+
+  <form method="POST" data-static-form-name="downtime-support">
+    <input type="hidden" name="form-name" value="downtime-support">
+
+    <label>
+      Plant / Company Name
+      <input type="text" name="company" required>
+    </label>
+
+    <label>
+      Contact Name
+      <input type="text" name="contact_name" required>
+    </label>
+
+    <label>
+      Contact Email
+      <input type="email" name="email" required>
+    </label>
+
+    <label>
+      Phone Number
+      <input type="tel" name="phone">
+    </label>
+
+    <label>
+      Urgency
+      <select name="urgency" required>
+        <option value="">Select one</option>
+        <option value="plant_down">🚨 Plant Down</option>
+        <option value="intermittent">⚠️ Intermittent Issue</option>
+        <option value="planned">ℹ️ Planned Support</option>
+      </select>
+    </label>
+
+    <label>
+      Control Platform / Equipment
+      <input type="text" name="platform"
+             placeholder="Allen-Bradley, Siemens, PowerFlex, etc.">
+    </label>
+
+    <label>
+      Issue Description
+      <textarea name="details" rows="5" required></textarea>
+    </label>
+
+    <button type="submit">
+      Submit Support Request
+    </button>
+  </form>
+  </section>
   <div class="container">
     <h1>Future Automation LLC</h1>
     <div class="tagline">Less downtime. More output. No guessing.</div>
