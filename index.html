@@ -226,5 +226,35 @@
     input.addEventListener('change', () => renderFiles(input.files));
   })();
 </script>
+<script>
+  (function(){
+    const form = document.querySelector('form[data-static-form-name="downtime-support"]');
+    if (!form) return;
+
+    form.addEventListener('submit', () => {
+      try {
+        const fd = new FormData(form);
+        const payload = {
+          urgency: fd.get('urgency') || '',
+          plant: fd.get('plant') || '',
+          location: fd.get('location') || '',
+          contactName: fd.get('contactName') || '',
+          email: fd.get('email') || '',
+          phone: fd.get('phone') || '',
+          platform: fd.get('platform') || '',
+          system: fd.get('system') || '',
+          remote_access: fd.get('remote_access') || '',
+        };
+
+        // Fire-and-forget so it never blocks the form submit
+        fetch('/api/alert', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(()=>{});
+      } catch(e) {}
+    });
+  })();
+</script>
 </body>
 </html>
