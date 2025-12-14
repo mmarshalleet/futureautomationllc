@@ -232,3 +232,44 @@ form { margin-top: 0.6rem; }
 }
 
 .hr{ height:1px; background:var(--border); margin:1.2rem 0; }
+/* Drag & drop upload zone */
+.dropzone{
+  display:block;
+  border:1px dashed var(--border);
+  background:#0b1220;
+  border-radius:10px;
+  padding:1rem;
+  cursor:pointer;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.dropzone input[type="file"]{
+  display:none;
+}
+
+.dropzone .dz-title{
+  font-weight:900;
+  color:var(--text);
+  margin-bottom:.25rem;
+}
+
+.dropzone .dz-sub{
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+.dropzone.dragover{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
+}
+
+.dropzone .dz-files{
+  margin-top:.75rem;
+  font-size:.9rem;
+  color:#cbd5e1;
+}
+
+.dropzone .dz-files div{
+  padding:.25rem 0;
+  border-top:1px solid var(--border);
+}
