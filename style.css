@@ -23,7 +23,25 @@ body{
   margin:auto;
   padding:2.5rem 1.5rem;
 }
+/* File upload styling */
+.field input[type="file"]{
+  padding:0.55rem;
+  background:#0b1220;
+  border:1px dashed var(--border);
+  border-radius:8px;
+  cursor:pointer;
+}
 
+.field input[type="file"]::file-selector-button{
+  margin-right:0.75rem;
+  padding:0.45rem 0.75rem;
+  border:none;
+  border-radius:6px;
+  background:#111827;
+  color:var(--text);
+  font-weight:800;
+  cursor:pointer;
+}
 nav{ margin-bottom:2rem; display:flex; gap:1.2rem; flex-wrap:wrap; align-items:center; }
 nav a{ color:var(--accent); text-decoration:none; font-weight:700; }
 nav .brand{ display:flex; gap:.7rem; align-items:center; margin-right:1rem; }
