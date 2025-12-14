@@ -198,5 +198,33 @@
       Email: <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a>
     </div>
   </div>
+<script>
+  (function(){
+    const dz = document.getElementById('dropzone');
+    const input = document.getElementById('attachments');
+    const list = document.getElementById('dzFiles');
+
+    function renderFiles(files){
+      if (!files || !files.length){
+        list.innerHTML = '';
+        return;
+      }
+      list.innerHTML = Array.from(files).map(f =>
+        `<div>${f.name} <span style="color:#94a3b8;">(${Math.round(f.size/1024)} KB)</span></div>`
+      ).join('');
+    }
+
+    dz.addEventListener('dragover', (e) => { e.preventDefault(); dz.classList.add('dragover'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+    dz.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dz.classList.remove('dragover');
+      input.files = e.dataTransfer.files;
+      renderFiles(input.files);
+    });
+
+    input.addEventListener('change', () => renderFiles(input.files));
+  })();
+</script>
 </body>
 </html>
