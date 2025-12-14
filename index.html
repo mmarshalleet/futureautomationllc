@@ -53,55 +53,93 @@
     If your plant is experiencing downtime or control issues, submit the form
     below and an engineer will respond as soon as possible.
   </p>
+<div class="card" id="support-request">
+  <h2>Downtime support request</h2>
+  <p class="small" style="margin-top:-0.4rem;">
+    Fill this out and we’ll respond ASAP. More detail = faster triage.
+  </p>
+
+  <div class="pillrow" style="margin-top:0.8rem;">
+    <span class="badge down">🚨 Plant down</span>
+    <span class="badge warn">⚠️ Unstable</span>
+    <span class="badge plan">ℹ️ Planned</span>
+  </div>
 
   <form method="POST" data-static-form-name="downtime-support">
     <input type="hidden" name="form-name" value="downtime-support">
 
-    <label>
-      Plant / Company Name
-      <input type="text" name="company" required>
-    </label>
+    <div class="form-grid">
+      <div class="field">
+        <label for="urgency">Urgency</label>
+        <select id="urgency" name="urgency" required>
+          <option value="">Select…</option>
+          <option value="Plant down / production stopped">🚨 Plant down / production stopped</option>
+          <option value="Running but unstable / frequent trips">⚠️ Running but unstable / frequent trips</option>
+          <option value="Planned work / improvement project">ℹ️ Planned work / improvement project</option>
+        </select>
+        <div class="help">If production is stopped, pick the first option.</div>
+      </div>
 
-    <label>
-      Contact Name
-      <input type="text" name="contact_name" required>
-    </label>
+      <div class="field">
+        <label for="platform">Controls platform</label>
+        <select id="platform" name="platform">
+          <option value="">Select…</option>
+          <option value="Allen-Bradley / Rockwell">Allen-Bradley / Rockwell</option>
+          <option value="Siemens">Siemens</option>
+          <option value="Other / Unknown">Other / Unknown</option>
+        </select>
+      </div>
 
-    <label>
-      Contact Email
-      <input type="email" name="email" required>
-    </label>
+      <div class="field">
+        <label for="plant">Plant / Company</label>
+        <input id="plant" name="plant" type="text" placeholder="Plant name" required>
+      </div>
 
-    <label>
-      Phone Number
-      <input type="tel" name="phone">
-    </label>
+      <div class="field">
+        <label for="location">Location</label>
+        <input id="location" name="location" type="text" placeholder="City, State, Country" required>
+      </div>
 
-    <label>
-      Urgency
-      <select name="urgency" required>
-        <option value="">Select one</option>
-        <option value="plant_down">🚨 Plant Down</option>
-        <option value="intermittent">⚠️ Intermittent Issue</option>
-        <option value="planned">ℹ️ Planned Support</option>
-      </select>
-    </label>
+      <div class="field">
+        <label for="contactName">Contact name</label>
+        <input id="contactName" name="contactName" type="text" placeholder="Who should we talk to?" required>
+      </div>
 
-    <label>
-      Control Platform / Equipment
-      <input type="text" name="platform"
-             placeholder="Allen-Bradley, Siemens, PowerFlex, etc.">
-    </label>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="name@company.com" required>
+      </div>
 
-    <label>
-      Issue Description
-      <textarea name="details" rows="5" required></textarea>
-    </label>
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="text" placeholder="+1 (555) 555-5555">
+      </div>
 
-    <button type="submit">
-      Submit Support Request
-    </button>
+      <div class="field">
+        <label for="system">System / equipment</label>
+        <input id="system" name="system" type="text" placeholder="Line, machine, PLC, drive, etc.">
+      </div>
+
+      <div class="field span-2">
+        <label for="details">What’s happening?</label>
+        <textarea id="details" name="details" required
+          placeholder="Symptoms, alarms/fault codes, what changed, what you tried…"></textarea>
+        <div class="help">Include fault codes, PLC/drive model numbers, and what changed right before the issue.</div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="submit" type="submit">Send request</button>
+      <a class="email" href="mailto:engineering@futureautomationllc.com?subject=Downtime%20Support%20Request">
+        Email engineering instead
+      </a>
+    </div>
+
+    <div class="form-note" style="margin-top:1rem;">
+      For urgent downtime, emailing <strong>engineering@futureautomationllc.com</strong> is the fastest backup if the form is having a bad day.
+    </div>
   </form>
+</div>
   </section>
   <div class="container">
     <h1>Future Automation LLC</h1>
