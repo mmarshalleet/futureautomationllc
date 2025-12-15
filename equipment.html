@@ -2,46 +2,118 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Equipment for Sale | Future Automation LLC</title>
+  <title>Equipment | Future Automation LLC</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Industrial automation equipment for sale. Ships worldwide. PayPal checkout." />
+  <meta name="description" content="Live inventory pulled from our eBay listings. Buy on eBay or direct with PayPal." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="container">
+
     <nav>
-      <span class="brand">
-        <img src="/logo.svg" alt="Future Automation LLC logo">
-      </span>
+      <span class="brand"><img src="/logo.svg" alt="Future Automation LLC logo"></span>
       <a href="/">Services</a>
       <a href="/equipment.html">Equipment</a>
-      <a href="/policies.html">Policies</a>
     </nav>
 
-    <h1>Automation equipment for sale</h1>
-    <div class="tagline">Ships worldwide. Shipping calculated at checkout.</div>
-
-    <div class="product">
-      <h3>Allen-Bradley PowerFlex 525 VFD</h3>
-      <p><strong>MPN:</strong> 25B-D4P0N104<br><strong>Condition:</strong> Used – Tested<br><strong>Status:</strong> In stock</p>
-      <p class="small">International buyers are responsible for customs duties/taxes/import fees.</p>
-
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-        <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="business" value="engineering@futureautomationllc.com">
-        <input type="hidden" name="item_name" value="Allen-Bradley PowerFlex 525 VFD - 25B-D4P0N104">
-        <input type="hidden" name="amount" value="1299.00">
-        <input type="hidden" name="currency_code" value="USD">
-        <input type="hidden" name="no_shipping" value="2">
-        <input type="hidden" name="return" value="https://futureautomationllc.com/thank-you.html">
-        <input type="submit" class="buy-btn" value="Buy Now with PayPal">
-      </form>
+    <h1>Equipment</h1>
+    <div class="tagline">
+      Live inventory from our current eBay listings. Choose eBay checkout or buy direct with PayPal.
     </div>
+
+    <div class="card" style="margin:1rem 0;">
+      <p class="small" style="margin:0;">
+        <strong>Direct PayPal:</strong> item price only. Shipping/taxes/duties may apply depending on destination.
+        For fully carrier-calculated shipping, use eBay checkout (for now).
+      </p>
+    </div>
+
+    <div id="status" class="small muted">Loading listings…</div>
+    <div id="grid" class="product-grid"></div>
 
     <div class="footer">
-      Questions about equipment? <a href="mailto:contact@futureautomationllc.com" style="color:var(--accent);">contact@futureautomationllc.com</a>
+      Questions? <a href="mailto:contact@futureautomationllc.com" style="color:var(--accent);">contact@futureautomationllc.com</a>
     </div>
   </div>
+
+<script>
+  const PAYPAL_BUSINESS = "mmarshall@futureautomationllc.com"; // change if needed
+
+  function escapeHtml(s){
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[m]));
+  }
+
+  function paypalBuyNowForm(item){
+    if (!item.price) return `<span class="small muted">PayPal unavailable</span>`;
+
+    return `
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin:0;">
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="${escapeHtml(PAYPAL_BUSINESS)}">
+        <input type="hidden" name="item_name" value="${escapeHtml(item.title)}">
+        <input type="hidden" name="amount" value="${escapeHtml(item.price)}">
+        <input type="hidden" name="currency_code" value="${escapeHtml(item.currency || 'USD')}">
+        <input type="hidden" name="invoice" value="${escapeHtml(item.id)}">
+        <input type="hidden" name="no_shipping" value="0">
+        <input type="hidden" name="return" value="https://futureautomationllc.com/thank-you.html">
+        <button class="btn btn-quiet" type="submit">Buy with PayPal</button>
+      </form>
+    `;
+  }
+
+  function card(item){
+    const img = item.image ? `<img class="pimg" src="${escapeHtml(item.image)}" alt="">` : `<div class="pimg ph"></div>`;
+    const price = item.price ? `${item.price} ${item.currency || "USD"}` : "—";
+
+    return `
+      <div class="product-card">
+        ${img}
+        <div class="pbody">
+          <div class="ptitle">${escapeHtml(item.title)}</div>
+          <div class="pmeta">
+            <span>${escapeHtml(item.condition || "")}</span>
+            <span><strong>${escapeHtml(price)}</strong></span>
+          </div>
+
+          <div class="btnrow" style="margin-top:0.9rem;">
+            <a class="btn btn-primary" href="${escapeHtml(item.ebayUrl)}" target="_blank" rel="noopener">Checkout on eBay</a>
+            ${paypalBuyNowForm(item)}
+          </div>
+
+          <div class="small muted" style="margin-top:.6rem;">
+            Item ID: ${escapeHtml(item.id)}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function load(){
+    const status = document.getElementById("status");
+    const grid = document.getElementById("grid");
+
+    try {
+      const r = await fetch("/api/ebay-listings");
+      if (!r.ok) throw new Error("API error " + r.status);
+      const data = await r.json();
+
+      if (!data.items || !data.items.length) {
+        status.textContent = "No active listings found.";
+        return;
+      }
+
+      status.textContent = `Showing ${data.items.length} active listings.`;
+      grid.innerHTML = data.items.map(card).join("");
+    } catch (e) {
+      console.error(e);
+      status.textContent = "Could not load listings right now. Try again in a minute.";
+    }
+  }
+
+  load();
+</script>
 </body>
 </html>
