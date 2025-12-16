@@ -1,8 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="FA">
-  <rect width="256" height="256" rx="40" fill="#0B1220" stroke="#1E293B" stroke-width="8"/>
-  <path d="M56 160 L112 88 L144 120 L200 64" fill="none" stroke="#38BDF8" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="56" cy="160" r="10" fill="#38BDF8"/>
-  <circle cx="112" cy="88" r="10" fill="#38BDF8"/>
-  <circle cx="144" cy="120" r="10" fill="#38BDF8"/>
-  <circle cx="200" cy="64" r="10" fill="#38BDF8"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 180 180"
+     role="img"
+     aria-label="Future Automation LLC icon">
+  <title>Future Automation LLC</title>
+
+  <rect x="18" y="18" width="144" height="144" rx="18"
+        fill="#0B1220" stroke="#1E293B" stroke-width="4"/>
+
+  <path d="M52 110 L82 78 L98 94 L128 64"
+        fill="none"
+        stroke="#38BDF8"
+        stroke-width="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+  <circle cx="52" cy="110" r="7" fill="#38BDF8"/>
+  <circle cx="82" cy="78" r="7" fill="#38BDF8"/>
+  <circle cx="98" cy="94" r="7" fill="#38BDF8"/>
+  <circle cx="128" cy="64" r="7" fill="#38BDF8"/>
+
+  <path d="M52 132 H128"
+        stroke="#1E293B"
+        stroke-width="4"
+        stroke-linecap="round"/>
 </svg>
