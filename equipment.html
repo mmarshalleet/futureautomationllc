@@ -6,118 +6,154 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Live inventory pulled from our eBay listings. Buy on eBay or direct with PayPal." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- If you already made /style.css, keep it. If not, remove this link and paste the CSS below into it. -->
   <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
-  <div class="container">
+  <nav>
+    <div class="nav-inner">
+      <span class="brand">
+        <a href="/" aria-label="Future Automation LLC home">
+          <img src="/logo.svg" alt="Future Automation LLC logo">
+          <span>Future Automation LLC</span>
+        </a>
+      </span>
 
-<nav>
-  <span class="brand">
-    <a href="/">
-      <img src="/logo.svg" alt="Future Automation LLC logo">
-    </a>
-  </span>
-    <a href="/" class="nav-link">Services</a>
-    <a href="/equipment.html" class="nav-link active">Equipment</a>
-</nav>
-
-    <h1>Equipment</h1>
-    <div class="tagline">
-      Live inventory from our current eBay listings. Choose eBay checkout or buy direct with PayPal.
+      <div class="nav-links">
+        <a href="/" class="nav-link">Services</a>
+        <a href="/equipment.html" class="nav-link active">Equipment</a>
+      </div>
     </div>
+  </nav>
 
-    <div class="card" style="margin:1rem 0;">
+  <main class="container">
+    <h1>Equipment</h1>
+    <p class="tagline">
+      Live inventory from our current eBay listings. Use eBay checkout for carrier-calculated shipping, or buy direct via PayPal.
+    </p>
+
+    <div class="card info-card">
       <p class="small" style="margin:0;">
         <strong>Direct PayPal:</strong> item price only. Shipping/taxes/duties may apply depending on destination.
         For fully carrier-calculated shipping, use eBay checkout (for now).
       </p>
     </div>
 
-    <div id="status" class="small muted">Loading listings…</div>
-    <div id="grid" class="product-grid"></div>
+    <div class="toolbar">
+      <div id="status" class="small muted" aria-live="polite">Loading listings…</div>
+      <a class="small muted" href="mailto:contact@futureautomationllc.com">Need something specific? Email us</a>
+    </div>
+
+    <div id="grid" class="product-grid" aria-label="Active listings"></div>
 
     <div class="footer">
-      Questions? <a href="mailto:contact@futureautomationllc.com" style="color:var(--accent);">contact@futureautomationllc.com</a>
+      Questions? <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a>
     </div>
-  </div>
+  </main>
 
-<script>
-  const PAYPAL_BUSINESS = "mmarshall@futureautomationllc.com"; // change if needed
+  <script>
+    const PAYPAL_BUSINESS = "mmarshall@futureautomationllc.com"; // change if needed
 
-  function escapeHtml(s){
-    return String(s ?? "").replace(/[&<>"']/g, m => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[m]));
-  }
-
-  function paypalBuyNowForm(item){
-    if (!item.price) return `<span class="small muted">PayPal unavailable</span>`;
-
-    return `
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin:0;">
-        <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="business" value="${escapeHtml(PAYPAL_BUSINESS)}">
-        <input type="hidden" name="item_name" value="${escapeHtml(item.title)}">
-        <input type="hidden" name="amount" value="${escapeHtml(item.price)}">
-        <input type="hidden" name="currency_code" value="${escapeHtml(item.currency || 'USD')}">
-        <input type="hidden" name="invoice" value="${escapeHtml(item.id)}">
-        <input type="hidden" name="no_shipping" value="0">
-        <input type="hidden" name="return" value="https://futureautomationllc.com/thank-you.html">
-        <button class="btn btn-quiet" type="submit">Buy with PayPal</button>
-      </form>
-    `;
-  }
-
-  function card(item){
-    const img = item.image ? `<img class="pimg" src="${escapeHtml(item.image)}" alt="">` : `<div class="pimg ph"></div>`;
-    const price = item.price ? `${item.price} ${item.currency || "USD"}` : "—";
-
-    return `
-      <div class="product-card">
-        ${img}
-        <div class="pbody">
-          <div class="ptitle">${escapeHtml(item.title)}</div>
-          <div class="pmeta">
-            <span>${escapeHtml(item.condition || "")}</span>
-            <span><strong>${escapeHtml(price)}</strong></span>
-          </div>
-
-          <div class="btnrow" style="margin-top:0.9rem;">
-            <a class="btn btn-primary" href="${escapeHtml(item.ebayUrl)}" target="_blank" rel="noopener">Checkout on eBay</a>
-            ${paypalBuyNowForm(item)}
-          </div>
-
-          <div class="small muted" style="margin-top:.6rem;">
-            Item ID: ${escapeHtml(item.id)}
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  async function load(){
-    const status = document.getElementById("status");
-    const grid = document.getElementById("grid");
-
-    try {
-      const r = await fetch("/api/ebay-listings");
-      if (!r.ok) throw new Error("API error " + r.status);
-      const data = await r.json();
-
-      if (!data.items || !data.items.length) {
-        status.textContent = "No active listings found.";
-        return;
-      }
-
-      status.textContent = `Showing ${data.items.length} active listings.`;
-      grid.innerHTML = data.items.map(card).join("");
-    } catch (e) {
-      console.error(e);
-      status.textContent = "Could not load listings right now. Try again in a minute.";
+    function escapeHtml(s){
+      return String(s ?? "").replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
     }
-  }
 
-  load();
-</script>
+    function paypalBuyNowForm(item){
+      if (!item.price) return `<span class="small muted">PayPal unavailable</span>`;
+
+      // NOTE: This is classic PayPal "Buy Now" (not PayPal Checkout).
+      // It’s fine for simple payments, but not as modern as Stripe/Checkout.
+      return `
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin:0;">
+          <input type="hidden" name="cmd" value="_xclick">
+          <input type="hidden" name="business" value="${escapeHtml(PAYPAL_BUSINESS)}">
+          <input type="hidden" name="item_name" value="${escapeHtml(item.title)}">
+          <input type="hidden" name="amount" value="${escapeHtml(item.price)}">
+          <input type="hidden" name="currency_code" value="${escapeHtml(item.currency || 'USD')}">
+          <input type="hidden" name="invoice" value="${escapeHtml(item.id)}">
+          <input type="hidden" name="no_shipping" value="0">
+          <input type="hidden" name="return" value="https://futureautomationllc.com/thank-you.html">
+          <button class="btn btn-quiet" type="submit">Buy with PayPal</button>
+        </form>
+      `;
+    }
+
+    function card(item){
+      const img = item.image
+        ? `<img class="pimg" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Listing photo')}">`
+        : `<div class="pimg ph" role="img" aria-label="No image available"></div>`;
+
+      const price = item.price ? `${item.price} ${item.currency || "USD"}` : "—";
+      const cond = item.condition ? escapeHtml(item.condition) : "Condition not specified";
+
+      return `
+        <article class="product-card">
+          ${img}
+          <div class="pbody">
+            <h2 class="ptitle">${escapeHtml(item.title || "Untitled listing")}</h2>
+
+            <div class="pmeta">
+              <span>${cond}</span>
+              <span><strong>${escapeHtml(price)}</strong></span>
+            </div>
+
+            <div class="btnrow" style="margin-top:0.9rem;">
+              <a class="btn btn-primary" href="${escapeHtml(item.ebayUrl)}" target="_blank" rel="noopener noreferrer">
+                Checkout on eBay
+              </a>
+              ${paypalBuyNowForm(item)}
+            </div>
+
+            <div class="small muted" style="margin-top:.6rem;">
+              Item ID: ${escapeHtml(item.id || "")}
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    async function load(){
+      const status = document.getElementById("status");
+      const grid = document.getElementById("grid");
+
+      try {
+        const r = await fetch("/api/ebay-listings", { cache: "no-store" });
+        if (!r.ok) throw new Error("API error " + r.status);
+        const data = await r.json();
+
+        const items = Array.isArray(data.items) ? data.items : [];
+        if (!items.length) {
+          status.textContent = "No active listings found.";
+          grid.innerHTML = `
+            <div class="card">
+              <p style="margin:.2rem 0 0;">Nothing listed right now.</p>
+              <p class="small muted" style="margin:.4rem 0 0;">Email us what you need and we’ll check stock.</p>
+            </div>
+          `;
+          return;
+        }
+
+        status.textContent = `Showing ${items.length} active listing${items.length === 1 ? "" : "s"}.`;
+        grid.innerHTML = items.map(card).join("");
+      } catch (e) {
+        console.error(e);
+        status.textContent = "Could not load listings right now. Try again in a minute.";
+        grid.innerHTML = `
+          <div class="card">
+            <p style="margin:.2rem 0 0;">Listings didn’t load.</p>
+            <p class="small muted" style="margin:.4rem 0 0;">
+              If this keeps happening, your <code>/api/ebay-listings</code> endpoint is down or blocked.
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    load();
+  </script>
 </body>
 </html>
