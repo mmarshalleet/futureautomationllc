@@ -90,3 +90,38 @@ nav > .nav-link{
 .card.info-card{
   margin: 1rem 0;
 }
+.nav-inner{
+  max-width:960px;
+  margin:0 auto;
+  padding:1.25rem 1.5rem 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.nav-links{
+  display:flex;
+  gap:.25rem;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.brand-logo{ display:inline-flex; align-items:center; }
+
+.brand-logo img,
+.brand-logo svg,
+.nav-logo{
+  height:34px;
+  width:auto;
+  display:block;
+}
+
+.pimg.ph{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+}
+.pimg.ph::after{ content:"No image"; font-weight:800; }
