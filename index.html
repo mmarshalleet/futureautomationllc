@@ -5,288 +5,269 @@
   <title>Future Automation LLC</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Industrial automation, controls troubleshooting, PLC and VFD expertise." />
-</head>
-<body>
- <nav>
-  <span class="brand">
-    <a href="/">
-      <img src="/logo.svg" alt="Future Automation LLC logo">
-    </a>
-  </span>
 
-  <a href="/" class="nav-link active">Services</a>
-  <a href="/equipment.html" class="nav-link">Equipment</a>
- </nav>
-  <div class="container">
-    <h1>Future Automation LLC</h1>
-    <div class="tagline">Less downtime. More output. No guessing.</div>
-
-    <h2>What We Do</h2>
-    <ul>
-      <li>PLC & HMI troubleshooting (Most major brands: Allen-Bradley, Siemens, etc.)</li>
-      <li>VFD setup & diagnostics (PowerFlex, Lenze, G120, ABB)</li>
-      <li>Controls retrofits & panel upgrades</li>
-      <li>Predictive maintenance & reliability improvements</li>
-      <li>Remote automation support</li>
-    </ul>
-
-    <h2>Industries Served</h2>
-    <ul>
-      <li>Food & poultry processing</li>
-      <li>Bulk material handling</li>
-      <li>Manufacturing & heavy industry</li>
-    </ul>
-
-    <div class="cta">
-      <strong>Contact</strong><br />
-      Email: <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a>
-    </div>
-  </div>
- <p>
-      If your plant is experiencing downtime or control issues, call or text is the fastest option. 
-      Submit form below and an engineer will respond as soon as possible.
-  </p>
-    <section id="support" class="container" style="max-width:960px;">
-    <h2>Downtime Support Request</h2>
-      <div class="btnrow" style="margin:1.2rem 0;">
-        
-        <a class="btn btn-primary"
-           href="tel:+18708062555">
-           🚨 Plant down — call now
-        </a>
-          
-        <a class="btn btn-quiet"
-           href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AControls%20platform:%0AMachine/Line:%0AIssue:">
-           📩 Text engineering
-        </a>
-</div>
-   
-   <div id="form-note" class="form-note" style="margin-top:1rem;">
-          For urgent downtime, emailing <strong>mmarshall@futureautomationllc.com</strong>
-        </div>
-    <div class="card" id="support-request" aria-labelledby="support-heading">
-      <h2 id="support-heading">Downtime support request</h2>
-      
-      <p class="small" style="margin-top:-0.4rem;">
-        Fill this out and we’ll respond ASAP. More detail = faster triage.
-    </p>
-      <div class="pillrow" style="margin-top:0.8rem;">
-        <span class="badge down" role="img" aria-label="Plant down">🚨 Plant down</span>
-        <span class="badge warn" role="img" aria-label="Unstable">⚠️ Unstable</span>
-        <span class="badge plan" role="img" aria-label="Planned">ℹ️ Planned</span>
-      </div>
-
-      <!-- form-name hidden kept for static handlers; name + enctype added -->
-      <form action="https://getform.io/f/awnvnzqb" method="POST" name="downtime-support" data-static-form-name="downtime-support" enctype="multipart/form-data" aria-describedby="form-note">
-        <input type="hidden" name="form-name" value="downtime-support">
-        <input type="hidden" name="redirect" value="/thank-you.html">
-        <div class="form-grid">
-          <div class="field">
-            <label for="urgency">Urgency</label>
-            <select id="urgency" name="urgency" required>
-              <option value="">Select…</option>
-              <option value="Plant down / production stopped">🚨 Plant down / production stopped</option>
-              <option value="Running but unstable / frequent trips">⚠️ Running but unstable / frequent trips</option>
-              <option value="Planned work / improvement project">ℹ️ Planned work / improvement project</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="remote_access">Remote access available?</label>
-            <select id="remote_access" name="remote_access" required>
-              <option value="">Select…</option>
-              <option value="Yes - VPN / TeamViewer / AnyDesk / ScreenConnect">Yes — remote access available</option>
-              <option value="No - onsite only">No — onsite only</option>
-              <option value="Not sure yet">Not sure yet</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="platform">Controls platform</label>
-            <select id="platform" name="platform">
-              <option value="">Select…</option>
-              <option value="Allen-Bradley / Rockwell">Allen-Bradley / Rockwell</option>
-              <option value="Siemens">Siemens</option>
-              <option value="Other / Unknown">Other / Unknown</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="plant">Plant / Company</label>
-            <input id="plant" name="plant" type="text" placeholder="Plant name" required>
-          </div>
-
-          <div class="field">
-            <label for="location">Location</label>
-            <input id="location" name="location" type="text" placeholder="City, State, Country" required>
-          </div>
-
-          <div class="field">
-            <label for="contactName">Contact name</label>
-            <input id="contactName" name="contactName" type="text" placeholder="Who should we talk to?" required>
-          </div>
-
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="name@company.com" required>
-          </div>
-
-          <div class="field">
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="text" placeholder="+1 (555) 555-5555">
-          </div>
-
-          <div class="field">
-            <label for="system">System / equipment</label>
-            <input id="system" name="system" type="text" placeholder="Line, machine, PLC, drive, etc.">
-          </div>
-
-          <div class="field span-2">
-            <label>Upload photos / screenshots (optional)</label>
-
-            <!-- dropzone: accessible, keyboard focusable -->
-            <label class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="File upload dropzone. Click or drop files.">
-              <div class="dz-title">Drag & drop files here</div>
-              <div class="dz-sub">…or tap to choose files (JPG/PNG/PDF, ~10MB total)</div>
-              <input
-                id="attachments"
-                name="attachments"
-                type="file"
-                multiple
-                accept=".jpg,.jpeg,.png,.pdf"
-                style="display:none;"
-              >
-              <div class="dz-files" id="dzFiles" aria-live="polite"></div>
-            </label>
-
-            <div id="fileWarning" class="file-warning" aria-hidden="true" style="display:none;"></div>
-
-            <div class="help">
-              Fault screens, drive displays, panel photos, wiring, nameplates — anything that saves time.
-            </div>
-          </div>
-
-          <div class="field span-2">
-            <label for="details">What’s happening?</label>
-            <textarea id="details" name="details" required
-              placeholder="Symptoms, alarms/fault codes, what changed, what you tried…"></textarea>
-            <div class="help">Include fault codes, PLC/drive model numbers, and what changed right before the issue.</div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button class="submit" id="submitBtn" type="submit">Send request</button>
-          <a class="email" href="mailto:engineering@futureautomationllc.com?subject=Downtime%20Support%20Request">Email engineering@futureautomationllc.com</a>
-        </div>
-
-      </form>
-    </div>
-  </section>
-
-<script>
-  (function(){
-    const dz = document.getElementById('dropzone');
-    const input = document.getElementById('attachments');
-    const list = document.getElementById('dzFiles');
-    const fileWarning = document.getElementById('fileWarning');
-    const submitBtn = document.getElementById('submitBtn');
-
-    const MAX_TOTAL_BYTES = 10 * 1024 * 1024; // 10 MB
-
-    function setWarning(message) {
-      if (!message) {
-        fileWarning.style.display = 'none';
-        fileWarning.setAttribute('aria-hidden', 'true');
-      } else {
-        fileWarning.style.display = 'block';
-        fileWarning.setAttribute('aria-hidden', 'false');
-        fileWarning.textContent = message;
-      }
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#111c36;
+      --panel2:#0b1226;
+      --text:#e5e7eb;
+      --muted:#a7b0c0;
+      --brand:#38bdf8;
+      --ok:#34d399;
+      --warn:#fbbf24;
+      --down:#fb7185;
+      --line:rgba(255,255,255,.12);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius:16px;
     }
 
-    function renderFiles(files) {
-      list.innerHTML = '';
-      setWarning('');
-      submitBtn.disabled = false;
-
-      if (!files || !files.length){
-        return;
-      }
-
-      let total = 0;
-      Array.from(files).forEach(f => {
-        total += f.size;
-        const row = document.createElement('div');
-        // Use textContent to avoid XSS via file name
-        const sizeKB = Math.round(f.size / 1024);
-        row.textContent = `${f.name} (${sizeKB} KB)`;
-        list.appendChild(row);
-      });
-
-      if (total > MAX_TOTAL_BYTES) {
-        setWarning('Total attachments exceed 10 MB. Please remove files or send fewer files.');
-        submitBtn.disabled = true;
-      }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(56,189,248,.18), transparent 60%),
+                  radial-gradient(1000px 600px at 90% 10%, rgba(52,211,153,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
     }
 
-    // Drag & drop handlers (use DataTransfer to populate input.files)
-    dz.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dz.classList.add('dragover');
-    });
-    dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
-    dz.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dz.classList.remove('dragover');
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{max-width:100%; height:auto}
 
-      const dtIncoming = e.dataTransfer;
-      if (!dtIncoming || !dtIncoming.files) return;
+    .container{
+      max-width:960px;
+      margin:0 auto;
+      padding: 2.5rem 1.25rem;
+    }
 
-      // Create a DataTransfer and add the dropped files (safer cross-browser)
-      const dt = new DataTransfer();
-      Array.from(dtIncoming.files).forEach(f => dt.items.add(f));
-      // Setting input.files from DataTransfer is widely supported when using DataTransfer API
-      input.files = dt.files;
-      renderFiles(input.files);
-    });
+    /* NAV */
+    nav{
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(15,23,42,.7);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{
+      max-width:960px;
+      margin:0 auto;
+      padding: .9rem 1.25rem;
+      display:flex;
+      align-items:center;
+      gap:1rem;
+    }
+    .brand a{
+      display:flex;
+      align-items:center;
+      gap:.6rem;
+      font-weight:700;
+      letter-spacing:.2px;
+      color:var(--text);
+    }
+    .brand img{
+      width:34px;
+      height:34px;
+      display:block;
+    }
+    .nav-links{
+      margin-left:auto;
+      display:flex;
+      gap:.25rem;
+      flex-wrap:wrap;
+    }
+    .nav-link{
+      display:inline-flex;
+      padding:.45rem .75rem;
+      border-radius:999px;
+      color:var(--text);
+      border:1px solid transparent;
+    }
+    .nav-link:hover{background:rgba(255,255,255,.06); text-decoration:none}
+    .nav-link.active{border-color:rgba(56,189,248,.35); background:rgba(56,189,248,.08)}
 
-    // Make dropzone clickable / keyboard accessible - open file picker
-    dz.addEventListener('click', () => input.click());
-    dz.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        input.click();
-      }
-    });
+    /* HERO */
+    .hero{
+      padding-top: 2.0rem;
+      padding-bottom: 1.25rem;
+    }
+    h1{
+      font-size: clamp(2rem, 2.8vw, 2.6rem);
+      margin:0 0 .4rem;
+      letter-spacing:.2px;
+    }
+    .tagline{
+      font-size: 1.08rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.4fr .6fr;
+      gap:1rem;
+      align-items:start;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(17,28,54,.9), rgba(11,18,38,.95));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+    }
+    .hero-card h2{margin:.1rem 0 .7rem; color:var(--brand); font-size:1.2rem}
+    .hero-card ul{margin:.25rem 0 0; padding-left: 1.1rem}
+    .hero-card li{margin:.35rem 0; color: var(--text)}
+    .side-card{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .side-card strong{display:block; margin-bottom:.35rem}
+    .side-card .small{color:var(--muted); font-size:.95rem}
 
-    input.addEventListener('change', () => renderFiles(input.files));
-  })();
-</script>
+    /* CTA buttons */
+    .btnrow{
+      display:flex;
+      gap:.75rem;
+      flex-wrap:wrap;
+      margin-top:1rem;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      padding: .8rem 1rem;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight:650;
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
+    }
+    .btn:hover{transform: translateY(-1px); text-decoration:none; background: rgba(255,255,255,.06)}
+    .btn-primary{
+      border-color: rgba(56,189,248,.55);
+      background: rgba(56,189,248,.12);
+    }
+    .btn-quiet{opacity:.92}
 
-<script>
-  (function(){
-    const form = document.querySelector('form[data-static-form-name="downtime-support"]');
-    if (!form) return;
+    /* Support section */
+    .section-title{
+      margin: 1.2rem 0 .4rem;
+      font-size: 1.3rem;
+    }
+    .lead{
+      color: var(--muted);
+      margin: .25rem 0 1.1rem;
+    }
 
-    form.addEventListener('submit', (event) => {
-      // Fire-and-forget: send a copy of the form data to /api/alert (includes files)
-      try {
-        const fd = new FormData(form);
+    .card{
+      background: linear-gradient(180deg, rgba(17,28,54,.9), rgba(11,18,38,.95));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+    }
+    .small{color: var(--muted); font-size: .95rem}
 
-        // Build a minimal JSON fallback for quick triage (no files) for services that prefer JSON.
-        // We'll send FormData for file-inclusive handlers; do not set content-type header so boundary is correct.
-        fetch('/api/alert', {
-          method: 'POST',
-          body: fd,
-        }).catch(()=>{});
+    .pillrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      margin-top:.75rem;
+      margin-bottom: 1rem;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      padding:.35rem .65rem;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      font-weight:650;
+      font-size:.9rem;
+      background: rgba(255,255,255,.04);
+    }
+    .badge.down{border-color: rgba(251,113,133,.55); background: rgba(251,113,133,.12)}
+    .badge.warn{border-color: rgba(251,191,36,.55); background: rgba(251,191,36,.10)}
+    .badge.plan{border-color: rgba(56,189,248,.45); background: rgba(56,189,248,.08)}
 
-        // Note: we intentionally do not call event.preventDefault() here so the native form POST (if any) proceeds.
-        // If you want to intercept submission and handle entirely via AJAX, call event.preventDefault() and handle response.
-      } catch(e) {
-        // swallow errors; don't block form submission
-      }
-    });
-  })();
-</script>
-</body>
-</html>
+    /* Form */
+    .form-note{
+      color: var(--muted);
+      margin: .9rem 0 1.1rem;
+    }
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .9rem 1rem;
+    }
+    .field label{
+      display:block;
+      font-weight:650;
+      margin-bottom:.35rem;
+    }
+    input, select, textarea{
+      width:100%;
+      padding:.75rem .85rem;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+    }
+    input::placeholder, textarea::placeholder{color: rgba(229,231,235,.55)}
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(56,189,248,.65);
+      box-shadow: 0 0 0 3px rgba(56,189,248,.15);
+    }
+    textarea{min-height: 150px; resize: vertical}
+    select option{color:#0b1226}
+
+    .span-2{grid-column: 1 / -1}
+    .help{margin-top:.4rem; color: var(--muted); font-size:.95rem}
+
+    /* Dropzone */
+    .dropzone{
+      display:block;
+      border: 1px dashed rgba(255,255,255,.22);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 1rem;
+      cursor:pointer;
+      transition: .15s ease;
+    }
+    .dropzone:hover{background: rgba(255,255,255,.05)}
+    .dropzone:focus{outline:none; box-shadow: 0 0 0 3px rgba(56,189,248,.18)}
+    .dropzone.dragover{
+      border-color: rgba(56,189,248,.65);
+      background: rgba(56,189,248,.08);
+    }
+    .dz-title{font-weight:750}
+    .dz-sub{color: var(--muted); margin-top:.25rem}
+    .dz-files{margin-top:.7rem; color: var(--muted); font-size:.95rem}
+    .file-warning{
+      margin-top:.6rem;
+      padding:.65rem .8rem;
+      border-radius: 12px;
+      border:1px solid rgba(251,191,36,.55);
+      background: rgba(251,191,36,.10);
+      color: var(--text);
+    }
+
+    .form-actions{
+      display:flex;
+      gap:.9rem;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 1rem;
+    }
+    .submit{
+      padding:.85rem 1.1rem;
+      border-radius: 
