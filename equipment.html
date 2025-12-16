@@ -5,9 +5,8 @@
   <title>Equipment | Future Automation LLC</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Live inventory pulled from our eBay listings. Buy on eBay or direct with PayPal." />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-  <!-- If you already made /style.css, keep it. If not, remove this link and paste the CSS below into it. -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -16,8 +15,21 @@
     <div class="nav-inner">
       <span class="brand">
         <a href="/" aria-label="Future Automation LLC home">
-          <img src="/logo.svg" alt="Future Automation LLC logo">
-          <span>Future Automation LLC</span>
+          <picture class="brand-logo">
+            <source srcset="/logo.svg" type="image/svg+xml">
+            <!-- Safari-safe fallback -->
+            <svg viewBox="0 0 180 180" class="nav-logo" aria-hidden="true">
+              <rect x="18" y="18" width="144" height="144" rx="18"
+                    fill="#0B1220" stroke="#1E293B" stroke-width="4"/>
+              <path d="M52 110 L82 78 L98 94 L128 64"
+                    fill="none" stroke="#38BDF8" stroke-width="10"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="52" cy="110" r="7" fill="#38BDF8"/>
+              <circle cx="82" cy="78" r="7" fill="#38BDF8"/>
+              <circle cx="98" cy="94" r="7" fill="#38BDF8"/>
+              <circle cx="128" cy="64" r="7" fill="#38BDF8"/>
+            </svg>
+          </picture>
         </a>
       </span>
 
@@ -30,53 +42,53 @@
 
   <main class="container">
     <h1>Equipment</h1>
-    <p class="tagline">
-      Live inventory from our current eBay listings. Use eBay checkout for carrier-calculated shipping, or buy direct via PayPal.
-    </p>
+    <div class="tagline">
+      Live inventory from our current eBay listings.  
+      Use eBay checkout or buy direct with PayPal.
+    </div>
 
-    <div class="card info-card">
+    <div class="card">
       <p class="small" style="margin:0;">
-        <strong>Direct PayPal:</strong> item price only. Shipping/taxes/duties may apply depending on destination.
-        For fully carrier-calculated shipping, use eBay checkout (for now).
+        <strong>Direct PayPal:</strong> item price only.  
+        Shipping, taxes, or duties may apply depending on destination.
       </p>
     </div>
 
-    <div class="toolbar">
-      <div id="status" class="small muted" aria-live="polite">Loading listings…</div>
-      <a class="small muted" href="mailto:contact@futureautomationllc.com">Need something specific? Email us</a>
+    <div id="status" class="small muted" style="margin-top:1rem;">
+      Loading listings…
     </div>
 
-    <div id="grid" class="product-grid" aria-label="Active listings"></div>
+    <div id="grid" class="product-grid"></div>
 
     <div class="footer">
-      Questions? <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a>
+      Questions?
+      <a href="mailto:contact@futureautomationllc.com">
+        contact@futureautomationllc.com
+      </a>
     </div>
   </main>
 
   <script>
-    const PAYPAL_BUSINESS = "mmarshall@futureautomationllc.com"; // change if needed
+    const PAYPAL_BUSINESS = "mmarshall@futureautomationllc.com";
 
     function escapeHtml(s){
       return String(s ?? "").replace(/[&<>"']/g, m => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+        "&":"&amp;","<":"&lt;",">":"&gt;",
+        '"':"&quot;","'":"&#039;"
       }[m]));
     }
 
     function paypalBuyNowForm(item){
       if (!item.price) return `<span class="small muted">PayPal unavailable</span>`;
 
-      // NOTE: This is classic PayPal "Buy Now" (not PayPal Checkout).
-      // It’s fine for simple payments, but not as modern as Stripe/Checkout.
       return `
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin:0;">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
           <input type="hidden" name="cmd" value="_xclick">
           <input type="hidden" name="business" value="${escapeHtml(PAYPAL_BUSINESS)}">
           <input type="hidden" name="item_name" value="${escapeHtml(item.title)}">
           <input type="hidden" name="amount" value="${escapeHtml(item.price)}">
           <input type="hidden" name="currency_code" value="${escapeHtml(item.currency || 'USD')}">
           <input type="hidden" name="invoice" value="${escapeHtml(item.id)}">
-          <input type="hidden" name="no_shipping" value="0">
-          <input type="hidden" name="return" value="https://futureautomationllc.com/thank-you.html">
           <button class="btn btn-quiet" type="submit">Buy with PayPal</button>
         </form>
       `;
@@ -84,35 +96,29 @@
 
     function card(item){
       const img = item.image
-        ? `<img class="pimg" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Listing photo')}">`
-        : `<div class="pimg ph" role="img" aria-label="No image available"></div>`;
-
-      const price = item.price ? `${item.price} ${item.currency || "USD"}` : "—";
-      const cond = item.condition ? escapeHtml(item.condition) : "Condition not specified";
+        ? `<img class="pimg" src="${escapeHtml(item.image)}" alt="">`
+        : `<div class="pimg ph"></div>`;
 
       return `
-        <article class="product-card">
+        <div class="product-card">
           ${img}
           <div class="pbody">
-            <h2 class="ptitle">${escapeHtml(item.title || "Untitled listing")}</h2>
-
+            <div class="ptitle">${escapeHtml(item.title)}</div>
             <div class="pmeta">
-              <span>${cond}</span>
-              <span><strong>${escapeHtml(price)}</strong></span>
+              <span>${escapeHtml(item.condition || "")}</span>
+              <span><strong>${escapeHtml(item.price || "—")} ${escapeHtml(item.currency || "")}</strong></span>
             </div>
 
-            <div class="btnrow" style="margin-top:0.9rem;">
-              <a class="btn btn-primary" href="${escapeHtml(item.ebayUrl)}" target="_blank" rel="noopener noreferrer">
-                Checkout on eBay
+            <div class="btnrow" style="margin-top:.75rem;">
+              <a class="btn btn-primary"
+                 href="${escapeHtml(item.ebayUrl)}"
+                 target="_blank" rel="noopener">
+                 Checkout on eBay
               </a>
               ${paypalBuyNowForm(item)}
             </div>
-
-            <div class="small muted" style="margin-top:.6rem;">
-              Item ID: ${escapeHtml(item.id || "")}
-            </div>
           </div>
-        </article>
+        </div>
       `;
     }
 
@@ -120,36 +126,19 @@
       const status = document.getElementById("status");
       const grid = document.getElementById("grid");
 
-      try {
-        const r = await fetch("/api/ebay-listings", { cache: "no-store" });
-        if (!r.ok) throw new Error("API error " + r.status);
+      try{
+        const r = await fetch("/api/ebay-listings", { cache:"no-store" });
         const data = await r.json();
 
-        const items = Array.isArray(data.items) ? data.items : [];
-        if (!items.length) {
+        if (!data.items || !data.items.length){
           status.textContent = "No active listings found.";
-          grid.innerHTML = `
-            <div class="card">
-              <p style="margin:.2rem 0 0;">Nothing listed right now.</p>
-              <p class="small muted" style="margin:.4rem 0 0;">Email us what you need and we’ll check stock.</p>
-            </div>
-          `;
           return;
         }
 
-        status.textContent = `Showing ${items.length} active listing${items.length === 1 ? "" : "s"}.`;
-        grid.innerHTML = items.map(card).join("");
-      } catch (e) {
-        console.error(e);
-        status.textContent = "Could not load listings right now. Try again in a minute.";
-        grid.innerHTML = `
-          <div class="card">
-            <p style="margin:.2rem 0 0;">Listings didn’t load.</p>
-            <p class="small muted" style="margin:.4rem 0 0;">
-              If this keeps happening, your <code>/api/ebay-listings</code> endpoint is down or blocked.
-            </p>
-          </div>
-        `;
+        status.textContent = `Showing ${data.items.length} active listings.`;
+        grid.innerHTML = data.items.map(card).join("");
+      }catch(e){
+        status.textContent = "Could not load listings.";
       }
     }
 
