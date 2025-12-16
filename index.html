@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Equipment | Future Automation LLC</title>
+  <title>Future Automation LLC</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Live inventory pulled from our eBay listings. Buy on eBay or direct with PayPal." />
+  <meta name="description" content="Industrial automation, controls troubleshooting, PLC and VFD expertise." />
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
@@ -34,115 +34,46 @@
       </span>
 
       <div class="nav-links">
-        <a href="/" class="nav-link">Services</a>
-        <a href="/equipment.html" class="nav-link active">Equipment</a>
+        <a href="/" class="nav-link active">Services</a>
+        <a href="/equipment.html" class="nav-link">Equipment</a>
       </div>
     </div>
   </nav>
 
   <main class="container">
-    <h1>Equipment</h1>
-    <div class="tagline">
-      Live inventory from our current eBay listings.  
-      Use eBay checkout or buy direct with PayPal.
-    </div>
+    <h1>Future Automation LLC</h1>
+    <div class="tagline">Less downtime. More output. No guessing.</div>
 
     <div class="card">
-      <p class="small" style="margin:0;">
-        <strong>Direct PayPal:</strong> item price only.  
-        Shipping, taxes, or duties may apply depending on destination.
-      </p>
+      <h2>What We Do</h2>
+      <ul>
+        <li>PLC & HMI troubleshooting (Allen-Bradley, Siemens, and more)</li>
+        <li>VFD setup & diagnostics (PowerFlex, Lenze, Siemens G120, ABB)</li>
+        <li>Controls retrofits & panel upgrades</li>
+        <li>Predictive maintenance & reliability improvements</li>
+        <li>Remote automation support</li>
+      </ul>
+
+      <h2>Industries Served</h2>
+      <ul>
+        <li>Food & poultry processing</li>
+        <li>Bulk material handling</li>
+        <li>Manufacturing & heavy industry</li>
+      </ul>
     </div>
 
-    <div id="status" class="small muted" style="margin-top:1rem;">
-      Loading listings…
-    </div>
-
-    <div id="grid" class="product-grid"></div>
-
-    <div class="footer">
-      Questions?
+    <div class="cta">
+      <strong>Contact</strong><br>
+      Email:
       <a href="mailto:contact@futureautomationllc.com">
         contact@futureautomationllc.com
       </a>
     </div>
+
+    <p class="muted" style="margin-top:1.25rem;">
+      If your plant is down, calling or texting is fastest.  
+      Use the form below for non-urgent requests.
+    </p>
   </main>
-
-  <script>
-    const PAYPAL_BUSINESS = "mmarshall@futureautomationllc.com";
-
-    function escapeHtml(s){
-      return String(s ?? "").replace(/[&<>"']/g, m => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",
-        '"':"&quot;","'":"&#039;"
-      }[m]));
-    }
-
-    function paypalBuyNowForm(item){
-      if (!item.price) return `<span class="small muted">PayPal unavailable</span>`;
-
-      return `
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-          <input type="hidden" name="cmd" value="_xclick">
-          <input type="hidden" name="business" value="${escapeHtml(PAYPAL_BUSINESS)}">
-          <input type="hidden" name="item_name" value="${escapeHtml(item.title)}">
-          <input type="hidden" name="amount" value="${escapeHtml(item.price)}">
-          <input type="hidden" name="currency_code" value="${escapeHtml(item.currency || 'USD')}">
-          <input type="hidden" name="invoice" value="${escapeHtml(item.id)}">
-          <button class="btn btn-quiet" type="submit">Buy with PayPal</button>
-        </form>
-      `;
-    }
-
-    function card(item){
-      const img = item.image
-        ? `<img class="pimg" src="${escapeHtml(item.image)}" alt="">`
-        : `<div class="pimg ph"></div>`;
-
-      return `
-        <div class="product-card">
-          ${img}
-          <div class="pbody">
-            <div class="ptitle">${escapeHtml(item.title)}</div>
-            <div class="pmeta">
-              <span>${escapeHtml(item.condition || "")}</span>
-              <span><strong>${escapeHtml(item.price || "—")} ${escapeHtml(item.currency || "")}</strong></span>
-            </div>
-
-            <div class="btnrow" style="margin-top:.75rem;">
-              <a class="btn btn-primary"
-                 href="${escapeHtml(item.ebayUrl)}"
-                 target="_blank" rel="noopener">
-                 Checkout on eBay
-              </a>
-              ${paypalBuyNowForm(item)}
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    async function load(){
-      const status = document.getElementById("status");
-      const grid = document.getElementById("grid");
-
-      try{
-        const r = await fetch("/api/ebay-listings", { cache:"no-store" });
-        const data = await r.json();
-
-        if (!data.items || !data.items.length){
-          status.textContent = "No active listings found.";
-          return;
-        }
-
-        status.textContent = `Showing ${data.items.length} active listings.`;
-        grid.innerHTML = data.items.map(card).join("");
-      }catch(e){
-        status.textContent = "Could not load listings.";
-      }
-    }
-
-    load();
-  </script>
 </body>
 </html>
