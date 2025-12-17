@@ -94,7 +94,7 @@
     <div class="grid-3">
 
       <div class="service card">
-        <h3>PLC & HMI Troubleshooting</h3>
+        <h3>PLC &amp; HMI Troubleshooting</h3>
         <p class="muted">
           Find the fault, fix it, and explain why it happened.
           PLC logic, I/O, comms, and HMI issues that stop production.
@@ -102,7 +102,7 @@
       </div>
 
       <div class="service card">
-        <h3>VFD Setup & Diagnostics</h3>
+        <h3>VFD Setup &amp; Diagnostics</h3>
         <p class="muted">
           Trip faults, tuning problems, encoder or resolver feedback,
           braking issues, and drives that “should work but don’t.”
@@ -118,7 +118,7 @@
       </div>
 
       <div class="service card">
-        <h3>Panel Upgrades & Rework</h3>
+        <h3>Panel Upgrades &amp; Rework</h3>
         <p class="muted">
           Clean up hacked panels, correct wiring mistakes,
           fix safety circuits, and make the panel serviceable again.
@@ -144,11 +144,25 @@
     </div>
   </section>
 
+  <!-- LIVE INVENTORY -->
+  <section class="section">
+    <h2 class="section-title">Equipment for Sale</h2>
+    <p class="section-sub">
+      Live inventory from our eBay store. Checkout stays on eBay while we build trust and direct checkout.
+    </p>
+
+    <div id="inventory" class="inventory-grid"></div>
+
+    <div class="section-actions">
+      <a class="btn btn-quiet" href="equipment.html">Browse all equipment</a>
+    </div>
+  </section>
+
   <!-- INDUSTRIES -->
   <section class="section">
     <h2 class="section-title">Industries Served</h2>
     <div class="chips">
-      <span class="chip">Food & poultry processing</span>
+      <span class="chip">Food &amp; poultry processing</span>
       <span class="chip">Bulk material handling</span>
       <span class="chip">Manufacturing</span>
       <span class="chip">Heavy industry</span>
@@ -161,6 +175,76 @@
   </section>
 
 </main>
+
+<script>
+  async function loadInventory() {
+    const grid = document.getElementById("inventory");
+    if (!grid) return;
+
+    // Skeletons
+    grid.innerHTML = `
+      <div class="card inv-skeleton"></div>
+      <div class="card inv-skeleton"></div>
+      <div class="card inv-skeleton"></div>
+    `;
+
+    try {
+      // Your Pages Function should return { items: [...] }
+      // Example endpoint we discussed: /functions/api/inventory.js
+      const res = await fetch("/api/inventory?seller=theautomationengineer", { cache: "no-store" });
+      const data = await res.json().catch(() => ({}));
+      const items = (data.items || []).slice(0, 12);
+
+      if (!items.length) {
+        grid.innerHTML = `
+          <div class="card">
+            <h3>Nothing listed right now</h3>
+            <p class="muted">Either the store is empty or the feed is taking a nap. Try again in a bit.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = items.map((it) => `
+        <div class="card inv-card">
+          ${it.image ? `<img class="inv-img" src="${it.image}" alt="" loading="lazy">` : ``}
+
+          <div class="inv-title">${escapeHtml(it.title || "Listing")}</div>
+
+          ${(it.price || it.condition) ? `
+            <div class="inv-meta">
+              ${it.price ? `<span class="inv-tag inv-price">${escapeHtml(it.price)}</span>` : ``}
+              ${it.condition ? `<span class="inv-tag">${escapeHtml(it.condition)}</span>` : ``}
+            </div>
+          ` : ``}
+
+          <a class="btn btn-primary" href="${it.link}" target="_blank" rel="noopener">
+            Buy on eBay (secure checkout)
+          </a>
+        </div>
+      `).join("");
+    } catch (err) {
+      console.error(err);
+      grid.innerHTML = `
+        <div class="card">
+          <h3>Inventory failed to load</h3>
+          <p class="muted">Either the API hiccuped or eBay is being eBay. Try again later.</p>
+        </div>
+      `;
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  loadInventory();
+</script>
 
 </body>
 </html>
