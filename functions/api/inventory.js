@@ -67,8 +67,15 @@ export async function onRequest({ request }) {
   if (request.method === "OPTIONS") return json({}, 204, { "cache-control": "no-store" });
   if (request.method !== "GET") return json({ items: [], error: "Method Not Allowed" }, 405, { "cache-control": "no-store" });
 
-  const url = new URL(request.url);
-  (url.searchParams.get("seller") || "theautomationengineer").trim();
+const reqUrl = new URL(request.url);
+const q = (reqUrl.searchParams.get("q") || "").trim();
+if (!q) return jsonResponse({ items: [], error: "Missing q" }, 400);
+
+const url =
+  "https://api.ebay.com/buy/browse/v1/item_summary/search" +
+  `?q=${encodeURIComponent(q)}` +
+  `&filter=seller:{${seller}}` +
+  "&limit=50";
 
   const feedUrl =
     `https://www.ebay.com/sch/i.html` +
