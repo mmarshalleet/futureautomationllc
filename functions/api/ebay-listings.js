@@ -53,9 +53,12 @@ export async function onRequest({ request, env }) {
 
     const token = await getAppToken(env);
 
-    const url = new URL("https://api.ebay.com/buy/browse/v1/item_summary/search");
-    url.searchParams.set("limit", "50");
-    url.searchParams.set("filter", `sellers:{${seller}}`);
+const seller = env.EBAY_SELLER;
+
+const url =
+  "https://api.ebay.com/buy/browse/v1/item_summary/search" +
+  `?filter=seller:{${seller}}` +
+  "&limit=50";
 
     const r = await fetch(url.toString(), {
       headers: {
