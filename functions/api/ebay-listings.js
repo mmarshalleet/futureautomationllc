@@ -3,7 +3,6 @@ function jsonResponse(obj, status = 200, extraHeaders = {}) {
     status,
     headers: {
       "content-type": "application/json; charset=utf-8",
-      // Safe even for same-origin; helps if you ever call this from another origin.
       "access-control-allow-origin": "*",
       "access-control-allow-methods": "GET,OPTIONS",
       "access-control-allow-headers": "content-type,authorization",
@@ -48,12 +47,34 @@ export async function onRequest({ request, env }) {
   }
 
   try {
-    "theautomationengineer";
-    const marketplace = env.EBAY_MARKETPLACE || "EBAY_US";
+    const reqUrl = new URL(request.url);
+
+    const q = (reqUrl.searchParams.get("q") || "").trim();
+    if (!q) {
+      return jsonResponse(
+        { items: [], error: "Missing required query param: q (example: /api/ebay-listings?q=25B-D4P0N104)" },
+        400,
+        { "cache-control": "no-store" }
+      );
+    }
+
+    // Default seller filter can come from env, but allow override via ?seller=
+    const seller =
+      (reqUrl.searchParams.get("seller") || env.EBAY_SELLER || "theautomationengineer").trim();
+
+    const marketplace = (env.EBAY_MARKETPLACE || "EBAY_US").trim();
+    const limit = Math.min(parseInt(reqUrl.searchParams.get("limit") || "24", 10) || 24, 50);
 
     const token = await getAppToken(env);
 
-    const r = await fetch(url.toString(), {
+    const ebayUrl = new URL("https://api.ebay.com/buy/browse/v1/item_summary/search");
+    ebayUrl.searchParams.set("q", q);
+    ebayUrl.searchParams.set("limit", String(limit));
+
+    // Only add seller filter if we have one
+    if (seller) ebayUrl.searchParams.set("filter", `seller:{${seller}}`);
+
+    const r = await fetch(ebayUrl.toString(), {
       headers: {
         Authorization: `Bearer ${token}`,
         "X-EBAY-C-MARKETPLACE-ID": marketplace
@@ -71,16 +92,24 @@ export async function onRequest({ request, env }) {
 
     const items = (data.itemSummaries || []).map((it) => ({
       id: it.itemId,
-      title: it.title,
-      ebayUrl: it.itemWebUrl,
-      condition: it.condition,
+      title: it.title || "",
+      ebayUrl: it.itemWebUrl || "",
+      condition: it.condition || "",
       image: it.image?.imageUrl || "",
       price: it.price?.value || "",
       currency: it.price?.currency || "USD"
     }));
 
-    return jsonResponse({ items }, 200, { "cache-control": "public, max-age=120" });
+    return jsonResponse(
+      { items },
+      200,
+      { "cache-control": "public, max-age=120" }
+    );
   } catch (e) {
-    return jsonResponse({ items: [], error: String(e) }, 500, { "cache-control": "no-store" });
+    return jsonResponse(
+      { items: [], error: String(e) },
+      500,
+      { "cache-control": "no-store" }
+    );
   }
 }
