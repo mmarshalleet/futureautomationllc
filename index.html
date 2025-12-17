@@ -190,8 +190,7 @@
 
     try {
       // Your Pages Function should return { items: [...] }
-      // Example endpoint we discussed: /functions/api/inventory.js
-      const res = await fetch("/api/inventory?seller=theautomationengineer", { cache: "no-store" });
+      // Example endpoint we discussed: /functions/api/inventory.j
       const data = await res.json().catch(() => ({}));
       const items = (data.items || []).slice(0, 12);
 
