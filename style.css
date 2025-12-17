@@ -1,8 +1,162 @@
-/* ===== Add-ons for updated nav + equipment layout ===== */
+:root{
+  --bg:#0f172a;
+  --panel:#111c33;
+  --card:#0b1220;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --border:rgba(255,255,255,.10);
+  --accent:#38bdf8;
+  --accent2:#22c55e;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
 
-/* Optional sticky/nav glass effect (works with new nav markup) */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+a{ color:var(--accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+.container{
+  max-width:960px;
+  margin:0 auto;
+  padding:2.25rem 1.5rem;
+}
+
+.muted{ color:var(--muted); }
+.small{ font-size:.95rem; }
+
+h1{ font-size:2.4rem; line-height:1.15; margin:.2rem 0 .6rem; }
+h2{ margin:0 0 .35rem; }
+h3{ margin:0 0 .4rem; }
+
+.kicker{
+  color:rgba(56,189,248,.9);
+  font-weight:700;
+  letter-spacing:.2px;
+  margin:0 0 .25rem;
+}
+
+.lead{
+  font-size:1.08rem;
+  color:rgba(229,231,235,.92);
+  margin:0 0 1rem;
+}
+
+.tagline{
+  font-weight:800;
+  letter-spacing:.2px;
+}
+
+.section{ margin-top:2.0rem; }
+.section-title{ font-size:1.5rem; margin:0; }
+.section-sub{ margin:.35rem 0 1.1rem; color:var(--muted); }
+
+.card{
+  background:rgba(11,18,32,.72);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:1.1rem 1.1rem;
+}
+
+.card-title{ font-size:1.1rem; margin:0 0 .35rem; }
+
+.hero{
+  display:grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap:1.25rem;
+  align-items:start;
+}
+
+.hero-actions{
+  display:flex;
+  gap:.6rem;
+  flex-wrap:wrap;
+  margin: 1rem 0 .85rem;
+}
+
+.btnrow{
+  display:flex;
+  gap:.6rem;
+  flex-wrap:wrap;
+  margin:.9rem 0 0;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.45rem;
+  padding:.65rem .95rem;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+  font-weight:800;
+  text-decoration:none;
+}
+.btn:hover{ background:rgba(255,255,255,.08); text-decoration:none; }
+
+.btn-primary{
+  border-color:rgba(56,189,248,.45);
+  background:rgba(56,189,248,.14);
+}
+
+.btn-quiet{
+  border-color:rgba(255,255,255,.12);
+  background:rgba(255,255,255,.03);
+}
+
+.trust-row, .chips{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  padding:.25rem .6rem;
+  border-radius:999px;
+  border:1px solid rgba(56,189,248,.25);
+  background:rgba(56,189,248,.08);
+  color:rgba(229,231,235,.95);
+  font-weight:700;
+  font-size:.92rem;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:.9rem;
+}
+
+.service h3{ font-size:1.05rem; }
+.service p{ margin:0; }
+
+.contact-block{
+  margin-top:.8rem;
+  padding-top:.8rem;
+  border-top:1px solid var(--border);
+}
+
+.tagline-box{
+  margin-top:.85rem;
+  padding:.85rem;
+  border-radius:12px;
+  border:1px dashed rgba(56,189,248,.35);
+  background:rgba(56,189,248,.06);
+}
+
+/* ===== Nav (kept from your existing style) ===== */
 nav{
-  /* keep your existing max-width/padding layout, but allow sticky when desired */
   position: sticky;
   top: 0;
   z-index: 20;
@@ -11,7 +165,6 @@ nav{
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
-/* New nav wrapper (used by the updated index/equipment HTML) */
 .nav-inner{
   max-width:960px;
   margin:0 auto;
@@ -23,14 +176,6 @@ nav{
   flex-wrap:wrap;
 }
 
-/* If you still have older nav markup, this keeps it from looking weird */
-nav > .brand,
-nav > .nav-link{
-  position: relative;
-  z-index: 1;
-}
-
-/* New nav link container */
 .nav-links{
   display:flex;
   gap:.25rem;
@@ -38,13 +183,11 @@ nav > .nav-link{
   align-items:center;
 }
 
-/* Make links pill-y (still matches your palette) */
 .nav-link{
   display:inline-flex;
   padding:.4rem .75rem;
   border-radius:999px;
   border:1px solid transparent;
-  margin-left:0; /* override older margin-left */
 }
 .nav-link:hover{
   background: rgba(255,255,255,.06);
@@ -55,73 +198,11 @@ nav > .nav-link{
   color: var(--accent);
 }
 
-/* Equipment page helpers */
-.toolbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:1rem;
-  flex-wrap:wrap;
-  margin: .75rem 0 0;
-}
-
-.footer{
-  margin-top: 2rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: .95rem;
-}
-
-/* Placeholder image block (used when no image exists) */
-.pimg.ph{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color: var(--muted);
-}
-.pimg.ph::after{
-  content: "No image";
-  font-weight: 800;
-  letter-spacing: .2px;
-}
-
-/* Tiny polish */
-.card.info-card{
-  margin: 1rem 0;
-}
-.nav-inner{
-  max-width:960px;
-  margin:0 auto;
-  padding:1.25rem 1.5rem 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  flex-wrap:wrap;
-}
-
-.nav-links{
-  display:flex;
-  gap:.25rem;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
 .brand-logo{ display:inline-flex; align-items:center; }
+.brand-logo img{ height:34px; width:auto; display:block; }
 
-.brand-logo img,
-.brand-logo svg,
-.nav-logo{
-  height:34px;
-  width:auto;
-  display:block;
+/* Responsive */
+@media (max-width: 900px){
+  .hero{ grid-template-columns:1fr; }
+  .grid-3{ grid-template-columns:1fr; }
 }
-
-.pimg.ph{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--muted);
-}
-.pimg.ph::after{ content:"No image"; font-weight:800; }
