@@ -1,6 +1,22 @@
+function jsonResponse(obj, status = 200, extraHeaders = {}) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      // Safe even for same-origin; helps if you ever call this from another origin.
+      "access-control-allow-origin": "*",
+      "access-control-allow-methods": "GET,OPTIONS",
+      "access-control-allow-headers": "content-type,authorization",
+      ...extraHeaders
+    }
+  });
+}
+
 async function getAppToken(env) {
-  // eBay OAuth2 Client Credentials grant (app token)
-  // Requires EBAY_CLIENT_ID and EBAY_CLIENT_SECRET in env vars.
+  if (!env.EBAY_CLIENT_ID || !env.EBAY_CLIENT_SECRET) {
+    throw new Error("Missing EBAY_CLIENT_ID/EBAY_CLIENT_SECRET");
+  }
+
   const creds = btoa(`${env.EBAY_CLIENT_ID}:${env.EBAY_CLIENT_SECRET}`);
 
   const body = new URLSearchParams({
@@ -11,52 +27,53 @@ async function getAppToken(env) {
   const r = await fetch("https://api.ebay.com/identity/v1/oauth2/token", {
     method: "POST",
     headers: {
-      "Authorization": `Basic ${creds}`,
+      Authorization: `Basic ${creds}`,
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    body
+    body: body.toString()
   });
 
-  const json = await r.json();
-  if (!r.ok) throw new Error(`Token error: ${JSON.stringify(json)}`);
+  const json = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(`Token error (${r.status}): ${JSON.stringify(json)}`);
+
   return json.access_token;
 }
 
-export async function onRequestGet({ env }) {
+export async function onRequest({ request, env }) {
+  // Preflight
+  if (request.method === "OPTIONS") return jsonResponse({}, 204);
+
+  if (request.method !== "GET") {
+    return jsonResponse({ items: [], error: "Method Not Allowed" }, 405);
+  }
+
   try {
     const seller = env.EBAY_SELLER || "theautomationengineer";
     const marketplace = env.EBAY_MARKETPLACE || "EBAY_US";
 
-    if (!env.EBAY_CLIENT_ID || !env.EBAY_CLIENT_SECRET) {
-      return new Response(JSON.stringify({ items: [], error: "Missing EBAY_CLIENT_ID/EBAY_CLIENT_SECRET" }), {
-        headers: { "content-type": "application/json" },
-        status: 500
-      });
-    }
-
     const token = await getAppToken(env);
 
-    // Browse API: search item summaries by seller
     const url = new URL("https://api.ebay.com/buy/browse/v1/item_summary/search");
     url.searchParams.set("limit", "50");
     url.searchParams.set("filter", `sellers:{${seller}}`);
 
     const r = await fetch(url.toString(), {
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "X-EBAY-C-MARKETPLACE-ID": marketplace
       }
     });
 
-    const data = await r.json();
+    const data = await r.json().catch(() => ({}));
     if (!r.ok) {
-      return new Response(JSON.stringify({ items: [], error: "eBay browse error", detail: data }), {
-        headers: { "content-type": "application/json" },
-        status: 502
-      });
+      return jsonResponse(
+        { items: [], error: `eBay browse error (${r.status})`, detail: data },
+        502,
+        { "cache-control": "no-store" }
+      );
     }
 
-    const items = (data.itemSummaries || []).map(it => ({
+    const items = (data.itemSummaries || []).map((it) => ({
       id: it.itemId,
       title: it.title,
       ebayUrl: it.itemWebUrl,
@@ -66,16 +83,8 @@ export async function onRequestGet({ env }) {
       currency: it.price?.currency || "USD"
     }));
 
-    return new Response(JSON.stringify({ items }), {
-      headers: {
-        "content-type": "application/json",
-        "cache-control": "public, max-age=120"
-      }
-    });
+    return jsonResponse({ items }, 200, { "cache-control": "public, max-age=120" });
   } catch (e) {
-    return new Response(JSON.stringify({ items: [], error: String(e) }), {
-      headers: { "content-type": "application/json" },
-      status: 500
-    });
+    return jsonResponse({ items: [], error: String(e) }, 500, { "cache-control": "no-store" });
   }
 }
