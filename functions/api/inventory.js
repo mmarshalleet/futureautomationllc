@@ -68,7 +68,7 @@ export async function onRequest({ request }) {
   if (request.method !== "GET") return json({ items: [], error: "Method Not Allowed" }, 405, { "cache-control": "no-store" });
 
   const url = new URL(request.url);
-  const seller = (url.searchParams.get("seller") || "theautomationengineer").trim();
+  (url.searchParams.get("seller") || "theautomationengineer").trim();
 
   const feedUrl =
     `https://www.ebay.com/sch/i.html` +
