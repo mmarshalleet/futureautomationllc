@@ -53,7 +53,6 @@ export async function onRequest({ request, env }) {
 
     const token = await getAppToken(env);
 
-const seller = env.EBAY_SELLER;
 
 const url =
   "https://api.ebay.com/buy/browse/v1/item_summary/search" +
