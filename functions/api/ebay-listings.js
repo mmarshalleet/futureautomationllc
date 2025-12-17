@@ -48,7 +48,7 @@ export async function onRequest({ request, env }) {
   }
 
   try {
-    const seller = env.EBAY_SELLER || "theautomationengineer";
+    "theautomationengineer";
     const marketplace = env.EBAY_MARKETPLACE || "EBAY_US";
 
     const token = await getAppToken(env);
