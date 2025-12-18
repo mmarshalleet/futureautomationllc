@@ -172,7 +172,80 @@
 
   <!-- SUPPORT -->
   <section id="support" class="section">
-    <!-- Keep your support form markup here (paste it below if you want me to rebuild it too) -->
+    <h2 class="section-title">Request downtime help</h2>
+      <p class="section-sub">
+    Fill this out and we’ll get back to you ASAP. If the line is stopped, call or text — don’t play email roulette.
+    </p>
+
+  <div class="card">
+    <form
+      class="support-form"
+      method="POST"
+      action="https://getform.io/f/awnvnzqb"
+    >
+      <!-- Optional: redirect after submit -->
+      <input type="hidden" name="redirect" value="thank-you.html" />
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="company">Company / Plant</label>
+          <input id="company" name="company" type="text" autocomplete="organization" />
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+
+        <div class="field">
+          <label for="platform">Controls platform</label>
+          <input id="platform" name="platform" type="text" placeholder="AB, Siemens, Lenze, etc." />
+        </div>
+
+        <div class="field">
+          <label for="urgency">Urgency</label>
+          <select id="urgency" name="urgency" required>
+            <option value="plant-down">Plant down</option>
+            <option value="production-impacting">Production impacting</option>
+            <option value="non-urgent">Non-urgent</option>
+          </select>
+        </div>
+
+        <div class="field field-full">
+          <label for="issue">What’s happening?</label>
+          <textarea id="issue" name="issue" rows="6" required
+            placeholder="Line/machine, symptoms, alarms/fault codes, what changed, what you’ve tried..."></textarea>
+        </div>
+      </div>
+
+      <div class="btnrow" style="margin-top:.9rem;">
+        <button class="btn btn-primary" type="submit">Submit request</button>
+
+        <a class="btn btn-quiet" href="tel:+18708062555">🚨 Plant down — call now</a>
+
+        <a class="btn btn-quiet"
+           href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AControls%20platform:%0AMachine/Line:%0AIssue:">
+          📩 Text engineering
+        </a>
+      </div>
+
+      <p class="muted small" style="margin:.8rem 0 0;">
+        After submitting, you’ll land on the “Request received” page. :contentReference[oaicite:1]{index=1}
+      </p>
+    </form>
+  </div>
+</section>
+
   </section>
 
 </main>
