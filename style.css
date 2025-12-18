@@ -328,3 +328,43 @@ nav{
   .inventory-grid{ grid-template-columns:1fr; }
   .inv-img{ height:200px; }
 }
+/* ===== Support Form ===== */
+.support-form label{
+  display:block;
+  font-weight:900;
+  margin:0 0 .35rem;
+  color: rgba(229,231,235,.92);
+}
+
+.support-form input,
+.support-form textarea,
+.support-form select{
+  width:100%;
+  padding:.7rem .9rem;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  outline:none;
+}
+
+.support-form textarea{ resize: vertical; }
+
+.support-form input:focus,
+.support-form textarea:focus,
+.support-form select:focus{
+  border-color: rgba(56,189,248,.45);
+  box-shadow: 0 0 0 3px rgba(56,189,248,.10);
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:.9rem;
+}
+
+.field-full{ grid-column: 1 / -1; }
+
+@media (max-width: 900px){
+  .form-grid{ grid-template-columns: 1fr; }
+}
