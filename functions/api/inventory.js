@@ -1,102 +1,92 @@
-function json(obj, status = 200, extraHeaders = {}) {
+let tokenCache = { accessToken: null, expiresAt: 0 };
+
+function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
     status,
     headers: {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
-      "cache-control": "public, max-age=300",
-      ...extraHeaders
+      "cache-control": "public, max-age=120"
     }
   });
 }
 
-function pickTag(xml, tag) {
-  // tag name is controlled by us (not user input), so this is safe enough here
-  const m = xml.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, "i"));
-  return m ? m[1].trim() : "";
+async function getAppToken(env) {
+  const now = Date.now();
+  if (tokenCache.accessToken && now < tokenCache.expiresAt - 60_000) {
+    return tokenCache.accessToken;
+  }
+
+  if (!env.EBAY_CLIENT_ID || !env.EBAY_CLIENT_SECRET) {
+    throw new Error("Missing EBAY_CLIENT_ID / EBAY_CLIENT_SECRET (Pages env vars).");
+  }
+
+  const creds = btoa(`${env.EBAY_CLIENT_ID}:${env.EBAY_CLIENT_SECRET}`);
+
+  const body = new URLSearchParams({
+    grant_type: "client_credentials",
+    scope: "https://api.ebay.com/oauth/api_scope"
+  });
+
+  const r = await fetch("https://api.ebay.com/identity/v1/oauth2/token", {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${creds}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body
+  });
+
+  const data = await r.json();
+  if (!r.ok) throw new Error(`Token error ${r.status}: ${JSON.stringify(data)}`);
+
+  tokenCache.accessToken = data.access_token;
+  tokenCache.expiresAt = now + (data.expires_in * 1000);
+  return tokenCache.accessToken;
 }
 
-function stripCdata(s) {
-  return String(s).replace(/^<!\[CDATA\[/i, "").replace(/\]\]>$/i, "");
-}
-
-function decodeHtml(s) {
-  return String(s)
-    .replaceAll("&amp;", "&")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#39;", "'");
-}
-
-function stripHtml(s) {
-  return String(s).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function extractImage(html) {
-  const m = String(html).match(/<img[^>]+src="([^"]+)"/i);
-  return m ? m[1] : "";
-}
-
-function extractPrice(text) {
-  const m =
-    text.match(/US\s*\$[\d,]+(?:\.\d{2})?/i) ||
-    text.match(/\$[\d,]+(?:\.\d{2})?/);
-  return m ? m[0] : "";
-}
-
-function extractCondition(text) {
-  const list = [
-    "New",
-    "New other",
-    "New open box",
-    "Open box",
-    "Used",
-    "Manufacturer refurbished",
-    "Seller refurbished",
-    "For parts or not working"
-  ];
-  return list.find(c => new RegExp(`\\b${c}\\b`, "i").test(text)) || "";
-}
-
-export async function onRequest({ request }) {
+export async function onRequest({ request, env }) {
   if (request.method === "OPTIONS") return json({}, 204);
   if (request.method !== "GET") return json({ items: [], error: "Method Not Allowed" }, 405);
 
   const url = new URL(request.url);
   const seller = (url.searchParams.get("seller") || "theautomationengineer").trim();
 
-  const feedUrl =
-    `https://www.ebay.com/sch/i.html` +
-    `?_ssn=${encodeURIComponent(seller)}` +
-    `&LH_Sold=0&rt=nc&rss=1`;
+  // Browse API requires q/gtin/epid/category_ids etc. We'll use a broad keyword.
+  // You can override with ?q=plc or ?q=allen%20bradley if you want.
+  const q = (url.searchParams.get("q") || "automation").trim();
 
-  let xml;
   try {
-    const r = await fetch(feedUrl, { headers: { "user-agent": "Mozilla/5.0" } });
-    xml = await r.text();
-    if (!r.ok) throw new Error(`Feed fetch failed: ${r.status}`);
+    const token = await getAppToken(env);
+
+    const filter = `sellers:{${seller}}`;
+    const apiUrl =
+      `https://api.ebay.com/buy/browse/v1/item_summary/search` +
+      `?q=${encodeURIComponent(q)}` +
+      `&filter=${encodeURIComponent(filter)}` +
+      `&sort=newlyListed` +
+      `&limit=50`;
+
+    const r = await fetch(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"
+      }
+    });
+
+    const data = await r.json();
+    if (!r.ok) return json({ items: [], error: `Browse API ${r.status}`, details: data }, 502);
+
+    const items = (data.itemSummaries || []).map(it => ({
+      title: it.title || "",
+      link: it.itemWebUrl || "",
+      image: it.image?.imageUrl || "",
+      price: it.price ? `${it.price.currency} ${it.price.value}` : "",
+      condition: it.condition || ""
+    }));
+
+    return json({ items, seller, q });
   } catch (e) {
     return json({ items: [], error: String(e) }, 502);
   }
-
-  // ✅ THIS is the line that was breaking your build before
-  const blocks = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
-
-  const items = blocks.slice(0, 50).map(block => {
-    const title = decodeHtml(stripCdata(pickTag(block, "title")));
-    const link = decodeHtml(stripCdata(pickTag(block, "link")));
-    const descHtml = decodeHtml(stripCdata(pickTag(block, "description")));
-    const text = stripHtml(descHtml);
-
-    return {
-      title,
-      link,
-      image: extractImage(descHtml),
-      price: extractPrice(text),
-      condition: extractCondition(text)
-    };
-  });
-
-  return json({ items });
 }
