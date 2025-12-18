@@ -4,162 +4,184 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
- <title>Equipment | Future Automation LLC</title>
-  <meta name="description" content="Industrial automation, PLC and VFD troubleshooting, controls support, and surplus equipment." />
+  <title>Equipment | Future Automation LLC</title>
+  <meta name="description" content="Browse active equipment listings from our eBay store." />
 
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Favicons -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
-
-  <!-- SEO / Social (safe defaults) -->
   <meta name="theme-color" content="#0B1220" />
 </head>
 
 <body>
-  <nav>
-    <div class="nav-inner">
-      <span class="brand">
-        <a href="index.html" aria-label="Future Automation LLC home">
-          <picture class="brand-logo">
-            <source srcset="logo.svg" type="image/svg+xml">
-            <svg viewBox="0 0 180 180" class="nav-logo" aria-hidden="true">
-              <rect x="18" y="18" width="144" height="144" rx="18"
-                    fill="#0B1220" stroke="#1E293B" stroke-width="4"/>
-              <path d="M52 110 L82 78 L98 94 L128 64"
-                    fill="none" stroke="#38BDF8" stroke-width="10"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="52" cy="110" r="7" fill="#38BDF8"/>
-              <circle cx="82" cy="78" r="7" fill="#38BDF8"/>
-              <circle cx="98" cy="94" r="7" fill="#38BDF8"/>
-              <circle cx="128" cy="64" r="7" fill="#38BDF8"/>
-              <path d="M52 132 H128" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </picture>
-        </a>
-      </span>
 
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">Services</a>
-        <a href="equipment.html" class="nav-link active">Equipment</a>
+<nav>
+  <div class="nav-inner">
+    <div class="brand">
+      <a href="/" class="brand-logo">
+        <img src="logo.svg" alt="Future Automation LLC">
+      </a>
+    </div>
+
+    <div class="nav-links">
+      <a class="nav-link" href="/">Home</a>
+      <a class="nav-link active" href="equipment.html">Equipment</a>
+      <a class="nav-link" href="/#support">Support</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="section">
+    <h1 style="margin:0 0 .25rem;">Equipment</h1>
+    <p class="section-sub">
+      Live listings from our eBay store. Checkout stays on eBay for secure payment and buyer protection.
+    </p>
+
+    <div class="equip-toolbar card">
+      <div class="equip-search">
+        <label class="muted small" for="q">Filter listings</label>
+        <input
+          id="q"
+          class="equip-input"
+          type="search"
+          placeholder="Search titles (PowerFlex, Siemens, Lenze, safety relay, PLC…)"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="equip-actions">
+        <button id="clearBtn" class="btn btn-quiet" type="button">Clear</button>
+        <a class="btn btn-quiet" href="https://www.ebay.com/usr/theautomationengineer" target="_blank" rel="noopener">
+          View store on eBay
+        </a>
       </div>
     </div>
-  </nav>
 
-  <main class="container">
-    <h1>Equipment</h1>
-    <div class="tagline">
-      Live inventory from our current eBay listings. Use eBay checkout or buy direct with PayPal.
-    </div>
+    <div id="equipStatus" class="muted small" style="margin:.75rem 0 0;"></div>
 
-    <div class="card" style="margin:1rem 0;">
-      <p class="small" style="margin:0;">
-        <strong>Direct PayPal:</strong> item price only. Shipping/taxes/duties may apply depending on destination.
-        For fully carrier-calculated shipping, use eBay checkout.
-      </p>
-    </div>
+    <div id="inventory" class="inventory-grid" style="margin-top:.9rem;"></div>
+  </section>
+</main>
 
-    <div id="status" class="small muted">Loading listings…</div>
-    <div id="grid" class="product-grid"></div>
+<script>
+  (function () {
+    const seller = "theautomationengineer";
 
-    <div class="footer">
-      Questions? <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a>
-      &nbsp;•&nbsp;
-      <a href="https://www.ebay.com/usr/theautomationengineer" target="_blank" rel="noopener">View on eBay</a>
-    </div>
-  </main>
+    const grid = document.getElementById("inventory");
+    const statusEl = document.getElementById("equipStatus");
+    const qInput = document.getElementById("q");
+    const clearBtn = document.getElementById("clearBtn");
 
-  <script>
-    const PAYPAL_BUSINESS = "mmarshall@futureautomationllc.com";
+    let allItems = [];
 
-    function escapeHtml(s){
-      return String(s ?? "").replace(/[&<>"']/g, m => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      }[m]));
+    function esc(s) {
+      return String(s)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
     }
 
-    function paypalBuyNowForm(item){
-      if (!item.price) return `<span class="small muted">PayPal unavailable</span>`;
-
-      return `
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin:0;">
-          <input type="hidden" name="cmd" value="_xclick">
-          <input type="hidden" name="business" value="${escapeHtml(PAYPAL_BUSINESS)}">
-          <input type="hidden" name="item_name" value="${escapeHtml(item.title)}">
-          <input type="hidden" name="amount" value="${escapeHtml(item.price)}">
-          <input type="hidden" name="currency_code" value="${escapeHtml(item.currency || 'USD')}">
-          <input type="hidden" name="invoice" value="${escapeHtml(item.id)}">
-          <input type="hidden" name="no_shipping" value="0">
-          <input type="hidden" name="return" value="https://futureautomationllc.com/thank-you.html">
-          <button class="btn btn-quiet" type="submit">Buy with PayPal</button>
-        </form>
-      `;
+    function setStatus(text) {
+      statusEl.textContent = text || "";
     }
 
-    function card(item){
-      const img = item.image ? `<img class="pimg" src="${escapeHtml(item.image)}" alt="">`
-                             : `<div class="pimg ph"></div>`;
-      const price = item.price ? `${item.price} ${item.currency || "USD"}` : "—";
+    function render(items) {
+      setStatus(items.length ? `${items.length} listing(s) shown` : "No matching listings.");
 
-      return `
-        <div class="product-card">
-          ${img}
-          <div class="pbody">
-            <div class="ptitle">${escapeHtml(item.title)}</div>
-            <div class="pmeta">
-              <span>${escapeHtml(item.condition || "")}</span>
-              <span><strong>${escapeHtml(price)}</strong></span>
-            </div>
-
-            <div class="btnrow" style="margin-top:0.9rem;">
-              <a class="btn btn-primary" href="${escapeHtml(item.ebayUrl)}" target="_blank" rel="noopener">Checkout on eBay</a>
-              ${paypalBuyNowForm(item)}
-            </div>
-
-            <div class="small muted" style="margin-top:.6rem;">
-              Item ID: ${escapeHtml(item.id)}
-            </div>
+      if (!items.length) {
+        grid.innerHTML = `
+          <div class="card">
+            <h3>No matches</h3>
+            <p class="muted">Try a shorter search term (e.g., “Siemens”, “Lenze”, “PowerFlex”).</p>
           </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = items.map((it) => `
+        <div class="card inv-card">
+          ${it.image ? `<img class="inv-img" src="${it.image}" alt="" loading="lazy">` : ``}
+
+          <div class="inv-title">${esc(it.title || "Listing")}</div>
+
+          ${(it.price || it.condition) ? `
+            <div class="inv-meta">
+              ${it.price ? `<span class="inv-tag inv-price">${esc(it.price)}</span>` : ``}
+              ${it.condition ? `<span class="inv-tag">${esc(it.condition)}</span>` : ``}
+            </div>
+          ` : ``}
+
+          <a class="btn btn-primary" href="${it.link}" target="_blank" rel="noopener">
+            Buy on eBay (secure checkout)
+          </a>
         </div>
+      `).join("");
+    }
+
+    function applyFilter() {
+      const q = (qInput.value || "").trim().toLowerCase();
+      if (!q) return render(allItems);
+
+      const filtered = allItems.filter(it =>
+        (it.title || "").toLowerCase().includes(q)
+      );
+
+      render(filtered);
+    }
+
+    async function loadInventory() {
+      // Skeletons
+      grid.innerHTML = `
+        <div class="card inv-skeleton"></div>
+        <div class="card inv-skeleton"></div>
+        <div class="card inv-skeleton"></div>
       `;
-    }
-
-    async function fetchJson(url){
-      const r = await fetch(url, { cache: "no-store" });
-      if (!r.ok) throw new Error(url + " -> " + r.status);
-      return await r.json();
-    }
-
-    async function load(){
-      const status = document.getElementById("status");
-      const grid = document.getElementById("grid");
+      setStatus("Loading inventory…");
 
       try {
-        // 1) Try real API (if you deploy one later)
-        let data;
-        try {
-          data = await fetchJson("api/ebay-listings");
-        } catch (e1) {
-          // 2) Fallback to static JSON file for GitHub Pages
-          data = await fetchJson("ebay-listings.json");
-        }
+        const res = await fetch(`/api/inventory?seller=${encodeURIComponent(seller)}`, { cache: "no-store" });
+        const data = await res.json().catch(() => ({}));
+        allItems = (data.items || []);
 
-        if (!data.items || !data.items.length) {
-          status.textContent = "No active listings found.";
+        if (!allItems.length) {
+          grid.innerHTML = `
+            <div class="card">
+              <h3>No active listings found</h3>
+              <p class="muted">If you’re looking for something specific, use the Support link and tell us what you need.</p>
+            </div>
+          `;
+          setStatus("");
           return;
         }
 
-        status.textContent = `Showing ${data.items.length} active listings.`;
-        grid.innerHTML = data.items.map(card).join("");
+        render(allItems);
       } catch (e) {
         console.error(e);
-        status.textContent = "Could not load listings. (Use the eBay link below.)";
+        grid.innerHTML = `
+          <div class="card">
+            <h3>Inventory failed to load</h3>
+            <p class="muted">Usually this means the eBay feed is being dramatic. Try again in a bit.</p>
+          </div>
+        `;
+        setStatus("");
       }
     }
 
-    load();
-  </script>
+    qInput.addEventListener("input", applyFilter);
+
+    clearBtn.addEventListener("click", () => {
+      qInput.value = "";
+      qInput.focus();
+      render(allItems);
+    });
+
+    loadInventory();
+  })();
+</script>
+
 </body>
 </html>
