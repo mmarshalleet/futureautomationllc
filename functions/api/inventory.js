@@ -11,12 +11,13 @@ function json(obj, status = 200, extraHeaders = {}) {
 }
 
 function pickTag(xml, tag) {
+  // tag name is controlled by us (not user input), so this is safe enough here
   const m = xml.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, "i"));
   return m ? m[1].trim() : "";
 }
 
 function stripCdata(s) {
-  return String(s).replace(/^<!\\[CDATA\\[/i, "").replace(/\\]\\]>$/i, "");
+  return String(s).replace(/^<!\[CDATA\[/i, "").replace(/\]\]>$/i, "");
 }
 
 function decodeHtml(s) {
@@ -29,7 +30,7 @@ function decodeHtml(s) {
 }
 
 function stripHtml(s) {
-  return String(s).replace(/<[^>]*>/g, " ").replace(/\\s+/g, " ").trim();
+  return String(s).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function extractImage(html) {
@@ -39,8 +40,8 @@ function extractImage(html) {
 
 function extractPrice(text) {
   const m =
-    text.match(/US\\s*\\$[\\d,]+(?:\\.\\d{2})?/i) ||
-    text.match(/\\$[\\d,]+(?:\\.\\d{2})?/);
+    text.match(/US\s*\$[\d,]+(?:\.\d{2})?/i) ||
+    text.match(/\$[\d,]+(?:\.\d{2})?/);
   return m ? m[0] : "";
 }
 
@@ -74,11 +75,12 @@ export async function onRequest({ request }) {
   try {
     const r = await fetch(feedUrl, { headers: { "user-agent": "Mozilla/5.0" } });
     xml = await r.text();
-    if (!r.ok) throw new Error("Feed fetch failed");
+    if (!r.ok) throw new Error(`Feed fetch failed: ${r.status}`);
   } catch (e) {
     return json({ items: [], error: String(e) }, 502);
   }
 
+  // ✅ THIS is the line that was breaking your build before
   const blocks = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
 
   const items = blocks.slice(0, 50).map(block => {
