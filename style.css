@@ -38,7 +38,7 @@ h3{ margin:0 0 .4rem; }
 
 .kicker{
   color:rgba(56,189,248,.9);
-  font-weight:700;
+  font-weight:800;
   letter-spacing:.2px;
   margin:0 0 .25rem;
 }
@@ -50,14 +50,14 @@ h3{ margin:0 0 .4rem; }
 }
 
 .tagline{
-  font-weight:800;
+  font-weight:900;
   letter-spacing:.2px;
 }
 
 .section{ margin-top:2.0rem; }
 .section-title{ font-size:1.5rem; margin:0; }
 .section-sub{ margin:.35rem 0 1.1rem; color:var(--muted); }
-.section-actions{ margin-top: 1rem; }
+.section-actions{ margin-top: 1rem; display:flex; gap:.6rem; flex-wrap:wrap; }
 
 .card{
   background:rgba(11,18,32,.72);
@@ -100,7 +100,7 @@ h3{ margin:0 0 .4rem; }
   border:1px solid var(--border);
   background:rgba(255,255,255,.04);
   color:var(--text);
-  font-weight:800;
+  font-weight:900;
   text-decoration:none;
 }
 .btn:hover{ background:rgba(255,255,255,.08); text-decoration:none; }
@@ -129,7 +129,7 @@ h3{ margin:0 0 .4rem; }
   border:1px solid rgba(56,189,248,.25);
   background:rgba(56,189,248,.08);
   color:rgba(229,231,235,.95);
-  font-weight:700;
+  font-weight:800;
   font-size:.92rem;
 }
 
@@ -189,9 +189,11 @@ nav{
   padding:.4rem .75rem;
   border-radius:999px;
   border:1px solid transparent;
+  color: var(--text);
 }
 .nav-link:hover{
   background: rgba(255,255,255,.06);
+  text-decoration:none;
 }
 .nav-link.active{
   border-color: rgba(56,189,248,.35);
@@ -202,16 +204,14 @@ nav{
 .brand-logo{ display:inline-flex; align-items:center; }
 .brand-logo img{ height:34px; width:auto; display:block; }
 
-/* ===== Live Inventory ===== */
+/* ===== Live Inventory (homepage + equipment page) ===== */
 .inventory-grid{
   display:grid;
   grid-template-columns:repeat(3, minmax(0, 1fr));
   gap:.9rem;
 }
 
-.inv-card .btn{
-  width: 100%;
-}
+.inv-card .btn{ width:100%; }
 
 .inv-img{
   width:100%;
@@ -248,7 +248,7 @@ nav{
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.03);
   color:rgba(229,231,235,.9);
-  font-weight:800;
+  font-weight:900;
   font-size:.88rem;
 }
 
@@ -280,6 +280,45 @@ nav{
 @keyframes shimmer{
   0%{ transform: translateX(-40%) rotate(8deg); }
   100%{ transform: translateX(40%) rotate(8deg); }
+}
+
+/* ===== Equipment page toolbar ===== */
+.equip-toolbar{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.equip-search{
+  display:flex;
+  flex-direction:column;
+  gap:.35rem;
+  flex: 1 1 320px;
+}
+
+.equip-input{
+  width:100%;
+  padding:.7rem .9rem;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  outline: none;
+}
+
+.equip-input::placeholder{ color: rgba(156,163,175,.85); }
+
+.equip-input:focus{
+  border-color: rgba(56,189,248,.45);
+  box-shadow: 0 0 0 3px rgba(56,189,248,.10);
+}
+
+.equip-actions{
+  display:flex;
+  gap:.6rem;
+  flex-wrap:wrap;
 }
 
 /* Responsive */
