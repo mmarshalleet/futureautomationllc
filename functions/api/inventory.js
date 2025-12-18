@@ -1,153 +1,140 @@
-// functions/api/inventory.js
-// Cloudflare Pages Function: /api/inventory
-// Uses eBay Browse API (official) + app-token (client credentials)
-// Env vars required in Cloudflare Pages:
-//   EBAY_CLIENT_ID
-//   EBAY_CLIENT_SECRET
-
-let tokenCache = {
-  accessToken: null,
-  expiresAt: 0
-};
-
 function json(obj, status = 200, extraHeaders = {}) {
-  return new Response(JSON.stringify(obj, null, 2), {
+  return new Response(JSON.stringify(obj), {
     status,
     headers: {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
-      "access-control-allow-methods": "GET, OPTIONS",
-      "access-control-allow-headers": "Content-Type, Authorization",
-      "cache-control": "public, max-age=120",
+      "access-control-allow-methods": "GET,OPTIONS",
+      "access-control-allow-headers": "content-type,authorization",
+      "cache-control": "public, max-age=180",
       ...extraHeaders
     }
   });
 }
 
-async function getAppToken(env) {
-  const now = Date.now();
-  if (tokenCache.accessToken && now < tokenCache.expiresAt - 60_000) {
-    return tokenCache.accessToken;
-  }
-
-  if (!env.EBAY_CLIENT_ID || !env.EBAY_CLIENT_SECRET) {
-    throw new Error("Missing EBAY_CLIENT_ID / EBAY_CLIENT_SECRET in Cloudflare Pages env vars.");
-  }
-
-  const creds = btoa(`${env.EBAY_CLIENT_ID}:${env.EBAY_CLIENT_SECRET}`);
-
-  const body = new URLSearchParams({
-    grant_type: "client_credentials",
-    scope: "https://api.ebay.com/oauth/api_scope"
-  });
-
-  const r = await fetch("https://api.ebay.com/identity/v1/oauth2/token", {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${creds}`,
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body
-  });
-
-  const data = await r.json();
-  if (!r.ok) {
-    throw new Error(`eBay token error ${r.status}: ${JSON.stringify(data)}`);
-  }
-
-  tokenCache.accessToken = data.access_token;
-  tokenCache.expiresAt = now + (data.expires_in * 1000);
-  return tokenCache.accessToken;
+function pickTag(xml, tag) {
+  const m = xml.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, "i"));
+  return m ? m[1].trim() : "";
 }
 
-function toItem(it) {
-  return {
-    id: it.itemId || "",
-    title: it.title || "",
-    link: it.itemWebUrl || "",
-    image: it.image?.imageUrl || "",
-    price: it.price ? `${it.price.currency} ${it.price.value}` : "",
-    condition: it.condition || ""
-  };
+function stripCdata(s) {
+  return String(s)
+    .replace(/^<!\\[CDATA\\[/i, "")
+    .replace(/\\]\\]>$/i, "");
 }
 
-export async function onRequest({ request, env }) {
+function decodeHtml(s) {
+  return String(s)
+    .replaceAll("&amp;", "&")
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">")
+    .replaceAll("&quot;", '"')
+    .replaceAll("&#39;", "'");
+}
+
+function stripHtml(s) {
+  return String(s).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function extractImage(html) {
+  // eBay RSS description usually contains an <img ... src="...">
+  const m = String(html).match(/<img[^>]+src="([^"]+)"/i);
+  return m ? m[1] : "";
+}
+
+function extractPrice(text) {
+  const m =
+    text.match(/US\\s*\\$[\\d,]+(?:\\.\\d{2})?/i) ||
+    text.match(/\\$[\\d,]+(?:\\.\\d{2})?/);
+  return m ? m[0] : "";
+}
+
+function extractCondition(text) {
+  const list = [
+    "New",
+    "New other",
+    "New open box",
+    "Open box",
+    "Used",
+    "Manufacturer refurbished",
+    "Seller refurbished",
+    "For parts or not working"
+  ];
+  return list.find(c => new RegExp(`\\b${c}\\b`, "i").test(text)) || "";
+}
+
+async function fetchFirstWorkingFeed(urls) {
+  let lastErr = null;
+
+  for (const u of urls) {
+    try {
+      const r = await fetch(u, {
+        headers: {
+          "user-agent": "Mozilla/5.0 (compatible; FutureAutomationBot/1.0)",
+          "accept": "application/rss+xml, application/xml, text/xml, */*"
+        }
+      });
+
+      const text = await r.text();
+      if (!r.ok) throw new Error(`Feed fetch failed (${r.status})`);
+
+      // If eBay returns HTML/captcha/etc, there will be no <item> blocks.
+      if (!/<item>[\s\S]*?<\/item>/i.test(text)) {
+        throw new Error("Feed returned no <item> entries (not RSS or blocked)");
+      }
+
+      return { xml: text, source: u };
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+
+  throw lastErr || new Error("All feed attempts failed");
+}
+
+export async function onRequest({ request }) {
   if (request.method === "OPTIONS") return json({}, 204);
   if (request.method !== "GET") return json({ items: [], error: "Method Not Allowed" }, 405);
 
   const url = new URL(request.url);
-
-  // seller defaults to your store
   const seller = (url.searchParams.get("seller") || "theautomationengineer").trim();
 
-  // Optional:
-  //   ?q=vfd (single query override)
-  // If q is NOT provided, we run a brand sweep and merge results.
-  const qParam = (url.searchParams.get("q") || "").trim();
+  // IMPORTANT: eBay uses `_rss=1` (underscore) for RSS output.
+  const feedUrls = [
+    `https://www.ebay.com/sch/i.html?_ssn=${encodeURIComponent(seller)}&LH_Sold=0&rt=nc&_rss=1`,
+    `https://www.ebay.com/rss/sch/i.html?_ssn=${encodeURIComponent(seller)}&LH_Sold=0&rt=nc`,
+    `https://www.ebay.com/sch/i.html?_nkw=&_ssn=${encodeURIComponent(seller)}&LH_Sold=0&rt=nc&_rss=1`
+  ];
 
-  // Optional:
-  //   ?limit=30 (caps final response)
-  const limit = Math.max(1, Math.min(200, Number(url.searchParams.get("limit") || 80)));
-
-  // Optional:
-  //   ?marketplace=EBAY_US (default)
-  const marketplace = (url.searchParams.get("marketplace") || "EBAY_US").trim();
-
-  const queries = qParam
-    ? [qParam]
-    : ["lenze", "allen bradley", "siemens", "automation"];
-
+  let xml, feedSource;
   try {
-    const token = await getAppToken(env);
-    const filter = `sellers:{${seller}}`;
-
-    const results = await Promise.all(
-      queries.map(async (q) => {
-        const apiUrl =
-          `https://api.ebay.com/buy/browse/v1/item_summary/search` +
-          `?q=${encodeURIComponent(q)}` +
-          `&filter=${encodeURIComponent(filter)}` +
-          `&sort=newlyListed` +
-          `&limit=50`;
-
-        const r = await fetch(apiUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "X-EBAY-C-MARKETPLACE-ID": marketplace
-          }
-        });
-
-        // If one query fails, don’t tank the whole inventory.
-        if (!r.ok) return { q, ok: false, items: [], status: r.status };
-
-        const data = await r.json();
-        return { q, ok: true, items: data.itemSummaries || [] };
-      })
-    );
-
-    // Dedupe by itemId
-    const byId = new Map();
-    for (const res of results) {
-      for (const it of res.items) {
-        if (it?.itemId && !byId.has(it.itemId)) byId.set(it.itemId, it);
-      }
-    }
-
-    const items = Array.from(byId.values())
-      .slice(0, limit)
-      .map(toItem);
-
-    // Light debug metadata so you can see what’s happening if it’s empty
-    const meta = {
-      seller,
-      marketplace,
-      queries,
-      fetched: results.map(r => ({ q: r.q, ok: r.ok, status: r.status || 200, count: r.items.length })),
-      count: items.length
-    };
-
-    return json({ items, meta });
+    const got = await fetchFirstWorkingFeed(feedUrls);
+    xml = got.xml;
+    feedSource = got.source;
   } catch (e) {
-    return json({ items: [], error: String(e) }, 502);
+    return json(
+      { items: [], error: String(e) },
+      502,
+      { "cache-control": "no-store" }
+    );
   }
+
+  const blocks = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
+
+  const items = blocks.slice(0, 50).map(block => {
+    const title = decodeHtml(stripCdata(pickTag(block, "title")));
+    const link = decodeHtml(stripCdata(pickTag(block, "link")));
+    const descHtml = decodeHtml(stripCdata(pickTag(block, "description")));
+    const text = stripHtml(descHtml);
+
+    return {
+      title,
+      link,
+      image: extractImage(descHtml),
+      price: extractPrice(text),
+      condition: extractCondition(text)
+    };
+  });
+
+  return json({ items, source: feedSource });
 }
