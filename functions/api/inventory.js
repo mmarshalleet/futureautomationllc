@@ -79,7 +79,7 @@ export async function onRequest({ request }) {
     return json({ items: [], error: String(e) }, 502);
   }
 
-  const blocks = xml.match(/<item>[\\s\\S]*?<\\/item>/gi) || [];
+  const blocks = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
 
   const items = blocks.slice(0, 50).map(block => {
     const title = decodeHtml(stripCdata(pickTag(block, "title")));
