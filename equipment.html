@@ -90,7 +90,13 @@
     }
 
     function render(items) {
-      setStatus(items.length ? `${items.length} listing(s) shown` : "No matching listings.");
+      const shown = items.length;
+      const total = allItems.length;
+
+      if (!total) setStatus("");
+      else if (!shown) setStatus("No matching listings.");
+      else if (shown === total) setStatus(`${shown} listing(s) shown`);
+      else setStatus(`${shown} of ${total} shown`);
 
       if (!items.length) {
         grid.innerHTML = `
@@ -143,20 +149,26 @@
       setStatus("Loading inventory…");
 
       try {
-        const res = await fetch(`/api/inventory?seller=${encodeURIComponent(seller)}&debug=1`, { cache: "no-store" });
-const data = await res.json().catch(() => ({}));
+        // Use same-origin to avoid www vs root weirdness
+        const url = `${location.origin}/api/inventory?debug=1&seller=${encodeURIComponent(seller)}`;
+        const res = await fetch(url, { cache: "no-store" });
+        const data = await res.json().catch(() => ({}));
 
-if (!res.ok || data.error) {
-  throw new Error(data.error || `HTTP ${res.status}`);
-}
+        // IMPORTANT: don’t lie to you with “no listings” when the API failed
+        if (!res.ok || data.error) {
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
 
-allItems = (data.items || []);
+        allItems = Array.isArray(data.items) ? data.items : [];
 
         if (!allItems.length) {
           grid.innerHTML = `
             <div class="card">
               <h3>No active listings found</h3>
-              <p class="muted">If you’re looking for something specific, use the Support link and tell us what you need.</p>
+              <p class="muted">API returned zero items. If you’re hunting something specific, use the Support link and tell us what you need.</p>
+              <p class="muted small" style="margin-top:.5rem;">
+                Debug: <a href="/api/inventory?debug=1" target="_blank" rel="noopener">/api/inventory?debug=1</a>
+              </p>
             </div>
           `;
           setStatus("");
@@ -169,7 +181,10 @@ allItems = (data.items || []);
         grid.innerHTML = `
           <div class="card">
             <h3>Inventory failed to load</h3>
-            <p class="muted">Usually this means the eBay feed is being dramatic. Try again in a bit.</p>
+            <p class="muted">${esc(String(e))}</p>
+            <p class="muted small" style="margin-top:.5rem;">
+              Debug: <a href="/api/inventory?debug=1" target="_blank" rel="noopener">/api/inventory?debug=1</a>
+            </p>
           </div>
         `;
         setStatus("");
