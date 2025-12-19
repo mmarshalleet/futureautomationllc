@@ -1,3 +1,6 @@
+let cachedToken = null;
+let cachedTokenExpMs = 0;
+
 function json(obj, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(obj), {
     status,
@@ -6,135 +9,118 @@ function json(obj, status = 200, extraHeaders = {}) {
       "access-control-allow-origin": "*",
       "access-control-allow-methods": "GET,OPTIONS",
       "access-control-allow-headers": "content-type,authorization",
-      "cache-control": "public, max-age=180",
+      "cache-control": status === 200 ? "public, max-age=180" : "no-store",
       ...extraHeaders
     }
   });
 }
 
-function pickTag(xml, tag) {
-  const m = xml.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, "i"));
-  return m ? m[1].trim() : "";
+function b64(str) {
+  // Cloudflare Workers support btoa for ASCII; credentials are safe ASCII.
+  return btoa(str);
 }
 
-function stripCdata(s) {
-  return String(s)
-    .replace(/^<!\\[CDATA\\[/i, "")
-    .replace(/\\]\\]>$/i, "");
-}
+async function getAppToken(env) {
+  const now = Date.now();
+  if (cachedToken && now < cachedTokenExpMs - 60_000) return cachedToken; // 60s safety buffer
 
-function decodeHtml(s) {
-  return String(s)
-    .replaceAll("&amp;", "&")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#39;", "'");
-}
-
-function stripHtml(s) {
-  return String(s).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function extractImage(html) {
-  // eBay RSS description usually contains an <img ... src="...">
-  const m = String(html).match(/<img[^>]+src="([^"]+)"/i);
-  return m ? m[1] : "";
-}
-
-function extractPrice(text) {
-  const m =
-    text.match(/US\\s*\\$[\\d,]+(?:\\.\\d{2})?/i) ||
-    text.match(/\\$[\\d,]+(?:\\.\\d{2})?/);
-  return m ? m[0] : "";
-}
-
-function extractCondition(text) {
-  const list = [
-    "New",
-    "New other",
-    "New open box",
-    "Open box",
-    "Used",
-    "Manufacturer refurbished",
-    "Seller refurbished",
-    "For parts or not working"
-  ];
-  return list.find(c => new RegExp(`\\b${c}\\b`, "i").test(text)) || "";
-}
-
-async function fetchFirstWorkingFeed(urls) {
-  let lastErr = null;
-
-  for (const u of urls) {
-    try {
-      const r = await fetch(u, {
-        headers: {
-          "user-agent": "Mozilla/5.0 (compatible; FutureAutomationBot/1.0)",
-          "accept": "application/rss+xml, application/xml, text/xml, */*"
-        }
-      });
-
-      const text = await r.text();
-      if (!r.ok) throw new Error(`Feed fetch failed (${r.status})`);
-
-      // If eBay returns HTML/captcha/etc, there will be no <item> blocks.
-      if (!/<item>[\s\S]*?<\/item>/i.test(text)) {
-        throw new Error("Feed returned no <item> entries (not RSS or blocked)");
-      }
-
-      return { xml: text, source: u };
-    } catch (e) {
-      lastErr = e;
-    }
+  if (!env.EBAY_CLIENT_ID || !env.EBAY_CLIENT_SECRET) {
+    throw new Error("Missing EBAY_CLIENT_ID or EBAY_CLIENT_SECRET env vars.");
   }
 
-  throw lastErr || new Error("All feed attempts failed");
+  const creds = b64(`${env.EBAY_CLIENT_ID}:${env.EBAY_CLIENT_SECRET}`);
+
+  const body = new URLSearchParams({
+    grant_type: "client_credentials",
+    // Browse API search doc lists api_scope as acceptable for this call
+    scope: "https://api.ebay.com/oauth/api_scope"
+  });
+
+  const r = await fetch("https://api.ebay.com/identity/v1/oauth2/token", {
+    method: "POST",
+    headers: {
+      "authorization": `Basic ${creds}`,
+      "content-type": "application/x-www-form-urlencoded"
+    },
+    body
+  });
+
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) {
+    throw new Error(`eBay token error (${r.status}): ${data.error_description || data.error || JSON.stringify(data)}`);
+  }
+
+  cachedToken = data.access_token;
+  cachedTokenExpMs = now + (Number(data.expires_in || 0) * 1000);
+  return cachedToken;
 }
 
-export async function onRequest({ request }) {
+function normalizeItem(it) {
+  const title = it?.title || "";
+  const link = it?.itemWebUrl || "";
+  const image =
+    it?.image?.imageUrl ||
+    it?.thumbnailImages?.[0]?.imageUrl ||
+    "";
+
+  const priceVal = it?.price?.value;
+  const priceCur = it?.price?.currency;
+  const price = (priceVal != null && priceCur)
+    ? `${priceVal} ${priceCur}`
+    : (priceVal != null ? String(priceVal) : "");
+
+  const condition = it?.condition || it?.conditionId || "";
+
+  return { title, link, image, price, condition };
+}
+
+export async function onRequest({ request, env }) {
   if (request.method === "OPTIONS") return json({}, 204);
   if (request.method !== "GET") return json({ items: [], error: "Method Not Allowed" }, 405);
 
   const url = new URL(request.url);
+
   const seller = (url.searchParams.get("seller") || "theautomationengineer").trim();
+  const q = (url.searchParams.get("q") || "").trim(); // optional keyword search from your site
 
-  // IMPORTANT: eBay uses `_rss=1` (underscore) for RSS output.
-  const feedUrls = [
-    `https://www.ebay.com/sch/i.html?_ssn=${encodeURIComponent(seller)}&LH_Sold=0&rt=nc&_rss=1`,
-    `https://www.ebay.com/rss/sch/i.html?_ssn=${encodeURIComponent(seller)}&LH_Sold=0&rt=nc`,
-    `https://www.ebay.com/sch/i.html?_nkw=&_ssn=${encodeURIComponent(seller)}&LH_Sold=0&rt=nc&_rss=1`
-  ];
+  // eBay Browse search endpoint
+  // Docs: GET https://api.ebay.com/buy/browse/v1/item_summary/search  [oai_citation:4‡eBay Developers](https://developer.ebay.com/api-docs/buy/browse/resources/item_summary/methods/search)
+  const endpoint = new URL("https://api.ebay.com/buy/browse/v1/item_summary/search");
 
-  let xml, feedSource;
+  // IMPORTANT: Browse search generally expects q when you're doing a "search".
+  // If you don't provide q, we send "*" so you can still "show all seller items".
+  endpoint.searchParams.set("q", q.length ? q : "*");
+
+  // Seller filter syntax: filter=sellers:{seller1|seller2}  [oai_citation:5‡eBay Developers](https://developer.ebay.com/api-docs/buy/static/ref-buy-browse-filters.html)
+  endpoint.searchParams.set("filter", `sellers:{${seller}}`);
+
+  // Pagination
+  endpoint.searchParams.set("limit", "50");
+  endpoint.searchParams.set("offset", "0");
+
   try {
-    const got = await fetchFirstWorkingFeed(feedUrls);
-    xml = got.xml;
-    feedSource = got.source;
+    const token = await getAppToken(env);
+
+    const r = await fetch(endpoint.toString(), {
+      headers: {
+        "authorization": `Bearer ${token}`,
+        // Marketplace header is commonly required/expected for Buy APIs
+        "x-ebay-c-marketplace-id": "EBAY_US",
+        "accept": "application/json"
+      }
+    });
+
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      throw new Error(`eBay Browse error (${r.status}): ${data?.errors?.[0]?.message || JSON.stringify(data)}`);
+    }
+
+    const items = Array.isArray(data.itemSummaries)
+      ? data.itemSummaries.map(normalizeItem)
+      : [];
+
+    return json({ items });
   } catch (e) {
-    return json(
-      { items: [], error: String(e) },
-      502,
-      { "cache-control": "no-store" }
-    );
+    return json({ items: [], error: String(e) }, 502);
   }
-
-  const blocks = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
-
-  const items = blocks.slice(0, 50).map(block => {
-    const title = decodeHtml(stripCdata(pickTag(block, "title")));
-    const link = decodeHtml(stripCdata(pickTag(block, "link")));
-    const descHtml = decodeHtml(stripCdata(pickTag(block, "description")));
-    const text = stripHtml(descHtml);
-
-    return {
-      title,
-      link,
-      image: extractImage(descHtml),
-      price: extractPrice(text),
-      condition: extractCondition(text)
-    };
-  });
-
-  return json({ items, source: feedSource });
 }
