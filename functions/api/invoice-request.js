@@ -1,106 +1,107 @@
-function jres(obj, status = 200, cacheControl = "no-store") {
-  return new Response(JSON.stringify(obj), {
+function jres(obj, status=200){
+  return new Response(JSON.stringify(obj),{
     status,
-    headers: {
-      "content-type": "application/json; charset=utf-8",
-      "access-control-allow-origin": "*",
-      "access-control-allow-methods": "POST,OPTIONS",
-      "access-control-allow-headers": "content-type",
-      "cache-control": cacheControl
-    }
+    headers:{ "content-type":"application/json" }
   });
 }
 
-function clean(s, max = 2000) {
-  return String(s ?? "")
-    .replace(/\r/g, "")
-    .trim()
-    .slice(0, max);
+function clean(s,max=2000){
+  return String(s??"").replace(/\r/g,"").trim().slice(0,max);
 }
 
-async function sendViaResend(env, subject, text) {
-  if (!env.RESEND_API_KEY || !env.INVOICE_TO_EMAIL || !env.INVOICE_FROM_EMAIL) {
-    // Don’t crash production if env vars aren’t set
-    return { skipped: true, reason: "Missing RESEND_API_KEY / INVOICE_TO_EMAIL / INVOICE_FROM_EMAIL" };
-  }
+async function sendViaResend(env, subject, text, attachments){
+  if(!env.RESEND_API_KEY) return { skipped:true };
 
-  const r = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "authorization": `Bearer ${env.RESEND_API_KEY}`,
-      "content-type": "application/json"
+  const r = await fetch("https://api.resend.com/emails",{
+    method:"POST",
+    headers:{
+      "authorization":`Bearer ${env.RESEND_API_KEY}`,
+      "content-type":"application/json"
     },
-    body: JSON.stringify({
-      from: env.INVOICE_FROM_EMAIL,   // e.g. "Future Automation <invoices@futureautomationllc.com>"
-      to: [env.INVOICE_TO_EMAIL],     // e.g. "contact@futureautomationllc.com"
+    body:JSON.stringify({
+      from: env.INVOICE_FROM_EMAIL,
+      to: [env.INVOICE_TO_EMAIL],
       subject,
-      text
+      text,
+      attachments
     })
   });
 
-  const data = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(`Resend error (${r.status}): ${JSON.stringify(data)}`);
-  return data;
+  const j = await r.json();
+  if(!r.ok) throw new Error(JSON.stringify(j));
+  return j;
 }
 
-export async function onRequest({ request, env }) {
-  if (request.method === "OPTIONS") return jres({}, 204);
-  if (request.method !== "POST") return jres({ error: "Method Not Allowed" }, 405);
+async function logToSheets(env, payload){
+  if(!env.GS_WEBHOOK_URL) return;
+  await fetch(env.GS_WEBHOOK_URL,{
+    method:"POST",
+    headers:{ "content-type":"application/json" },
+    body: JSON.stringify(payload)
+  });
+}
 
-  try {
-    const body = await request.json().catch(() => null);
-    if (!body) return jres({ error: "Invalid JSON" }, 400);
+export async function onRequest({ request, env }){
+  if(request.method!=="POST") return jres({error:"Method not allowed"},405);
 
-    // Honeypot: if filled, treat as spam
-    if (body.website && String(body.website).trim() !== "") {
-      return jres({ ok: true }); // pretend success
+  try{
+    const b = await request.json();
+
+    if(b.website) return jres({ok:true}); // honeypot
+
+    const data = {
+      name: clean(b.name,200),
+      company: clean(b.company,200),
+      email: clean(b.email,200),
+      phone: clean(b.phone,200),
+      shipTo: clean(b.shipTo,1200),
+      items: clean(b.items,2000),
+      needBy: clean(b.needBy,50),
+      urgency: clean(b.urgency,80),
+      notes: clean(b.notes,2000),
+      pdfFilename: b.pdfFilename,
+      pdfBase64: b.pdfBase64
+    };
+
+    if(!data.name || !data.email || !data.items || !data.shipTo){
+      return jres({error:"Missing required fields"},400);
     }
 
-    const name = clean(body.name, 200);
-    const company = clean(body.company, 200);
-    const email = clean(body.email, 200);
-    const phone = clean(body.phone, 200);
-    const shipTo = clean(body.shipTo, 1200);
-    const items = clean(body.items, 2000);
-    const needBy = clean(body.needBy, 50);
-    const urgency = clean(body.urgency, 80);
-    const notes = clean(body.notes, 2000);
-
-    if (!name || !email || !shipTo || !items) {
-      return jres({ error: "Missing required fields (name, email, ship-to, items)" }, 400);
+    const attachments = [];
+    if(data.pdfBase64 && data.pdfFilename){
+      attachments.push({
+        filename: data.pdfFilename,
+        content: data.pdfBase64
+      });
     }
 
-    const subject = `Invoice request: ${name}${company ? " (" + company + ")" : ""} — ${urgency || "Non-urgent"}`;
-
+    const subject = `Invoice request: ${data.name} — ${data.urgency}`;
     const text =
-`New invoice request from futureautomationllc.com
+`Invoice request
 
-Name: ${name}
-Company: ${company}
-Email: ${email}
-Phone: ${phone}
+Name: ${data.name}
+Company: ${data.company}
+Email: ${data.email}
+Phone: ${data.phone}
 
 Ship-to:
-${shipTo}
+${data.shipTo}
 
 Items:
-${items}
+${data.items}
 
-Need-by: ${needBy}
-Urgency: ${urgency}
+Need-by: ${data.needBy}
+Urgency: ${data.urgency}
 
 Notes:
-${notes}
-
----
-IP: ${request.headers.get("cf-connecting-ip") || ""}
-UA: ${request.headers.get("user-agent") || ""}
+${data.notes}
 `;
 
-    const sent = await sendViaResend(env, subject, text);
+    await sendViaResend(env, subject, text, attachments);
+    await logToSheets(env, { ...data, source:"website" });
 
-    return jres({ ok: true, sent });
-  } catch (e) {
-    return jres({ error: String(e) }, 500);
+    return jres({ok:true});
+  }catch(e){
+    return jres({error:String(e)},500);
   }
 }
