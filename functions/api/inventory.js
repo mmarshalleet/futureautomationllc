@@ -1,6 +1,3 @@
-let cachedToken = null;
-let cachedTokenExpMs = 0;
-
 function json(obj, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(obj), {
     status,
@@ -15,61 +12,23 @@ function json(obj, status = 200, extraHeaders = {}) {
   });
 }
 
-function b64(str) {
-  // Cloudflare Workers support btoa for ASCII; credentials are safe ASCII.
-  return btoa(str);
-}
-
-async function getAppToken(env) {
-  const now = Date.now();
-  if (cachedToken && now < cachedTokenExpMs - 60_000) return cachedToken; // 60s safety buffer
-
-  if (!env.EBAY_CLIENT_ID || !env.EBAY_CLIENT_SECRET) {
-    throw new Error("Missing EBAY_CLIENT_ID or EBAY_CLIENT_SECRET env vars.");
-  }
-
-  const creds = b64(`${env.EBAY_CLIENT_ID}:${env.EBAY_CLIENT_SECRET}`);
-
-  const body = new URLSearchParams({
-    grant_type: "client_credentials",
-    // Browse API search doc lists api_scope as acceptable for this call
-    scope: "https://api.ebay.com/oauth/api_scope"
-  });
-
-  const r = await fetch("https://api.ebay.com/identity/v1/oauth2/token", {
-    method: "POST",
-    headers: {
-      "authorization": `Basic ${creds}`,
-      "content-type": "application/x-www-form-urlencoded"
-    },
-    body
-  });
-
-  const data = await r.json().catch(() => ({}));
-  if (!r.ok) {
-    throw new Error(`eBay token error (${r.status}): ${data.error_description || data.error || JSON.stringify(data)}`);
-  }
-
-  cachedToken = data.access_token;
-  cachedTokenExpMs = now + (Number(data.expires_in || 0) * 1000);
-  return cachedToken;
-}
-
-function normalizeItem(it) {
-  const title = it?.title || "";
-  const link = it?.itemWebUrl || "";
+function toItem(it) {
+  const title = it?.title?.[0] || "";
+  const link = it?.viewItemURL?.[0] || "";
   const image =
-    it?.image?.imageUrl ||
-    it?.thumbnailImages?.[0]?.imageUrl ||
+    it?.galleryURL?.[0] ||
+    it?.pictureURLLarge?.[0] ||
+    it?.pictureURLSuperSize?.[0] ||
     "";
 
-  const priceVal = it?.price?.value;
-  const priceCur = it?.price?.currency;
-  const price = (priceVal != null && priceCur)
-    ? `${priceVal} ${priceCur}`
-    : (priceVal != null ? String(priceVal) : "");
+  const priceObj = it?.sellingStatus?.[0]?.currentPrice?.[0];
+  const priceVal = priceObj?.__value__ ?? "";
+  const currency = priceObj?.["@currencyId"] ?? "";
+  const price = priceVal !== "" ? `${priceVal} ${currency}`.trim() : "";
 
-  const condition = it?.condition || it?.conditionId || "";
+  const condition =
+    it?.condition?.[0]?.conditionDisplayName?.[0] ||
+    "";
 
   return { title, link, image, price, condition };
 }
@@ -79,45 +38,60 @@ export async function onRequest({ request, env }) {
   if (request.method !== "GET") return json({ items: [], error: "Method Not Allowed" }, 405);
 
   const url = new URL(request.url);
-
   const seller = (url.searchParams.get("seller") || "theautomationengineer").trim();
-  const q = (url.searchParams.get("q") || "").trim(); // optional keyword search from your site
 
-  // eBay Browse search endpoint
-  // Docs: GET https://api.ebay.com/buy/browse/v1/item_summary/search  [oai_citation:4‡eBay Developers](https://developer.ebay.com/api-docs/buy/browse/resources/item_summary/methods/search)
-  const endpoint = new URL("https://api.ebay.com/buy/browse/v1/item_summary/search");
+  // Use PRODUCTION Client ID as the AppID for Finding API calls
+  const appId = env.EBAY_CLIENT_ID;
+  if (!appId) return json({ items: [], error: "Missing EBAY_CLIENT_ID env var." }, 502);
 
-  // IMPORTANT: Browse search generally expects q when you're doing a "search".
-  // If you don't provide q, we send "*" so you can still "show all seller items".
-  endpoint.searchParams.set("q", q.length ? q : "*");
+  // Finding API endpoint
+  const endpoint = new URL("https://svcs.ebay.com/services/search/FindingService/v1");
 
-  // Seller filter syntax: filter=sellers:{seller1|seller2}  [oai_citation:5‡eBay Developers](https://developer.ebay.com/api-docs/buy/static/ref-buy-browse-filters.html)
-  endpoint.searchParams.set("filter", `sellers:{${seller}}`);
+  // Required request params
+  endpoint.searchParams.set("OPERATION-NAME", "findItemsAdvanced");
+  endpoint.searchParams.set("SERVICE-VERSION", "1.13.0");
+  endpoint.searchParams.set("SECURITY-APPNAME", appId);
+  endpoint.searchParams.set("RESPONSE-DATA-FORMAT", "JSON");
+  endpoint.searchParams.set("REST-PAYLOAD", "true");
 
   // Pagination
-  endpoint.searchParams.set("limit", "50");
-  endpoint.searchParams.set("offset", "0");
+  endpoint.searchParams.set("paginationInput.entriesPerPage", "50");
+  endpoint.searchParams.set("paginationInput.pageNumber", "1");
+
+  // Seller filter (this is the magic)
+  endpoint.searchParams.set("itemFilter(0).name", "Seller");
+  endpoint.searchParams.set("itemFilter(0).value", seller);
+
+  // eBay recommends LocatedIn=WorldWide to ensure you see all items regardless of location
+  endpoint.searchParams.set("itemFilter(1).name", "LocatedIn");
+  endpoint.searchParams.set("itemFilter(1).value", "WorldWide");
+
+  // Prefer richer image URLs when available
+  endpoint.searchParams.set("outputSelector(0)", "PictureURLLarge");
+  endpoint.searchParams.set("outputSelector(1)", "PictureURLSuperSize");
 
   try {
-    const token = await getAppToken(env);
-
     const r = await fetch(endpoint.toString(), {
       headers: {
-        "authorization": `Bearer ${token}`,
-        // Marketplace header is commonly required/expected for Buy APIs
-        "x-ebay-c-marketplace-id": "EBAY_US",
-        "accept": "application/json"
+        "accept": "application/json",
+        "user-agent": "Mozilla/5.0 (compatible; FutureAutomationBot/1.0)"
       }
     });
 
     const data = await r.json().catch(() => ({}));
-    if (!r.ok) {
-      throw new Error(`eBay Browse error (${r.status}): ${data?.errors?.[0]?.message || JSON.stringify(data)}`);
+    if (!r.ok) throw new Error(`Finding API HTTP ${r.status}`);
+
+    const resp = data?.findItemsAdvancedResponse?.[0];
+    const ack = resp?.ack?.[0];
+    if (ack !== "Success") {
+      const errMsg =
+        resp?.errorMessage?.[0]?.error?.[0]?.message?.[0] ||
+        JSON.stringify(resp?.errorMessage || data);
+      throw new Error(`Finding API error: ${errMsg}`);
     }
 
-    const items = Array.isArray(data.itemSummaries)
-      ? data.itemSummaries.map(normalizeItem)
-      : [];
+    const arr = resp?.searchResult?.[0]?.item || [];
+    const items = Array.isArray(arr) ? arr.map(toItem) : [];
 
     return json({ items });
   } catch (e) {
