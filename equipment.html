@@ -143,9 +143,14 @@
       setStatus("Loading inventory…");
 
       try {
-        const res = await fetch(`/api/inventory?seller=${encodeURIComponent(seller)}`, { cache: "no-store" });
-        const data = await res.json().catch(() => ({}));
-        allItems = (data.items || []);
+        const res = await fetch(`/api/inventory?seller=${encodeURIComponent(seller)}&debug=1`, { cache: "no-store" });
+const data = await res.json().catch(() => ({}));
+
+if (!res.ok || data.error) {
+  throw new Error(data.error || `HTTP ${res.status}`);
+}
+
+allItems = (data.items || []);
 
         if (!allItems.length) {
           grid.innerHTML = `
