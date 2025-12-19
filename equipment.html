@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Equipment | Future Automation LLC</title>
-  <meta name="description" content="Browse active equipment listings from our eBay store." />
+  <meta name="description" content="Live industrial automation equipment listings." />
 
   <link rel="stylesheet" href="style.css" />
-
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-  <meta name="theme-color" content="#0B1220" />
 </head>
 
 <body>
 
 <nav>
   <div class="nav-inner">
-    <div class="brand">
-      <a href="/" class="brand-logo">
-        <img src="logo.svg" alt="Future Automation LLC">
-      </a>
-    </div>
+    <a href="/" class="brand-logo">
+      <img src="logo.svg" alt="Future Automation LLC" />
+    </a>
 
     <div class="nav-links">
       <a class="nav-link" href="/">Home</a>
       <a class="nav-link active" href="equipment.html">Equipment</a>
+
+      <div class="nav-item">
+        <a class="nav-link" href="request-invoice.html">Request Invoice</a>
+        <div class="nav-helper">Invoice first • Pay by PayPal or card</div>
+      </div>
+
       <a class="nav-link" href="/#support">Support</a>
     </div>
   </div>
@@ -34,176 +34,103 @@
 
 <main class="container">
   <section class="section">
-    <h1 style="margin:0 0 .25rem;">Equipment</h1>
+    <h1>Equipment</h1>
     <p class="section-sub">
       Live listings from our eBay store. Checkout stays on eBay for secure payment and buyer protection.
     </p>
 
-    <div class="equip-toolbar card">
-      <div class="equip-search">
-        <label class="muted small" for="q">Filter listings</label>
-        <input
-          id="q"
-          class="equip-input"
-          type="search"
-          placeholder="Search titles (PowerFlex, Siemens, Lenze, safety relay, PLC…)"
-          autocomplete="off"
-        />
-      </div>
-
-      <div class="equip-actions">
-        <button id="clearBtn" class="btn btn-quiet" type="button">Clear</button>
-        <a class="btn btn-quiet" href="https://www.ebay.com/usr/theautomationengineer" target="_blank" rel="noopener">
-          View store on eBay
-        </a>
-      </div>
+    <div class="card" style="margin-top:1rem;">
+      <label class="muted small">Filter listings</label>
+      <input id="filter" type="search"
+        placeholder="Search titles (PowerFlex, Siemens, Lenze, PLC…)" />
     </div>
 
-    <div id="equipStatus" class="muted small" style="margin:.75rem 0 0;"></div>
+    <div id="status" class="muted small" style="margin:.75rem 0;"></div>
 
-    <div id="inventory" class="inventory-grid" style="margin-top:.9rem;"></div>
+    <div id="inventory" class="inventory-grid"></div>
+
     <p class="muted small" style="margin-top:1rem;">
-  Don’t see what you need?
-  <a href="request-invoice.html">Request an invoice</a> and we’ll source it.</p>
+      Don’t see what you need?
+      <a href="request-invoice.html">Request an invoice</a> and we’ll source it.
+    </p>
   </section>
 </main>
 
 <script>
-  (function () {
-    const seller = "theautomationengineer";
+(async function () {
+  const grid = document.getElementById("inventory");
+  const status = document.getElementById("status");
+  const filter = document.getElementById("filter");
+  let all = [];
 
-    const grid = document.getElementById("inventory");
-    const statusEl = document.getElementById("equipStatus");
-    const qInput = document.getElementById("q");
-    const clearBtn = document.getElementById("clearBtn");
+  function esc(s) {
+    return String(s || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
+  }
 
-    let allItems = [];
-
-    function esc(s) {
-      return String(s)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
-    function setStatus(text) {
-      statusEl.textContent = text || "";
-    }
-
-    function render(items) {
-      const shown = items.length;
-      const total = allItems.length;
-
-      if (!total) setStatus("");
-      else if (!shown) setStatus("No matching listings.");
-      else if (shown === total) setStatus(`${shown} listing(s) shown`);
-      else setStatus(`${shown} of ${total} shown`);
-
-      if (!items.length) {
-        grid.innerHTML = `
-          <div class="card">
-            <h3>No matches</h3>
-            <p class="muted">Try a shorter search term (e.g., “Siemens”, “Lenze”, “PowerFlex”).</p>
-          </div>
-        `;
-        return;
-      }
-
-      grid.innerHTML = items.map((it) => `
-        <div class="card inv-card">
-          ${it.image ? `<img class="inv-img" src="${it.image}" alt="" loading="lazy">` : ``}
-
-          <div class="inv-title">${esc(it.title || "Listing")}</div>
-
-          ${(it.price || it.condition) ? `
-            <div class="inv-meta">
-              ${it.price ? `<span class="inv-tag inv-price">${esc(it.price)}</span>` : ``}
-              ${it.condition ? `<span class="inv-tag">${esc(it.condition)}</span>` : ``}
-            </div>
-          ` : ``}
-
-          <a class="btn btn-primary" href="${it.link}" target="_blank" rel="noopener">
-            Buy on eBay (secure checkout)
-          </a>
-        </div>
-      `).join("");
-    }
-
-    function applyFilter() {
-      const q = (qInput.value || "").trim().toLowerCase();
-      if (!q) return render(allItems);
-
-      const filtered = allItems.filter(it =>
-        (it.title || "").toLowerCase().includes(q)
-      );
-
-      render(filtered);
-    }
-
-    async function loadInventory() {
-      // Skeletons
+  function render(list) {
+    if (!list.length) {
       grid.innerHTML = `
-        <div class="card inv-skeleton"></div>
-        <div class="card inv-skeleton"></div>
-        <div class="card inv-skeleton"></div>
-      `;
-      setStatus("Loading inventory…");
-
-      try {
-        // Use same-origin to avoid www vs root weirdness
-        const url = `${location.origin}/api/inventory?debug=1&seller=${encodeURIComponent(seller)}`;
-        const res = await fetch(url, { cache: "no-store" });
-        const data = await res.json().catch(() => ({}));
-
-        // IMPORTANT: don’t lie to you with “no listings” when the API failed
-        if (!res.ok || data.error) {
-          throw new Error(data.error || `HTTP ${res.status}`);
-        }
-
-        allItems = Array.isArray(data.items) ? data.items : [];
-
-        if (!allItems.length) {
-          grid.innerHTML = `
-            <div class="card">
-              <h3>No active listings found</h3>
-              <p class="muted">API returned zero items. If you’re hunting something specific, use the Support link and tell us what you need.</p>
-              <p class="muted small" style="margin-top:.5rem;">
-                Debug: <a href="/api/inventory?debug=1" target="_blank" rel="noopener">/api/inventory?debug=1</a>
-              </p>
-            </div>
-          `;
-          setStatus("");
-          return;
-        }
-
-        render(allItems);
-      } catch (e) {
-        console.error(e);
-        grid.innerHTML = `
-          <div class="card">
-            <h3>Inventory failed to load</h3>
-            <p class="muted">${esc(String(e))}</p>
-            <p class="muted small" style="margin-top:.5rem;">
-              Debug: <a href="/api/inventory?debug=1" target="_blank" rel="noopener">/api/inventory?debug=1</a>
-            </p>
-          </div>
-        `;
-        setStatus("");
-      }
+        <div class="card">
+          <h3>No matching listings</h3>
+          <p class="muted">Try a shorter or broader search term.</p>
+        </div>`;
+      status.textContent = "";
+      return;
     }
 
-    qInput.addEventListener("input", applyFilter);
+    status.textContent = `${list.length} listing(s) shown`;
 
-    clearBtn.addEventListener("click", () => {
-      qInput.value = "";
-      qInput.focus();
-      render(allItems);
-    });
+    grid.innerHTML = list.map(it => `
+      <div class="card inv-card">
+        ${it.image ? `<img class="inv-img" src="${it.image}" loading="lazy">` : ""}
+        <div class="inv-title">${esc(it.title)}</div>
 
-    loadInventory();
-  })();
+        <div class="inv-meta">
+          ${it.price ? `<span class="inv-tag inv-price">${esc(it.price)}</span>` : ""}
+          ${it.condition ? `<span class="inv-tag">${esc(it.condition)}</span>` : ""}
+        </div>
+
+        <a class="btn btn-primary" href="${it.link}" target="_blank" rel="noopener">
+          Buy on eBay
+        </a>
+      </div>
+    `).join("");
+  }
+
+  try {
+    status.textContent = "Loading inventory…";
+    const res = await fetch(`${location.origin}/api/inventory`, { cache: "no-store" });
+    const data = await res.json();
+
+    all = Array.isArray(data.items) ? data.items : [];
+    if (!all.length) {
+      grid.innerHTML = `
+        <div class="card">
+          <h3>No active listings found</h3>
+          <p class="muted">Use Request Invoice and we’ll track it down.</p>
+        </div>`;
+      status.textContent = "";
+      return;
+    }
+
+    render(all);
+  } catch (e) {
+    grid.innerHTML = `
+      <div class="card">
+        <h3>Inventory failed to load</h3>
+        <p class="muted">${esc(e)}</p>
+      </div>`;
+  }
+
+  filter.addEventListener("input", () => {
+    const q = filter.value.toLowerCase().trim();
+    if (!q) return render(all);
+    render(all.filter(i => i.title.toLowerCase().includes(q)));
+  });
+})();
 </script>
 
 </body>
