@@ -1,7 +1,7 @@
 let cachedToken = null;
 let cachedTokenExpMs = 0;
 
-function jres(obj, status = 200, cache = "public, max-age=60") {
+function jres(obj, status = 200, cacheControl = "public, max-age=120") {
   return new Response(JSON.stringify(obj), {
     status,
     headers: {
@@ -9,7 +9,7 @@ function jres(obj, status = 200, cache = "public, max-age=60") {
       "access-control-allow-origin": "*",
       "access-control-allow-methods": "GET,OPTIONS",
       "access-control-allow-headers": "content-type,authorization",
-      "cache-control": cache
+      "cache-control": cacheControl
     }
   });
 }
@@ -20,7 +20,10 @@ async function getAppToken(env) {
 
   const id = env.EBAY_CLIENT_ID;
   const secret = env.EBAY_CLIENT_SECRET;
-  if (!id || !secret) throw new Error("Missing EBAY_CLIENT_ID or EBAY_CLIENT_SECRET");
+
+  if (!id || !secret) {
+    throw new Error("Missing EBAY_CLIENT_ID or EBAY_CLIENT_SECRET");
+  }
 
   const creds = btoa(`${id}:${secret}`);
   const body = new URLSearchParams({
@@ -38,21 +41,32 @@ async function getAppToken(env) {
   });
 
   const data = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(`Token error ${r.status}: ${data.error_description || JSON.stringify(data)}`);
+  if (!r.ok) {
+    throw new Error(`Token error ${r.status}: ${data.error_description || JSON.stringify(data)}`);
+  }
 
   cachedToken = data.access_token;
   cachedTokenExpMs = now + Number(data.expires_in || 0) * 1000;
   return cachedToken;
 }
 
+function safeStr(x) {
+  return (x == null) ? "" : String(x);
+}
+
 function norm(it) {
+  const image =
+    it?.image?.imageUrl ||
+    it?.thumbnailImages?.[0]?.imageUrl ||
+    "";
+
   return {
-    id: it.itemId || "",
-    title: it.title || "",
-    link: it.itemWebUrl || "",
-    image: it.image?.imageUrl || it.thumbnailImages?.[0]?.imageUrl || "",
-    price: it.price ? `${it.price.value} ${it.price.currency}` : "",
-    condition: it.condition || ""
+    id: safeStr(it.itemId),
+    title: safeStr(it.title),
+    link: safeStr(it.itemWebUrl),
+    image: safeStr(image),
+    price: it?.price ? `${it.price.value} ${it.price.currency}` : "",
+    condition: safeStr(it.condition)
   };
 }
 
@@ -72,21 +86,24 @@ async function fetchSearch({ token, marketplace, seller, q }) {
   });
 
   const data = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(`Browse error ${r.status} for q="${q}": ${JSON.stringify(data)}`);
+  if (!r.ok) {
+    throw new Error(`Browse error ${r.status} for q="${q}": ${JSON.stringify(data)}`);
+  }
 
   return Array.isArray(data.itemSummaries) ? data.itemSummaries : [];
 }
 
 export async function onRequest({ request, env }) {
-  if (request.method === "OPTIONS") return jres({}, 204);
+  if (request.method === "OPTIONS") return jres({}, 204, "no-store");
   if (request.method !== "GET") return jres({ items: [], error: "Method Not Allowed" }, 405, "no-store");
 
   const url = new URL(request.url);
   const debug = url.searchParams.get("debug") === "1";
+
   const seller = (url.searchParams.get("seller") || env.EBAY_SELLER || "theautomationengineer").trim();
   const marketplace = (env.EBAY_MARKETPLACE || "EBAY_US").trim();
 
-  // Use a “seed list” that actually matches industrial titles
+  // Seeds that actually match industrial titles
   const seeds = [
     "allen", "rockwell", "siemens", "lenze", "powerflex",
     "plc", "hmi", "vfd", "drive", "module", "relay", "safety", "servo"
