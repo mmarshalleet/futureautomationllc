@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Equipment | Future Automation LLC</title>
-  <meta name="description" content="Browse active equipment listings from our eBay store." />
+  <meta name="description" content="Live industrial automation equipment listings." />
 
   <link rel="stylesheet" href="style.css" />
-
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-  <meta name="theme-color" content="#0B1220" />
 </head>
 
 <body>
 
 <nav>
   <div class="nav-inner">
-    <div class="brand">
-      <a href="/" class="brand-logo">
-        <img src="logo.svg" alt="Future Automation LLC">
-      </a>
-    </div>
+    <a href="/" class="brand-logo">
+      <img src="logo.svg" alt="Future Automation LLC" />
+    </a>
 
     <div class="nav-links">
       <a class="nav-link" href="/">Home</a>
       <a class="nav-link active" href="equipment.html">Equipment</a>
+
+      <div class="nav-item">
+        <a class="nav-link" href="request-invoice.html">Request Invoice</a>
+        <div class="nav-helper">Invoice first • Pay by PayPal or card</div>
+      </div>
+
       <a class="nav-link" href="/#support">Support</a>
     </div>
   </div>
@@ -34,180 +34,224 @@
 
 <main class="container">
   <section class="section">
-    <h1 style="margin:0 0 .25rem;">Equipment</h1>
+    <h1>Equipment</h1>
     <p class="section-sub">
       Live listings from our eBay store. Checkout stays on eBay for secure payment and buyer protection.
     </p>
 
-    <!-- INVOICE REQUEST (moved here) -->
-    <div class="card" style="margin:.9rem 0 1rem;">
-      <h2 class="card-title" style="margin:0 0 .35rem;">Request an invoice</h2>
-      <p class="muted" style="margin:0 0 .75rem;">
-        Use this if you need a formal invoice (company card/PayPal, PO paperwork, multiple items, or shipping to a plant).
-        This is for <strong>equipment purchases</strong> — not downtime support.
-      </p>
+    <div class="card" style="margin-top:1rem;">
+      <div class="equip-toolbar">
+        <div style="flex:1;">
+          <label class="muted small">Search listings</label>
+          <input id="filter" type="search" placeholder="Search titles (PowerFlex, Siemens, Lenze, PLC…)" />
+        </div>
 
-      <div class="chips" style="margin:0 0 .75rem;">
-        <span class="chip">List the item(s)</span>
-        <span class="chip">Ship-to address</span>
-        <span class="chip">Company name</span>
-        <span class="chip">PO # (if needed)</span>
-      </div>
-
-      <div class="btnrow">
-        <a class="btn btn-primary"
-           href="mailto:contact@futureautomationllc.com?subject=Invoice%20Request%20-%20Equipment&body=Please%20invoice%20me%20for:%0A%0AItem%20link(s)%20or%20title(s):%0AQty:%0A%0AShip-to%20Company:%0AShip-to%20Name:%0AShip-to%20Address:%0APhone:%0A%0APO%20%23%20(optional):%0A%0ANotes:%0A">
-          Request invoice
-        </a>
-        <a class="btn btn-quiet" href="/#support">Need downtime help instead?</a>
-      </div>
-
-      <p class="small muted" style="margin:.85rem 0 0;">
-        Tip: If it’s urgent, include the eBay item link(s) so there’s zero guessing on what you want.
-      </p>
-    </div>
-
-    <div class="equip-toolbar card">
-      <div class="equip-search">
-        <label class="muted small" for="q">Filter listings</label>
-        <input
-          id="q"
-          class="equip-input"
-          type="search"
-          placeholder="Search titles (PowerFlex, Siemens, Lenze, safety relay, PLC…)"
-          autocomplete="off"
-        />
-      </div>
-
-      <div class="equip-actions">
-        <button id="clearBtn" class="btn btn-quiet" type="button">Clear</button>
-        <a class="btn btn-quiet" href="https://www.ebay.com/usr/theautomationengineer" target="_blank" rel="noopener">
-          View store on eBay
-        </a>
+        <div class="equip-toolbar-right">
+          <label class="muted small">Category</label>
+          <div id="cats" class="catbar" aria-label="Category filter"></div>
+        </div>
       </div>
     </div>
 
-    <div id="equipStatus" class="muted small" style="margin:.75rem 0 0;"></div>
+    <div id="status" class="muted small" style="margin:.75rem 0;"></div>
 
-    <div id="inventory" class="inventory-grid" style="margin-top:.9rem;"></div>
+    <div id="inventory"></div>
+
+    <p class="muted small" style="margin-top:1rem;">
+      Don’t see what you need?
+      <a href="request-invoice.html">Request an invoice</a> and we’ll source it.
+    </p>
   </section>
 </main>
 
 <script>
-  (function () {
-    const seller = "theautomationengineer";
+(async function () {
+  const wrap = document.getElementById("inventory");
+  const status = document.getElementById("status");
+  const filter = document.getElementById("filter");
+  const cats = document.getElementById("cats");
 
-    const grid = document.getElementById("inventory");
-    const statusEl = document.getElementById("equipStatus");
-    const qInput = document.getElementById("q");
-    const clearBtn = document.getElementById("clearBtn");
+  let all = [];
+  let activeCat = "All";
 
-    let allItems = [];
+  function esc(s) {
+    return String(s || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
+  }
 
-    function esc(s) {
-      return String(s)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+  // Edit these rules anytime. First match wins.
+  const CATEGORY_RULES = [
+    { name: "PLCs & CPUs", re: /\b(plc|cpu|controller|micrologix|compactlogix|controllogix|slc|s7-?200|s7-?300|s7-?1200|s7-?1500|logo!|click plc)\b/i },
+    { name: "I/O Modules", re: /\b(i\/o|io\b|input|output|module|card|rack|1756|1769|1746|1734|1794|1791|1771|6es7)\b/i },
+    { name: "HMIs & Displays", re: /\b(hmi|panelview|comfort panel|basic panel|kTP|tp\d+|op\d+|touchscreen|display|screen)\b/i },
+    { name: "Drives & VFDs", re: /\b(vfd|drive\b|inverter|powerflex|lenze|danfoss|altivar|sinamics|g120|g110|v20)\b/i },
+    { name: "Servos & Motion", re: /\b(servo|servodrive|kinetix|v90|v70|s110|s120|motion|motor)\b/i },
+    { name: "Safety", re: /\b(safety|guardmaster|pilz|3sk|3rk|msr|safety relay|relay\b|interlock)\b/i },
+    { name: "Sensors & Encoders", re: /\b(encoder|resolver|sensor|photoeye|photo eye|proximity|prox\b|turck|ifm|banner|sick)\b/i },
+    { name: "Power & Networking", re: /\b(power supply|psu\b|24v|switch\b|ethernet|profinet|profibus|scalance|stratix|gateway|router)\b/i },
+  ];
+
+  const ORDER = ["PLCs & CPUs","I/O Modules","HMIs & Displays","Drives & VFDs","Servos & Motion","Safety","Sensors & Encoders","Power & Networking","Other"];
+
+  function categorize(title) {
+    const t = String(title || "");
+    for (const r of CATEGORY_RULES) {
+      if (r.re.test(t)) return r.name;
     }
+    return "Other";
+  }
 
-    function setStatus(text) {
-      statusEl.textContent = text || "";
-    }
+  function cardHTML(it) {
+    return `
+      <div class="card inv-card inv-hover">
+        ${it.image ? `<img class="inv-img" src="${it.image}" alt="" loading="lazy">` : ""}
+        <div class="inv-title">${esc(it.title)}</div>
 
-    function render(items) {
-      setStatus(items.length ? `${items.length} listing(s) shown` : "No matching listings.");
-
-      if (!items.length) {
-        grid.innerHTML = `
-          <div class="card">
-            <h3>No matches</h3>
-            <p class="muted">Try a shorter search term (e.g., “Siemens”, “Lenze”, “PowerFlex”).</p>
-          </div>
-        `;
-        return;
-      }
-
-      grid.innerHTML = items.map((it) => `
-        <div class="card inv-card">
-          ${it.image ? `<img class="inv-img" src="${it.image}" alt="" loading="lazy">` : ``}
-
-          <div class="inv-title">${esc(it.title || "Listing")}</div>
-
-          ${(it.price || it.condition) ? `
-            <div class="inv-meta">
-              ${it.price ? `<span class="inv-tag inv-price">${esc(it.price)}</span>` : ``}
-              ${it.condition ? `<span class="inv-tag">${esc(it.condition)}</span>` : ``}
-            </div>
-          ` : ``}
-
-          <a class="btn btn-primary" href="${it.link}" target="_blank" rel="noopener">
-            Buy on eBay (secure checkout)
-          </a>
+        <div class="inv-meta">
+          ${it.price ? `<span class="inv-tag inv-price">${esc(it.price)}</span>` : ""}
+          ${it.condition ? `<span class="inv-tag">${esc(it.condition)}</span>` : ""}
         </div>
-      `).join("");
+
+        <a class="btn btn-primary" href="${it.link}" target="_blank" rel="noopener">
+          Buy on eBay
+        </a>
+      </div>
+    `;
+  }
+
+  function groupItems(list) {
+    const grouped = new Map();
+    for (const it of list) {
+      const cat = categorize(it.title);
+      if (!grouped.has(cat)) grouped.set(cat, []);
+      grouped.get(cat).push(it);
     }
 
-    function applyFilter() {
-      const q = (qInput.value || "").trim().toLowerCase();
-      if (!q) return render(allItems);
-
-      const filtered = allItems.filter(it =>
-        (it.title || "").toLowerCase().includes(q)
-      );
-
-      render(filtered);
+    // stable-ish sort inside each group
+    for (const [k, v] of grouped) {
+      v.sort((a, b) => String(a.title).localeCompare(String(b.title)));
+      grouped.set(k, v);
     }
 
-    async function loadInventory() {
-      grid.innerHTML = `
-        <div class="card inv-skeleton"></div>
-        <div class="card inv-skeleton"></div>
-        <div class="card inv-skeleton"></div>
-      `;
-      setStatus("Loading inventory…");
-
-      try {
-        const res = await fetch(`/api/inventory?seller=${encodeURIComponent(seller)}`, { cache: "no-store" });
-        const data = await res.json().catch(() => ({}));
-        allItems = (data.items || []);
-
-        if (!allItems.length) {
-          grid.innerHTML = `
-            <div class="card">
-              <h3>No active listings found</h3>
-              <p class="muted">If you’re looking for something specific, use the Support link and tell us what you need.</p>
-            </div>
-          `;
-          setStatus("");
-          return;
-        }
-
-        render(allItems);
-      } catch (e) {
-        console.error(e);
-        grid.innerHTML = `
-          <div class="card">
-            <h3>Inventory failed to load</h3>
-            <p class="muted">Usually this means the eBay feed is being dramatic. Try again in a bit.</p>
-          </div>
-        `;
-        setStatus("");
-      }
+    // order groups
+    const ordered = [];
+    for (const name of ORDER) {
+      if (grouped.has(name)) ordered.push([name, grouped.get(name)]);
     }
+    // any unexpected categories (if you add more later)
+    for (const [k, v] of grouped) {
+      if (!ORDER.includes(k)) ordered.push([k, v]);
+    }
+    return ordered;
+  }
 
-    qInput.addEventListener("input", applyFilter);
+  function renderCategoryPills(groupedPairs, totalCount) {
+    const counts = new Map(groupedPairs.map(([k, v]) => [k, v.length]));
 
-    clearBtn.addEventListener("click", () => {
-      qInput.value = "";
-      qInput.focus();
-      render(allItems);
+    const pill = (name, count) => `
+      <button class="pill ${activeCat === name ? "pill-active" : ""}" data-cat="${esc(name)}" type="button">
+        ${esc(name)} <span class="pill-count">${count}</span>
+      </button>
+    `;
+
+    cats.innerHTML =
+      pill("All", totalCount) +
+      groupedPairs.map(([k, v]) => pill(k, v.length)).join("");
+
+    cats.querySelectorAll("button[data-cat]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeCat = btn.getAttribute("data-cat");
+        applyAndRender();
+        // keep focus visible for keyboard users
+        btn.blur();
+      });
     });
+  }
 
-    loadInventory();
-  })();
+  function renderGrouped(groupedPairs) {
+    if (!groupedPairs.length) {
+      wrap.innerHTML = `
+        <div class="card">
+          <h3>No matching listings</h3>
+          <p class="muted">Try a shorter or broader search term.</p>
+        </div>`;
+      return;
+    }
+
+    wrap.innerHTML = groupedPairs.map(([cat, items]) => `
+      <section class="cat-section" data-cat="${esc(cat)}">
+        <div class="cat-head">
+          <h2 class="cat-title">${esc(cat)}</h2>
+          <span class="cat-count">${items.length}</span>
+        </div>
+        <div class="inventory-grid">
+          ${items.map(cardHTML).join("")}
+        </div>
+      </section>
+    `).join("");
+  }
+
+  function applyAndRender() {
+    const q = filter.value.toLowerCase().trim();
+
+    let filtered = all;
+    if (q) filtered = filtered.filter(i => String(i.title || "").toLowerCase().includes(q));
+
+    const grouped = groupItems(filtered);
+
+    // pills reflect filtered counts (so it feels “honest”)
+    renderCategoryPills(grouped, filtered.length);
+
+    const shownGroups =
+      (activeCat === "All")
+        ? grouped
+        : grouped.filter(([k]) => k === activeCat);
+
+    const shownCount = (activeCat === "All")
+      ? filtered.length
+      : (shownGroups[0]?.[1]?.length || 0);
+
+    status.textContent =
+      `${shownCount} listing(s) shown` +
+      (q ? ` • search: "${filter.value.trim()}"` : "") +
+      (activeCat !== "All" ? ` • category: ${activeCat}` : "");
+
+    renderGrouped(shownGroups);
+  }
+
+  try {
+    status.textContent = "Loading inventory…";
+    const res = await fetch(`${location.origin}/api/inventory`, { cache: "no-store" });
+    const data = await res.json();
+
+    all = Array.isArray(data.items) ? data.items : [];
+
+    if (!all.length) {
+      wrap.innerHTML = `
+        <div class="card">
+          <h3>No active listings found</h3>
+          <p class="muted">Use Request Invoice and we’ll track it down.</p>
+        </div>`;
+      status.textContent = "";
+      cats.innerHTML = "";
+      return;
+    }
+
+    applyAndRender();
+  } catch (e) {
+    wrap.innerHTML = `
+      <div class="card">
+        <h3>Inventory failed to load</h3>
+        <p class="muted">${esc(e)}</p>
+      </div>`;
+    status.textContent = "";
+    cats.innerHTML = "";
+  }
+
+  filter.addEventListener("input", applyAndRender);
+})();
 </script>
 
 </body>
