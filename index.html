@@ -49,7 +49,7 @@
 
     <div class="hero-actions">
       <a class="btn btn-primary" href="#support">Request downtime help</a>
-      <a class="btn btn-quiet" href="#what-you-get">What you get</a>
+      <a class="btn btn-quiet" href="#use-cases">Use cases</a>
       <a class="btn btn-quiet" href="/equipment.html">Browse equipment</a>
     </div>
 
@@ -90,6 +90,82 @@
         <h3>Clean, safe panels</h3>
         <p>Fix hacked controls cabinets so the next shutdown isn’t “surprise smoke.”</p>
       </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="use-cases" class="section">
+    <h2>Common plant problems we solve</h2>
+    <p class="section-sub">
+      These are the calls plants care about — because they cost real money every minute they drag on.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Intermittent line stops</h3>
+        <p class="muted">“It only faults sometimes.” The worst kind.</p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>Random I/O drops, nuisance faults, ghost inputs</li>
+          <li>We prove root cause (signal → wiring → logic → hardware)</li>
+          <li>Fix + notes so it doesn’t come back next shift</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>VFD trips and motor overheating</h3>
+        <p class="muted">Burning motors is an expensive hobby.</p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>Overcurrent/overtemp trips, low-speed heat, torque issues</li>
+          <li>Drive setup review: mode, accel/decel, limits, boost/tuning</li>
+          <li>Settings that protect the motor and stabilize production</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Signal type mismatches</h3>
+        <p class="muted">The system “works”… just wrong enough to fail.</p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>4–20mA vs 0–10V, PNP/NPN, scaling, noisy analog</li>
+          <li>We correct the interface + scaling so feedback is real</li>
+          <li>Restores function without replacing good parts</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Network and comms gremlins</h3>
+        <p class="muted">HMI freezes, drives drop, “comms lost” at random.</p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>Bad terminations, noise, topology issues, flaky switches</li>
+          <li>Harden the physical layer + clean up addressing/config</li>
+          <li>Stability you can trust during peak load</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Control panels that fight you</h3>
+        <p class="muted">Unsafe wiring and “only one guy knows it.”</p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>Panel redesigns for reliability, safety, and serviceability</li>
+          <li>Labeling, layout, protection, clean wiring standards</li>
+          <li>Before/after available on request</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Obsolete controls and “last one in the country” parts</h3>
+        <p class="muted">Still running… until it isn’t.</p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>Retrofits that keep the process intact</li>
+          <li>Equivalent replacements + documentation for the next tech</li>
+          <li>Optional: sourcing hard-to-find automation parts</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="support-actions" style="margin-top:1rem;">
+      <a class="btn btn-primary" href="#support">Plant down help</a>
+      <a class="btn btn-quiet" href="/request-invoice.html">Request invoice / quote</a>
+      <a class="btn btn-quiet" href="/services.html">All services</a>
     </div>
   </section>
 
@@ -152,20 +228,23 @@
   <section id="recent" class="section">
     <h2>Recent work</h2>
     <p class="section-sub">
-      Add real examples here as you go. Even 5–10 bullets builds trust fast.
+      A few real examples (more available upon request).
     </p>
 
     <div class="card" style="max-width: 980px;">
       <ul class="muted" style="margin:.25rem 0 0; padding-left:1.2rem;">
-        <li><strong>PLC / I/O fault:</strong> traced intermittent input dropout to bad terminal + vibration, corrected wiring and added strain relief.</li>
-        <li><strong>VFD trips:</strong> eliminated nuisance overcurrent by correcting accel/decel + motor data + braking settings.</li>
-        <li><strong>Comms failure:</strong> stabilized network by replacing flaky switch + fixing addressing + cleaning up shielding/grounding.</li>
-        <li><strong>Panel cleanup:</strong> reworked unsafe cabinet wiring, labeled, corrected fusing, improved serviceability.</li>
-        <li><strong>Retrofit:</strong> replaced obsolete components with supported equivalents and documented the conversion.</li>
+        <li><strong>Leg debone motor issue:</strong> resolved root cause after outside technicians couldn’t, eliminating the need for follow-up service.</li>
+        <li><strong>Vacuum system feedback:</strong> corrected sensor/output mismatch (4–20mA vs 0–10V), restored function, and canceled scheduled tech support.</li>
+        <li><strong>Panel redesigns:</strong> rebuilt multiple control panels to improve reliability, safety, and serviceability (before/after images available).</li>
+        <li><strong>Motor overheating:</strong> identified low-frequency operation without proper V/Hz boost; recommended manual V/Hz tuning to protect motors and extend equipment life.</li>
+
+        <!-- realistic examples (you can swap these for your own as you collect them) -->
+        <li><strong>Intermittent I/O dropout:</strong> traced to vibration/loose termination and corrected wiring/strain relief to stop repeat faults.</li>
+        <li><strong>Comms instability:</strong> stabilized network by replacing a failing switch and cleaning up addressing/grounding to prevent random drops.</li>
       </ul>
 
       <p class="muted small" style="margin-top:1rem;">
-        Want this section to hit harder? Swap each bullet into: “Problem → Fix → Result (minutes/hours saved)”.
+        Want this section to hit harder? Add results like: “Line down 3x/week → zero trips for 30 days.”
       </p>
     </div>
   </section>
