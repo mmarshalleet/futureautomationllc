@@ -1,225 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<section id="support" class="section">
+  <h2 class="section-title">Support request</h2>
+  <p class="section-sub">
+    Give us the details once — we’ll call/text/email back. If you’re truly plant-down, use the big red “call now” button above.
+  </p>
 
-  <title>Future Automation LLC</title>
-  <meta name="description" content="Industrial automation, PLC and VFD troubleshooting, controls support, and surplus equipment." />
-
-  <link rel="stylesheet" href="style.css" />
-
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-
-  <meta name="theme-color" content="#0B1220" />
-</head>
-
-<body>
-
-<nav>
-  <div class="nav-inner">
-    <div class="brand">
-      <a href="/" class="brand-logo">
-        <img src="logo.svg" alt="Future Automation LLC">
-      </a>
-    </div>
-
-    <div class="nav-links">
-      <a class="nav-link active" href="/">Home</a>
-      <a class="nav-link" href="equipment.html">Equipment</a>
-      <a class="nav-link" href="#support">Support</a>
-    </div>
-  </div>
-</nav>
-
-<main class="container">
-
-  <section class="hero">
-    <div class="hero-left">
-      <p class="kicker">Industrial Automation • Troubleshooting • Reliability</p>
-      <h1>Industrial Automation<br>No Guessing. No Fluff.</h1>
-
-      <p class="lead">
-        Fast, practical controls support for plants that can’t afford downtime.
-        PLCs, HMIs, VFDs, panels — problems that only show up when production is running.
+  <div class="grid-3" style="grid-template-columns: 1.15fr .85fr; align-items:start;">
+    <!-- FORM -->
+    <form id="supportForm" class="card" style="padding:1.2rem;">
+      <h3 style="margin:0 0 .35rem;">Request downtime help</h3>
+      <p class="muted small" style="margin:.15rem 0 1rem;">
+        The more specific you are, the faster this gets solved.
       </p>
 
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#support">Request downtime help</a>
-        <a class="btn btn-quiet" href="equipment.html">Browse equipment</a>
+      <div class="grid-3" style="grid-template-columns: 1fr 1fr; gap:.9rem;">
+        <div>
+          <label class="muted small" for="sr_name">Name</label>
+          <input id="sr_name" name="name" class="equip-input" type="text" autocomplete="name" required />
+        </div>
+
+        <div>
+          <label class="muted small" for="sr_company">Company / Plant</label>
+          <input id="sr_company" name="company" class="equip-input" type="text" autocomplete="organization" />
+        </div>
+
+        <div>
+          <label class="muted small" for="sr_phone">Phone (best for emergencies)</label>
+          <input id="sr_phone" name="phone" class="equip-input" type="tel" autocomplete="tel" placeholder="870-806-2555" />
+        </div>
+
+        <div>
+          <label class="muted small" for="sr_email">Email</label>
+          <input id="sr_email" name="email" class="equip-input" type="email" autocomplete="email" placeholder="you@company.com" />
+        </div>
+
+        <div>
+          <label class="muted small" for="sr_location">Location</label>
+          <input id="sr_location" name="location" class="equip-input" type="text" placeholder="City, State" />
+        </div>
+
+        <div>
+          <label class="muted small" for="sr_urgency">Urgency</label>
+          <select id="sr_urgency" name="urgency" class="equip-input">
+            <option value="Plant down (production stopped)">Plant down (production stopped)</option>
+            <option value="Degraded (running but hurting output)">Degraded (running but hurting output)</option>
+            <option value="Non-urgent (quote / planning)">Non-urgent (quote / planning)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="muted small" for="sr_platform">Controls platform</label>
+          <select id="sr_platform" name="platform" class="equip-input">
+            <option value="">Select…</option>
+            <option>Allen-Bradley (SLC/PLC5/CLX/CompactLogix)</option>
+            <option>Siemens (S7-300/400/1200/1500)</option>
+            <option>Omron</option>
+            <option>Mitsubishi</option>
+            <option>Other / Unknown</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="muted small" for="sr_line">Machine / Line</label>
+          <input id="sr_line" name="machineLine" class="equip-input" type="text" placeholder="e.g., Debone Line 2 / Conveyor A3" />
+        </div>
       </div>
 
-      <div class="trust-row">
-        <span class="chip">PLC / HMI troubleshooting</span>
-        <span class="chip">VFD diagnostics</span>
-        <span class="chip">Remote or onsite</span>
-        <span class="chip">Food &amp; heavy industry</span>
+      <div style="margin-top:.9rem;">
+        <label class="muted small" for="sr_issue">What’s happening?</label>
+        <textarea
+          id="sr_issue"
+          name="issue"
+          class="equip-input"
+          rows="6"
+          required
+          placeholder="Symptoms, alarms/fault codes, what changed, what you've already tried, and what 'normal' looks like."
+          style="resize:vertical;"
+        ></textarea>
       </div>
-    </div>
 
-    <aside class="hero-right card">
-      <h2 class="card-title">Quick response</h2>
-      <p class="small muted">If production is stopped, calling or texting is faster than email.</p>
+      <div style="margin-top:.9rem; display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;">
+        <button class="btn btn-primary" type="submit">Submit request</button>
+        <span id="supportStatus" class="muted small" aria-live="polite"></span>
+      </div>
 
-      <div class="btnrow">
+      <div class="contact-block">
+        <div class="muted small">
+          By submitting, you agree we can contact you about this request (no spam, no nonsense).
+        </div>
+      </div>
+    </form>
+
+    <!-- SIDE CARD -->
+    <aside class="card">
+      <h3 style="margin:0 0 .35rem;">Fastest options</h3>
+      <p class="muted small" style="margin:.15rem 0 .9rem;">
+        If it’s truly production-stopping, don’t wait on a form submission to save the day.
+      </p>
+
+      <div class="btnrow" style="margin:.2rem 0 0;">
         <a class="btn btn-primary" href="tel:+18708062555">🚨 Plant down — call now</a>
         <a class="btn btn-quiet"
            href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AControls%20platform:%0AMachine/Line:%0AIssue:">
           📩 Text engineering
         </a>
+        <a class="btn btn-quiet"
+           href="mailto:engineering@futureautomationllc.com?subject=Downtime%20Support%20Request">
+          ✉️ Email engineering
+        </a>
       </div>
 
       <div class="contact-block">
-        <div><strong>Email:</strong> <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a></div>
-      </div>
-
-      <div class="tagline-box">
-        <div class="tagline">Less downtime. More output. No guessing.</div>
+        <div><strong>Engineering:</strong> <a href="mailto:engineering@futureautomationllc.com">engineering@futureautomationllc.com</a></div>
+        <div><strong>General:</strong> <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a></div>
       </div>
     </aside>
-  </section>
+  </div>
 
-  <section class="section">
-    <h2 class="section-title">Services</h2>
-    <p class="section-sub">
-      This isn’t consulting fluff. These are the services that actually stop downtime and prevent repeat failures.
-    </p>
+  <script>
+    // Simple, reliable fallback:
+    // - If you later add a real endpoint, set window.SUPPORT_ENDPOINT = "https://your-endpoint"
+    // - Otherwise it opens an email draft to engineering@futureautomationllc.com with all details.
+    (function () {
+      const form = document.getElementById("supportForm");
+      const statusEl = document.getElementById("supportStatus");
 
-    <div class="grid-3">
-      <div class="service card">
-        <h3>PLC &amp; HMI Troubleshooting</h3>
-        <p class="muted">Find the fault, fix it, and explain why it happened. PLC logic, I/O, comms, and HMI issues that stop production.</p>
-      </div>
+      function setStatus(msg) { if (statusEl) statusEl.textContent = msg || ""; }
 
-      <div class="service card">
-        <h3>VFD Setup &amp; Diagnostics</h3>
-        <p class="muted">Trip faults, tuning problems, encoder/resolver feedback, braking issues, and drives that “should work but don’t.”</p>
-      </div>
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        setStatus("Sending…");
 
-      <div class="service card">
-        <h3>Controls Retrofits</h3>
-        <p class="muted">Replace obsolete controls with modern, supportable hardware without breaking the process or losing tribal knowledge.</p>
-      </div>
+        const fd = new FormData(form);
+        const payload = Object.fromEntries(fd.entries());
 
-      <div class="service card">
-        <h3>Panel Upgrades &amp; Rework</h3>
-        <p class="muted">Clean up hacked panels, correct wiring mistakes, fix safety circuits, and make the panel serviceable again.</p>
-      </div>
-
-      <div class="service card">
-        <h3>Reliability Improvements</h3>
-        <p class="muted">Eliminate repeat failures and nuisance trips by fixing the cause — not resetting the same fault every shift.</p>
-      </div>
-
-      <div class="service card">
-        <h3>Remote Support</h3>
-        <p class="muted">Fast remote troubleshooting when someone on-site needs answers, not guesses.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2 class="section-title">Equipment for Sale</h2>
-    <p class="section-sub">
-      Live inventory from our eBay store. Checkout stays on eBay for secure payment while we build trust and direct checkout.
-    </p>
-
-    <div id="inventory" class="inventory-grid"></div>
-
-    <div class="section-actions">
-      <a class="btn btn-quiet" href="equipment.html">Browse all equipment</a>
-      <a class="btn btn-quiet" href="https://www.ebay.com/usr/theautomationengineer" target="_blank" rel="noopener">
-        View store on eBay
-      </a>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2 class="section-title">Industries Served</h2>
-    <div class="chips">
-      <span class="chip">Food &amp; poultry processing</span>
-      <span class="chip">Bulk material handling</span>
-      <span class="chip">Manufacturing</span>
-      <span class="chip">Heavy industry</span>
-    </div>
-  </section>
-
-  <section id="support" class="section">
-    <!-- your support form lives here -->
-  </section>
-
-</main>
-
-<script>
-  (function () {
-    const seller = "theautomationengineer";
-    const grid = document.getElementById("inventory");
-    if (!grid) return;
-
-    function esc(s) {
-      return String(s)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
-    async function loadInventory() {
-      grid.innerHTML = `
-        <div class="card inv-skeleton"></div>
-        <div class="card inv-skeleton"></div>
-        <div class="card inv-skeleton"></div>
-      `;
-
-      try {
-        const res = await fetch(`/api/inventory?seller=${encodeURIComponent(seller)}`, { cache: "no-store" });
-        const data = await res.json().catch(() => ({}));
-        const items = (data.items || []).slice(0, 12);
-
-        if (!items.length) {
-          grid.innerHTML = `
-            <div class="card">
-              <h3>Nothing listed right now</h3>
-              <p class="muted">If you’re looking for something specific, hit Support and we’ll track it down.</p>
-            </div>
-          `;
-          return;
+        // If you have an endpoint, POST JSON to it
+        if (window.SUPPORT_ENDPOINT) {
+          try {
+            const r = await fetch(window.SUPPORT_ENDPOINT, {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+            if (!r.ok) throw new Error("Request failed");
+            setStatus("Sent. We’ll respond ASAP.");
+            form.reset();
+            return;
+          } catch (err) {
+            console.error(err);
+            setStatus("Couldn’t send (network). Opening email draft…");
+          }
         }
 
-        grid.innerHTML = items.map((it) => `
-          <div class="card inv-card">
-            ${it.image ? `<img class="inv-img" src="${it.image}" alt="" loading="lazy">` : ``}
+        // Fallback: mailto draft
+        const subject = encodeURIComponent("Downtime Support Request");
+        const body = encodeURIComponent(
+          `Name: ${payload.name || ""}\n` +
+          `Company/Plant: ${payload.company || ""}\n` +
+          `Phone: ${payload.phone || ""}\n` +
+          `Email: ${payload.email || ""}\n` +
+          `Location: ${payload.location || ""}\n` +
+          `Urgency: ${payload.urgency || ""}\n` +
+          `Controls platform: ${payload.platform || ""}\n` +
+          `Machine/Line: ${payload.machineLine || ""}\n\n` +
+          `Issue:\n${payload.issue || ""}\n`
+        );
 
-            <div class="inv-title">${esc(it.title || "Listing")}</div>
-
-            ${(it.price || it.condition) ? `
-              <div class="inv-meta">
-                ${it.price ? `<span class="inv-tag inv-price">${esc(it.price)}</span>` : ``}
-                ${it.condition ? `<span class="inv-tag">${esc(it.condition)}</span>` : ``}
-              </div>
-            ` : ``}
-
-            <a class="btn btn-primary" href="${it.link}" target="_blank" rel="noopener">
-              Buy on eBay (secure checkout)
-            </a>
-          </div>
-        `).join("");
-      } catch (e) {
-        console.error(e);
-        grid.innerHTML = `
-          <div class="card">
-            <h3>Inventory failed to load</h3>
-            <p class="muted">Try again in a bit. If it keeps happening, it’s usually the eBay feed being dramatic.</p>
-          </div>
-        `;
-      }
-    }
-
-    loadInventory();
-  })();
-</script>
-
-</body>
-</html>
+        window.location.href = `mailto:engineering@futureautomationllc.com?subject=${subject}&body=${body}`;
+        setStatus("Email draft opened.");
+      });
+    })();
+  </script>
+</section>
