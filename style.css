@@ -309,3 +309,114 @@ a:hover{ opacity:.95; }
     width:100%;
   }
 }
+/* ================================
+   Global polish
+================================ */
+html, body { line-height: 1.55; }
+body {
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(56,189,248,.14), transparent 60%),
+    radial-gradient(700px 400px at 95% 0%, rgba(14,165,233,.10), transparent 55%),
+    var(--bg);
+}
+
+h1, h2, h3 { letter-spacing: -0.02em; }
+h1 { font-size: 2.2rem; margin: 0 0 .5rem; }
+h2 { margin: 0; font-size: 1.15rem; }
+.section-sub { margin-top: .25rem; }
+
+/* smoother UI */
+.btn, .card, input, textarea, select {
+  transition: transform .12s ease, border-color .12s ease, background .12s ease, box-shadow .12s ease;
+}
+
+.card {
+  box-shadow: 0 10px 30px rgba(0,0,0,.20);
+}
+
+.inv-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56,189,248,.35);
+  box-shadow: 0 12px 34px rgba(0,0,0,.28);
+}
+
+/* ================================
+   Equipment toolbar
+================================ */
+.equip-toolbar {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.equip-toolbar-right {
+  min-width: 260px;
+}
+
+/* Category pills */
+.catbar {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-top: .35rem;
+}
+
+.pill {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.02);
+  color: var(--text);
+  border-radius: 999px;
+  padding: .35rem .6rem;
+  font-size: .8rem;
+  cursor: pointer;
+  display: inline-flex;
+  gap: .45rem;
+  align-items: center;
+}
+
+.pill:hover { border-color: rgba(56,189,248,.55); }
+.pill:focus { outline: none; box-shadow: 0 0 0 3px rgba(56,189,248,.25); }
+.pill-active {
+  border-color: rgba(56,189,248,.75);
+  background: rgba(56,189,248,.10);
+}
+
+.pill-count {
+  font-size: .7rem;
+  padding: .12rem .45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,.35);
+  color: var(--muted);
+}
+
+/* Category sections */
+.cat-section {
+  margin-top: 1rem;
+}
+
+.cat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .65rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.02);
+  margin-bottom: .75rem;
+}
+
+.cat-title { color: var(--text); }
+.cat-count {
+  font-size: .8rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: .2rem .6rem;
+}
+
+/* Make inventory grids breathe a bit more */
+.inventory-grid { gap: 1.1rem; }
+.inv-img { aspect-ratio: 4 / 3; object-fit: cover; }
