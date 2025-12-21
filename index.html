@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Future Automation LLC</title>
-  <meta name="description" content="Fast, no-nonsense industrial automation support. PLCs, HMIs, VFDs, panels, and downtime problems." />
+  <meta name="description" content="Industrial automation support. PLC, HMI, VFD troubleshooting, retrofits, and downtime help." />
 
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -22,8 +21,9 @@
     </a>
 
     <div class="nav-links">
-      <a class="nav-link active" href="/">Services</a>
-      <a class="nav-link" href="/equipment">Equipment</a>
+      <a class="nav-link active" href="/">Home</a>
+      <a class="nav-link" href="/services.html">Services</a>
+      <a class="nav-link" href="/equipment.html">Equipment</a>
 
       <div class="nav-item">
         <a class="nav-link" href="/request-invoice.html">Request Invoice</a>
@@ -31,6 +31,7 @@
       </div>
 
       <a class="nav-link" href="#support">Support</a>
+      <a class="nav-link" href="/about.html">About</a>
       <a class="nav-link" href="/policies.html">Policies</a>
     </div>
   </div>
@@ -38,64 +39,187 @@
 
 <main class="container">
 
+  <!-- HERO -->
   <section class="section hero">
     <h1>Industrial Automation<br>No Guessing. No Fluff.</h1>
     <p class="hero-sub">
       Fast, practical controls support for plants that can’t afford downtime.
-      PLCs, HMIs, VFDs, panels — problems that only show up when production is running.
+      PLCs, HMIs, VFDs, and panels — when production is running and the pressure is real.
     </p>
 
     <div class="hero-actions">
       <a class="btn btn-primary" href="#support">Request downtime help</a>
-      <a class="btn btn-quiet" href="/equipment">Browse equipment</a>
-      <a class="btn btn-quiet" href="/request-invoice.html">Request invoice</a>
+      <a class="btn btn-quiet" href="#what-you-get">What you get</a>
+      <a class="btn btn-quiet" href="/equipment.html">Browse equipment</a>
+    </div>
+
+    <p class="muted small" style="margin-top:.85rem;">
+      Plant down = call/text. Purchasing/PO/combined shipping = <a href="/request-invoice.html">Request Invoice</a>.
+    </p>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section id="what-you-get" class="section">
+    <h2>What you get</h2>
+    <p class="section-sub">
+      Clear outcomes. Less downtime. Less finger-pointing. More “it’s fixed.”
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Fast triage</h3>
+        <p>We isolate what failed and why — not just “reset it and hope.”</p>
+      </div>
+      <div class="card">
+        <h3>Root-cause fixes</h3>
+        <p>Stop repeat failures by addressing the real problem: wiring, parameters, logic, comms, hardware.</p>
+      </div>
+      <div class="card">
+        <h3>Practical documentation</h3>
+        <p>What we changed, why we changed it, and what to watch next time.</p>
+      </div>
+      <div class="card">
+        <h3>Better uptime habits</h3>
+        <p>Quick reliability wins: alarms that matter, spares that make sense, settings that don’t drift.</p>
+      </div>
+      <div class="card">
+        <h3>Support that scales</h3>
+        <p>Remote help for on-site techs: diagnosis, steps, and a plan — not a lecture.</p>
+      </div>
+      <div class="card">
+        <h3>Clean, safe panels</h3>
+        <p>Fix hacked controls cabinets so the next shutdown isn’t “surprise smoke.”</p>
+      </div>
     </div>
   </section>
 
-  <section class="section">
+  <!-- WHO THIS IS FOR -->
+  <section id="who" class="section">
+    <h2>Who this is for</h2>
+    <p class="section-sub">
+      If you’re tired of repeating the same failures or gambling on guesses, you’re in the right place.
+    </p>
+
+    <div class="card" style="max-width: 980px;">
+      <div class="form-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem;">
+        <div>
+          <h3>Best fit</h3>
+          <ul class="muted" style="margin:.5rem 0 0; padding-left: 1.2rem;">
+            <li>Plants with downtime pressure</li>
+            <li>Maintenance teams that need a second brain</li>
+            <li>Repeat trips, nuisance trips, intermittent faults</li>
+            <li>Obsolete controls that “still run”… until they don’t</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Not a great fit</h3>
+          <ul class="muted" style="margin:.5rem 0 0; padding-left: 1.2rem;">
+            <li>“Just tell me what I want to hear” situations</li>
+            <li>One-time band-aids with no interest in fixing root cause</li>
+            <li>Ignoring safety, documentation, or basic electrical practice</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="muted small" style="margin-top:1rem;">
+        If you’re not sure, send details. We’ll tell you straight if it’s something we can solve fast.
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="section">
+    <h2>How it works</h2>
+    <p class="section-sub">Simple process. No mystery meetings. No “circle back.”</p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>1) Tell us what’s happening</h3>
+        <p>Symptoms, what changed, what trips, what you’ve already checked. Photos help.</p>
+      </div>
+      <div class="card">
+        <h3>2) We troubleshoot and fix</h3>
+        <p>Remote guidance or on-site support depending on severity and access.</p>
+      </div>
+      <div class="card">
+        <h3>3) You get the notes</h3>
+        <p>What failed, what we changed, and what to monitor so it doesn’t come back next week.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENT WORK / PROOF -->
+  <section id="recent" class="section">
+    <h2>Recent work</h2>
+    <p class="section-sub">
+      Add real examples here as you go. Even 5–10 bullets builds trust fast.
+    </p>
+
+    <div class="card" style="max-width: 980px;">
+      <ul class="muted" style="margin:.25rem 0 0; padding-left:1.2rem;">
+        <li><strong>PLC / I/O fault:</strong> traced intermittent input dropout to bad terminal + vibration, corrected wiring and added strain relief.</li>
+        <li><strong>VFD trips:</strong> eliminated nuisance overcurrent by correcting accel/decel + motor data + braking settings.</li>
+        <li><strong>Comms failure:</strong> stabilized network by replacing flaky switch + fixing addressing + cleaning up shielding/grounding.</li>
+        <li><strong>Panel cleanup:</strong> reworked unsafe cabinet wiring, labeled, corrected fusing, improved serviceability.</li>
+        <li><strong>Retrofit:</strong> replaced obsolete components with supported equivalents and documented the conversion.</li>
+      </ul>
+
+      <p class="muted small" style="margin-top:1rem;">
+        Want this section to hit harder? Swap each bullet into: “Problem → Fix → Result (minutes/hours saved)”.
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICES (SHORT) -->
+  <section id="services" class="section">
     <h2>Services</h2>
     <p class="section-sub">
-      This isn’t consulting fluff. These are the services that stop downtime and prevent repeat failures.
+      Here’s the short list. The full list is on <a href="/services.html">Services</a>.
     </p>
 
     <div class="cards">
       <div class="card">
         <h3>PLC & HMI Troubleshooting</h3>
-        <p>Logic faults, I/O issues, comms failures, and HMIs that suddenly stop making sense.</p>
+        <p>Logic faults, I/O issues, comms failures, and intermittent weirdness.</p>
       </div>
-
       <div class="card">
         <h3>VFD Setup & Diagnostics</h3>
-        <p>Trip faults, tuning problems, encoder/resolver feedback, braking issues.</p>
+        <p>Trips, tuning, braking, encoder feedback, and motor/drive mismatch.</p>
       </div>
-
       <div class="card">
         <h3>Controls Retrofits</h3>
-        <p>Replace obsolete controls without breaking the process or losing tribal knowledge.</p>
+        <p>Obsolete hardware replacements without wrecking the process.</p>
       </div>
+    </div>
 
-      <div class="card">
-        <h3>Panel Upgrades & Rework</h3>
-        <p>Fix hacked panels, bad wiring, unsafe circuits, and unserviceable layouts.</p>
-      </div>
-
-      <div class="card">
-        <h3>Reliability Improvements</h3>
-        <p>Eliminate repeat failures by fixing root causes — not resetting alarms.</p>
-      </div>
-
-      <div class="card">
-        <h3>Remote Support</h3>
-        <p>Fast answers when someone on-site needs direction, not guesses.</p>
-      </div>
+    <div class="support-actions" style="margin-top:1rem;">
+      <a class="btn btn-primary" href="/services.html">View all services</a>
+      <a class="btn btn-quiet" href="#support">Request downtime help</a>
     </div>
   </section>
 
+  <!-- EQUIPMENT SALES -->
+  <section id="equipment-sales" class="section">
+    <h2>Equipment sales</h2>
+    <p class="section-sub">
+      We sell industrial automation parts. Listings are live and organized by category.
+      Need a PO, combined shipping, or a PayPal invoice? Use the invoice request form.
+    </p>
+
+    <div class="support-actions">
+      <a class="btn btn-primary" href="/equipment.html">Browse live listings</a>
+      <a class="btn btn-quiet" href="/request-invoice.html">Request an invoice</a>
+    </div>
+
+    <p class="muted small" style="margin-top:.75rem;">
+      Buying multiple items? “Request Invoice” is the clean way to get one quote and one shipment.
+    </p>
+  </section>
+
+  <!-- SUPPORT -->
   <section id="support" class="section">
     <h2>Request downtime help</h2>
-    <p class="section-sub">
-      If production is stopped, calling or texting is faster than email.
-    </p>
+    <p class="section-sub">If production is stopped, calling/texting beats email every time.</p>
 
     <div class="support-actions">
       <a class="btn btn-primary" href="tel:+18708062555">🚨 Plant down — call now</a>
