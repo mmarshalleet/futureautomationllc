@@ -5,24 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Request Invoice | Future Automation LLC</title>
   <meta name="description" content="Request an invoice for industrial automation equipment. We’ll quote and send a PayPal invoice." />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
 </head>
 
 <body>
 <nav>
   <div class="nav-inner">
-    <div class="brand">
-      <a href="/" class="brand-logo">
-        <img src="logo.svg" alt="Future Automation LLC">
-      </a>
-    </div>
+    <a href="/" class="brand-logo">
+      <img src="/logo.svg" alt="Future Automation LLC">
+    </a>
     <div class="nav-links">
-      <a class="nav-link" href="/">Home</a>
-      <a class="nav-link" href="equipment.html">Equipment</a>
-      <a class="nav-link active" href="request-invoice.html">Request Invoice</a>
+      <a class="nav-link" href="/">Services</a>
+      <a class="nav-link" href="/equipment">Equipment</a>
+      <a class="nav-link active" href="/request-invoice.html">Request Invoice</a>
+      <a class="nav-link" href="/#support">Support</a>
+      <a class="nav-link" href="/policies.html">Policies</a>
     </div>
   </div>
 </nav>
@@ -63,12 +63,12 @@
 
         <div style="margin-top: 1rem;">
           <label class="muted small">Ship-to (Company / Address / City / State / ZIP)</label>
-          <textarea name="shipTo" rows="3" required placeholder="Example: Peco Foods • 123 Plant Rd • City, ST 12345"></textarea>
+          <textarea id="shipTo" name="shipTo" rows="3" required placeholder="Example: Peco Foods • 123 Plant Rd • City, ST 12345"></textarea>
         </div>
 
         <div style="margin-top: 1rem;">
           <label class="muted small">Items needed (part number, qty, condition)</label>
-          <textarea name="items" rows="5" required placeholder="Example:
+          <textarea id="items" name="items" rows="5" required placeholder="Example:
 25B-D4P0N104 (PowerFlex 525) — Qty 1 — New/Open box ok
 3SK1211-1BB40 — Qty 2 — Used ok"></textarea>
         </div>
@@ -80,7 +80,7 @@
           </div>
           <div>
             <label class="muted small">Urgency</label>
-            <select name="urgency">
+            <select id="urgency" name="urgency">
               <option value="Plant down">Plant down</option>
               <option value="Production impacting">Production impacting</option>
               <option value="Non-urgent" selected>Non-urgent</option>
@@ -88,18 +88,9 @@
           </div>
         </div>
 
-        <!-- ✅ PDF upload -->
-        <div style="margin-top: 1rem;">
-          <label class="muted small">Attach PDF (optional)</label>
-          <input type="file" id="pdf" accept="application/pdf" />
-          <div class="muted small" style="margin-top:4px;">
-            PDF only (nameplate/spec/PO). Keep it small if possible.
-          </div>
-        </div>
-
         <div style="margin-top: 1rem;">
           <label class="muted small">Notes</label>
-          <textarea name="notes" rows="3" placeholder="Dock hours, preferred carrier, PO number, photos coming, etc."></textarea>
+          <textarea id="notes" name="notes" rows="3" placeholder="Dock hours, preferred carrier, PO number, photos coming, etc."></textarea>
         </div>
 
         <div style="display:flex; gap:.75rem; align-items:center; margin-top: 1rem;">
@@ -115,20 +106,22 @@
   const form = document.getElementById("invoiceForm");
   const btn = document.getElementById("submitBtn");
   const msg = document.getElementById("msg");
-  const pdfInput = document.getElementById("pdf");
 
   function setMsg(t) { msg.textContent = t || ""; }
 
-  async function fileToBase64(file) {
-    const buf = await file.arrayBuffer();
-    let binary = "";
-    const bytes = new Uint8Array(buf);
-    const chunk = 0x8000;
-    for (let i = 0; i < bytes.length; i += chunk) {
-      binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
-    }
-    return btoa(binary);
-  }
+  // Prefill from query params (used by Equipment page "Request invoice")
+  (function prefillFromUrl(){
+    const p = new URLSearchParams(location.search);
+    const items = p.get("items");
+    const urgency = p.get("urgency");
+    const notes = p.get("notes");
+    const shipTo = p.get("shipTo");
+
+    if (items) document.getElementById("items").value = items;
+    if (urgency) document.getElementById("urgency").value = urgency;
+    if (notes) document.getElementById("notes").value = notes;
+    if (shipTo) document.getElementById("shipTo").value = shipTo;
+  })();
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -138,19 +131,6 @@
 
     const fd = new FormData(form);
     const payload = Object.fromEntries(fd.entries());
-
-    // ✅ Attach PDF fields if provided
-    const file = pdfInput?.files?.[0];
-    if (file) {
-      if (file.type !== "application/pdf") {
-        setMsg("PDF only.");
-        btn.disabled = false;
-        btn.textContent = "Submit request";
-        return;
-      }
-      payload.pdfFilename = file.name;
-      payload.pdfBase64 = await fileToBase64(file);
-    }
 
     try {
       const res = await fetch(`${location.origin}/api/invoice-request`, {
