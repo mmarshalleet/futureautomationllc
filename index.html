@@ -3,162 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Future Automation LLC | Industrial Automation Support</title>
+  <meta name="description" content="Fast, no-nonsense industrial automation support. PLC/HMI/VFD troubleshooting, controls upgrades, panel rework, and remote support." />
 
-  <title>Future Automation LLC</title>
-  <meta name="description" content="Industrial automation support, PLC troubleshooting, plant downtime response, and surplus controls equipment." />
-
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
 </head>
 
 <body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="brand-logo">
+        <img src="/logo.svg" alt="Future Automation LLC" />
+      </a>
 
-<header class="site-header">
-  <div class="container">
-    <div class="brand">
-      <img src="logo.svg" alt="Future Automation LLC" class="logo" />
-      <span class="brand-name">Future Automation LLC</span>
+      <div class="nav-links">
+        <a class="nav-link active" href="/">Home</a>
+        <a class="nav-link" href="/services">Services</a>
+        <a class="nav-link" href="/equipment">Equipment</a>
+
+        <div class="nav-item">
+          <a class="nav-link" href="/request-invoice">Request Invoice</a>
+          <div class="nav-helper">Invoice first • Pay by PayPal or card</div>
+        </div>
+
+        <a class="nav-link" href="/policies">Policies</a>
+        <a class="nav-link" href="/about">About</a>
+      </div>
     </div>
+  </nav>
 
-    <nav class="nav">
-      <a href="#support">Request Help</a>
-      <a href="equipment.html">Equipment</a>
-      <a href="about.html">About</a>
-      <a href="policies.html">Policies</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <h1>Industrial automation help when production can’t wait</h1>
+  <main class="container">
+    <section class="section hero">
+      <h1>Industrial Automation Support<br>That Actually Fixes It</h1>
       <p class="hero-sub">
-        PLCs, VFDs, safety systems, and controls troubleshooting.
-        Less downtime. More output. No guessing.
+        Troubleshooting, controls upgrades, and remote support for plants that can’t afford downtime.
+        PLCs, HMIs, VFDs, motion, comms, panels — the real stuff.
       </p>
 
       <div class="hero-actions">
-        <a href="#support" class="btn btn-primary">Request downtime help</a>
-        <a href="tel:+18708062555" class="btn btn-danger">Plant down? Call now</a>
+        <a class="btn btn-primary" href="#hire">Request downtime help</a>
+        <a class="btn btn-quiet" href="/services">See services</a>
+        <a class="btn btn-quiet" href="/equipment">Browse equipment</a>
+        <a class="btn btn-quiet" href="/request-invoice">Request invoice</a>
       </div>
-    </div>
-  </section>
 
-  <!-- SUPPORT FORM -->
-  <section id="support" class="section">
-    <div class="container">
+      <p class="muted small" style="margin-top:.9rem;">
+        Plant down? Calling is faster than email. (Yeah, even in 2025.)
+      </p>
+    </section>
 
-      <h2>Request downtime help</h2>
+    <section class="section">
+      <h2>What we do</h2>
       <p class="section-sub">
-        The more detail you provide, the faster this gets solved.
-        If the line is stopped, don’t wait — call or text.
+        Service-first. Equipment is secondary. If you need it running, we’re your people.
       </p>
 
-      <form
-        class="support-form card"
-        method="POST"
-        action="https://getform.io/f/YOUR_GETFORM_ENDPOINT"
-      >
-        <input type="hidden" name="redirect" value="thank-you.html" />
-
-        <div class="form-grid">
-          <div class="field">
-            <label>Name</label>
-            <input name="name" required />
-          </div>
-
-          <div class="field">
-            <label>Company / Plant</label>
-            <input name="company" />
-          </div>
-
-          <div class="field">
-            <label>Phone (best for emergencies)</label>
-            <input name="phone" type="tel" required />
-          </div>
-
-          <div class="field">
-            <label>Email</label>
-            <input name="email" type="email" required />
-          </div>
-
-          <div class="field">
-            <label>Location</label>
-            <input name="location" placeholder="City, State" />
-          </div>
-
-          <div class="field">
-            <label>Urgency</label>
-            <select name="urgency">
-              <option>Plant down (production stopped)</option>
-              <option>Production impacted</option>
-              <option>Non-urgent</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Controls platform</label>
-            <select name="platform">
-              <option>Select…</option>
-              <option>Allen-Bradley</option>
-              <option>Siemens</option>
-              <option>Lenze</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Machine / Line</label>
-            <input name="machine" placeholder="e.g. Debone Line 2 / Case Packer" />
-          </div>
-
-          <div class="field field-full">
-            <label>What’s happening?</label>
-            <textarea
-              name="issue"
-              rows="6"
-              placeholder="Faults, alarms, symptoms, what changed, what you've tried…"
-              required
-            ></textarea>
-          </div>
+      <div class="cards">
+        <div class="card">
+          <h3>Emergency Troubleshooting</h3>
+          <p>Rapid triage for PLC/HMI/VFD failures, comms issues, I/O weirdness, and “it worked yesterday.”</p>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit request</button>
+        <div class="card">
+          <h3>Remote Support</h3>
+          <p>On-site tech + remote controls expertise = faster fixes and fewer midnight guesses.</p>
+        </div>
 
-        <p class="form-note">
-          By submitting, you agree we can contact you about this request.
-          No spam. No nonsense.
-        </p>
-      </form>
+        <div class="card">
+          <h3>Controls Upgrades</h3>
+          <p>Retrofits, migrations, and cleanup that keep production stable and maintainable.</p>
+        </div>
 
-      <div class="fast-options">
-        <h3>Fastest options</h3>
-        <p>If production is stopped, don’t wait on a form.</p>
+        <div class="card">
+          <h3>Drives & Motion</h3>
+          <p>Tuning, trips, feedback/encoder issues, braking, torque problems, and flaky parameters.</p>
+        </div>
 
-        <ul>
-          <li>🚨 <a href="tel:+18708062555">Plant down — call now</a></li>
-          <li>📩 <a href="sms:+18708062555">Text engineering</a></li>
-          <li>📧 <a href="mailto:engineering@futureautomationllc.com">engineering@futureautomationllc.com</a></li>
-        </ul>
+        <div class="card">
+          <h3>Panel Rework</h3>
+          <p>Fix hacked wiring, unsafe circuits, and layouts that punish the next guy who opens the door.</p>
+        </div>
+
+        <div class="card">
+          <h3>Reliability Improvements</h3>
+          <p>Stop repeat failures by fixing root cause — not just resetting alarms.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="hire" class="section">
+      <h2>Request downtime help</h2>
+      <p class="section-sub">
+        For production-stopping issues: call or text. For parts/invoices: use Request Invoice.
+      </p>
+
+      <div class="support-actions">
+        <a class="btn btn-primary" href="tel:+18708062555">🚨 Plant down — call now</a>
+        <a class="btn btn-quiet" href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AName:%0AIssue:">📩 Text engineering</a>
+        <a class="btn btn-quiet" href="mailto:contact@futureautomationllc.com?subject=Downtime%20Support%20Request">Email</a>
       </div>
 
+      <p class="muted small" style="margin-top:.85rem;">
+        Equipment buyers: <a href="/equipment">browse listings</a> • Need a PO/PayPal invoice? <a href="/request-invoice">request invoice</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="muted small">© Future Automation LLC — Less downtime. More output. No guessing.</p>
     </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <p>© <span id="year"></span> Future Automation LLC</p>
-  </div>
-</footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
+  </footer>
 </body>
 </html>
