@@ -1,173 +1,164 @@
-<section id="support" class="section">
-  <h2 class="section-title">Support request</h2>
-  <p class="section-sub">
-    Give us the details once — we’ll call/text/email back. If you’re truly plant-down, use the big red “call now” button above.
-  </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <div class="grid-3" style="grid-template-columns: 1.15fr .85fr; align-items:start;">
-    <!-- FORM -->
-    <form id="supportForm" class="card" style="padding:1.2rem;">
-      <h3 style="margin:0 0 .35rem;">Request downtime help</h3>
-      <p class="muted small" style="margin:.15rem 0 1rem;">
-        The more specific you are, the faster this gets solved.
-      </p>
+  <title>Future Automation LLC</title>
+  <meta name="description" content="Industrial automation support, PLC troubleshooting, plant downtime response, and surplus controls equipment." />
 
-      <div class="grid-3" style="grid-template-columns: 1fr 1fr; gap:.9rem;">
-        <div>
-          <label class="muted small" for="sr_name">Name</label>
-          <input id="sr_name" name="name" class="equip-input" type="text" autocomplete="name" required />
-        </div>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-        <div>
-          <label class="muted small" for="sr_company">Company / Plant</label>
-          <input id="sr_company" name="company" class="equip-input" type="text" autocomplete="organization" />
-        </div>
+<body>
 
-        <div>
-          <label class="muted small" for="sr_phone">Phone (best for emergencies)</label>
-          <input id="sr_phone" name="phone" class="equip-input" type="tel" autocomplete="tel" placeholder="870-806-2555" />
-        </div>
+<header class="site-header">
+  <div class="container">
+    <div class="brand">
+      <img src="logo.svg" alt="Future Automation LLC" class="logo" />
+      <span class="brand-name">Future Automation LLC</span>
+    </div>
 
-        <div>
-          <label class="muted small" for="sr_email">Email</label>
-          <input id="sr_email" name="email" class="equip-input" type="email" autocomplete="email" placeholder="you@company.com" />
-        </div>
-
-        <div>
-          <label class="muted small" for="sr_location">Location</label>
-          <input id="sr_location" name="location" class="equip-input" type="text" placeholder="City, State" />
-        </div>
-
-        <div>
-          <label class="muted small" for="sr_urgency">Urgency</label>
-          <select id="sr_urgency" name="urgency" class="equip-input">
-            <option value="Plant down (production stopped)">Plant down (production stopped)</option>
-            <option value="Degraded (running but hurting output)">Degraded (running but hurting output)</option>
-            <option value="Non-urgent (quote / planning)">Non-urgent (quote / planning)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="muted small" for="sr_platform">Controls platform</label>
-          <select id="sr_platform" name="platform" class="equip-input">
-            <option value="">Select…</option>
-            <option>Allen-Bradley (SLC/PLC5/CLX/CompactLogix)</option>
-            <option>Siemens (S7-300/400/1200/1500)</option>
-            <option>Omron</option>
-            <option>Mitsubishi</option>
-            <option>Other / Unknown</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="muted small" for="sr_line">Machine / Line</label>
-          <input id="sr_line" name="machineLine" class="equip-input" type="text" placeholder="e.g., Debone Line 2 / Conveyor A3" />
-        </div>
-      </div>
-
-      <div style="margin-top:.9rem;">
-        <label class="muted small" for="sr_issue">What’s happening?</label>
-        <textarea
-          id="sr_issue"
-          name="issue"
-          class="equip-input"
-          rows="6"
-          required
-          placeholder="Symptoms, alarms/fault codes, what changed, what you've already tried, and what 'normal' looks like."
-          style="resize:vertical;"
-        ></textarea>
-      </div>
-
-      <div style="margin-top:.9rem; display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;">
-        <button class="btn btn-primary" type="submit">Submit request</button>
-        <span id="supportStatus" class="muted small" aria-live="polite"></span>
-      </div>
-
-      <div class="contact-block">
-        <div class="muted small">
-          By submitting, you agree we can contact you about this request (no spam, no nonsense).
-        </div>
-      </div>
-    </form>
-
-    <!-- SIDE CARD -->
-    <aside class="card">
-      <h3 style="margin:0 0 .35rem;">Fastest options</h3>
-      <p class="muted small" style="margin:.15rem 0 .9rem;">
-        If it’s truly production-stopping, don’t wait on a form submission to save the day.
-      </p>
-
-      <div class="btnrow" style="margin:.2rem 0 0;">
-        <a class="btn btn-primary" href="tel:+18708062555">🚨 Plant down — call now</a>
-        <a class="btn btn-quiet"
-           href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AControls%20platform:%0AMachine/Line:%0AIssue:">
-          📩 Text engineering
-        </a>
-        <a class="btn btn-quiet"
-           href="mailto:engineering@futureautomationllc.com?subject=Downtime%20Support%20Request">
-          ✉️ Email engineering
-        </a>
-      </div>
-
-      <div class="contact-block">
-        <div><strong>Engineering:</strong> <a href="mailto:engineering@futureautomationllc.com">engineering@futureautomationllc.com</a></div>
-        <div><strong>General:</strong> <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a></div>
-      </div>
-    </aside>
+    <nav class="nav">
+      <a href="#support">Request Help</a>
+      <a href="equipment.html">Equipment</a>
+      <a href="about.html">About</a>
+      <a href="policies.html">Policies</a>
+    </nav>
   </div>
+</header>
 
-  <script>
-    // Simple, reliable fallback:
-    // - If you later add a real endpoint, set window.SUPPORT_ENDPOINT = "https://your-endpoint"
-    // - Otherwise it opens an email draft to engineering@futureautomationllc.com with all details.
-    (function () {
-      const form = document.getElementById("supportForm");
-      const statusEl = document.getElementById("supportStatus");
+<main>
 
-      function setStatus(msg) { if (statusEl) statusEl.textContent = msg || ""; }
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Industrial automation help when production can’t wait</h1>
+      <p class="hero-sub">
+        PLCs, VFDs, safety systems, and controls troubleshooting.
+        Less downtime. More output. No guessing.
+      </p>
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        setStatus("Sending…");
+      <div class="hero-actions">
+        <a href="#support" class="btn btn-primary">Request downtime help</a>
+        <a href="tel:+18708062555" class="btn btn-danger">Plant down? Call now</a>
+      </div>
+    </div>
+  </section>
 
-        const fd = new FormData(form);
-        const payload = Object.fromEntries(fd.entries());
+  <!-- SUPPORT FORM -->
+  <section id="support" class="section">
+    <div class="container">
 
-        // If you have an endpoint, POST JSON to it
-        if (window.SUPPORT_ENDPOINT) {
-          try {
-            const r = await fetch(window.SUPPORT_ENDPOINT, {
-              method: "POST",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify(payload)
-            });
-            if (!r.ok) throw new Error("Request failed");
-            setStatus("Sent. We’ll respond ASAP.");
-            form.reset();
-            return;
-          } catch (err) {
-            console.error(err);
-            setStatus("Couldn’t send (network). Opening email draft…");
-          }
-        }
+      <h2>Request downtime help</h2>
+      <p class="section-sub">
+        The more detail you provide, the faster this gets solved.
+        If the line is stopped, don’t wait — call or text.
+      </p>
 
-        // Fallback: mailto draft
-        const subject = encodeURIComponent("Downtime Support Request");
-        const body = encodeURIComponent(
-          `Name: ${payload.name || ""}\n` +
-          `Company/Plant: ${payload.company || ""}\n` +
-          `Phone: ${payload.phone || ""}\n` +
-          `Email: ${payload.email || ""}\n` +
-          `Location: ${payload.location || ""}\n` +
-          `Urgency: ${payload.urgency || ""}\n` +
-          `Controls platform: ${payload.platform || ""}\n` +
-          `Machine/Line: ${payload.machineLine || ""}\n\n` +
-          `Issue:\n${payload.issue || ""}\n`
-        );
+      <form
+        class="support-form card"
+        method="POST"
+        action="https://getform.io/f/YOUR_GETFORM_ENDPOINT"
+      >
+        <input type="hidden" name="redirect" value="thank-you.html" />
 
-        window.location.href = `mailto:engineering@futureautomationllc.com?subject=${subject}&body=${body}`;
-        setStatus("Email draft opened.");
-      });
-    })();
-  </script>
-</section>
+        <div class="form-grid">
+          <div class="field">
+            <label>Name</label>
+            <input name="name" required />
+          </div>
+
+          <div class="field">
+            <label>Company / Plant</label>
+            <input name="company" />
+          </div>
+
+          <div class="field">
+            <label>Phone (best for emergencies)</label>
+            <input name="phone" type="tel" required />
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input name="email" type="email" required />
+          </div>
+
+          <div class="field">
+            <label>Location</label>
+            <input name="location" placeholder="City, State" />
+          </div>
+
+          <div class="field">
+            <label>Urgency</label>
+            <select name="urgency">
+              <option>Plant down (production stopped)</option>
+              <option>Production impacted</option>
+              <option>Non-urgent</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Controls platform</label>
+            <select name="platform">
+              <option>Select…</option>
+              <option>Allen-Bradley</option>
+              <option>Siemens</option>
+              <option>Lenze</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Machine / Line</label>
+            <input name="machine" placeholder="e.g. Debone Line 2 / Case Packer" />
+          </div>
+
+          <div class="field field-full">
+            <label>What’s happening?</label>
+            <textarea
+              name="issue"
+              rows="6"
+              placeholder="Faults, alarms, symptoms, what changed, what you've tried…"
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit request</button>
+
+        <p class="form-note">
+          By submitting, you agree we can contact you about this request.
+          No spam. No nonsense.
+        </p>
+      </form>
+
+      <div class="fast-options">
+        <h3>Fastest options</h3>
+        <p>If production is stopped, don’t wait on a form.</p>
+
+        <ul>
+          <li>🚨 <a href="tel:+18708062555">Plant down — call now</a></li>
+          <li>📩 <a href="sms:+18708062555">Text engineering</a></li>
+          <li>📧 <a href="mailto:engineering@futureautomationllc.com">engineering@futureautomationllc.com</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Future Automation LLC</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
