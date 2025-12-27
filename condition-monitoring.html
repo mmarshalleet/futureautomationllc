@@ -4,12 +4,134 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Condition Monitoring | Future Automation LLC</title>
-  <meta name="description" content="Condition monitoring and predictive maintenance using parts room + CMMS data and targeted sensing to reduce downtime." />
+  <meta name="description" content="Condition monitoring and predictive maintenance that starts with your CMMS and parts room, then adds targeted sensing where it actually pays off." />
 
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
+
+  <style>
+    /* Page-specific layout (keeps your global CSS intact) */
+    .hero-split{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 1.25rem;
+      align-items:center;
+    }
+    @media (max-width: 900px){ .hero-split{ grid-template-columns: 1fr; } }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panel-pad{ padding: 1.15rem; }
+
+    .kpi-row{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .8rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 900px){ .kpi-row{ grid-template-columns: 1fr; } }
+    .kpi{
+      padding: .95rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+    }
+    .kpi strong{ display:block; font-size: 1rem; }
+    .kpi span{ color: rgba(229,231,235,.72); font-size:.92rem; }
+
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 980px){ .steps{ grid-template-columns: 1fr; } }
+    .step{
+      position: relative;
+      padding: 1.15rem;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+    }
+    .step .num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      font-weight: 900;
+      color: #071018;
+      background: linear-gradient(135deg, rgba(56,189,248,.95), rgba(34,211,238,.85));
+      border: 1px solid rgba(56,189,248,.35);
+      margin-bottom: .65rem;
+    }
+
+    .icon-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 980px){ .icon-grid{ grid-template-columns: 1fr; } }
+
+    .icon-card{
+      padding: 1.1rem;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      display:flex;
+      gap: .85rem;
+      align-items:flex-start;
+    }
+    .icon{
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(56,189,248,.35);
+      background: rgba(56,189,248,.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex: 0 0 auto;
+    }
+    .icon svg{ width: 24px; height: 24px; display:block; }
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .two-col{ grid-template-columns: 1fr; } }
+
+    .callout{
+      padding: 1.25rem;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(56,189,248,.35);
+      background: linear-gradient(135deg, rgba(56,189,248,.10), rgba(34,211,238,.06));
+      box-shadow: var(--shadow);
+    }
+
+    details{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding: .85rem .95rem;
+    }
+    details + details{ margin-top: .65rem; }
+    summary{
+      cursor:pointer;
+      font-weight: 850;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .faq-body{ color: rgba(229,231,235,.78); margin-top:.5rem; }
+  </style>
 </head>
 
 <body>
@@ -40,140 +162,326 @@
 
 <main class="container">
 
-  <section class="section hero" style="padding-bottom: 1.2rem;">
-    <h1>Condition Monitoring<br>Predict failures. Schedule fixes.</h1>
-    <p class="hero-sub">
-      Predictive maintenance doesn’t start with new sensors.
-      It starts with the data you already have.
-    </p>
+  <!-- HERO -->
+  <section class="section hero">
+    <div class="hero-split">
+      <div>
+        <h1>Condition Monitoring<br>That Actually Gets Used</h1>
+        <p class="hero-sub">
+          Predictive maintenance doesn’t start with buying a pile of sensors.
+          It starts with the data you already have — then adds targeted monitoring on the assets that matter most.
+        </p>
 
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="/request-consult.html?service=Condition%20Monitoring%20%2F%20Predictive%20Maintenance">Request a consult</a>
-      <a class="btn btn-quiet" href="/services.html">View services</a>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/request-consult.html?service=Condition%20Monitoring%20%2F%20Predictive%20Maintenance">Request a consult</a>
+          <a class="btn btn-quiet" href="/services.html">View services</a>
+          <a class="btn btn-quiet" href="/#support">Plant down support</a>
+        </div>
+
+        <div class="kpi-row" aria-label="Outcomes">
+          <div class="kpi">
+            <strong>Fewer surprises</strong>
+            <span>Earlier warnings before failure turns into downtime.</span>
+          </div>
+          <div class="kpi">
+            <strong>Smarter spares</strong>
+            <span>Stock what matters, stop hoarding dead money.</span>
+          </div>
+          <div class="kpi">
+            <strong>Planned work</strong>
+            <span>Fix it when production can handle it — not mid-shift.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" aria-hidden="true">
+        <div class="panel-pad">
+          <!-- Inline “sensor → trend → decision” illustration -->
+          <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="900" height="600" rx="28" fill="rgba(0,0,0,.10)"/>
+            <rect x="60" y="70" width="360" height="460" rx="22" fill="rgba(15,23,42,.75)" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+            <text x="95" y="125" fill="rgba(229,231,235,.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="22" font-weight="800">Assets</text>
+
+            <!-- motor -->
+            <rect x="110" y="160" width="250" height="120" rx="18" fill="rgba(11,18,32,.75)" stroke="rgba(56,189,248,.25)" stroke-width="3"/>
+            <circle cx="360" cy="220" r="36" fill="rgba(11,18,32,.75)" stroke="rgba(56,189,248,.25)" stroke-width="3"/>
+            <circle cx="360" cy="220" r="10" fill="rgba(229,231,235,.75)"/>
+            <rect x="145" y="135" width="70" height="42" rx="12" fill="rgba(11,18,32,.75)" stroke="rgba(56,189,248,.35)" stroke-width="3"/>
+            <circle cx="178" cy="156" r="8" fill="rgba(34,197,94,.95)"/>
+
+            <!-- flow arrow -->
+            <path d="M430 300 C 490 300, 500 300, 560 300" fill="none" stroke="rgba(56,189,248,.35)" stroke-width="6" stroke-linecap="round"/>
+            <path d="M552 285 L 585 300 L 552 315" fill="none" stroke="rgba(56,189,248,.35)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- dashboard -->
+            <rect x="560" y="120" width="290" height="180" rx="22" fill="rgba(15,23,42,.75)" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+            <text x="595" y="165" fill="rgba(229,231,235,.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="20" font-weight="800">Trends</text>
+            <rect x="590" y="180" width="230" height="90" rx="16" fill="rgba(11,18,32,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <path d="M610 255 L 635 238 L 660 252 L 685 224 L 710 246 L 735 214 L 800 260"
+              fill="none" stroke="rgba(34,197,94,.95)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- decision box -->
+            <rect x="560" y="330" width="290" height="200" rx="22" fill="rgba(15,23,42,.75)" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+            <text x="595" y="375" fill="rgba(229,231,235,.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="20" font-weight="800">Next Actions</text>
+            <rect x="590" y="395" width="230" height="40" rx="14" fill="rgba(11,18,32,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <rect x="590" y="445" width="230" height="40" rx="14" fill="rgba(11,18,32,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <rect x="590" y="495" width="230" height="20" rx="10" fill="rgba(56,189,248,.12)" stroke="rgba(56,189,248,.25)" stroke-width="2"/>
+          </svg>
+
+          <p class="muted small" style="margin:.85rem 0 0;">
+            The goal isn’t “more data.” The goal is <strong>better decisions</strong>.
+          </p>
+        </div>
+      </div>
     </div>
-
-    <p class="muted small" style="margin-top:.85rem;">
-      Practical, plant-ready reliability work — built for real uptime pressure.
-    </p>
   </section>
 
+  <!-- THE POINT -->
   <section class="section">
-    <h2>Start with the parts room</h2>
+    <h2>What makes this different</h2>
     <p class="section-sub">
-      Your storeroom and CMMS already contain early-warning signals — repeat failures, emergency part pulls, and downtime patterns.
+      Most condition monitoring fails because it becomes a dashboard nobody trusts. We keep it plant-ready:
+      start with what you already track, prove value fast, then expand only where it pays off.
     </p>
 
-    <div class="cards">
+    <div class="two-col">
       <div class="card">
-        <h3>What we look for</h3>
-        <ul class="muted" style="margin:.5rem 0 0; padding-left:1.2rem;">
-          <li>Repeated bearing, seal, motor, or gearbox replacements on the same assets</li>
-          <li>Shortening time-between-failure on specific components</li>
-          <li>High-usage or constantly missing spares</li>
-          <li>Emergency pulls vs planned work</li>
-          <li>Long lead-time items that consistently extend downtime</li>
+        <h3>Start with your CMMS + parts room</h3>
+        <p class="muted">
+          Repeat failures and emergency part pulls are early warnings. We translate that noise into a short list of
+          assets and failure modes worth monitoring.
+        </p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>Repeat bearing/motor/gearbox replacements on the same assets</li>
+          <li>Shortening time-between-failure</li>
+          <li>Downtime patterns tied to load, product, washdown, or shift</li>
+          <li>Long lead-time parts that extend downtime</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Why it works</h3>
+        <h3>Add sensors where it pays off</h3>
         <p class="muted">
-          Parts usage trends often show deterioration weeks or months before a breakdown.
-          We correlate usage with runtime, operating conditions, and failure history to turn “repeat problems”
-          into planned work — and smarter stocking.
+          We don’t blanket the plant with sensors. We target the few assets that cause the most pain
+          and give you alarms and trends that your team will actually use.
         </p>
-      </div>
-
-      <div class="card">
-        <h3>Fast time to value</h3>
-        <p class="muted">
-          Starting with existing data means you get results fast — without waiting months to “train” a model
-          or buying sensors for every piece of equipment.
-        </p>
+        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+          <li>High-impact bottlenecks</li>
+          <li>Hard-to-access drives/gearboxes</li>
+          <li>Assets with expensive collateral damage</li>
+          <li>Equipment where “failure happens fast”</li>
+        </ul>
       </div>
     </div>
   </section>
 
+  <!-- HOW IT WORKS -->
   <section class="section">
-    <h2>Condition monitoring where it pays off</h2>
-    <p class="section-sub">
-      We add targeted sensing on high-impact assets — not a sensor blanket that turns into another ignored dashboard.
-    </p>
+    <h2>How it works</h2>
+    <p class="section-sub">Three steps. Fast time-to-value. No science-fair projects.</p>
 
-    <div class="cards">
-      <div class="card">
-        <h3>Vibration</h3>
-        <p class="muted">Bearings, gearboxes, conveyors, fans, pumps — misalignment, imbalance, wear, looseness.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Baseline + shortlist</h3>
+        <p class="muted">
+          Review CMMS/parts trends, downtime notes, and the usual suspects. Identify the top failure modes and assets
+          worth monitoring.
+        </p>
       </div>
-      <div class="card">
-        <h3>Temperature & thermal</h3>
-        <p class="muted">Friction points, motors, electrical cabinets, drives — overheating and abnormal heat patterns.</p>
+
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Targeted monitoring</h3>
+        <p class="muted">
+          Add vibration/thermal/electrical monitoring on the short list. Set practical thresholds and trend views
+          your team can act on.
+        </p>
       </div>
-      <div class="card">
-        <h3>Electrical / motor health</h3>
-        <p class="muted">Electrical imbalance, insulation degradation, rotor/stator issues, abnormal load signatures.</p>
-      </div>
-      <div class="card">
-        <h3>Ultrasonic / acoustic</h3>
-        <p class="muted">Air leaks, valve leakage, cavitation, early friction changes that vibration may miss.</p>
-      </div>
-      <div class="card">
-        <h3>Oil & lubrication condition</h3>
-        <p class="muted">Contamination and breakdown trends so changes happen at the right time — not too early or too late.</p>
-      </div>
-      <div class="card">
-        <h3>Process & performance trends</h3>
-        <p class="muted">Pressure/flow/speed/output/downtime patterns tied back to maintenance and parts history.</p>
+
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Action plan + handoff</h3>
+        <p class="muted">
+          Clear “what to do next” guidance: inspect, align, lubricate, replace, or watch. Documented so it doesn’t
+          become tribal knowledge.
+        </p>
       </div>
     </div>
   </section>
 
+  <!-- WHAT WE MONITOR -->
+  <section class="section">
+    <h2>What we monitor</h2>
+    <p class="section-sub">Pick the right signals for the failure mode. Don’t guess.</p>
+
+    <div class="icon-grid">
+      <div class="icon-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12c3-6 6 6 9 0s6 6 9 0" fill="none" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Vibration</h3>
+          <p class="muted">Bearings, gearboxes, fans, pumps, conveyors — misalignment, imbalance, looseness, wear.</p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2v12" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M9 14a3 3 0 0 0 6 0" fill="none" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 22h8" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Temperature / thermal</h3>
+          <p class="muted">Motors, cabinets, drives, friction points — overheating, abnormal patterns, weak connections.</p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" fill="none" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Electrical signatures</h3>
+          <p class="muted">Load trends, imbalance, overheating under low speed, abnormal torque/current behavior.</p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 10c5-6 11 6 16 0" fill="none" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 14c5-6 11 6 16 0" fill="none" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Ultrasonic / acoustic</h3>
+          <p class="muted">Air leaks, valve leakage, cavitation, friction changes that vibration may miss.</p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3c4 6 4 10 0 18C8 13 8 9 12 3z" fill="none" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Lubrication / oil condition</h3>
+          <p class="muted">Contamination and breakdown trends so changes happen at the right time.</p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 18V6" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 18V10" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 18V8" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 18V12" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M20 18V7" stroke="rgba(229,231,235,.9)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Process trends</h3>
+          <p class="muted">Pressure/flow/speed/output/downtime patterns tied to maintenance history.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERABLES -->
   <section class="section">
     <h2>What you get</h2>
+    <p class="section-sub">Not a data dump. Deliverables your maintenance team can run with.</p>
 
     <div class="cards">
       <div class="card">
-        <h3>Fewer surprises</h3>
-        <p class="muted">Earlier fault detection and fewer “it died mid-shift” events.</p>
+        <h3>Asset shortlist</h3>
+        <p class="muted">Top assets and failure modes worth monitoring, ranked by downtime impact and cost.</p>
       </div>
       <div class="card">
-        <h3>Smarter spares</h3>
-        <p class="muted">Risk-based stocking: fewer shelves of dead money, fewer missing critical parts.</p>
+        <h3>Baselines + thresholds</h3>
+        <p class="muted">Practical alarms and trend views — tuned to your environment, not a textbook.</p>
       </div>
       <div class="card">
-        <h3>Planned work</h3>
-        <p class="muted">Schedule repairs when it fits production — not when the line forces your hand.</p>
+        <h3>Actionable playbooks</h3>
+        <p class="muted">When it drifts: what to inspect, what to measure, what to replace, and when.</p>
       </div>
       <div class="card">
-        <h3>Better uptime</h3>
-        <p class="muted">Reduced unplanned downtime and fewer repeat failures.</p>
+        <h3>Spare strategy</h3>
+        <p class="muted">Stock what matters, reduce “missing critical part” downtime, and stop guessing.</p>
       </div>
       <div class="card">
-        <h3>Clear next actions</h3>
-        <p class="muted">No data dump. You get actionable guidance: what’s drifting, what to inspect, what to replace, and when.</p>
+        <h3>Documentation</h3>
+        <p class="muted">Clear notes so the next shift isn’t starting from zero.</p>
       </div>
       <div class="card">
-        <h3>Built for real plants</h3>
-        <p class="muted">Works with legacy equipment and modern systems. We meet you where you are.</p>
+        <h3>Realistic rollout</h3>
+        <p class="muted">Start small, prove value, expand only when results justify it.</p>
       </div>
     </div>
 
-    <div class="card" style="margin-top:1rem; max-width:980px;">
-      <h3>Use what you already know. Measure what you don’t.</h3>
-      <p class="muted" style="margin-top:.35rem;">
+    <div class="callout" style="margin-top:1rem;">
+      <h3 style="margin:0;">Use what you already know. Measure what you don’t.</h3>
+      <p style="margin:.35rem 0 0;">
         Reactive maintenance costs more. Preventive maintenance guesses. Condition monitoring gives you answers.
       </p>
-      <div class="support-actions" style="margin-top:.85rem;">
+      <div class="hero-actions" style="margin-top:.85rem;">
         <a class="btn btn-primary" href="/request-consult.html?service=Condition%20Monitoring%20%2F%20Predictive%20Maintenance">Request a consult</a>
         <a class="btn btn-quiet" href="/services.html">See all services</a>
       </div>
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="section">
+    <h2>FAQ</h2>
+    <p class="section-sub">Quick answers to the stuff everyone asks.</p>
+
+    <details>
+      <summary>Do we need new sensors to get value?</summary>
+      <div class="faq-body">
+        Not always. We start with CMMS/parts usage and downtime notes first. Sensors come second — only where it makes financial sense.
+      </div>
+    </details>
+
+    <details>
+      <summary>Will this work on older equipment?</summary>
+      <div class="faq-body">
+        Yes. That’s the point. We’re not waiting for a full modernization to reduce downtime.
+        Monitoring and trend-based decisions can be layered onto legacy systems.
+      </div>
+    </details>
+
+    <details>
+      <summary>How do you prevent “ignored dashboard syndrome”?</summary>
+      <div class="faq-body">
+        We keep outputs simple: a short list of assets, trend views that answer “is it getting worse,”
+        and clear actions your team can execute. If it can’t drive a decision, it doesn’t belong.
+      </div>
+    </details>
+
+    <details>
+      <summary>What do you need from us to start?</summary>
+      <div class="faq-body">
+        CMMS exports (even partial), parts usage history, downtime notes, and a list of your biggest pain assets.
+        If you don’t have it clean, we can still start with what you’ve got.
+      </div>
+    </details>
+  </section>
+
 </main>
 
 <footer class="footer">
-  <p class="muted small">© Future Automation LLC</p>
+  <p class="muted small">© Future Automation LLC — Less downtime. More output. No guessing.</p>
 </footer>
 
 </body>
