@@ -3,13 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Future Automation LLC</title>
-  <meta name="description" content="Industrial automation support. PLC, HMI, VFD troubleshooting, retrofits, and downtime help." />
+  <title>Future Automation LLC | Industrial Automation Support</title>
+  <meta name="description" content="Industrial automation support for plants that can’t afford downtime. PLC, HMI, VFD troubleshooting, retrofits, and condition monitoring — remote or on-site." />
 
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
+
+  <style>
+    /* Page-specific upgrades (doesn't touch your global CSS) */
+    .hero-split{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 1.25rem;
+      align-items:center;
+    }
+    @media (max-width: 900px){ .hero-split{ grid-template-columns: 1fr; } }
+
+    .badge-row{
+      display:flex; flex-wrap:wrap; gap:.5rem;
+      margin-top: 1rem;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:.45rem;
+      padding:.35rem .7rem; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(229,231,235,.86);
+      font-size:.9rem;
+      white-space:nowrap;
+    }
+
+    .hero-media{
+      border-radius: var(--radius2);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero-media .pad{ padding: 1.1rem; }
+    .hero-media svg{ width:100%; height:auto; display:block; }
+
+    .proof-strip{
+      display:flex; flex-wrap:wrap; gap:.55rem;
+      margin-top: 1rem;
+    }
+    .proof-pill{
+      font-size:.85rem;
+      padding:.25rem .6rem;
+      border-radius:999px;
+      border:1px solid rgba(56,189,248,.32);
+      background: rgba(56,189,248,.08);
+      color: rgba(229,231,235,.9);
+    }
+
+    .split-wide{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items:start;
+    }
+    @media (max-width: 900px){ .split-wide{ grid-template-columns: 1fr; } }
+
+    .cta-band{
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(56,189,248,.35);
+      background: linear-gradient(135deg, rgba(56,189,248,.10), rgba(34,211,238,.06));
+      box-shadow: var(--shadow);
+    }
+    .cta-band h3{ margin:0; }
+    .cta-band p{ margin:.35rem 0 0; color: rgba(229,231,235,.78); }
+    .cta-band .hero-actions{ margin-top:.85rem; }
+
+    .mini-note{
+      margin-top:.75rem;
+      color: rgba(229,231,235,.65);
+      font-size:.92rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -42,327 +116,201 @@
 
   <!-- HERO -->
   <section class="section hero">
-    <h1>Industrial Automation<br>No Guessing. No Fluff.</h1>
-    <p class="hero-sub">
-      Fast, practical controls support for plants that can’t afford downtime.
-      PLCs, HMIs, VFDs, and panels — when production is running and the pressure is real.
-    </p>
+    <div class="hero-split">
+      <div>
+        <h1>Industrial Automation Support<br>Without the Guessing</h1>
+        <p class="hero-sub">
+          PLC, HMI, VFD, and controls troubleshooting for plants that can’t afford downtime.
+          Remote or on-site — practical fixes, clean documentation, and less “try it and pray.”
+        </p>
 
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#support">Request downtime help</a>
-      <a class="btn btn-quiet" href="#use-cases">Use cases</a>
-      <a class="btn btn-quiet" href="/condition-monitoring.html">Condition monitoring</a>
-      <a class="btn btn-quiet" href="/equipment.html">Browse equipment</a>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#support">Request downtime help</a>
+          <a class="btn btn-quiet" href="/services.html">View services</a>
+          <a class="btn btn-quiet" href="/condition-monitoring.html">Condition monitoring</a>
+        </div>
+
+        <div class="badge-row" aria-label="Highlights">
+          <div class="badge">⚡ Fast triage</div>
+          <div class="badge">🧠 Root-cause fixes</div>
+          <div class="badge">🧾 Clear notes for your team</div>
+          <div class="badge">🛰️ Remote-friendly</div>
+        </div>
+
+        <div class="proof-strip" aria-label="Systems">
+          <span class="proof-pill">Allen-Bradley</span>
+          <span class="proof-pill">Siemens</span>
+          <span class="proof-pill">PowerFlex / Lenze / Danfoss</span>
+          <span class="proof-pill">EtherNet/IP • Profinet • IO</span>
+        </div>
+
+        <p class="mini-note">
+          Purchasing/PO/combined shipping? Use <a href="/request-invoice.html">Request Invoice</a>.
+          Plant down? Scroll to Support and call/text.
+        </p>
+      </div>
+
+      <div class="hero-media" aria-hidden="true">
+        <div class="pad">
+          <!-- Inline industrial automation illustration (no extra assets needed) -->
+          <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bgG" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="rgba(56,189,248,.22)"/>
+                <stop offset="1" stop-color="rgba(34,211,238,.05)"/>
+              </linearGradient>
+            </defs>
+            <rect width="900" height="600" rx="28" fill="rgba(0,0,0,.10)"/>
+            <rect x="40" y="40" width="820" height="520" rx="22" fill="url(#bgG)" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+
+            <!-- Cabinet -->
+            <rect x="95" y="110" width="380" height="380" rx="18" fill="rgba(15,23,42,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <rect x="130" y="150" width="310" height="120" rx="14" fill="rgba(11,18,32,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <g>
+              <rect x="150" y="175" width="55" height="70" rx="10" fill="rgba(17,27,51,.85)" stroke="rgba(56,189,248,.35)" stroke-width="2"/>
+              <rect x="215" y="175" width="55" height="70" rx="10" fill="rgba(17,27,51,.85)" stroke="rgba(56,189,248,.22)" stroke-width="2"/>
+              <rect x="280" y="175" width="55" height="70" rx="10" fill="rgba(17,27,51,.85)" stroke="rgba(56,189,248,.22)" stroke-width="2"/>
+              <rect x="345" y="175" width="55" height="70" rx="10" fill="rgba(17,27,51,.85)" stroke="rgba(56,189,248,.22)" stroke-width="2"/>
+              <circle cx="178" cy="192" r="6" fill="rgba(34,197,94,.95)"/>
+              <circle cx="243" cy="192" r="6" fill="rgba(245,158,11,.95)"/>
+              <circle cx="308" cy="192" r="6" fill="rgba(34,197,94,.95)"/>
+              <circle cx="373" cy="192" r="6" fill="rgba(239,68,68,.95)"/>
+            </g>
+
+            <!-- Dashboard -->
+            <rect x="520" y="110" width="285" height="150" rx="18" fill="rgba(15,23,42,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <rect x="545" y="140" width="235" height="90" rx="14" fill="rgba(11,18,32,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <path d="M560 212 L590 190 L620 206 L650 175 L680 202 L710 168 L765 210"
+              fill="none" stroke="rgba(34,197,94,.95)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- Drive + motor -->
+            <rect x="520" y="305" width="285" height="185" rx="18" fill="rgba(15,23,42,.75)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+            <rect x="545" y="330" width="120" height="135" rx="14" fill="rgba(11,18,32,.75)" stroke="rgba(56,189,248,.25)" stroke-width="3"/>
+            <rect x="685" y="350" width="95" height="95" rx="18" fill="rgba(11,18,32,.75)" stroke="rgba(56,189,248,.25)" stroke-width="3"/>
+            <circle cx="732" cy="397" r="26" fill="rgba(17,27,51,.85)" stroke="rgba(255,255,255,.10)" stroke-width="3"/>
+
+            <!-- Wiring lines -->
+            <path d="M475 250 C 525 260, 510 290, 520 305" fill="none" stroke="rgba(56,189,248,.35)" stroke-width="5" stroke-linecap="round"/>
+            <path d="M475 320 C 520 330, 505 365, 520 375" fill="none" stroke="rgba(56,189,248,.25)" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
     </div>
-
-    <p class="muted small" style="margin-top:.85rem;">
-      Plant down = call/text. Purchasing/PO/combined shipping = <a href="/request-invoice.html">Request Invoice</a>.
-    </p>
   </section>
 
   <!-- WHAT YOU GET -->
-  <section id="what-you-get" class="section">
+  <section class="section" id="what">
     <h2>What you get</h2>
     <p class="section-sub">
-      Clear outcomes. Less downtime. Less finger-pointing. More “it’s fixed.”
+      Clear outcomes. Less downtime. Fewer repeat failures. Better handoff to your maintenance team.
     </p>
 
     <div class="cards">
       <div class="card">
         <h3>Fast triage</h3>
-        <p>We isolate what failed and why — not just “reset it and hope.”</p>
+        <p>We isolate what failed and why — not just “cycle power and hope.”</p>
       </div>
       <div class="card">
         <h3>Root-cause fixes</h3>
-        <p>Stop repeat failures by addressing the real problem: wiring, parameters, logic, comms, hardware.</p>
+        <p>Wiring, parameters, logic, comms, hardware — we fix the real problem so it doesn’t boomerang next shift.</p>
       </div>
       <div class="card">
         <h3>Practical documentation</h3>
-        <p>What we changed, why we changed it, and what to watch next time.</p>
+        <p>What changed, why it changed, and what to watch next time.</p>
       </div>
       <div class="card">
-        <h3>Better uptime habits</h3>
-        <p>Quick reliability wins: alarms that matter, spares that make sense, settings that don’t drift.</p>
+        <h3>Panel reliability</h3>
+        <p>Clean, safe cabinets that don’t turn into “surprise smoke” during startup.</p>
+      </div>
+      <div class="card">
+        <h3>Remote support that works</h3>
+        <p>Clear steps for on-site techs: diagnosis, options, and a plan — not a lecture.</p>
       </div>
       <div class="card">
         <h3>Condition monitoring</h3>
-        <p>Use parts-room + CMMS trends to spot failures early, then add targeted sensors where it pays off.</p>
+        <p>Use your existing CMMS/parts trends first, then add sensors where the ROI is real.</p>
         <p class="muted small" style="margin-top:.6rem;"><a href="/condition-monitoring.html">See how it works →</a></p>
-      </div>
-      <div class="card">
-        <h3>Support that scales</h3>
-        <p>Remote help for on-site techs: diagnosis, steps, and a plan — not a lecture.</p>
-      </div>
-      <div class="card">
-        <h3>Clean, safe panels</h3>
-        <p>Fix hacked controls cabinets so the next shutdown isn’t “surprise smoke.”</p>
       </div>
     </div>
   </section>
 
-<!-- USE CASES -->
-<section id="use-cases" class="section">
-  <h2>Use cases</h2>
+  <!-- SERVICES (SCANNABLE) -->
+  <section class="section" id="services">
+    <h2>Services</h2>
+    <p class="section-sub">A clean short list. Full details are on <a href="/services.html">Services</a>.</p>
 
-  <!-- Poultry / Food -->
-  <div class="card" style="max-width: 980px; margin-bottom: 1rem;">
-    <h3>Poultry / Food processing</h3>
-    <p class="muted" style="margin-top:.35rem;">
-      High uptime pressure, washdown environments, vacuum/air systems, and processes that can’t drift.
-    </p>
-
-    <div class="cards" style="margin-top: 1rem;">
+    <div class="cards">
       <div class="card">
-        <h3>Leg debone / cut-up line stops</h3>
-        <p class="muted">Intermittent faults, nuisance trips, “only happens under load.”</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>Trace signals + motion + I/O to prove root cause</li>
-          <li>Fix it once so it doesn’t boomerang next shift</li>
-          <li>Document changes for maintenance handoff</li>
-        </ul>
+        <h3>PLC & HMI troubleshooting</h3>
+        <p>Intermittent faults, I/O issues, comms drops, logic gremlins.</p>
       </div>
-
       <div class="card">
-        <h3>Vacuum system feedback issues</h3>
-        <p class="muted">Bad sensor scaling, wrong signal type, unstable control.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>4–20mA vs 0–10V mismatches, scaling, noise</li>
-          <li>Restore accurate feedback so the system behaves</li>
-          <li>Avoid replacing “good” parts out of frustration</li>
-        </ul>
+        <h3>VFD setup & diagnostics</h3>
+        <p>Trips, tuning, braking, encoder feedback, motor/drive mismatch.</p>
       </div>
-
       <div class="card">
-        <h3>Washdown electrical + panel reliability</h3>
-        <p class="muted">Moisture, corrosion, loose terminations, repeat faults.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>Panel cleanup/redesign for serviceability and safety</li>
-          <li>Fix termination/grounding issues that cause ghosts</li>
-          <li>Reduce repeat downtime from “mystery shorts”</li>
-        </ul>
+        <h3>Retrofits & migrations</h3>
+        <p>Replace obsolete hardware without wrecking the process.</p>
+      </div>
+      <div class="card">
+        <h3>Condition monitoring</h3>
+        <p>Vibration, thermal, electrical signatures, and trend-based maintenance planning.</p>
+      </div>
+      <div class="card">
+        <h3>Controls panels</h3>
+        <p>Cleanup, rebuilds, documentation, and serviceability upgrades.</p>
+      </div>
+      <div class="card">
+        <h3>Remote troubleshooting</h3>
+        <p>When you need a second brain right now — not next week.</p>
       </div>
     </div>
-  </div>
 
-  <!-- Manufacturing -->
-  <div class="card" style="max-width: 980px; margin-bottom: 1rem;">
-    <h3>Manufacturing / production lines</h3>
-    <p class="muted" style="margin-top:.35rem;">
-      Conveyors, drives, sensors, motion, comms—usually a mix of “it used to work” and “nobody wants to touch it.”
-    </p>
-
-    <div class="cards" style="margin-top: 1rem;">
-      <div class="card">
-        <h3>VFD trips + motor overheating</h3>
-        <p class="muted">Low-speed heat, overloads, nuisance faults, premature motor failures.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>Review drive mode, accel/decel, current limits, carrier freq</li>
-          <li>Correct V/Hz / boost / vector tuning for the real load</li>
-          <li>Protect motors and stop repeat failures</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Intermittent I/O and sensor faults</h3>
-        <p class="muted">False trips, “it clears itself,” random rejects.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>Prove whether it’s wiring, noise, device failure, or logic</li>
-          <li>Correct the cause (not the symptom)</li>
-          <li>Leave notes + a quick check procedure for techs</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Comms drops and HMI freezes</h3>
-        <p class="muted">Random “comms lost,” drives faulting, I/O dropping off network.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>Physical layer + topology + device load checks</li>
-          <li>Fix terminations, shielding/grounding, switch issues</li>
-          <li>Stability under production load</li>
-        </ul>
+    <div class="cta-band">
+      <h3>Plant down or stuck chasing a repeat fault?</h3>
+      <p>Send details and we’ll tell you straight if it’s something we can solve fast.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#support">Request downtime help</a>
+        <a class="btn btn-quiet" href="/request-consult.html">Request a consult</a>
+        <a class="btn btn-quiet" href="/services.html">All services</a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- New Product Development / Testing -->
-  <div class="card" style="max-width: 980px;">
-    <h3>New product development & testing</h3>
-    <p class="muted" style="margin-top:.35rem;">
-      You need repeatable results, clean data, and controls that don’t sabotage your test.
-    </p>
-
-    <div class="cards" style="margin-top: 1rem;">
-      <div class="card">
-        <h3>Test stand automation</h3>
-        <p class="muted">Build a controllable, repeatable test process with proper interlocks.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>Sequencing, safety, and operator-friendly HMI</li>
-          <li>Parameter recipes for consistent test runs</li>
-          <li>Logging of key values (pass/fail + trends)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Instrumentation & signal conditioning</h3>
-        <p class="muted">Sensors are only helpful when the signal is correct and stable.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>4–20mA / 0–10V / RTD / load cell integration</li>
-          <li>Scaling, filtering, grounding/noise control</li>
-          <li>Reliable measurements you can trust</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Prototype debugging under load</h3>
-        <p class="muted">When it fails in the real world, we isolate why—fast.</p>
-        <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-          <li>Root-cause analysis with repeatable reproduction</li>
-          <li>Control changes + documentation for design reviews</li>
-          <li>Turn “random failures” into known failure modes</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="support-actions" style="margin-top:1rem;">
-    <a class="btn btn-primary" href="#support">Plant down help</a>
-    <a class="btn btn-quiet" href="/request-invoice.html">Request invoice / quote</a>
-    <a class="btn btn-quiet" href="/services.html">All services</a>
-  </div>
-</section>
-
-  <!-- WHO THIS IS FOR -->
-  <section id="who" class="section">
-    <h2>Who this is for</h2>
+  <!-- EQUIPMENT -->
+  <section class="section" id="equipment">
+    <h2>Equipment sales</h2>
     <p class="section-sub">
-      If you’re tired of repeating the same failures or gambling on guesses, you’re in the right place.
+      Surplus industrial automation parts — organized listings with clear condition notes.
+      Need a PO, combined shipping, or PayPal invoice? Use the invoice request form.
     </p>
 
-    <div class="card" style="max-width: 980px;">
-      <div class="form-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem;">
-        <div>
-          <h3>Best fit</h3>
-          <ul class="muted" style="margin:.5rem 0 0; padding-left: 1.2rem;">
-            <li>Plants with downtime pressure</li>
-            <li>Maintenance teams that need a second brain</li>
-            <li>Repeat trips, nuisance trips, intermittent faults</li>
-            <li>Obsolete controls that “still run”… until they don’t</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Not a great fit</h3>
-          <ul class="muted" style="margin:.5rem 0 0; padding-left: 1.2rem;">
-            <li>“Just tell me what I want to hear” situations</li>
-            <li>One-time band-aids with no interest in fixing root cause</li>
-            <li>Ignoring safety, documentation, or basic electrical practice</li>
-          </ul>
-        </div>
-      </div>
-
-      <p class="muted small" style="margin-top:1rem;">
-        If you’re not sure, send details. We’ll tell you straight if it’s something we can solve fast.
-      </p>
+    <div class="support-actions">
+      <a class="btn btn-primary" href="/equipment.html">Browse equipment</a>
+      <a class="btn btn-quiet" href="/request-invoice.html">Request invoice / quote</a>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section id="how" class="section">
+  <section class="section" id="how">
     <h2>How it works</h2>
     <p class="section-sub">Simple process. No mystery meetings. No “circle back.”</p>
 
     <div class="cards">
       <div class="card">
-        <h3>1) Tell us what’s happening</h3>
-        <p>Symptoms, what changed, what trips, what you’ve already checked. Photos help.</p>
+        <h3>1) Send the symptoms</h3>
+        <p>Fault codes, photos, what changed, what you’ve tried. The more specific, the faster we move.</p>
       </div>
       <div class="card">
-        <h3>2) We troubleshoot and fix</h3>
+        <h3>2) Troubleshoot and fix</h3>
         <p>Remote guidance or on-site support depending on severity and access.</p>
       </div>
       <div class="card">
-        <h3>3) You get the notes</h3>
-        <p>What failed, what we changed, and what to monitor so it doesn’t come back next week.</p>
+        <h3>3) Handoff + notes</h3>
+        <p>What failed, what we changed, and what to monitor so it doesn’t return.</p>
       </div>
     </div>
   </section>
-
-  <!-- RECENT WORK / PROOF -->
-  <section id="recent" class="section">
-    <h2>Recent work</h2>
-    <p class="section-sub">
-      A few real examples (more available upon request).
-    </p>
-
-    <div class="card" style="max-width: 980px;">
-      <ul class="muted" style="margin:.25rem 0 0; padding-left:1.2rem;">
-  <li><strong>Poultry line motor issue:</strong> found root cause after outside technicians couldn’t, fixed permanently — no follow-up service needed.</li>
-  <li><strong>Vacuum system feedback:</strong> corrected sensor/output mismatch (4–20mA vs 0–10V), restored function, canceled scheduled tech support.</li>
-  <li><strong>Controls panels:</strong> redesigned multiple panels to improve reliability, safety, and serviceability (before/after images available).</li>
-  <li><strong>Motor overheating:</strong> traced failures to low-frequency operation without proper V/Hz boost; recommended manual tuning to protect motors and extend life.</li>
-  <li><strong>Washdown reliability:</strong> eliminated repeat faults by correcting terminations, grounding/shielding, and moisture-related failure points.</li>
-  <li><strong>Comms stability:</strong> stopped random network drops by fixing topology/termination issues and removing a failing switch from the system.</li>
-  <li><strong>Test stand support:</strong> created repeatable sequences + recipe parameters + basic logging so prototype runs are consistent and reviewable.</li>
-
-      </ul>
-    </div>
-  </section>
-
-  <!-- SERVICES (SHORT) -->
-  <section id="services" class="section">
-    <h2>Services</h2>
-    <p class="section-sub">
-      Here’s the short list. The full list is on <a href="/services.html">Services</a>.
-    </p>
-
-    <div class="cards">
-      <div class="card">
-        <h3>PLC & HMI Troubleshooting</h3>
-        <p>Logic faults, I/O issues, comms failures, and intermittent weirdness.</p>
-      </div>
-      <div class="card">
-        <h3>VFD Setup & Diagnostics</h3>
-        <p>Trips, tuning, braking, encoder feedback, and motor/drive mismatch.</p>
-      </div>
-      <div class="card">
-        <h3>Controls Retrofits</h3>
-        <p>Obsolete hardware replacements without wrecking the process.</p>
-      </div>
-    </div>
-
-    <div class="support-actions" style="margin-top:1rem;">
-      <a class="btn btn-primary" href="/services.html">View all services</a>
-      <a class="btn btn-quiet" href="#support">Request downtime help</a>
-    </div>
-  </section>
-
-  <!-- EQUIPMENT SALES -->
-  <section id="equipment-sales" class="section">
-    <h2>Equipment sales</h2>
-    <p class="section-sub">
-      We sell industrial automation parts. Listings are live and organized by category.
-      Need a PO, combined shipping, or a PayPal invoice? Use the invoice request form.
-    </p>
-
-    <div class="support-actions">
-      <a class="btn btn-primary" href="/equipment.html">Browse live listings</a>
-      <a class="btn btn-quiet" href="/request-invoice.html">Request an invoice</a>
-    </div>
-
-    <p class="muted small" style="margin-top:.75rem;">
-      Buying multiple items? “Request Invoice” is the clean way to get one quote and one shipment.
-    </p>
-  </section>
-
-  <div class="card" style="max-width: 980px; margin-top: 1rem;">
-   <h3>Send this for faster troubleshooting</h3>
-    <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
-      <li>Plant + line/machine name + your contact info</li>
-      <li>Exact symptoms and when it started</li>
-      <li>Fault codes / screenshots / drive parameters (if available)</li>
-      <li>What changed recently (maintenance, parts swapped, settings edited)</li>
-      <li>Photos of the panel/wiring if it smells electrical</li>
-    </ul>
-  </div>
 
   <!-- SUPPORT -->
   <section id="support" class="section">
@@ -375,9 +323,19 @@
       <a class="btn btn-quiet" href="mailto:contact@futureautomationllc.com?subject=Downtime%20Support%20Request">Email</a>
     </div>
 
-    <p class="muted small" style="margin-top:.75rem;">
-      Email: <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a>
-    </p>
+    <div class="card" style="max-width: 980px; margin-top: 1rem;">
+      <h3>Send this for faster troubleshooting</h3>
+      <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+        <li>Plant + line/machine name + your contact info</li>
+        <li>Exact symptoms and when it started</li>
+        <li>Fault codes / screenshots / drive parameters (if available)</li>
+        <li>What changed recently (maintenance, parts swapped, settings edited)</li>
+        <li>Photos of the panel/wiring if it smells electrical</li>
+      </ul>
+      <p class="muted small" style="margin-top:.8rem;">
+        Email: <a href="mailto:contact@futureautomationllc.com">contact@futureautomationllc.com</a>
+      </p>
+    </div>
   </section>
 
 </main>
