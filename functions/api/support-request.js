@@ -184,3 +184,23 @@ UA: ${request.headers.get("user-agent") || ""}
     return jres({ error: String(e) }, 500);
   }
 }
+async function sendPushover(env, title, message, priority = 0) {
+  const body = new URLSearchParams({
+    token: env.PUSHOVER_APP_TOKEN,
+    user: env.PUSHOVER_USER_KEY,
+    title,
+    message,
+    priority
+  });
+
+  if (priority === 2) {
+    body.append("retry", "60");
+    body.append("expire", "3600");
+  }
+
+  await fetch("https://api.pushover.net/1/messages.json", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body
+  });
+}
