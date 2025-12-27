@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Request Support | Future Automation LLC</title>
+  <meta name="description" content="Request downtime support or condition monitoring. Send details and photos; we’ll respond quickly with a plan." />
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+
+  <meta property="og:title" content="Request Support | Future Automation LLC" />
+  <meta property="og:description" content="Request downtime support or condition monitoring. Send details and we’ll respond quickly with a plan." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://futureautomationllc.com/request-support.html" />
+  <meta property="og:image" content="https://futureautomationllc.com/logo.svg" />
+  <meta name="twitter:card" content="summary" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Future Automation LLC",
+    "description": "Industrial automation downtime support and condition monitoring. PLC, HMI, VFD troubleshooting and reliability services.",
+    "telephone": "+1-870-806-2555",
+    "url": "https://futureautomationllc.com",
+    "areaServed": "United States",
+    "serviceType": [
+      "Industrial Downtime Support",
+      "PLC Troubleshooting",
+      "VFD Diagnostics",
+      "Condition Monitoring",
+      "Predictive Maintenance"
+    ]
+  }
+  </script>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="brand-logo">
+      <img src="/logo.svg" alt="Future Automation LLC" />
+    </a>
+
+    <div class="nav-links">
+      <a class="nav-link " href="/">Home</a>
+      <a class="nav-link " href="/services.html">Services</a>
+      <a class="nav-link " href="/downtime-support.html">Downtime Support</a>
+      <a class="nav-link " href="/condition-monitoring.html">Condition Monitoring</a>
+      <a class="nav-link " href="/industries.html">Industries</a>
+      <a class="nav-link " href="/about.html">About</a>
+      <a class="nav-link active" href="/request-support.html">Request Support</a>
+      <a class="nav-link " href="/policies.html">Policies</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="section">
+    <h1>Request Support</h1>
+    <p class="section-sub">
+      Fill this out and we’ll respond quickly. If production is stopped, call/text first — it’s faster.
+    </p>
+
+    <div class="support-actions" style="margin-bottom:1rem;">
+      <a class="btn btn-primary" href="tel:+18708062555">🚨 Plant down — call now</a>
+      <a class="btn btn-quiet" href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AName:%0AIssue:">Text engineering</a>
+      <a class="btn btn-quiet" href="mailto:contact@futureautomationllc.com?subject=Support%20Request">Email</a>
+    </div>
+
+    <div class="card" style="max-width: 980px;">
+      <form id="supportForm">
+        <div class="form-grid">
+          <div>
+            <label for="requestType">Request type *</label>
+            <select id="requestType" name="requestType" required>
+              <option value="">Select…</option>
+              <option>Downtime Support</option>
+              <option>Condition Monitoring</option>
+              <option>General</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="urgency">Urgency</label>
+            <select id="urgency" name="urgency">
+              <option>Normal</option>
+              <option>High</option>
+              <option>Critical (Plant Down)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="name">Name *</label>
+            <input id="name" name="name" placeholder="Your name" required />
+          </div>
+
+          <div>
+            <label for="company">Company</label>
+            <input id="company" name="company" placeholder="Company / plant" />
+          </div>
+
+          <div>
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" required />
+          </div>
+
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" placeholder="Best callback number" />
+          </div>
+
+          <div>
+            <label for="location">Plant / Location</label>
+            <input id="location" name="location" placeholder="City, state (or plant name)" />
+          </div>
+
+          <div>
+            <label for="preferredContact">Preferred contact</label>
+            <select id="preferredContact" name="preferredContact">
+              <option>Call</option>
+              <option>Text</option>
+              <option>Email</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:.9rem;">
+          <label for="system">System / Area</label>
+          <input id="system" name="system" placeholder="Line, machine, cell, or area (ex: debone line, chiller, conveyor 3)" />
+        </div>
+
+        <div style="margin-top:.9rem;">
+          <label for="symptoms">Issue / Symptoms *</label>
+          <textarea id="symptoms" name="symptoms" placeholder="What happened? When did it start? Any fault codes?" required></textarea>
+        </div>
+
+        <div class="form-grid" style="margin-top:.9rem;">
+          <div>
+            <label for="downtimeImpact">Downtime impact</label>
+            <input id="downtimeImpact" name="downtimeImpact" placeholder="Ex: line down, reduced speed, quality loss" />
+          </div>
+          <div>
+            <label for="timeframe">Timeframe</label>
+            <input id="timeframe" name="timeframe" placeholder="Ex: ASAP, this week, next shutdown window" />
+          </div>
+        </div>
+
+        <div style="margin-top:.9rem;">
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" name="notes" placeholder="What changed recently? Parts swapped? Settings edited? Anything you suspect?"></textarea>
+        </div>
+
+        <!-- Honeypot -->
+        <div style="display:none;">
+          <label for="website">Website</label>
+          <input id="website" name="website" />
+        </div>
+
+        <div class="support-actions" style="margin-top:1rem;">
+          <button class="btn btn-primary" type="submit">Send request</button>
+          <a class="btn btn-quiet" href="/services.html">Back to services</a>
+        </div>
+
+        <p id="formStatus" class="muted small" style="margin-top:.85rem;"></p>
+      </form>
+    </div>
+  
+    <div class="card" style="max-width:980px; margin-top:1rem;">
+      <h3>Before you call (if you have 2 minutes)</h3>
+      <ul class="muted" style="margin:.6rem 0 0; padding-left:1.2rem;">
+        <li>Exact fault messages or drive codes</li>
+        <li>What changed recently (maintenance, parts, settings)</li>
+        <li>Is it repeatable or intermittent?</li>
+        <li>Any smells, heat, or visible damage?</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+(function() {
+  const form = document.getElementById('supportForm');
+  const status = document.getElementById('formStatus');
+
+  function setStatus(msg) {
+    status.textContent = msg || '';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setStatus('Sending…');
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const r = await fetch('/api/support-request', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) {
+        throw new Error(j.error || 'Request failed');
+      }
+
+      window.location.href = '/thank-you.html';
+    } catch (err) {
+      setStatus('Could not send. Try calling/texting, or email contact@futureautomationllc.com. (' + (err?.message || err) + ')');
+    }
+  });
+})();
+</script>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">Future Automation LLC</div>
+      <p class="muted small">Less downtime. More output. No guessing.</p>
+    </div>
+
+    <div class="footer-cols">
+      <div>
+        <div class="footer-title">Support</div>
+        <a class="footer-link" href="/request-support.html">Request support</a>
+        <a class="footer-link" href="tel:+18708062555">Call: (870) 806-2555</a>
+        <a class="footer-link" href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AName:%0AIssue:">Text engineering</a>
+      </div>
+      <div>
+        <div class="footer-title">Services</div>
+        <a class="footer-link" href="/downtime-support.html">Downtime support</a>
+        <a class="footer-link" href="/condition-monitoring.html">Condition monitoring</a>
+        <a class="footer-link" href="/services.html">All services</a>
+      </div>
+      <div>
+        <div class="footer-title">Company</div>
+        <a class="footer-link" href="/about.html">About</a>
+        <a class="footer-link" href="/policies.html">Policies</a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <p class="muted small" style="margin:.75rem 0 0;">© Future Automation LLC</p>
+  </div>
+</footer>
+</body>
+</html>

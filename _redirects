@@ -1,0 +1,4 @@
+/equipment.html /services.html 301
+/request-invoice.html /request-support.html 301
+/equipment /services.html 301
+/request-invoice /request-support.html 301
