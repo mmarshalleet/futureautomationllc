@@ -288,3 +288,44 @@ footer{
   .hero-split{ grid-template-columns: 1fr; }
   .footer-grid{ flex-direction:column; }
 }
+
+
+/* ---- Toggle (Plant Down) ---- */
+.toggle-row{ margin: 0 0 1rem; }
+.toggle{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  user-select:none;
+}
+.toggle input{ position:absolute; opacity:0; pointer-events:none; }
+.toggle-ui{
+  width: 54px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  position: relative;
+  flex: 0 0 auto;
+  transition: background .18s ease, border-color .18s ease;
+}
+.toggle-ui::after{
+  content:"";
+  position:absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(229,231,235,.92);
+  transition: transform .18s ease;
+}
+.toggle input:checked + .toggle-ui{
+  background: rgba(239,68,68,.20);
+  border-color: rgba(239,68,68,.45);
+}
+.toggle input:checked + .toggle-ui::after{
+  transform: translateX(24px);
+  background: rgba(239,68,68,.92);
+}
+.toggle-text{ font-weight: 800; }

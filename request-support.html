@@ -65,13 +65,22 @@
     </p>
 
     <div class="support-actions" style="margin-bottom:1rem;">
-      <a class="btn btn-primary" href="tel:+18708062555">🚨 Plant down — call now</a>
-      <a class="btn btn-quiet" href="sms:+18708062555?body=Plant%20down%20-%20Please%20call%20me.%0A%0APlant:%0ALocation:%0AName:%0AIssue:">Text engineering</a>
-      <a class="btn btn-quiet" href="mailto:contact@futureautomationllc.com?subject=Support%20Request">Email</a>
-    </div>
+  <a class="btn btn-primary" href="/request-support.html#supportForm">Submit a request (alerts monitored)</a>
+  <a class="btn btn-quiet" href="tel:+18708062555">Call</a>
+  <a class="btn btn-quiet" href="mailto:contact@futureautomationllc.com?subject=Support%20Request">Email</a>
+</div>
 
-    <div class="card" style="max-width: 980px;">
+<div class="card style="max-width: 980px;">
       <form id="supportForm">
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="plantDown" name="plantDown" />
+            <span class="toggle-ui" aria-hidden="true"></span>
+            <span class="toggle-text"><strong>Plant Down</strong> (urgent alert)</span>
+          </label>
+          <p class="muted small" style="margin:.35rem 0 0;">Turn this on if production is stopped or you’re losing product.</p>
+        </div>
+
         <div class="form-grid">
           <div>
             <label for="requestType">Request type *</label>
@@ -184,9 +193,23 @@
 (function() {
   const form = document.getElementById('supportForm');
   const status = document.getElementById('formStatus');
+  const plantDown = document.getElementById('plantDown');
+  const urgency = document.getElementById('urgency');
+  plantDown?.addEventListener('change', () => {
+    if (plantDown.checked) {
+      urgency.value = 'Critical (Plant Down)';
+    }
+  });
 
   function setStatus(msg) {
     status.textContent = msg || '';
+  }
+
+    // Query param: ?plantdown=1 pre-checks Plant Down
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('plantdown') === '1') {
+    plantDown.checked = true;
+    urgency.value = 'Critical (Plant Down)';
   }
 
   form.addEventListener('submit', async (e) => {
