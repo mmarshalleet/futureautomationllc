@@ -1,5 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0B1220"/>
-  <path d="M18 36c6-10 10-14 14-14s8 4 14 14" fill="none" stroke="#5b8cff" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="32" cy="36" r="4" fill="#7c4dff"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Future Automation icon">
+  <defs>
+    <linearGradient id="faG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5b8cff"/>
+      <stop offset="1" stop-color="#7c4dff"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="10" y="10" width="108" height="108" rx="28" fill="#0B1220" stroke="rgba(255,255,255,0.16)"/>
+  <path d="M40 34h46c4 0 7 3 7 7s-3 7-7 7H54v18h26c4 0 7 3 7 7s-3 7-7 7H54v22c0 4-3 7-7 7s-7-3-7-7V41c0-4 3-7 7-7z"
+        fill="url(#faG)"/>
+  <circle cx="86" cy="86" r="10" fill="#25d48c"/>
 </svg>
