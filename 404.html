@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
   <title>Page Not Found | Future Automation LLC</title>
   <meta name="description" content="Page not found." />
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="index.html">
-        <span class="brand-badge" aria-hidden="true"></span>
-        <span>Future Automation LLC</span>
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -32,7 +34,7 @@
       <div class="hero-inner" style="grid-template-columns:1fr;">
         <div>
           <div class="kicker"><span class="kdot"></span> 404</div>
-          <h1>This page doesn’t exist.</h1>
+          <h1>This page does not exist.</h1>
           <p class="lead">Head back home or submit a support request.</p>
 
           <div class="hero-actions">
@@ -55,6 +57,8 @@
     </div>
   </footer>
 
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
