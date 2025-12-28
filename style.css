@@ -227,3 +227,86 @@ textarea{resize: vertical; min-height: 120px}
   color: var(--muted);
   font-weight:750; font-size: 12px;
 }
+/* --- Condition Monitoring extras --- */
+.callout{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.16);
+  border-radius: 22px;
+  padding:16px;
+}
+.callout h2{margin:0 0 8px}
+.callout p{margin:0; color: var(--muted)}
+.callout strong{color: var(--text)}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  color: var(--muted);
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:.2px;
+}
+.tag .dot{
+  width:8px;height:8px;border-radius:999px;
+  background: rgba(255,255,255,.40);
+}
+
+.tag.down{
+  border-color: rgba(255, 92, 92, .45);
+  background: rgba(255, 92, 92, .12);
+  color: rgba(255,255,255,.90);
+}
+.tag.down .dot{ background: rgba(255, 92, 92, .95); box-shadow:0 0 0 4px rgba(255,92,92,.14); }
+
+.tag.trend{
+  border-color: rgba(37, 212, 140, .40);
+  background: rgba(37, 212, 140, .10);
+  color: rgba(255,255,255,.88);
+}
+.tag.trend .dot{ background: rgba(37, 212, 140, .95); box-shadow:0 0 0 4px rgba(37,212,140,.12); }
+
+.metrics{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+.metric{
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 18px;
+  padding:14px;
+}
+.metric .num{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:.2px;
+  margin:0 0 6px;
+}
+.metric .lbl{margin:0;color:var(--muted); font-size:13px}
+@media (max-width: 900px){ .metrics{grid-template-columns:1fr} }
+
+.table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border-radius: 18px;
+  border:1px solid rgba(255,255,255,.10);
+}
+.table th, .table td{
+  text-align:left;
+  padding:12px 12px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  color: var(--muted);
+  vertical-align:top;
+}
+.table th{color: var(--text); background: rgba(255,255,255,.03); font-weight:900}
+.table tr:last-child td{border-bottom:none}
+.table td strong{color: var(--text)}
+
