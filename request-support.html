@@ -1,1 +1,123 @@
-<h1>Request Support</h1><form method='POST' action='/api/notify'><label>Name <input name='name' required></label><br><label>Company <input name='company'></label><br><label>Issue <textarea name='issue' required></textarea></label><br><button type='submit'>Send Request</button></form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Request Support | Future Automation LLC</title>
+  <meta name="description" content="Submit a downtime or controls support request. Delivered instantly via secure push alert." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">Future Automation LLC</a>
+      <div class="nav-links">
+        <a href="services.html">Services</a>
+        <a href="condition-monitoring.html">Condition Monitoring</a>
+        <a class="active" href="request-support.html">Request Support</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="page-head">
+      <h1>Request Support</h1>
+      <p class="lead">Submit your request below. It’s delivered instantly via secure push alert and logged for follow-up.</p>
+    </header>
+
+    <section class="card">
+      <form id="supportForm" class="form">
+        <div class="row">
+          <label>
+            Name
+            <input name="name" autocomplete="name" required />
+          </label>
+          <label>
+            Company
+            <input name="company" autocomplete="organization" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Email
+            <input name="email" type="email" autocomplete="email" />
+          </label>
+          <label>
+            Location / Plant
+            <input name="location" placeholder="City, plant name, or line" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Asset / Machine
+            <input name="asset" placeholder="Line, machine, PLC, VFD, etc." />
+          </label>
+
+          <label class="toggle">
+            <span>Plant Down</span>
+            <input id="plantDown" name="plantDown" type="checkbox" />
+            <span class="toggle-ui" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <label>
+          Issue / Symptoms
+          <textarea name="issue" rows="6" placeholder="What happened? What have you tried? Any fault codes?" required></textarea>
+        </label>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">Send Request</button>
+          <p class="fine">Submitting here is the fastest way to get eyes on it.</p>
+        </div>
+
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="card subtle mt">
+      <h2>What happens next</h2>
+      <ul class="bullets">
+        <li>Your request is delivered instantly via push alert.</li>
+        <li>We respond with next steps, triage questions, and an ETA.</li>
+        <li>If “Plant Down” is enabled, the alert is prioritized.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Future Automation LLC</span>
+      <span class="muted">Support requests are handled through this form for speed and documentation.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const form = document.getElementById("supportForm");
+    const statusEl = document.getElementById("status");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "Sending…";
+
+      const fd = new FormData(form);
+      fd.set("type", document.getElementById("plantDown").checked ? "plant_down" : "support");
+
+      try {
+        const r = await fetch("/api/notify", { method: "POST", body: fd });
+        if (!r.ok) throw new Error("Request failed");
+        form.reset();
+        statusEl.textContent = "Request sent. We’ll respond shortly.";
+      } catch (err) {
+        statusEl.textContent = "Couldn’t send right now. Please refresh and try again.";
+      }
+    });
+  </script>
+</body>
+</html>

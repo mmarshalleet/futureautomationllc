@@ -4,97 +4,76 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Services | Future Automation LLC</title>
-  <meta name="description" content="Industrial automation services: PLC/HMI troubleshooting, VFD diagnostics, retrofits, panel upgrades, and reliability work." />
-
-  <link rel="stylesheet" href="/style.css" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="/favicon.ico" />
+  <meta name="description" content="Industrial automation services focused on uptime: troubleshooting, retrofits, and reliability improvements." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
 </head>
-
 <body>
-
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="brand-logo"><img src="/logo.svg" alt="Future Automation LLC" /></a>
-    <div class="nav-links">
-      <a class="nav-link" href="/">Home</a>
-      <a class="nav-link active" href="/services.html">Services</a>
-      <a class="nav-link" href="/condition-monitoring.html">Condition Monitoring</a>
-      <a class="nav-link" href="/equipment.html">Equipment</a>
-      <a class="nav-link" href="/request-invoice.html">Request Invoice</a>
-      <a class="nav-link" href="/about.html">About</a>
-      <a class="nav-link" href="/policies.html">Policies</a>
-    </div>
-  </div>
-</nav>
-
-<main class="container">
-  <section class="section">
-    <h1>Services</h1>
-    <p class="section-sub">
-      We fix downtime problems, improve reliability, and clean up controls so your plant runs.
-      Remote support is available when you have someone on-site who can execute.
-    </p>
-
-    <div class="support-actions" style="margin-bottom:1rem;">
-      <a class="btn btn-primary" href="/#support">Request downtime help</a>
-      <a class="btn btn-quiet" href="tel:+18708062555">Call</a>
-      <a class="btn btn-quiet" href="sms:+18708062555?body=Downtime%20support%20request.%0A%0APlant:%0ALocation:%0AName:%0AIssue:">Text</a>
-    </div>
-
-    <div class="cards">
-      <div class="card">
-        <h3>PLC & HMI Troubleshooting</h3>
-        <p>Allen-Bradley, Siemens, and mixed systems. Fault isolation, I/O mapping, comms issues, and logic fixes.</p>
-      </div>
-      <div class="card">
-        <h3>VFD Setup & Diagnostics</h3>
-        <p>PowerFlex, Lenze, Danfoss, Siemens, and more. Trips, tuning, braking, encoder/resolver feedback issues.</p>
-      </div>
-      <div class="card">
-        <h3>Controls Retrofits</h3>
-        <p>Obsolete replacements, upgrades, and cleanup without breaking the process. Documentation included.</p>
-      </div>
-      <div class="card">
-        <h3>Panel Upgrades & Rework</h3>
-        <p>Safe rewiring, labeling, fusing corrections, panel layout improvements, and serviceability upgrades.</p>
-      </div>
-      <div class="card">
-        <h3>Reliability Improvements</h3>
-        <p>Repeat failures: solved. Root-cause analysis + practical changes that stick.</p>
-      </div>
-      <div class="card">
-        <h3>Condition Monitoring & Predictive Maintenance</h3>
-        <p>Start with the data you already have — parts room history + CMMS trends — then add targeted sensing where it pays off. Turn repeat failures into planned fixes.</p>
-        <p class="muted small" style="margin-top:.6rem;"><a href="/condition-monitoring.html">Learn more →</a></p>
-      </div>
-      <div class="card">
-        <h3>Remote Support</h3>
-        <p>Quick triage and clear instructions for your on-site team — when you need direction fast.</p>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">Future Automation LLC</a>
+      <div class="nav-links">
+        <a class="active" href="services.html">Services</a>
+        <a href="condition-monitoring.html">Condition Monitoring</a>
+        <a href="request-support.html">Request Support</a>
       </div>
     </div>
+  </nav>
 
-    <div class="card" style="margin-top:1rem; max-width:980px;">
-      <h3>What to send for faster help</h3>
-      <ul class="muted" style="margin:.5rem 0 0; padding-left:1.2rem;">
-        <li>Machine/line name + plant/location</li>
-        <li>Symptoms and when it started</li>
-        <li>Fault codes / screenshots</li>
-        <li>What changed recently (maintenance, parts swapped, parameter edits)</li>
-        <li>Photos of panel/wiring if relevant</li>
-      </ul>
+  <main class="container">
+    <header class="page-head">
+      <h1>Services</h1>
+      <p class="lead">Industrial automation services focused on uptime: troubleshooting, retrofits, and reliability improvements.</p>
+    </header>
+
+    <section class="grid">
+      <div class="card">
+        <h2>Downtime Support</h2>
+        <p>Controls troubleshooting across PLCs, HMIs, VFDs, sensors, and control panels — on-site or remote.</p>
+      </div>
+      <div class="card">
+        <h2>Condition Monitoring</h2>
+        <p>Practical monitoring and alerts to catch failures early and reduce unplanned downtime.</p>
+      </div>
+      <div class="card">
+        <h2>Retrofits & Upgrades</h2>
+        <p>Modernize aging hardware, reduce nuisance faults, and improve maintainability.</p>
+      </div>
+    </section>
+
+    <section class="grid mt">
+      <div class="card">
+        <h2>Reliability Improvements</h2>
+        <p>Root-cause analysis, electrical cleanup, documentation, and standardization.</p>
+      </div>
+      <div class="card">
+        <h2>Documentation & Handoffs</h2>
+        <p>Clear notes and findings so fixes survive shift changes and prevent repeat failures.</p>
+      </div>
+      <div class="card">
+        <h2>Remote Triage</h2>
+        <p>When it makes sense, start with remote triage to shorten time-to-fix and reduce travel.</p>
+      </div>
+    </section>
+
+    <section class="card subtle mt">
+      <h2>Start a request</h2>
+      <p class="muted">
+        Submit a request through the support form. It is delivered instantly via secure push alert and logged for follow-up.
+      </p>
+      <a class="btn primary" href="request-support.html">Request Support</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Future Automation LLC</span>
+      <span class="muted">Secure push alerts. Logged requests. Faster response.</span>
     </div>
+  </footer>
 
-    <p class="muted small" style="margin-top:1rem;">
-      Purchasing parts? Use <a href="/request-invoice.html">Request Invoice</a> for quotes/POs/combined shipping.
-    </p>
-  </section>
-</main>
-
-<footer class="footer">
-  <p class="muted small">© Future Automation LLC</p>
-</footer>
-
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
