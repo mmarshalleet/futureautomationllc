@@ -3,21 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
   <title>Page Not Found | Future Automation LLC</title>
   <meta name="description" content="Page not found." />
-  <link rel="stylesheet" href="style.css" />
-  <meta name="theme-color" content="#0B1220" />
 </head>
 <body>
-  <main class="container">
-    <div class="card">
-      <h1>404</h1>
-      <p class="muted">This page doesn’t exist. Head back home or request support.</p>
-      <div class="hero-actions">
-        <a class="btn primary" href="index.html">Home</a>
-        <a class="btn" href="request-support.html">Request Support</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>Future Automation LLC</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="services.html">Services</a>
+        <a href="condition-monitoring.html">Condition Monitoring</a>
+        <a href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn small primary" href="request-support.html">Request Support</a>
       </div>
     </div>
+  </header>
+
+  <main class="container">
+    <section class="section hero">
+      <div class="hero-inner" style="grid-template-columns:1fr;">
+        <div>
+          <div class="kicker"><span class="kdot"></span> 404</div>
+          <h1>This page doesn’t exist.</h1>
+          <p class="lead">Head back home or submit a support request.</p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="index.html">Home</a>
+            <a class="btn" href="request-support.html">Request Support</a>
+          </div>
+
+          <div class="pill2" style="margin-top:14px;">
+            If you followed an old link, the page may have been renamed during the services-only update.
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure push alerts • Logged requests • Faster response</div>
+    </div>
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
