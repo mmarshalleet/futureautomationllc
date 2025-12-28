@@ -3,74 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
   <title>Future Automation LLC | Industrial Downtime Support</title>
   <meta name="description" content="Industrial downtime support and condition monitoring with real-time push alerts." />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-  <meta name="theme-color" content="#0B1220" />
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="index.html">Future Automation LLC</a>
-      <div class="nav-links">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>Future Automation LLC</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
         <a href="services.html">Services</a>
         <a href="condition-monitoring.html">Condition Monitoring</a>
         <a href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn small primary" href="request-support.html">Request Support</a>
       </div>
     </div>
-  </nav>
+  </header>
 
   <main class="container">
-    <header class="page-head">
-      <p class="pill">Industrial Automation Services</p>
-      <h1>Downtime help when the line is stopped — and monitoring so it doesn’t stop again.</h1>
-      <p class="lead">
-        Practical controls support for real plants. Fast triage, root-cause fixes, and reliability improvements across PLCs, HMIs, VFDs, and control panels.
-      </p>
-    </header>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="kicker"><span class="kdot"></span> Industrial Automation Services</div>
+          <h1>Downtime help when the line is stopped — and monitoring so it doesn’t stop again.</h1>
+          <p class="lead">
+            Practical controls support for real plants. Fast triage, root-cause fixes, and reliability improvements across PLCs, HMIs, VFDs, and control panels.
+          </p>
 
-    <section class="hero card">
-      <div class="hero-actions">
-        <a class="btn primary" href="request-support.html">Request Emergency Support</a>
-        <a class="btn" href="condition-monitoring.html">Condition Monitoring</a>
-        <a class="btn" href="services.html">Services</a>
-      </div>
-      <div class="hero-note">
-        <strong>Plant down?</strong> Submit a request — it delivers instantly via secure push alert and can be prioritized.
+          <div class="hero-actions">
+            <a class="btn primary" href="request-support.html">Request Emergency Support</a>
+            <a class="btn" href="condition-monitoring.html">Condition Monitoring</a>
+            <a class="btn" href="services.html">View Services</a>
+          </div>
+
+          <div class="pill2" style="margin-top:14px;">
+            Plant down requests can be marked as priority from the support form.
+          </div>
+        </div>
+
+        <aside class="hero-aside">
+          <div class="badge">
+            <div class="icon" aria-hidden="true"></div>
+            <div>
+              <h3>Fast triage</h3>
+              <p>Clear next steps, root-cause focus, fewer repeat stops.</p>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="badge">
+            <div class="icon" aria-hidden="true" style="background:rgba(37,212,140,.14); border-color:rgba(37,212,140,.30);"></div>
+            <div>
+              <h3>Logged & documented</h3>
+              <p>Requests are tracked for handoffs and follow-up.</p>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <p class="small">
+            Requests are delivered instantly via secure push alert. Everything stays consistent and easy to track.
+          </p>
+          <a class="btn primary" href="request-support.html" style="width:100%; margin-top:12px;">Open Support Form</a>
+        </aside>
       </div>
     </section>
 
-    <section class="grid">
+    <section class="section grid">
       <div class="card">
-        <h2>Fast</h2>
-        <p>Triage and next steps in plain English. No guessing, no wandering.</p>
+        <h2>Downtime Support</h2>
+        <p>PLC/HMI/VFD troubleshooting, electrical controls issues, and reliability fixes.</p>
       </div>
       <div class="card">
-        <h2>Root Cause</h2>
-        <p>We fix what broke — and why it broke — so it stays fixed.</p>
+        <h2>Condition Monitoring</h2>
+        <p>Practical monitoring with actionable alerts designed for maintenance teams.</p>
       </div>
       <div class="card">
-        <h2>Documented</h2>
-        <p>Requests are logged, tracked, and easier to hand off across shifts.</p>
+        <h2>Reliability Improvements</h2>
+        <p>Reduce nuisance faults, improve documentation, and keep fixes from reverting.</p>
       </div>
     </section>
 
-    <section class="card subtle mt">
-      <h2>How requests work</h2>
-      <p class="muted">
-        Support requests are submitted through the form and delivered instantly via secure push alert.
-        This keeps everything logged, prioritized, and easy to follow up.
-      </p>
-      <a class="btn primary" href="request-support.html">Request Support</a>
+    <section class="section split">
+      <div class="card mini">
+        <h2>What you get</h2>
+        <ul>
+          <li>Fast triage and next steps</li>
+          <li>Root-cause fixes, not band-aids</li>
+          <li>Clear documentation for your team</li>
+        </ul>
+      </div>
+      <div class="card mini">
+        <h2>How requests work</h2>
+        <p>
+          Submit requests through the support form. “Plant Down” can be prioritized.
+          Everything is logged so your team can track status and handoffs.
+        </p>
+        <div style="height:10px"></div>
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <span>© <span id="year"></span> Future Automation LLC</span>
-      <span class="muted">Secure push alerts. Logged requests. Faster response.</span>
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure push alerts • Logged requests • Faster response</div>
     </div>
   </footer>
 
