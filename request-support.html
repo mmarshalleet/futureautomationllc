@@ -4,18 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
   <title>Request Support | Future Automation LLC</title>
-  <meta name="description" content="Submit a support request. Delivered instantly via push alert." />
+  <meta name="description" content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." />
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="index.html"><span class="brand-badge"></span><span>Future Automation LLC</span></a>
-      <nav class="nav-links">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
         <a href="services.html">Services</a>
         <a href="condition-monitoring.html">Condition Monitoring</a>
         <a class="active" href="request-support.html">Request Support</a>
       </nav>
+
       <div class="nav-cta">
         <a class="btn small primary" href="request-support.html">Request Support</a>
       </div>
@@ -32,6 +39,7 @@
     <section class="section split">
       <div class="card">
         <h2>Request details</h2>
+
         <form id="supportForm" class="form">
           <div class="row">
             <label>Name
@@ -64,15 +72,15 @@
           </div>
 
           <label>Issue / Symptoms
-            <textarea name="issue" rows="6" placeholder="What happened? What have you tried? Any fault codes?" required></textarea>
+            <textarea name="issue" rows="6" placeholder="What happened? What have you tried? Include fault codes if you have them." required></textarea>
           </label>
 
-          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:6px">
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px">
             <button class="btn primary" type="submit">Send Request</button>
             <p class="status" id="status" role="status" aria-live="polite"></p>
           </div>
 
-          <p class="small">Tip: Include fault codes, recent changes, and what’s already been tried.</p>
+          <p class="small">Tip: Include fault codes, recent changes, and what has already been tried.</p>
         </form>
       </div>
 
@@ -80,13 +88,14 @@
         <h2>What happens next</h2>
         <ul>
           <li>Your request is delivered instantly via push alert.</li>
-          <li>We respond with next steps, triage questions, and an ETA.</li>
           <li>If Plant Down is enabled, the alert is prioritized.</li>
+          <li>We respond with next steps and triage questions.</li>
+          <li>Request details are logged for follow-up and handoff.</li>
         </ul>
 
         <div class="hr"></div>
 
-        <p class="small">Everything stays in writing and is easier to track across shifts.</p>
+        <p class="small">This keeps communication consistent and easy to track across shifts.</p>
       </div>
     </section>
   </main>
@@ -105,7 +114,7 @@
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      statusEl.textContent = "Sending…";
+      statusEl.textContent = "Sending...";
 
       const fd = new FormData(form);
       fd.set("type", document.getElementById("plantDown").checked ? "plant_down" : "support");
@@ -114,9 +123,9 @@
         const r = await fetch("/api/notify", { method: "POST", body: fd });
         if (!r.ok) throw new Error("Request failed");
         form.reset();
-        statusEl.textContent = "Request sent. We’ll respond shortly.";
+        statusEl.textContent = "Request sent. We will respond shortly.";
       } catch (err) {
-        statusEl.textContent = "Couldn’t send right now. Please refresh and try again.";
+        statusEl.textContent = "Could not send right now. Please refresh and try again.";
       }
     });
   </script>
