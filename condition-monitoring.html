@@ -3,62 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
   <title>Condition Monitoring | Future Automation LLC</title>
   <meta name="description" content="Catch failures early with practical monitoring and clear alerts — built for maintenance teams." />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-  <meta name="theme-color" content="#0B1220" />
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="index.html">Future Automation LLC</a>
-      <div class="nav-links">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>Future Automation LLC</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
         <a href="services.html">Services</a>
         <a class="active" href="condition-monitoring.html">Condition Monitoring</a>
         <a href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn small primary" href="request-support.html">Request Support</a>
       </div>
     </div>
-  </nav>
+  </header>
 
   <main class="container">
-    <header class="page-head">
-      <h1>Condition Monitoring</h1>
-      <p class="lead">Catch failures early with practical monitoring and clear alerts — built for maintenance teams.</p>
+    <header class="section">
+      <div class="kicker"><span class="kdot"></span> Condition Monitoring</div>
+      <h1>Catch problems early with practical monitoring and clean alerts.</h1>
+      <p class="lead">
+        Monitoring that’s built for maintenance teams: actionable signals, low noise, and clear context.
+      </p>
     </header>
 
-    <section class="grid">
+    <section class="section grid">
       <div class="card">
         <h2>What we monitor</h2>
-        <ul class="bullets">
+        <ul>
           <li>Motor/VFD health signals and fault trends</li>
           <li>Sensor failures, nuisance trips, and safety chain events</li>
-          <li>Cycle counts, run hours, downtime reasons, and recurring stops</li>
+          <li>Cycle counts, run hours, downtime reasons, recurring stops</li>
         </ul>
       </div>
+
       <div class="card">
         <h2>How alerts work</h2>
-        <p>Alerts are delivered instantly via push notification with the context your team needs to act.</p>
-        <p class="muted">Noise is tuned down. Signal is tuned up.</p>
+        <p>
+          Alerts are delivered instantly via push notification with the context your team needs to act.
+        </p>
+        <ul>
+          <li>Clear “what happened” summary</li>
+          <li>Asset/line context</li>
+          <li>Noise tuned down, signal tuned up</li>
+        </ul>
       </div>
+
       <div class="card">
         <h2>Outcome</h2>
         <p>Less unplanned downtime. Faster troubleshooting. Better handoff between shifts.</p>
+        <ul>
+          <li>Fewer repeat failures</li>
+          <li>Shorter time-to-fix</li>
+          <li>Better visibility for leads/managers</li>
+        </ul>
       </div>
     </section>
 
-    <section class="card subtle mt">
-      <h2>Start with one line</h2>
-      <p class="muted">Pick a high-impact line or asset. We’ll set up practical monitoring, tune noise, and prove value quickly.</p>
-      <a class="btn primary" href="request-support.html">Request a consult</a>
+    <section class="section split">
+      <div class="card mini">
+        <h2>Start small, prove value</h2>
+        <p>
+          Pick one high-impact line or asset. We set up monitoring, tune thresholds, and prove ROI fast.
+        </p>
+      </div>
+
+      <div class="card mini">
+        <h2>Request a consult</h2>
+        <p>
+          Submit a request and we’ll follow up with scope, data needs, and options.
+        </p>
+        <div style="height:10px"></div>
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <span>© <span id="year"></span> Future Automation LLC</span>
-      <span class="muted">Secure push alerts. Logged requests. Faster response.</span>
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure push alerts • Logged requests • Faster response</div>
     </div>
   </footer>
 
