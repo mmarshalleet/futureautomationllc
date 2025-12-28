@@ -28,65 +28,183 @@
   </header>
 
   <main class="container">
-    <header class="section">
-      <div class="kicker"><span class="kdot"></span> Condition Monitoring</div>
-      <h1>Catch problems early with practical monitoring and clean alerts.</h1>
-      <p class="lead">
-        Monitoring that’s built for maintenance teams: actionable signals, low noise, and clear context.
+  <header class="section">
+    <div class="kicker"><span class="kdot"></span> Condition Monitoring</div>
+    <h1>Condition monitoring built for maintenance managers — not dashboards that get ignored.</h1>
+    <p class="lead">
+      This reduces downtime without adding noise: early warning, clear context, and usable data your team can act on.
+    </p>
+
+    <!-- One-line manager summary -->
+    <div class="callout" style="margin-top:14px;">
+      <p>
+        <strong>Manager summary:</strong> “We catch developing failures early, cut repeat downtime, and document chronic issues with actionable alerts — not alarm spam.”
       </p>
-    </header>
+    </div>
+  </header>
 
-    <section class="section grid">
-      <div class="card">
-        <h2>What we monitor</h2>
-        <ul>
-          <li>Motor/VFD health signals and fault trends</li>
-          <li>Sensor failures, nuisance trips, and safety chain events</li>
-          <li>Cycle counts, run hours, downtime reasons, recurring stops</li>
-        </ul>
-      </div>
+  <!-- Distinction: Plant Down vs Trending -->
+  <section class="section split">
+    <div class="card mini">
+      <div class="tag down"><span class="dot"></span> PLANT DOWN</div>
+      <h2 style="margin-top:10px;">Immediate response signal</h2>
+      <p>
+        A hard-stop event where production is impacted now. Alerts prioritize urgency, location, and first checks to restore operation fast.
+      </p>
+      <ul>
+        <li>High urgency</li>
+        <li>Restore operation first</li>
+        <li>Root-cause follow-up documented</li>
+      </ul>
+    </div>
 
-      <div class="card">
-        <h2>How alerts work</h2>
-        <p>
-          Alerts are delivered instantly via push notification with the context your team needs to act.
-        </p>
-        <ul>
-          <li>Clear “what happened” summary</li>
-          <li>Asset/line context</li>
-          <li>Noise tuned down, signal tuned up</li>
-        </ul>
-      </div>
+    <div class="card mini">
+      <div class="tag trend"><span class="dot"></span> TRENDING ISSUE</div>
+      <h2 style="margin-top:10px;">Early warning before it becomes downtime</h2>
+      <p>
+        A developing condition, recurring fault pattern, or abnormal behavior that is likely to become downtime if ignored.
+      </p>
+      <ul>
+        <li>Lower urgency, higher payoff</li>
+        <li>Plan the fix (parts + schedule)</li>
+        <li>Stops repeat failures</li>
+      </ul>
+    </div>
+  </section>
 
-      <div class="card">
-        <h2>Outcome</h2>
-        <p>Less unplanned downtime. Faster troubleshooting. Better handoff between shifts.</p>
-        <ul>
-          <li>Fewer repeat failures</li>
-          <li>Shorter time-to-fix</li>
-          <li>Better visibility for leads/managers</li>
-        </ul>
-      </div>
-    </section>
+  <section class="section grid">
+    <div class="card">
+      <h2>What gets monitored</h2>
+      <ul>
+        <li>Motor & VFD faults, warnings, and trending conditions</li>
+        <li>Safety circuit interruptions and nuisance trips</li>
+        <li>Sensor failures, bad inputs, and intermittent signals</li>
+        <li>Cycle counts, run hours, and stop frequency</li>
+        <li>Recurring faults that don’t always trigger a shutdown (yet)</li>
+      </ul>
+      <p class="small">Focus is on failure patterns — not raw data dumps.</p>
+    </div>
 
-    <section class="section split">
-      <div class="card mini">
-        <h2>Start small, prove value</h2>
-        <p>
-          Pick one high-impact line or asset. We set up monitoring, tune thresholds, and prove ROI fast.
-        </p>
-      </div>
+    <div class="card">
+      <h2>How alerts actually help</h2>
+      <p>
+        Alerts fire only when something changes that matters. Each alert includes context so techs aren’t starting from zero.
+      </p>
+      <ul>
+        <li>Which asset/line is affected</li>
+        <li>What changed vs “normal”</li>
+        <li>Whether it’s new, trending, or recurring</li>
+        <li>Enough detail to guide the first check</li>
+      </ul>
+      <p class="small">If it alerts, it’s worth looking at.</p>
+    </div>
 
-      <div class="card mini">
-        <h2>Request a consult</h2>
-        <p>
-          Submit a request and we’ll follow up with scope, data needs, and options.
-        </p>
-        <div style="height:10px"></div>
-        <a class="btn primary" href="request-support.html">Request Support</a>
+    <div class="card">
+      <h2>What you get as a manager</h2>
+      <ul>
+        <li>Fewer surprise breakdowns</li>
+        <li>Earlier visibility into developing problems</li>
+        <li>Clear documentation of chronic issues</li>
+        <li>Data to justify repairs, parts, or upgrades</li>
+        <li>Better handoff between shifts</li>
+      </ul>
+      <p class="small">This supports decisions — not just troubleshooting.</p>
+    </div>
+  </section>
+
+  <!-- Before / After example block -->
+  <section class="section">
+    <div class="callout">
+      <h2>Before / After example</h2>
+      <p class="small" style="margin-bottom:12px;">
+        Example scenario (realistic): One line has repeat nuisance stops that “never happen when we’re watching it.”
+      </p>
+
+      <table class="table" role="table" aria-label="Before and After Example">
+        <thead>
+          <tr>
+            <th style="width:20%;">State</th>
+            <th style="width:40%;">What maintenance experiences</th>
+            <th style="width:40%;">What changes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Before</strong></td>
+            <td>
+              Random VFD trips / sensor faults. Techs chase it, reset it, and it comes back next shift.
+              Ops thinks maintenance is guessing.
+            </td>
+            <td>
+              No trend visibility. No repeat-fault pattern. No proof for parts or downtime scheduling.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>After</strong></td>
+            <td>
+              Alerts show the fault pattern and conditions leading up to it (frequency, timing, related inputs).
+              Tech arrives with a plan.
+            </td>
+            <td>
+              Chronic issue becomes measurable. Fix is scheduled with justification. Repeat downtime drops.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="metrics" aria-label="Example impact metrics">
+        <div class="metric">
+          <p class="num">↓ Repeat stops</p>
+          <p class="lbl">Chronic issues become trackable and fixable.</p>
+        </div>
+        <div class="metric">
+          <p class="num">↓ Time-to-diagnose</p>
+          <p class="lbl">Context arrives with the alert — less “start from zero.”</p>
+        </div>
+        <div class="metric">
+          <p class="num">↑ Proof for action</p>
+          <p class="lbl">Data to justify parts, PM time, or upgrade decisions.</p>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- ROI framing -->
+  <section class="section split">
+    <div class="card mini">
+      <h2>ROI framing (simple and defendable)</h2>
+      <p>
+        Most plants don’t need a fancy spreadsheet. Managers need a clean story:
+        fewer stops, faster troubleshooting, documented justification.
+      </p>
+      <ul>
+        <li><strong>Cost of downtime:</strong> Minutes lost × line rate × frequency</li>
+        <li><strong>Cost of repeat issues:</strong> Tech time + parts churn + production disruption</li>
+        <li><strong>Value of early warning:</strong> Planned fixes replace emergency fixes</li>
+      </ul>
+      <p class="small">
+        If monitoring prevents just one “big stop” per month, it usually pays for itself.
+      </p>
+    </div>
+
+    <div class="card mini">
+      <h2>Start small, prove value</h2>
+      <p>
+        Pick one high-impact asset or line. We monitor, tune thresholds, and show results quickly.
+      </p>
+      <ul>
+        <li>Select a failure-prone asset</li>
+        <li>Define “normal” operation</li>
+        <li>Alert on deviation, not noise</li>
+        <li>Review results and adjust</li>
+      </ul>
+
+      <div style="height:10px"></div>
+      <a class="btn primary" href="request-support.html">Request a Consult</a>
+    </div>
+  </section>
+</main>
+
 
   <footer class="footer">
     <div class="footer-inner">
