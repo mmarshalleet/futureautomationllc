@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="alternate icon" href="favicon.ico" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
   <title>Condition Monitoring | Future Automation LLC</title>
-  <meta name="description" content="Catch failures early with practical monitoring and clear alerts — built for maintenance teams." />
+  <meta name="description" content="Condition monitoring built for maintenance managers: fewer surprises, faster troubleshooting, and clear documentation." />
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="index.html">
-        <span class="brand-badge" aria-hidden="true"></span>
-        <span>Future Automation LLC</span>
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -30,183 +30,154 @@
   </header>
 
   <main class="container">
-  <header class="section">
-    <div class="kicker"><span class="kdot"></span> Condition Monitoring</div>
-    <h1>Condition monitoring built for maintenance managers — not dashboards that get ignored.</h1>
-    <p class="lead">
-      This reduces downtime without adding noise: early warning, clear context, and usable data your team can act on.
-    </p>
-
-    <!-- One-line manager summary -->
-    <div class="callout" style="margin-top:14px;">
-      <p>
-        <strong>Manager summary:</strong> “We catch developing failures early, cut repeat downtime, and document chronic issues with actionable alerts — not alarm spam.”
-      </p>
-    </div>
-  </header>
-
-  <!-- Distinction: Plant Down vs Trending -->
-  <section class="section split">
-    <div class="card mini">
-      <div class="tag down"><span class="dot"></span> PLANT DOWN</div>
-      <h2 style="margin-top:10px;">Immediate response signal</h2>
-      <p>
-        A hard-stop event where production is impacted now. Alerts prioritize urgency, location, and first checks to restore operation fast.
-      </p>
-      <ul>
-        <li>High urgency</li>
-        <li>Restore operation first</li>
-        <li>Root-cause follow-up documented</li>
-      </ul>
-    </div>
-
-    <div class="card mini">
-      <div class="tag trend"><span class="dot"></span> TRENDING ISSUE</div>
-      <h2 style="margin-top:10px;">Early warning before it becomes downtime</h2>
-      <p>
-        A developing condition, recurring fault pattern, or abnormal behavior that is likely to become downtime if ignored.
-      </p>
-      <ul>
-        <li>Lower urgency, higher payoff</li>
-        <li>Plan the fix (parts + schedule)</li>
-        <li>Stops repeat failures</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section grid">
-    <div class="card">
-      <h2>What gets monitored</h2>
-      <ul>
-        <li>Motor & VFD faults, warnings, and trending conditions</li>
-        <li>Safety circuit interruptions and nuisance trips</li>
-        <li>Sensor failures, bad inputs, and intermittent signals</li>
-        <li>Cycle counts, run hours, and stop frequency</li>
-        <li>Recurring faults that don’t always trigger a shutdown (yet)</li>
-      </ul>
-      <p class="small">Focus is on failure patterns — not raw data dumps.</p>
-    </div>
-
-    <div class="card">
-      <h2>How alerts actually help</h2>
-      <p>
-        Alerts fire only when something changes that matters. Each alert includes context so techs aren’t starting from zero.
-      </p>
-      <ul>
-        <li>Which asset/line is affected</li>
-        <li>What changed vs “normal”</li>
-        <li>Whether it’s new, trending, or recurring</li>
-        <li>Enough detail to guide the first check</li>
-      </ul>
-      <p class="small">If it alerts, it’s worth looking at.</p>
-    </div>
-
-    <div class="card">
-      <h2>What you get as a manager</h2>
-      <ul>
-        <li>Fewer surprise breakdowns</li>
-        <li>Earlier visibility into developing problems</li>
-        <li>Clear documentation of chronic issues</li>
-        <li>Data to justify repairs, parts, or upgrades</li>
-        <li>Better handoff between shifts</li>
-      </ul>
-      <p class="small">This supports decisions — not just troubleshooting.</p>
-    </div>
-  </section>
-
-  <!-- Before / After example block -->
-  <section class="section">
-    <div class="callout">
-      <h2>Before / After example</h2>
-      <p class="small" style="margin-bottom:12px;">
-        Example scenario (realistic): One line has repeat nuisance stops that “never happen when we’re watching it.”
+    <header class="section">
+      <div class="kicker"><span class="kdot"></span> Condition Monitoring</div>
+      <h1>Early warning that reduces downtime without adding noise.</h1>
+      <p class="lead">
+        Catch developing failures early, reduce repeat downtime, and document chronic issues with actionable alerts.
       </p>
 
-      <table class="table" role="table" aria-label="Before and After Example">
-        <thead>
-          <tr>
-            <th style="width:20%;">State</th>
-            <th style="width:40%;">What maintenance experiences</th>
-            <th style="width:40%;">What changes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Before</strong></td>
-            <td>
-              Random VFD trips / sensor faults. Techs chase it, reset it, and it comes back next shift.
-              Ops thinks maintenance is guessing.
-            </td>
-            <td>
-              No trend visibility. No repeat-fault pattern. No proof for parts or downtime scheduling.
-            </td>
-          </tr>
-          <tr>
-            <td><strong>After</strong></td>
-            <td>
-              Alerts show the fault pattern and conditions leading up to it (frequency, timing, related inputs).
-              Tech arrives with a plan.
-            </td>
-            <td>
-              Chronic issue becomes measurable. Fix is scheduled with justification. Repeat downtime drops.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="callout" style="margin-top:14px;">
+        <p>
+          <strong>Manager summary:</strong> Early warning + clear context + documented patterns. Less emergency work and fewer repeat stops.
+        </p>
+      </div>
+    </header>
 
-      <div class="metrics" aria-label="Example impact metrics">
-        <div class="metric">
-          <p class="num">↓ Repeat stops</p>
-          <p class="lbl">Chronic issues become trackable and fixable.</p>
-        </div>
-        <div class="metric">
-          <p class="num">↓ Time-to-diagnose</p>
-          <p class="lbl">Context arrives with the alert — less “start from zero.”</p>
-        </div>
-        <div class="metric">
-          <p class="num">↑ Proof for action</p>
-          <p class="lbl">Data to justify parts, PM time, or upgrade decisions.</p>
+    <section class="section split" aria-label="Signal types">
+      <div class="card mini">
+        <div class="tag down"><span class="dot"></span> PLANT DOWN</div>
+        <h2 style="margin-top:10px;">Immediate response</h2>
+        <p>Production is impacted now. Alerts prioritize urgency, location, and first checks to restore operation fast.</p>
+        <ul>
+          <li>High urgency</li>
+          <li>Restore operation first</li>
+          <li>Root-cause follow-up documented</li>
+        </ul>
+      </div>
+
+      <div class="card mini">
+        <div class="tag trend"><span class="dot"></span> TRENDING ISSUE</div>
+        <h2 style="margin-top:10px;">Early warning</h2>
+        <p>A developing condition or recurring pattern likely to become downtime if ignored. Plan the fix before it stops production.</p>
+        <ul>
+          <li>Lower urgency, higher payoff</li>
+          <li>Plan parts and schedule</li>
+          <li>Stops repeat failures</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section grid">
+      <div class="card">
+        <h2>What gets monitored</h2>
+        <ul>
+          <li>Motor and VFD faults, warnings, and trending conditions</li>
+          <li>Safety interruptions and nuisance trips</li>
+          <li>Sensor failures, bad inputs, intermittent signals</li>
+          <li>Cycle counts, run hours, stop frequency</li>
+          <li>Recurring faults that do not always hard-stop the line</li>
+        </ul>
+        <p class="small">Focus is on failure patterns and usable context.</p>
+      </div>
+
+      <div class="card">
+        <h2>What alerts include</h2>
+        <ul>
+          <li>Asset or line affected</li>
+          <li>What changed versus normal operation</li>
+          <li>Whether it is new, trending, or recurring</li>
+          <li>Details that guide the first check</li>
+        </ul>
+        <p class="small">If it alerts, it is worth looking at.</p>
+      </div>
+
+      <div class="card">
+        <h2>What managers get</h2>
+        <ul>
+          <li>Fewer surprise breakdowns</li>
+          <li>Faster troubleshooting</li>
+          <li>Clear documentation of chronic issues</li>
+          <li>Better justification for parts, PM time, and upgrades</li>
+          <li>Better handoff between shifts</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="callout">
+        <h2>Before and after example</h2>
+        <p class="small" style="margin-bottom:12px;">
+          Example: A line has repeat nuisance stops that never happen when anyone is watching.
+        </p>
+
+        <table class="table" role="table" aria-label="Before and After Example">
+          <thead>
+            <tr>
+              <th style="width:20%;">State</th>
+              <th style="width:40%;">What maintenance sees</th>
+              <th style="width:40%;">What changes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Before</strong></td>
+              <td>Random trips and intermittent faults. Reset, run, repeat. Ops thinks it is guesswork.</td>
+              <td>No trend visibility. No pattern. No justification for parts or scheduled repair time.</td>
+            </tr>
+            <tr>
+              <td><strong>After</strong></td>
+              <td>Alerts show the recurring pattern and conditions leading up to the stop. Tech arrives with a plan.</td>
+              <td>Chronic issue becomes measurable. Fix is scheduled with justification. Repeat downtime drops.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="metrics" aria-label="Example impact metrics">
+          <div class="metric">
+            <p class="num">Fewer repeat stops</p>
+            <p class="lbl">Chronic issues become trackable and fixable.</p>
+          </div>
+          <div class="metric">
+            <p class="num">Faster diagnosis</p>
+            <p class="lbl">Context arrives with the alert.</p>
+          </div>
+          <div class="metric">
+            <p class="num">Clear justification</p>
+            <p class="lbl">Data to support parts, PM time, or upgrades.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ROI framing -->
-  <section class="section split">
-    <div class="card mini">
-      <h2>ROI framing (simple and defendable)</h2>
-      <p>
-        Most plants don’t need a fancy spreadsheet. Managers need a clean story:
-        fewer stops, faster troubleshooting, documented justification.
-      </p>
-      <ul>
-        <li><strong>Cost of downtime:</strong> Minutes lost × line rate × frequency</li>
-        <li><strong>Cost of repeat issues:</strong> Tech time + parts churn + production disruption</li>
-        <li><strong>Value of early warning:</strong> Planned fixes replace emergency fixes</li>
-      </ul>
-      <p class="small">
-        If monitoring prevents just one “big stop” per month, it usually pays for itself.
-      </p>
-    </div>
+    <section class="section split">
+      <div class="card mini">
+        <h2>Why this pays for itself</h2>
+        <p>
+          The value is simple: fewer stops, less repeat work, and faster troubleshooting.
+        </p>
+        <ul>
+          <li><strong>Downtime cost:</strong> Minutes lost x line rate x frequency</li>
+          <li><strong>Repeat issues:</strong> Tech time + parts churn + production disruption</li>
+          <li><strong>Early warning:</strong> Planned fixes replace emergency fixes</li>
+        </ul>
+        <p class="small">Preventing one major stop per month usually covers the cost.</p>
+      </div>
 
-    <div class="card mini">
-      <h2>Start small, prove value</h2>
-      <p>
-        Pick one high-impact asset or line. We monitor, tune thresholds, and show results quickly.
-      </p>
-      <ul>
-        <li>Select a failure-prone asset</li>
-        <li>Define “normal” operation</li>
-        <li>Alert on deviation, not noise</li>
-        <li>Review results and adjust</li>
-      </ul>
-
-      <div style="height:10px"></div>
-      <a class="btn primary" href="request-support.html">Request a Consult</a>
-    </div>
-  </section>
-</main>
-
+      <div class="card mini">
+        <h2>Start small, prove value</h2>
+        <p>Pick one high-impact line or asset. We monitor, tune thresholds, and show results quickly.</p>
+        <ul>
+          <li>Select a failure-prone asset</li>
+          <li>Define normal operation</li>
+          <li>Alert on deviation, not noise</li>
+          <li>Review results and adjust</li>
+        </ul>
+        <div style="height:10px"></div>
+        <a class="btn primary" href="request-support.html">Request a Consult</a>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="footer-inner">
@@ -215,6 +186,8 @@
     </div>
   </footer>
 
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
