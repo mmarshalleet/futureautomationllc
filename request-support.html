@@ -7,47 +7,33 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
-
   <title>Request Support | Future Automation LLC</title>
   <meta name="description" content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." />
 
-  <!-- Page-specific layout fixes (doesn't fight your global style.css) -->
   <style>
-    /* Make the form behave on small screens no matter what */
     .support-wrap { max-width: 860px; margin: 0 auto; }
     .support-card { padding: 22px; }
-
     .support-form { margin-top: 14px; }
 
-    /* Mobile-first: one column */
     .support-grid{
       display:grid;
       grid-template-columns: 1fr;
       gap: 12px;
     }
 
-    /* Desktop/tablet: two columns */
     @media (min-width: 780px){
-      .support-grid{
-        grid-template-columns: 1fr 1fr;
-      }
+      .support-grid{ grid-template-columns: 1fr 1fr; }
       .span-2{ grid-column: 1 / -1; }
     }
 
-    /* Make labels + inputs behave */
     .field label{
       display:block;
       font-weight: 750;
       font-size: 13px;
       color: var(--muted);
     }
+    .field input, .field textarea{ width:100%; }
 
-    .field input,
-    .field textarea{
-      width:100%;
-    }
-
-    /* Toggle field (Plant Down) */
     .toggle-field{
       display:flex;
       align-items:center;
@@ -70,15 +56,12 @@
       gap:10px;
       flex: 0 0 auto;
     }
-
-    /* Keep your existing toggle-ui behavior, but ensure layout doesn't collapse */
     .toggle-field input[type="checkbox"]{
       width: 18px;
       height: 18px;
       margin: 0;
     }
 
-    /* Button/status spacing */
     .support-actions{
       display:flex;
       flex-direction:column;
@@ -92,7 +75,6 @@
         justify-content:space-between;
       }
     }
-
     #status{ min-height: 1.2em; }
   </style>
 </head>
@@ -104,13 +86,16 @@
         <img src="logo.svg" alt="Future Automation LLC" />
       </a>
 
-      <nav class="nav">
+      <nav class="nav" aria-label="Primary">
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link" href="services.html">Services</a>
         <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
-        <a class="nav-link" href="equipment.html">Equipment</a>
         <a class="nav-link active" href="request-support.html">Request Support</a>
       </nav>
+
+      <div class="nav-cta">
+        <a class="btn small primary" href="request-support.html">Request Support</a>
+      </div>
     </div>
   </header>
 
@@ -155,7 +140,6 @@
               <div class="toggle-field" role="group" aria-label="Plant down toggle">
                 <p class="toggle-label">Plant Down</p>
                 <div class="toggle-right">
-                  <!-- Keep this ID for your script -->
                   <input id="plantDown" name="plantDown" type="checkbox" />
                   <span class="toggle-ui" aria-hidden="true"></span>
                 </div>
@@ -175,9 +159,10 @@
 
             <div class="field span-2">
               <div class="support-actions">
-                <button class="btn" type="submit">Send Request</button>
+                <button class="btn primary" type="submit">Send Request</button>
                 <div id="status" class="small muted" aria-live="polite"></div>
               </div>
+
               <p class="small muted" style="margin-top:10px;">
                 Tip: Include fault codes, recent changes, and what has already been tried.
               </p>
