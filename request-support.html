@@ -14,7 +14,7 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="index.html" aria-label="Future Automation LLC home">
-        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
+        <img src="/fa-logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -109,6 +109,11 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("urgent") === "1" || params.get("plantDown") === "1" || params.get("plant_down") === "1") {
+      document.getElementById("plantDown").checked = true;
+    }
+
     const form = document.getElementById("supportForm");
     const statusEl = document.getElementById("status");
 
