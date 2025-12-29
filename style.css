@@ -410,3 +410,14 @@ textarea{resize: vertical; min-height: 120px}
   font-size:12px;
   color: rgba(255,255,255,.62);
 }
+/* Card icons */
+.card .card-icon{
+  width:44px; height:44px;
+  border-radius: 16px;
+  display:grid;
+  place-items:center;
+  margin-bottom:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+}
+.card .card-icon svg{ width:24px; height:24px; opacity:.92 }
