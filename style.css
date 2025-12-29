@@ -421,3 +421,16 @@ textarea{resize: vertical; min-height: 120px}
   background: rgba(255,255,255,.04);
 }
 .card .card-icon svg{ width:24px; height:24px; opacity:.92 }
+/* Section divider */
+.section-divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin: 42px 0;
+  opacity:.9;
+}
+.section-divider img{
+  width:100%;
+  max-width:1100px;
+  height:auto;
+}
