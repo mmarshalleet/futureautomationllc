@@ -310,19 +310,6 @@ textarea{resize: vertical; min-height: 120px}
 .table tr:last-child td{border-bottom:none}
 .table td strong{color: var(--text)}
 
-.fa-logo {
-  width: 320px;     /* scale however you want */
-  height: auto;
-  color: #000;      /* logo color */
-  --fa-bg: transparent; /* background inside the logo bounds */
-}
-
-.dark .fa-logo {
-  color: #fff;
-  --fa-bg: transparent; /* or #0b1220 if you want a block */
-}
-.hero .fa-logo {
-  color: #fff;
-  --fa-bg: #0b1220;
-  padding: 12px; /* optional, outside the svg */
-}
+.fa-logo { width: 280px; color:#000; }
+.dark .fa-logo { color:#fff; }
+.fa-logo:hover { color:#3b82f6; }
