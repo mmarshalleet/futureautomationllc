@@ -3,212 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Future Automation LLC | Industrial Downtime Support</title>
   <meta name="description" content="Industrial downtime support, PLC/HMI/VFD troubleshooting, and condition monitoring. Fast response. Straight answers." />
   <meta name="theme-color" content="#0B1220" />
 
   <link rel="stylesheet" href="/style.css" />
+
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="/favicon.ico" />
-
-  <style>
-    :root{
-      --bg:#0B1220;
-      --panel:#0F1A33;
-      --text:#EAF0FF;
-      --muted:#B9C6E6;
-      --line:rgba(255,255,255,.10);
-      --accent:#6EE7FF;
-      --accent2:#A78BFA;
-      --radius:18px;
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --container:1100px;
-    }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(900px 600px at 10% -10%, rgba(110,231,255,.18), transparent 55%),
-        radial-gradient(900px 600px at 90% 0%, rgba(167,139,250,.18), transparent 55%),
-        linear-gradient(180deg, #070B14 0%, var(--bg) 45%, #050711 100%);
-    }
-    a{ color:inherit; text-decoration:none; }
-    .container{ width:min(var(--container), calc(100% - 40px)); margin:0 auto; }
-
-    .nav{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(5,8,16,.70);
-      border-bottom:1px solid var(--line);
-    }
-    .nav-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:14px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width:220px;
-    }
-    .brand img{
-      width:230px;
-      height:auto;
-      display:block;
-    }
-
-    .nav-links{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
-    .nav-link{
-      padding:10px 12px;
-      border-radius:12px;
-      color:var(--muted);
-      font-weight:600;
-      border:1px solid transparent;
-    }
-    .nav-link:hover{
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      border-color: rgba(255,255,255,.06);
-    }
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      font-weight:800;
-      white-space:nowrap;
-    }
-    .btn.primary{
-      border-color: rgba(110,231,255,.35);
-      background: linear-gradient(135deg, rgba(110,231,255,.22), rgba(167,139,250,.18));
-    }
-
-    .hero{ padding: 52px 0 30px; }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    .card{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .hero-left{ padding:26px; }
-    h1{
-      margin:10px 0 10px;
-      font-size: clamp(28px, 4vw, 46px);
-      line-height:1.08;
-      letter-spacing:-0.8px;
-    }
-    .lead{
-      margin: 0 0 18px;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.55;
-    }
-    .cta-row{ display:flex; flex-wrap:wrap; gap:12px; }
-
-    .badge{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background: rgba(255,255,255,.05);
-      color:var(--muted);
-      font-weight:700;
-      width: fit-content;
-    }
-    .badge img{
-      width:22px;
-      height:22px;
-      display:block;
-    }
-
-    .list{
-      margin:16px 0 0;
-      padding:0;
-      list-style:none;
-      display:grid;
-      gap:10px;
-    }
-    .list li{
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-    }
-    .list strong{ color: var(--text); }
-
-    @media (max-width: 920px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .brand img{ width: 210px; }
-      .nav-links{ justify-content:flex-start; }
-    }
-  </style>
 </head>
 
 <body>
-  <div class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="/" aria-label="Future Automation LLC home">
-        <img src="/fa-logo.svg" alt="Future Automation LLC" />
-      </a>
+  <!-- Background glow -->
+  <div class="bg-glow" aria-hidden="true"></div>
 
-      <div class="nav-links">
-        <a class="nav-link" href="/services.html">Services</a>
-        <a class="nav-link" href="/condition-monitoring.html">Condition Monitoring</a>
-        <a class="nav-link" href="/request-support.html">Request Support</a>
-        <a class="btn primary" href="/request-support.html?urgent=1">Plant Down?</a>
+  <header class="site-header">
+    <nav class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="/" aria-label="Future Automation LLC home">
+          <img class="brand-logo" src="/fa-logo.svg" alt="Future Automation LLC" />
+        </a>
+
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div id="navMenu" class="nav-links">
+          <a class="nav-link active" href="/">Home</a>
+          <a class="nav-link" href="/services.html">Services</a>
+          <a class="nav-link" href="/condition-monitoring.html">Condition Monitoring</a>
+          <a class="nav-link" href="/request-support.html">Request Support</a>
+          <a class="nav-cta" href="/request-support.html#plant-down">Plant Down?</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="pill">
+            <span class="dot"></span>
+            Downtime support • Remote + On-site
+          </div>
+
+          <h1>Industrial downtime support that gets you running — fast.</h1>
+
+          <p class="lead">
+            PLC/HMI/VFD troubleshooting, controls support, and condition monitoring for maintenance teams
+            that don’t have time for guesswork.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="/request-support.html">Request Support</a>
+            <a class="btn ghost" href="/services.html">See Services</a>
+          </div>
+
+          <div class="hero-bullets">
+            <div class="bullet">
+              <div class="bullet-icon">⚡</div>
+              <div>
+                <div class="bullet-title">Fast triage</div>
+                <div class="bullet-text">Clear next steps within minutes, not hours.</div>
+              </div>
+            </div>
+            <div class="bullet">
+              <div class="bullet-icon">🧰</div>
+              <div>
+                <div class="bullet-title">Controls-first approach</div>
+                <div class="bullet-text">Root cause, not “swap parts and pray.”</div>
+              </div>
+            </div>
+            <div class="bullet">
+              <div class="bullet-icon">📈</div>
+              <div>
+                <div class="bullet-title">Prevent repeat failures</div>
+                <div class="bullet-text">Condition monitoring to catch it before it stops you.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="card">
+            <h2>Need help right now?</h2>
+            <p class="muted">
+              If the plant is down, skip the back-and-forth. Send the details and I’ll respond ASAP.
+            </p>
+
+            <div class="mini-list">
+              <div class="mini-row">
+                <span class="k">Best info to include</span>
+                <span class="v">Line / machine / alarm</span>
+              </div>
+              <div class="mini-row">
+                <span class="k">Hardware</span>
+                <span class="v">PLC / HMI / VFD brand</span>
+              </div>
+              <div class="mini-row">
+                <span class="k">What changed</span>
+                <span class="v">Power loss / jam / maintenance</span>
+              </div>
+            </div>
+
+            <a class="btn wide primary" href="/request-support.html#plant-down">Plant Down? Send it</a>
+            <a class="btn wide subtle" href="/request-support.html">Non-urgent request</a>
+
+            <div class="note">
+              <strong>Goal:</strong> less downtime, more output, no guessing.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>What I do</h2>
+          <p class="muted">Practical support that helps your team move faster and break less stuff.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="service">
+            <h3>PLC / HMI Troubleshooting</h3>
+            <p>Find the real failure: logic, IO, comms, safety circuits, or bad assumptions.</p>
+            <ul>
+              <li>Fault isolation + recovery plan</li>
+              <li>Network + comms sanity checks</li>
+              <li>Program changes with notes</li>
+            </ul>
+          </article>
+
+          <article class="service">
+            <h3>VFD / Motor Control</h3>
+            <p>Trips, overcurrent, weird speed issues, tuning, and “it worked yesterday” mysteries.</p>
+            <ul>
+              <li>Power + control verification</li>
+              <li>Parameter review + backup</li>
+              <li>Startup + stability improvements</li>
+            </ul>
+          </article>
+
+          <article class="service">
+            <h3>Condition Monitoring</h3>
+            <p>Catch bearing, vibration, heat, and electrical problems before they turn into downtime.</p>
+            <ul>
+              <li>Baseline measurements</li>
+              <li>Alert thresholds + reporting</li>
+              <li>Actionable maintenance plan</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="split">
+          <div>
+            <h2>How support works</h2>
+            <p class="muted">No mystery process. No “we’ll circle back.”</p>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                  <div class="step-title">Triage</div>
+                  <div class="step-text">You send details. I respond with questions + a plan.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                  <div class="step-title">Diagnose</div>
+                  <div class="step-text">Remote session or on-site. Verify, isolate, fix.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                  <div class="step-title">Prevent</div>
+                  <div class="step-text">Document changes and recommend guardrails.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <a class="btn primary" href="/request-support.html">Request Support</a>
+              <a class="btn ghost" href="/condition-monitoring.html">Explore Condition Monitoring</a>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Best fit for</h3>
+            <ul class="checklist">
+              <li>Plants that can’t afford downtime</li>
+              <li>Maintenance teams stretched thin</li>
+              <li>Controls systems with repeat faults</li>
+              <li>New equipment / line changes</li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <h3>Not a good fit for</h3>
+            <ul class="xlist">
+              <li>“Just guess and send parts.”</li>
+              <li>Ignoring safety circuits and interlocks.</li>
+              <li>Refusing to document changes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="banner">
+          <div>
+            <h2>Plant down right now?</h2>
+            <p class="muted">Hit the button. Send the basics. I’ll get eyes on it ASAP.</p>
+          </div>
+          <a class="btn primary" href="/request-support.html#plant-down">Plant Down?</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <img class="footer-logo" src="/fa-logo.svg" alt="Future Automation LLC" />
+        <p class="muted">Industrial downtime support • Controls troubleshooting • Condition monitoring</p>
+      </div>
+      <div class="footer-right">
+        <a href="/services.html">Services</a>
+        <a href="/condition-monitoring.html">Condition Monitoring</a>
+        <a href="/request-support.html">Request Support</a>
       </div>
     </div>
-  </div>
-
-  <header class="hero">
-    <div class="container hero-grid">
-      <section class="card hero-left">
-        <div class="badge">
-          <img src="/future_automation_icon_white.svg" alt="" aria-hidden="true" />
-          <span>Downtime support • Remote + On-site</span>
-        </div>
-
-        <h1>Industrial downtime support that gets you running — fast.</h1>
-
-        <p class="lead">
-          PLC/HMI/VFD troubleshooting, controls support, and condition monitoring for maintenance teams that don’t have time for guesswork.
-        </p>
-
-        <div class="cta-row">
-          <a class="btn primary" href="/request-support.html">Request Support</a>
-          <a class="btn" href="/services.html">See Services</a>
-        </div>
-      </section>
-
-      <aside class="card hero-left">
-        <h2 style="margin:0 0 10px;">Fast triage. Clear next steps.</h2>
-        <p class="lead" style="margin:0 0 14px;">
-          Straight answers, clean documentation, and support that respects production.
-        </p>
-
-        <ul class="list">
-          <li><strong>1)</strong> Send symptoms + photos (or call for urgent).</li>
-          <li><strong>2)</strong> We isolate the fault: code, device, comms, power, or process.</li>
-          <li><strong>3)</strong> You get a plan: parts, steps, and a fix path.</li>
-        </ul>
-
-        <div class="cta-row" style="margin-top:16px;">
-          <a class="btn" href="/condition-monitoring.html">Prevent this next time</a>
-          <a class="btn" href="/services.html">What we cover</a>
-        </div>
-      </aside>
+    <div class="container footer-bottom muted">
+      © <span id="year"></span> Future Automation LLC. Built for uptime.
     </div>
-  </header>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const btn = document.querySelector(".nav-toggle");
+    const menu = document.getElementById("navMenu");
+    btn?.addEventListener("click", () => {
+      const open = menu.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
