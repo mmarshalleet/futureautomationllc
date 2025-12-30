@@ -298,6 +298,6 @@
   </g>
 
   <g opacity="0.72">
-    <text x="150" y="780" class="small">Sensors → PLC → VFD/Motor → prioritized alerts & logging</text>
+    <text x="150" y="780" class="small">Sensors → PLC → VFD/Motor → prioritized alerts &amp; logging</text>
   </g>
 </svg>
