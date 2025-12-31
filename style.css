@@ -439,11 +439,10 @@ textarea{resize: vertical; min-height: 120px}
 /* Clamp any logo images used in headers/nav (old + new markup) */
 .topbar img,
 nav img,
-.brand img,
-.brand-logo img{
-  height: 34px !important;
-  width: auto !important;
-  max-width: 180px !important;
+.nav .brand-logo img {
+  height: 32px;      /* try 32–36px */
+  width: auto;
+  opacity: 1;
 }
 
 /* Prevent random hero logos/SVGs from taking over the page */
