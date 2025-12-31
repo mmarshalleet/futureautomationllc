@@ -84,10 +84,12 @@ li{margin:6px 0}
 }
 
 .brand img{
-  height:34px;
+  height:54px;
   width:auto;
 }
-
+.nav .brand-logo {
+  padding: 0 12px;
+}
 /* Use either .nav-links OR .nav */
 .nav-links, .nav{
   display:flex;
