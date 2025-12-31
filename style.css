@@ -436,13 +436,26 @@ textarea{resize: vertical; min-height: 120px}
 }
 /* === HARD STOP: logo/header consistency across old pages === */
 
-/* Clamp any logo images used in headers/nav (old + new markup) */
-.topbar img,
-nav img,
-.nav .brand-logo img {
-  height: 32px;      /* try 32–36px */
+/* Header logo sizing (override the global clamp) */
+.topbar .brand img,
+.topbar .brand-logo img,
+nav .brand img,
+nav .brand-logo img{
+  height: 44px;          /* desktop/tablet */
   width: auto;
-  opacity: 1;
+  max-height: 44px;
+  display: block;
+}
+
+/* Mobile: bump it a bit more */
+@media (max-width: 560px){
+  .topbar .brand img,
+  .topbar .brand-logo img,
+  nav .brand img,
+  nav .brand-logo img{
+    height: 48px;
+    max-height: 48px;
+  }
 }
 
 /* Prevent random hero logos/SVGs from taking over the page */
