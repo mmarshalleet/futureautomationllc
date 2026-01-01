@@ -1,9 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
-  <rect x="10" y="10" width="280" height="280" rx="6" ry="6" fill="none" stroke="#1f2933" stroke-width="16"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 100 100"
+     width="100"
+     height="100">
 
-  <polygon fill="#1f2933" points="70,220 70,90 200,90 185,120 105,120 105,220"/>
-  <polygon fill="#2ea3e6" points="150,130 200,130 185,155 150,155"/>
+  <!-- Background -->
+  <rect x="0" y="0" width="100" height="100" rx="12" fill="#0B1220"/>
 
-  <polygon fill="#1f2933" points="105,220 150,110 195,220 165,220 150,175 135,220"/>
-  <polygon fill="#2ea3e6" points="145,185 155,185 150,200"/>
+  <!-- Outer frame -->
+  <rect x="10" y="10" width="80" height="80" rx="8"
+        fill="none"
+        stroke="#E5E7EB"
+        stroke-width="6"/>
+
+  <!-- Stylized FA mark (simplified & bold) -->
+  <!-- F -->
+  <path d="M34 28 H66 V36 H42 V44 H60 V52 H42 V72 H34 Z"
+        fill="#E5E7EB"/>
+
+  <!-- A accent -->
+  <path d="M52 44 H66 V52 H52 Z"
+        fill="#38BDF8"/>
+
 </svg>
