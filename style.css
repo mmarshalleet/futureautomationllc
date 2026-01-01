@@ -474,3 +474,107 @@ svg.fa-logo{
 .top-logo{
   display: none !important;
 }
+/* === Maintenance-focused UI helpers (pills, steps, FAQ) === */
+.pill-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.78);
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:.2px;
+}
+
+.iconlist{
+  list-style:none;
+  padding-left:0;
+  margin-top:10px;
+}
+
+.iconlist li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin:10px 0;
+  color: var(--muted);
+}
+
+.iconlist .bullet{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  margin-top:6px;
+  background: rgba(91,140,255,.9);
+  box-shadow: 0 0 0 4px rgba(91,140,255,.12);
+  flex: 0 0 auto;
+}
+
+.steps{
+  display:grid;
+  gap:12px;
+  margin-top:12px;
+}
+
+.step{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:12px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+}
+
+.step-num{
+  width:32px;
+  height:32px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  color: rgba(255,255,255,.92);
+  border:1px solid rgba(91,140,255,.35);
+  background: rgba(91,140,255,.12);
+  flex: 0 0 auto;
+}
+
+.step-title{
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+/* FAQ */
+.faq{
+  margin-top:18px;
+}
+
+.faq details{
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius:18px;
+  padding:12px 14px;
+  margin-top:12px;
+}
+
+.faq summary{
+  cursor:pointer;
+  font-weight:900;
+  color: rgba(255,255,255,.90);
+  list-style:none;
+}
+
+.faq summary::-webkit-details-marker{ display:none; }
+
+.faq details[open]{
+  background: rgba(0,0,0,.14);
+}
