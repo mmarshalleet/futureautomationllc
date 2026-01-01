@@ -389,10 +389,6 @@ textarea{resize: vertical; min-height: 120px}
   margin:0 auto;
 }
 
-/* IMPORTANT: condition-monitoring.html has an extra SVG at the very top.
-   This keeps it from breaking the header/layout. */
-.fa-logo{ display:none !important; }
-
 /* Hero illustration panel */
 .hero-visual{
   border:1px solid rgba(255,255,255,.10);
