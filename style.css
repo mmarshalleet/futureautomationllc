@@ -703,3 +703,44 @@ p{ margin: 0 0 10px; }
     animation: none !important;
   }
 }
+/* --- Services page: keep visuals from going full-kaiju --- */
+
+/* Any image/SVG placed inside cards should never exceed the card */
+.card img,
+.card svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* If you're using a big standalone graphic image in a service card */
+.card .service-img,
+.card .service-graphic,
+.card .hero-graphic {
+  width: min(420px, 100%);
+  margin: 0 auto 14px;
+  display: block;
+  height: auto;
+  object-fit: contain;
+}
+
+/* If your big graphic is an <img> directly inside a card */
+.card > img {
+  width: min(420px, 100%);
+  margin: 0 auto 14px;
+  display: block;
+}
+
+/* Your small icon container (top of each service card) */
+.card-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+
+/* Ensure the inline icon SVG itself stays small */
+.card-icon svg {
+  width: 22px;
+  height: 22px;
+}
