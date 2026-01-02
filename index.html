@@ -71,112 +71,151 @@
         </div>
 
 <aside class="hero-visual">
-  <div class="fa-viz" role="img" aria-label="Animated automation data flow from sensors to PLC, VFD, motor, and alerts">
-    <svg class="fa-viz-svg" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3.2" result="b"/>
-          <feMerge>
-            <feMergeNode in="b"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
+ <div class="fa-viz" role="img" aria-label="Animated automation data flow with tooltips and trend chart">
+  <svg class="fa-viz-svg" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3.2" result="b"/>
+        <feMerge>
+          <feMergeNode in="b"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
 
-        <linearGradient id="flowA" x1="0" x2="1">
-          <stop offset="0" stop-color="var(--brand1)" stop-opacity=".25"/>
-          <stop offset=".55" stop-color="var(--brand1)" stop-opacity=".95"/>
-          <stop offset="1" stop-color="var(--ok)" stop-opacity=".35"/>
-        </linearGradient>
+      <linearGradient id="flowA" x1="0" x2="1">
+        <stop offset="0" stop-color="var(--brand1)" stop-opacity=".25"/>
+        <stop offset=".55" stop-color="var(--brand1)" stop-opacity=".95"/>
+        <stop offset="1" stop-color="var(--ok)" stop-opacity=".35"/>
+      </linearGradient>
 
-        <linearGradient id="flowB" x1="0" x2="1">
-          <stop offset="0" stop-color="var(--brand2)" stop-opacity=".25"/>
-          <stop offset=".55" stop-color="var(--brand2)" stop-opacity=".95"/>
-          <stop offset="1" stop-color="var(--ok)" stop-opacity=".35"/>
-        </linearGradient>
-      </defs>
+      <linearGradient id="flowB" x1="0" x2="1">
+        <stop offset="0" stop-color="var(--brand2)" stop-opacity=".25"/>
+        <stop offset=".55" stop-color="var(--brand2)" stop-opacity=".95"/>
+        <stop offset="1" stop-color="var(--ok)" stop-opacity=".35"/>
+      </linearGradient>
 
-      <!-- subtle grid -->
-      <g class="fa-viz-grid">
-        <path d="M20 70 H740" />
-        <path d="M20 140 H740" />
-        <path d="M20 210 H740" />
-        <path d="M20 280 H740" />
-        <path d="M20 350 H740" />
-        <path d="M120 40 V390" />
-        <path d="M260 40 V390" />
-        <path d="M400 40 V390" />
-        <path d="M540 40 V390" />
-        <path d="M680 40 V390" />
-      </g>
+      <linearGradient id="trendFill" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="var(--ok)" stop-opacity=".22"/>
+        <stop offset="1" stop-color="var(--ok)" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
 
-      <!-- nodes -->
-      <g class="fa-viz-node" transform="translate(70 110)">
-        <rect width="150" height="90" rx="18"/>
-        <text x="18" y="34">Sensors</text>
-        <text class="sub" x="18" y="58">photoeye • encoder</text>
-        <text class="sub" x="18" y="78">temp • vibration</text>
-        <circle class="pulse" cx="140" cy="22" r="6"/>
-      </g>
+    <!-- subtle grid -->
+    <g class="fa-viz-grid">
+      <path d="M20 70 H740" />
+      <path d="M20 140 H740" />
+      <path d="M20 210 H740" />
+      <path d="M20 280 H740" />
+      <path d="M20 350 H740" />
+      <path d="M120 40 V390" />
+      <path d="M260 40 V390" />
+      <path d="M400 40 V390" />
+      <path d="M540 40 V390" />
+      <path d="M680 40 V390" />
+    </g>
 
-      <g class="fa-viz-node" transform="translate(255 90)">
-        <rect width="170" height="130" rx="18"/>
-        <text x="18" y="34">PLC / Logic</text>
-        <text class="sub" x="18" y="58">state • interlocks</text>
-        <text class="sub" x="18" y="78">fault context</text>
-        <text class="sub" x="18" y="98">event log</text>
-        <circle class="pulse pulse2" cx="154" cy="22" r="6"/>
-      </g>
+    <!-- nodes -->
+    <g class="fa-viz-node" transform="translate(70 110)">
+      <rect width="150" height="90" rx="18"/>
+      <text x="18" y="34">Sensors</text>
+      <text class="sub" x="18" y="58">photoeye • encoder</text>
+      <text class="sub" x="18" y="78">temp • vibration</text>
+      <circle class="pulse" cx="140" cy="22" r="6"/>
+    </g>
 
-      <g class="fa-viz-node" transform="translate(445 110)">
-        <rect width="150" height="90" rx="18"/>
-        <text x="18" y="34">VFD</text>
-        <text class="sub" x="18" y="58">fault history</text>
-        <text class="sub" x="18" y="78">load / ramps</text>
-        <circle class="pulse pulse3" cx="140" cy="22" r="6"/>
-      </g>
+    <g class="fa-viz-node" transform="translate(255 90)">
+      <rect width="170" height="130" rx="18"/>
+      <text x="18" y="34">PLC / Logic</text>
+      <text class="sub" x="18" y="58">state • interlocks</text>
+      <text class="sub" x="18" y="78">fault context</text>
+      <text class="sub" x="18" y="98">event log</text>
+      <circle class="pulse pulse2" cx="154" cy="22" r="6"/>
+    </g>
 
-      <g class="fa-viz-node" transform="translate(615 105)">
-        <rect width="120" height="100" rx="18"/>
-        <text x="18" y="34">Motor</text>
-        <text class="sub" x="18" y="58">run time</text>
-        <text class="sub" x="18" y="78">trend</text>
-        <circle class="pulse pulse4" cx="106" cy="22" r="6"/>
-      </g>
+    <g class="fa-viz-node" transform="translate(445 110)">
+      <rect width="150" height="90" rx="18"/>
+      <text x="18" y="34">VFD</text>
+      <text class="sub" x="18" y="58">fault history</text>
+      <text class="sub" x="18" y="78">load / ramps</text>
+      <circle class="pulse pulse3" cx="140" cy="22" r="6"/>
+    </g>
 
-      <g class="fa-viz-node fa-viz-alert" transform="translate(465 245)">
-        <rect width="270" height="120" rx="18"/>
-        <text x="18" y="34">Actionable Alerts</text>
-        <text class="sub" x="18" y="58">“input chatter ↑”</text>
-        <text class="sub" x="18" y="78">“drive trips trending”</text>
-        <text class="sub" x="18" y="98">“check X before reset”</text>
-      </g>
+    <g class="fa-viz-node" transform="translate(615 105)">
+      <rect width="120" height="100" rx="18"/>
+      <text x="18" y="34">Motor</text>
+      <text class="sub" x="18" y="58">run time</text>
+      <text class="sub" x="18" y="78">trend</text>
+      <circle class="pulse pulse4" cx="106" cy="22" r="6"/>
+    </g>
 
-      <!-- flow paths (animated dashed strokes) -->
-      <path class="fa-flow fa-flow-a" d="M220 155 C245 155, 245 155, 255 155" />
-      <path class="fa-flow fa-flow-b" d="M425 155 C440 155, 440 155, 445 155" />
-      <path class="fa-flow fa-flow-a" d="M595 155 C607 155, 607 155, 615 155" />
-      <path class="fa-flow fa-flow-ok" d="M340 220 C360 250, 400 260, 465 290" />
-      <path class="fa-flow fa-flow-ok2" d="M520 220 C540 252, 575 265, 650 295" />
+    <g class="fa-viz-node fa-viz-alert" transform="translate(465 245)">
+      <rect width="270" height="120" rx="18"/>
+      <text x="18" y="34">Actionable Alerts</text>
+      <text class="sub" x="18" y="58">“input chatter ↑”</text>
+      <text class="sub" x="18" y="78">“drive trips trending”</text>
+      <text class="sub" x="18" y="98">“check X before reset”</text>
+    </g>
 
-      <!-- tiny “data packets” -->
-      <circle class="packet p1" r="4" cx="240" cy="155"/>
-      <circle class="packet p2" r="4" cx="435" cy="155"/>
-      <circle class="packet p3" r="4" cx="605" cy="155"/>
-      <circle class="packet p4" r="4" cx="420" cy="260"/>
-      <circle class="packet p5" r="4" cx="560" cy="270"/>
+    <!-- flow paths -->
+    <path class="fa-flow fa-flow-a" d="M220 155 C245 155, 245 155, 255 155" />
+    <path class="fa-flow fa-flow-b" d="M425 155 C440 155, 440 155, 445 155" />
+    <path class="fa-flow fa-flow-a" d="M595 155 C607 155, 607 155, 615 155" />
+    <path class="fa-flow fa-flow-ok" d="M340 220 C360 250, 400 260, 465 290" />
+    <path class="fa-flow fa-flow-ok2" d="M520 220 C540 252, 575 265, 650 295" />
+
+    <!-- data packets -->
+    <circle class="packet p1" r="4" cx="240" cy="155"/>
+    <circle class="packet p2" r="4" cx="435" cy="155"/>
+    <circle class="packet p3" r="4" cx="605" cy="155"/>
+    <circle class="packet p4" r="4" cx="420" cy="260"/>
+    <circle class="packet p5" r="4" cx="560" cy="270"/>
+
+    <!-- TOOLTIP HIT-ZONES (invisible, above everything) -->
+    <g class="fa-hit">
+      <rect class="hit" x="70"  y="110" width="150" height="90"  rx="18" data-tip-title="Sensors" data-tip-body="We track chatter, dropouts, and time patterns so you fix the real cause — not the symptom."/>
+      <rect class="hit" x="255" y="90"  width="170" height="130" rx="18" data-tip-title="PLC / Logic" data-tip-body="Event logs + last good state. Faster first checks and fewer repeat failures across shifts."/>
+      <rect class="hit" x="445" y="110" width="150" height="90"  rx="18" data-tip-title="VFD" data-tip-body="Fault history + load trends. Stops ‘replace the motor’ roulette and cuts nuisance trips."/>
+      <rect class="hit" x="615" y="105" width="120" height="100" rx="18" data-tip-title="Motor" data-tip-body="Run-time and trend warnings before it turns into a hard stop (and a 2am party)."/>
+      <rect class="hit" x="465" y="245" width="270" height="120" rx="18" data-tip-title="Actionable Alerts" data-tip-body="Alerts only when it matters — with what to check next. Less spam, more signal."/>
+    </g>
+  </svg>
+
+  <!-- Mini trend chart overlay -->
+  <div class="trend-card" aria-hidden="true">
+    <div class="trend-head">
+      <div class="trend-title">Trend: Input chatter</div>
+      <div class="trend-pill">last 60 min</div>
+    </div>
+
+    <svg class="trend-svg" viewBox="0 0 260 92" xmlns="http://www.w3.org/2000/svg">
+      <path class="trend-grid" d="M10 18 H250 M10 46 H250 M10 74 H250" />
+      <path class="trend-area" d="M10 74 L20 70 L30 72 L40 64 L50 66 L60 58 L70 60 L80 48 L90 54 L100 42 L110 46 L120 40 L130 44 L140 28 L150 36 L160 24 L170 30 L180 22 L190 34 L200 26 L210 40 L220 32 L230 52 L240 44 L250 58 L250 84 L10 84 Z"/>
+      <path class="trend-line" d="M10 74 L20 70 L30 72 L40 64 L50 66 L60 58 L70 60 L80 48 L90 54 L100 42 L110 46 L120 40 L130 44 L140 28 L150 36 L160 24 L170 30 L180 22 L190 34 L200 26 L210 40 L220 32 L230 52 L240 44 L250 58"/>
+      <circle class="trend-dot" cx="250" cy="58" r="3.8" />
     </svg>
 
-    <div class="fa-viz-badges" aria-hidden="true">
-      <span class="badge ok">LIVE</span>
-      <span class="badge">events logged</span>
-      <span class="badge">alerts prioritized</span>
+    <div class="trend-foot">
+      <span class="trend-metric"><b>8</b> spikes</span>
+      <span class="trend-metric"><b>+42%</b> vs baseline</span>
     </div>
   </div>
 
+  <!-- Tooltip bubble -->
+  <div class="fa-tooltip" id="faTooltip" role="status" aria-live="polite" hidden>
+    <div class="fa-tooltip-title" id="faTipTitle"></div>
+    <div class="fa-tooltip-body" id="faTipBody"></div>
+    <div class="fa-tooltip-hint">Tip: tap to pin • tap outside to close</div>
+  </div>
+
+<div class="fa-viz-badges" aria-hidden="true">
+    <span class="badge ok">LIVE</span>
+    <span class="badge">events logged</span>
+    <span class="badge">alerts prioritized</span>
+  </div>
+</div>
   <div class="caption">Live signals → context → prioritized alerts (so techs stop guessing)</div>
 </aside>
-
-      </div>
+  </div>
     </section>
 
     <div class="section-divider">
