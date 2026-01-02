@@ -70,10 +70,112 @@
           </p>
         </div>
 
-        <aside class="hero-visual">
-          <img src="assets/hero-diagram.svg" alt="PLC panel block diagram: sensors, PLC, VFD, motor, alerts" />
-          <div class="caption">Sensors → PLC → VFD/Motor + prioritized alerts & logging</div>
-        </aside>
+<aside class="hero-visual">
+  <div class="fa-viz" role="img" aria-label="Animated automation data flow from sensors to PLC, VFD, motor, and alerts">
+    <svg class="fa-viz-svg" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3.2" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <linearGradient id="flowA" x1="0" x2="1">
+          <stop offset="0" stop-color="var(--brand1)" stop-opacity=".25"/>
+          <stop offset=".55" stop-color="var(--brand1)" stop-opacity=".95"/>
+          <stop offset="1" stop-color="var(--ok)" stop-opacity=".35"/>
+        </linearGradient>
+
+        <linearGradient id="flowB" x1="0" x2="1">
+          <stop offset="0" stop-color="var(--brand2)" stop-opacity=".25"/>
+          <stop offset=".55" stop-color="var(--brand2)" stop-opacity=".95"/>
+          <stop offset="1" stop-color="var(--ok)" stop-opacity=".35"/>
+        </linearGradient>
+      </defs>
+
+      <!-- subtle grid -->
+      <g class="fa-viz-grid">
+        <path d="M20 70 H740" />
+        <path d="M20 140 H740" />
+        <path d="M20 210 H740" />
+        <path d="M20 280 H740" />
+        <path d="M20 350 H740" />
+        <path d="M120 40 V390" />
+        <path d="M260 40 V390" />
+        <path d="M400 40 V390" />
+        <path d="M540 40 V390" />
+        <path d="M680 40 V390" />
+      </g>
+
+      <!-- nodes -->
+      <g class="fa-viz-node" transform="translate(70 110)">
+        <rect width="150" height="90" rx="18"/>
+        <text x="18" y="34">Sensors</text>
+        <text class="sub" x="18" y="58">photoeye • encoder</text>
+        <text class="sub" x="18" y="78">temp • vibration</text>
+        <circle class="pulse" cx="140" cy="22" r="6"/>
+      </g>
+
+      <g class="fa-viz-node" transform="translate(255 90)">
+        <rect width="170" height="130" rx="18"/>
+        <text x="18" y="34">PLC / Logic</text>
+        <text class="sub" x="18" y="58">state • interlocks</text>
+        <text class="sub" x="18" y="78">fault context</text>
+        <text class="sub" x="18" y="98">event log</text>
+        <circle class="pulse pulse2" cx="154" cy="22" r="6"/>
+      </g>
+
+      <g class="fa-viz-node" transform="translate(445 110)">
+        <rect width="150" height="90" rx="18"/>
+        <text x="18" y="34">VFD</text>
+        <text class="sub" x="18" y="58">fault history</text>
+        <text class="sub" x="18" y="78">load / ramps</text>
+        <circle class="pulse pulse3" cx="140" cy="22" r="6"/>
+      </g>
+
+      <g class="fa-viz-node" transform="translate(615 105)">
+        <rect width="120" height="100" rx="18"/>
+        <text x="18" y="34">Motor</text>
+        <text class="sub" x="18" y="58">run time</text>
+        <text class="sub" x="18" y="78">trend</text>
+        <circle class="pulse pulse4" cx="106" cy="22" r="6"/>
+      </g>
+
+      <g class="fa-viz-node fa-viz-alert" transform="translate(465 245)">
+        <rect width="270" height="120" rx="18"/>
+        <text x="18" y="34">Actionable Alerts</text>
+        <text class="sub" x="18" y="58">“input chatter ↑”</text>
+        <text class="sub" x="18" y="78">“drive trips trending”</text>
+        <text class="sub" x="18" y="98">“check X before reset”</text>
+      </g>
+
+      <!-- flow paths (animated dashed strokes) -->
+      <path class="fa-flow fa-flow-a" d="M220 155 C245 155, 245 155, 255 155" />
+      <path class="fa-flow fa-flow-b" d="M425 155 C440 155, 440 155, 445 155" />
+      <path class="fa-flow fa-flow-a" d="M595 155 C607 155, 607 155, 615 155" />
+      <path class="fa-flow fa-flow-ok" d="M340 220 C360 250, 400 260, 465 290" />
+      <path class="fa-flow fa-flow-ok2" d="M520 220 C540 252, 575 265, 650 295" />
+
+      <!-- tiny “data packets” -->
+      <circle class="packet p1" r="4" cx="240" cy="155"/>
+      <circle class="packet p2" r="4" cx="435" cy="155"/>
+      <circle class="packet p3" r="4" cx="605" cy="155"/>
+      <circle class="packet p4" r="4" cx="420" cy="260"/>
+      <circle class="packet p5" r="4" cx="560" cy="270"/>
+    </svg>
+
+    <div class="fa-viz-badges" aria-hidden="true">
+      <span class="badge ok">LIVE</span>
+      <span class="badge">events logged</span>
+      <span class="badge">alerts prioritized</span>
+    </div>
+  </div>
+
+  <div class="caption">Live signals → context → prioritized alerts (so techs stop guessing)</div>
+</aside>
+
       </div>
     </section>
 
