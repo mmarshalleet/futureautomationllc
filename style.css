@@ -87,7 +87,7 @@ li{ margin: 6px 0; }
   gap: 14px;
   padding: 12px 0;
 }
-.brand img{ height: 34px; width:auto; }
+.brand img{ height: 40px; width:auto; }
 
 .nav{
   display:flex;
