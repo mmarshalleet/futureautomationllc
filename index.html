@@ -442,5 +442,104 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+  <script>
+  (function () {
+    const viz = document.querySelector(".fa-viz");
+    if (!viz) return;
+
+    const tooltip = document.getElementById("faTooltip");
+    const tipTitle = document.getElementById("faTipTitle");
+    const tipBody = document.getElementById("faTipBody");
+    const hits = viz.querySelectorAll(".fa-hit .hit");
+
+    let pinned = false;
+
+    function showTip(target, clientX, clientY) {
+      const title = target.getAttribute("data-tip-title") || "";
+      const body = target.getAttribute("data-tip-body") || "";
+      tipTitle.textContent = title;
+      tipBody.textContent = body;
+
+      tooltip.hidden = false;
+      viz.classList.add("is-hovering");
+
+      // Position tooltip relative to viz container
+      const rect = viz.getBoundingClientRect();
+      const x = (clientX ?? (rect.left + rect.width / 2)) - rect.left;
+      const y = (clientY ?? (rect.top + rect.height / 2)) - rect.top;
+
+      // Keep tooltip inside bounds a bit
+      const pad = 14;
+      const clampedX = Math.max(pad, Math.min(rect.width - pad, x));
+      const clampedY = Math.max(pad + 40, Math.min(rect.height - pad, y));
+
+      tooltip.style.left = clampedX + "px";
+      tooltip.style.top = clampedY + "px";
+    }
+
+    function hideTip() {
+      if (pinned) return;
+      tooltip.hidden = true;
+      viz.classList.remove("is-hovering");
+    }
+
+    function pinTip() {
+      pinned = true;
+      tooltip.classList.add("pinned");
+      tooltip.hidden = false;
+    }
+
+    function unpinTip() {
+      pinned = false;
+      tooltip.classList.remove("pinned");
+      tooltip.hidden = true;
+      viz.classList.remove("is-hovering");
+    }
+
+    hits.forEach(hit => {
+      hit.addEventListener("mousemove", (e) => {
+        if (pinned) return;
+        showTip(hit, e.clientX, e.clientY);
+      });
+
+      hit.addEventListener("mouseenter", (e) => {
+        if (pinned) return;
+        showTip(hit, e.clientX, e.clientY);
+      });
+
+      hit.addEventListener("mouseleave", () => {
+        hideTip();
+      });
+
+      // Mobile tap: pin tooltip
+      hit.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const rect = hit.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+
+        showTip(hit, cx, cy);
+        pinTip();
+      });
+    });
+
+    // Clicking outside closes pinned tip
+    document.addEventListener("click", (e) => {
+      if (!pinned) return;
+      const insideViz = viz.contains(e.target);
+      if (!insideViz) unpinTip();
+    });
+
+    // Escape closes pinned tip
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") unpinTip();
+    });
+
+    // If user scrolls while pinned, close it (keeps it from floating awkwardly)
+    window.addEventListener("scroll", () => {
+      if (pinned) unpinTip();
+    }, { passive: true });
+  })();
+  </script>
 </body>
 </html>
