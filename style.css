@@ -744,3 +744,16 @@ p{ margin: 0 0 10px; }
   width: 22px;
   height: 22px;
 }
+/* --- Section divider control --- */
+.section-divider {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.section-divider img {
+  width: 100%;
+  max-width: 420px;   /* ← key number */
+  height: auto;
+  opacity: 0.6;
+}
