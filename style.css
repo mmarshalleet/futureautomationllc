@@ -227,3 +227,164 @@
 @media (prefers-reduced-motion: reduce){
   .fa-flow, .pulse, .packet{ animation: none !important; }
 }
+/* ===== Mini Trend Chart + Tooltips ===== */
+.fa-hit .hit{
+  fill: transparent;
+  cursor: pointer;
+}
+.fa-hit .hit:hover{
+  outline: none;
+}
+.fa-viz .fa-hit .hit:hover{
+  /* SVG hover glow is handled via JS class on container */
+}
+
+.fa-viz.is-hovering{
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    0 18px 48px rgba(0,0,0,.28);
+}
+
+/* Tooltip */
+.fa-tooltip{
+  position:absolute;
+  z-index: 5;
+  min-width: 220px;
+  max-width: 320px;
+  padding: 12px 12px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(10,14,24,.88);
+  color: rgba(255,255,255,.92);
+  box-shadow: 0 18px 50px rgba(0,0,0,.38);
+  backdrop-filter: blur(12px);
+  transform: translate(-50%, -112%);
+  pointer-events: none; /* so hover doesn't flicker */
+}
+.fa-tooltip-title{
+  font-weight: 950;
+  font-size: 13px;
+  letter-spacing: .2px;
+  margin-bottom: 6px;
+}
+.fa-tooltip-body{
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(255,255,255,.78);
+  line-height: 1.35;
+}
+.fa-tooltip-hint{
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .25px;
+}
+
+/* When pinned (mobile tap), allow interaction */
+.fa-tooltip.pinned{
+  pointer-events: auto;
+}
+
+/* Mini trend chart card */
+.trend-card{
+  position:absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 260px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.20);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.30);
+  padding: 10px 10px 8px;
+  overflow:hidden;
+}
+
+.trend-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.trend-title{
+  font-weight: 950;
+  font-size: 12px;
+  color: rgba(255,255,255,.90);
+}
+.trend-pill{
+  font-size: 10px;
+  font-weight: 900;
+  padding: 5px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.78);
+  background: rgba(255,255,255,.04);
+}
+
+.trend-svg{ width:100%; height:auto; display:block; }
+.trend-grid{ stroke: rgba(255,255,255,.08); stroke-width:1; fill:none; }
+.trend-area{
+  fill: url(#trendFill);
+  opacity: .95;
+  animation: trendReveal 1.8s ease-out infinite;
+}
+.trend-line{
+  stroke: rgba(37,212,140,.90);
+  stroke-width: 2.4;
+  fill:none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: trendDraw 1.8s ease-out infinite;
+  filter: url(#glow);
+}
+.trend-dot{
+  fill: rgba(255,255,255,.92);
+  filter: url(#glow);
+  animation: dotPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes trendDraw{
+  0%{ stroke-dashoffset: 340; opacity:.65 }
+  45%{ stroke-dashoffset: 0; opacity:1 }
+  100%{ stroke-dashoffset: 0; opacity:.75 }
+}
+@keyframes trendReveal{
+  0%{ opacity:.55 }
+  45%{ opacity:.95 }
+  100%{ opacity:.65 }
+}
+@keyframes dotPulse{
+  0%,100%{ transform: scale(1); opacity:.85 }
+  50%{ transform: scale(1.35); opacity:1 }
+}
+
+.trend-foot{
+  display:flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.trend-metric{
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,.70);
+}
+.trend-metric b{
+  color: rgba(255,255,255,.92);
+}
+
+/* Mobile sizing */
+@media (max-width: 520px){
+  .trend-card{ width: 220px; }
+  .fa-tooltip{ max-width: 260px; }
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce){
+  .trend-line, .trend-area, .trend-dot{ animation: none !important; }
+}
+
