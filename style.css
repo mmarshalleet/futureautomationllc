@@ -488,3 +488,132 @@ nav,
 }
 
 /* Mobile: keep nav VISIBLE (no hiding
+/* =========================
+   iOS SUPPORT FORM FIX
+   (request-support.html)
+   ========================= */
+
+/* Make the support form layout sane */
+.support-card form.form{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Rows become a real grid (2-col desktop, 1-col mobile) */
+.support-card .row{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 780px){
+  .support-card .row{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Labels should stack text over the input */
+.support-card form.form > label,
+.support-card .row > label{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 750;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Inputs: full width + iOS-friendly sizing (prevents Safari zoom) */
+.support-card input,
+.support-card textarea,
+.support-card select{
+  width: 100%;
+  min-width: 0;
+  font-size: 16px;            /* IMPORTANT: stops iOS zoom on focus */
+  line-height: 1.2;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  outline: none;
+}
+
+.support-card textarea{
+  resize: vertical;
+}
+
+.support-card input:focus,
+.support-card textarea:focus,
+.support-card select:focus{
+  border-color: rgba(91,140,255,.55);
+  box-shadow: 0 0 0 3px rgba(91,140,255,.18);
+}
+
+/* Toggle rows: make each toggle a clean "switch" pill */
+.support-card label.toggle{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 54px 12px 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+/* Hide the native checkbox but keep it accessible */
+.support-card label.toggle input[type="checkbox"]{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The switch UI */
+.support-card label.toggle .toggle-ui{
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.25);
+}
+
+.support-card label.toggle .toggle-ui::after{
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.65);
+  transition: left .15s ease, background .15s ease;
+}
+
+/* Checked state (input is right before .toggle-ui in your HTML) */
+.support-card label.toggle input[type="checkbox"]:checked + .toggle-ui{
+  border-color: rgba(37,212,140,.45);
+  background: rgba(37,212,140,.18);
+}
+
+.support-card label.toggle input[type="checkbox"]:checked + .toggle-ui::after{
+  left: 21px;
+  background: var(--ok);
+}
+
+/* Mobile: make the submit button easier to tap */
+@media (max-width: 780px){
+  .support-card button.btn{
+    width: 100%;
+  }
+}
