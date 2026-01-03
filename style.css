@@ -439,3 +439,52 @@ h3{ font-size: 18px; }
     color: var(--muted2);
     font-size: 12px;
 }
+/* =========================
+   MOBILE HEADER + BIG ICON FIX (override)
+   Paste at the BOTTOM of style.css
+   ========================= */
+
+/* Make header/nav actually show + stay visible on iPhone */
+nav,
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: rgba(6,9,15,.78);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Support BOTH header structures:
+   1) <nav><div class="nav-inner">...</div></nav>
+   2) <header class="topbar"><div class="topbar-inner">...</div></header> */
+.nav-inner,
+.topbar-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Logo sizing */
+.brand-logo img,
+.brand img{
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+/* Desktop defaults (both variants) */
+.nav-links,
+.nav{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Mobile: keep nav VISIBLE (no hiding
