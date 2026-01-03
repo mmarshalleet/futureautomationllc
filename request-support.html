@@ -9,88 +9,18 @@
   <meta name="theme-color" content="#0B1220" />
   <title>Request Support | Future Automation LLC</title>
   <meta name="description" content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." />
-
-  <style>
-    .support-wrap { max-width: 860px; margin: 0 auto; }
-    .support-card { padding: 22px; }
-    .support-form { margin-top: 14px; }
-
-    .support-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    @media (min-width: 780px){
-      .support-grid{ grid-template-columns: 1fr 1fr; }
-      .span-2{ grid-column: 1 / -1; }
-    }
-
-    .field label{
-      display:block;
-      font-weight: 750;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .field input, .field textarea{ width:100%; }
-
-    .toggle-field{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-    }
-    .toggle-field .toggle-label{
-      font-weight: 800;
-      font-size: 13px;
-      color: var(--muted);
-      margin: 0;
-    }
-    .toggle-field .toggle-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex: 0 0 auto;
-    }
-    .toggle-field input[type="checkbox"]{
-      width: 18px;
-      height: 18px;
-      margin: 0;
-    }
-
-    .support-actions{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top: 4px;
-    }
-    @media (min-width: 780px){
-      .support-actions{
-        flex-direction:row;
-        align-items:center;
-        justify-content:space-between;
-      }
-    }
-    #status{ min-height: 1.2em; }
-  </style>
 </head>
-
 <body>
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="index.html" aria-label="Future Automation LLC home">
-        <img src="logo.svg" alt="Future Automation LLC" />
+        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="services.html">Services</a>
-        <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
-        <a class="nav-link active" href="request-support.html">Request Support</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="services.html">Services</a>
+        <a href="condition-monitoring.html">Condition Monitoring</a>
+        <a class="active" href="request-support.html">Request Support</a>
       </nav>
 
       <div class="nav-cta">
@@ -99,81 +29,76 @@
     </div>
   </header>
 
-<main class="page">
-  <section class="container">
-    <div class="hero">
-      <h1>Request Support</h1>
-      <p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues—send the details and we’ll get eyes on it fast.</p>
-    </div>
+  <main class="container">
+    <header class="section">
+      <div class="kicker"><span class="kdot"></span> Request Support</div>
+      <h1>Submit a support request.</h1>
+      <p class="lead">Delivered instantly via secure push alert and logged for follow-up.</p>
+    </header>
 
-    <div class="grid two-col">
+    <section class="section split">
       <div class="card">
-        <h2>What to include</h2>
-        <ul class="bullets">
-          <li>Line / area + what stopped</li>
-          <li>PLC / HMI / drive model (if you know it)</li>
-          <li>Alarms, screenshots, fault codes</li>
-          <li>Best call-back number + site time zone</li>
-        </ul>
-        <div class="note">
-          <strong>Heads up:</strong> If you can’t text photos through the form, submit the request anyway—reply to the confirmation email with attachments.
-        </div>
-      </div>
-
-      <div class="card support-card">
-        <h2>Support request</h2>
+        <h2>Request details</h2>
 
         <form id="supportForm" class="form">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required />
+          <div class="row">
+            <label>Name
+              <input name="name" autocomplete="name" required />
+            </label>
+            <label>Company
+              <input name="company" autocomplete="organization" />
+            </label>
           </div>
 
-          <div class="field">
-            <label for="company">Company / Plant</label>
-            <input id="company" name="company" type="text" autocomplete="organization" />
+          <div class="row">
+            <label>Email
+              <input name="email" type="email" autocomplete="email" />
+            </label>
+            <label>Location / Plant
+              <input name="location" placeholder="City, plant name, or line" />
+            </label>
           </div>
 
-          <div class="field two">
-            <div>
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
-            </div>
-            <div>
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" />
-            </div>
+          <div class="row">
+            <label>Asset / Machine
+              <input name="asset" placeholder="Line, machine, PLC, VFD, etc." />
+            </label>
+
+            <label class="toggle">
+              <span>Plant Down</span>
+              <input id="plantDown" name="plantDown" type="checkbox" />
+              <span class="toggle-ui" aria-hidden="true"></span>
+            </label>
           </div>
 
-          <div class="field">
-            <label for="service">What do you need?</label>
-            <select id="service" name="service" required>
-              <option value="" selected disabled>Select one…</option>
-              <option>Plant-down support</option>
-              <option>VFD / motor troubleshooting</option>
-              <option>PLC/HMI troubleshooting</option>
-              <option>Repeat-stop elimination</option>
-              <option>Retrofit / migration</option>
-              <option>Condition monitoring</option>
-              <option>Other</option>
-            </select>
+          <label>Issue / Symptoms
+            <textarea name="issue" rows="6" placeholder="What happened? What have you tried? Include fault codes if you have them." required></textarea>
+          </label>
+
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px">
+            <button class="btn primary" type="submit">Send Request</button>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
           </div>
 
-          <div class="field">
-            <label for="message">Details</label>
-            <textarea id="message" name="message" rows="7" placeholder="What happened? What have you tried? Any fault codes?" required></textarea>
-          </div>
-
-          <button id="submitBtn" class="btn primary" type="submit">
-            Send request
-          </button>
-
-          <p id="status" class="status" role="status" aria-live="polite"></p>
+          <p class="small">Tip: Include fault codes, recent changes, and what has already been tried.</p>
         </form>
       </div>
-    </div>
-  </section>
-</main>
+
+      <div class="card mini">
+        <h2>What happens next</h2>
+        <ul>
+          <li>Your request is delivered instantly via push alert.</li>
+          <li>If Plant Down is enabled, the alert is prioritized.</li>
+          <li>We respond with next steps and triage questions.</li>
+          <li>Request details are logged for follow-up and handoff.</li>
+        </ul>
+
+        <div class="hr"></div>
+
+        <p class="small">This keeps communication consistent and easy to track across shifts.</p>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="footer-inner">
@@ -181,43 +106,28 @@
       <div class="small">Secure push alerts • Logged requests • Faster response</div>
     </div>
   </footer>
- <script>
-  const form = document.getElementById("supportForm");
-  const statusEl = document.getElementById("status");
-  const btn = document.getElementById("submitBtn");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    statusEl.textContent = "";
-    btn.disabled = true;
-    btn.textContent = "Sending…";
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const form = document.getElementById("supportForm");
+    const statusEl = document.getElementById("status");
 
-    const payload = Object.fromEntries(new FormData(form).entries());
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "Sending...";
 
-    try {
-      const res = await fetch("/api/notify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+      const fd = new FormData(form);
+      fd.set("type", document.getElementById("plantDown").checked ? "plant_down" : "support");
 
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        throw new Error(data.error || "Request failed. Please try again.");
+      try {
+        const r = await fetch("/api/notify", { method: "POST", body: fd });
+        if (!r.ok) throw new Error("Request failed");
+        form.reset();
+        statusEl.textContent = "Request sent. We will respond shortly.";
+      } catch (err) {
+        statusEl.textContent = "Could not send right now. Please refresh and try again.";
       }
-
-      statusEl.textContent = "Sent. Redirecting…";
-      form.reset();
-      setTimeout(() => { window.location.href = "/thank-you.html"; }, 600);
-    } catch (err) {
-      console.error(err);
-      statusEl.textContent = (err && err.message) ? err.message : "Something went wrong. Please try again.";
-      btn.disabled = false;
-      btn.textContent = "Send request";
-    }
-  });
-</script>
-
+    });
+  </script>
 </body>
 </html>

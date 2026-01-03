@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>Subscription Confirmed | Future Automation LLC</title>
+  <meta name="description" content="Subscription confirmed. Next steps for onboarding." />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="services.html">Services</a>
+        <a href="condition-monitoring.html">Condition Monitoring</a>
+        <a href="request-support.html">Request Support</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="kicker"><span class="kdot"></span> Confirmed</div>
+      <h1>Subscription active.</h1>
+      <p class="lead">You’re in. We’ll reach out shortly to start onboarding.</p>
+
+      <div class="card" style="margin-top:14px;">
+        <p class="small" id="meta"></p>
+        <p class="small" style="margin-top:8px;">If you need plant-down support in the meantime, use <a href="request-support.html" style="text-decoration:underline;">Request Support</a>.</p>
+      </div>
+
+      <div class="hr"></div>
+      <a class="btn primary" href="condition-monitoring.html">Back to Condition Monitoring</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small"><a href="terms.html" style="text-decoration:underline;">Service terms</a></div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const u = new URL(location.href);
+    const sub = u.searchParams.get("sub");
+    const plan = u.searchParams.get("plan");
+    const parts = [];
+    if (sub) parts.push(`Subscription ID: ${sub}`);
+    if (plan) parts.push(`Plan: ${plan}`);
+    document.getElementById("meta").textContent = parts.length ? parts.join(" • ") : "";
+  </script>
+</body>
+</html>

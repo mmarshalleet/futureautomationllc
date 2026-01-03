@@ -8,21 +8,22 @@
   <link rel="alternate icon" href="favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
   <title>Condition Monitoring | Future Automation LLC</title>
-  <meta name="description" content="Condition monitoring for maintenance teams: fewer surprises, faster troubleshooting, and documentation that reduces repeat downtime." />
+  <meta name="description" content="Condition monitoring built for maintenance managers: fewer surprises, faster troubleshooting, and clear documentation." />
 </head>
-
 <body>
+  <svg class="fa-logo" aria-label="Future Automation LLC logo" role="img">
+  <use href="#fa-logo"></use>
+</svg>
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="index.html" aria-label="Future Automation LLC home">
-        <img src="logo.svg" alt="Future Automation LLC" />
+        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="services.html">Services</a>
-        <a class="nav-link active" href="condition-monitoring.html">Condition Monitoring</a>
-        <a class="nav-link" href="request-support.html">Request Support</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="services.html">Services</a>
+        <a class="active" href="condition-monitoring.html">Condition Monitoring</a>
+        <a href="request-support.html">Request Support</a>
       </nav>
 
       <div class="nav-cta">
@@ -34,23 +35,19 @@
   <main class="container">
     <header class="section">
       <div class="kicker"><span class="kdot"></span> Condition Monitoring</div>
-      <h1>Early warning with context — not alert spam.</h1>
+      <h1>Early warning that reduces downtime without adding noise.</h1>
       <p class="lead">
-        The goal isn’t “more alarms.” The goal is fewer surprise breakdowns, faster troubleshooting, and a paper trail for repeat offenders.
+        Catch developing failures early, reduce repeat downtime, and document chronic issues with actionable alerts.
       </p>
 
-      <div class="pill-row" style="margin-top:14px;">
-        <span class="pill">Trending faults</span>
-        <span class="pill">Repeat stops</span>
-        <span class="pill">Run hours</span>
-        <span class="pill">Nuisance trips</span>
-        <span class="pill">Intermittent signals</span>
+      <div class="card warn" id="cancelBox" style="display:none; margin-top:14px;">
+        <strong>Subscription not completed.</strong>
+        <p>No charges were made. If you meant to subscribe, try again.</p>
       </div>
 
       <div class="callout" style="margin-top:14px;">
         <p>
-          <strong>Manager summary:</strong> Early warning + clear context + documented patterns.
-          Less emergency work and fewer repeat stops.
+          <strong>Manager summary:</strong> Early warning + clear context + documented patterns. Less emergency work and fewer repeat stops.
         </p>
       </div>
     </header>
@@ -59,7 +56,7 @@
       <div class="card mini">
         <div class="tag down"><span class="dot"></span> PLANT DOWN</div>
         <h2 style="margin-top:10px;">Immediate response</h2>
-        <p>Production is impacted now. Alerts focus on urgency, location, and first checks to restore operation fast.</p>
+        <p>Production is impacted now. Alerts prioritize urgency, location, and first checks to restore operation fast.</p>
         <ul>
           <li>High urgency</li>
           <li>Restore operation first</li>
@@ -69,8 +66,8 @@
 
       <div class="card mini">
         <div class="tag trend"><span class="dot"></span> TRENDING ISSUE</div>
-        <h2 style="margin-top:10px;">Planned fix before downtime</h2>
-        <p>A developing condition or recurring pattern likely to become downtime. Plan the fix before it stops production.</p>
+        <h2 style="margin-top:10px;">Early warning</h2>
+        <p>A developing condition or recurring pattern likely to become downtime if ignored. Plan the fix before it stops production.</p>
         <ul>
           <li>Lower urgency, higher payoff</li>
           <li>Plan parts and schedule</li>
@@ -79,7 +76,7 @@
       </div>
     </section>
 
-    <section class="section grid" aria-label="Monitoring details">
+    <section class="section grid">
       <div class="card">
         <h2>What gets monitored</h2>
         <ul>
@@ -87,9 +84,9 @@
           <li>Safety interruptions and nuisance trips</li>
           <li>Sensor failures, bad inputs, intermittent signals</li>
           <li>Cycle counts, run hours, stop frequency</li>
-          <li>Recurring faults that don’t always hard-stop the line</li>
+          <li>Recurring faults that do not always hard-stop the line</li>
         </ul>
-        <p class="small">Focus is on patterns and usable context.</p>
+        <p class="small">Focus is on failure patterns and usable context.</p>
       </div>
 
       <div class="card">
@@ -97,10 +94,10 @@
         <ul>
           <li>Asset or line affected</li>
           <li>What changed versus normal operation</li>
-          <li>Whether it’s new, trending, or recurring</li>
+          <li>Whether it is new, trending, or recurring</li>
           <li>Details that guide the first check</li>
         </ul>
-        <p class="small">If it alerts, it’s worth looking at.</p>
+        <p class="small">If it alerts, it is worth looking at.</p>
       </div>
 
       <div class="card">
@@ -108,85 +105,100 @@
         <ul>
           <li>Fewer surprise breakdowns</li>
           <li>Faster troubleshooting</li>
-          <li>Documentation of chronic issues</li>
-          <li>Justification for parts, PM time, and upgrades</li>
-          <li>Cleaner handoff between shifts</li>
+          <li>Clear documentation of chronic issues</li>
+          <li>Better justification for parts, PM time, and upgrades</li>
+          <li>Better handoff between shifts</li>
         </ul>
       </div>
     </section>
 
-<section class="section rollout" aria-label="Simple rollout">
-  <div class="rollout-card">
-    <div class="rollout-head">
-      <div>
-        <div class="kicker"><span class="kdot"></span> No giant project required</div>
-        <h2 class="rollout-title">Simple rollout</h2>
-        <p class="rollout-sub">
-          Start small, prove value fast, and build momentum without boiling the ocean.
+    <section class="section">
+      <div class="callout">
+        <h2>Before and after example</h2>
+        <p class="small" style="margin-bottom:12px;">
+          Example: A line has repeat nuisance stops that never happen when anyone is watching.
         </p>
+
+        <table class="table" role="table" aria-label="Before and After Example">
+          <thead>
+            <tr>
+              <th style="width:20%;">State</th>
+              <th style="width:40%;">What maintenance sees</th>
+              <th style="width:40%;">What changes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Before</strong></td>
+              <td>Random trips and intermittent faults. Reset, run, repeat. Ops thinks it is guesswork.</td>
+              <td>No trend visibility. No pattern. No justification for parts or scheduled repair time.</td>
+            </tr>
+            <tr>
+              <td><strong>After</strong></td>
+              <td>Alerts show the recurring pattern and conditions leading up to the stop. Tech arrives with a plan.</td>
+              <td>Chronic issue becomes measurable. Fix is scheduled with justification. Repeat downtime drops.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="metrics" aria-label="Example impact metrics">
+          <div class="metric">
+            <p class="num">Fewer repeat stops</p>
+            <p class="lbl">Chronic issues become trackable and fixable.</p>
+          </div>
+          <div class="metric">
+            <p class="num">Faster diagnosis</p>
+            <p class="lbl">Context arrives with the alert.</p>
+          </div>
+          <div class="metric">
+            <p class="num">Clear justification</p>
+            <p class="lbl">Data to support parts, PM time, or upgrades.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split">
+      <div class="card mini">
+        <h2>Why this pays for itself</h2>
+        <p>
+          The value is simple: fewer stops, less repeat work, and faster troubleshooting.
+        </p>
+        <ul>
+          <li><strong>Downtime cost:</strong> Minutes lost x line rate x frequency</li>
+          <li><strong>Repeat issues:</strong> Tech time + parts churn + production disruption</li>
+          <li><strong>Early warning:</strong> Planned fixes replace emergency fixes</li>
+        </ul>
+        <p class="small">Preventing one major stop per month usually covers the cost.</p>
       </div>
 
-      <div class="rollout-badges" aria-hidden="true">
-        <span class="rollout-badge">1–3 assets first</span>
-        <span class="rollout-badge">alerts w/ context</span>
-        <span class="rollout-badge ok">repeat stops ↓</span>
+      <div class="card mini">
+        <h2>Start small, prove value</h2>
+        <p>Pick one high-impact line or asset. We monitor, tune thresholds, and show results quickly.</p>
+        <ul>
+          <li>Select a failure-prone asset</li>
+          <li>Define normal operation</li>
+          <li>Alert on deviation, not noise</li>
+          <li>Review results and adjust</li>
+        </ul>
+        <div style="height:10px"></div>
+        <a class="btn primary" href="#subscribe">Subscribe (Monthly)</a>
       </div>
-    </div>
+    </section>
 
-    <div class="rollout-steps">
-      <article class="step">
-        <div class="step-top">
-          <span class="step-num" aria-hidden="true">1</span>
-          <h3 class="step-title">Start with your worst repeat offenders</h3>
-        </div>
-        <p class="step-body">
-          Pick the assets that keep tripping, faulting, or eating your weekend. We’ll baseline what “normal” looks like.
+    <section class="section" id="subscribe" aria-label="Subscribe">
+      <div class="callout">
+        <h2>Subscribe</h2>
+        <p class="small" style="margin:0 0 12px;">
+          Monthly plan. Cancel anytime through PayPal. You’ll get onboarding instructions after signup.
         </p>
-        <ul class="step-bullets">
-          <li>Top nuisance stops</li>
-          <li>Trend the “almost downtime”</li>
-          <li>Capture last-known-good context</li>
-        </ul>
-      </article>
 
-      <article class="step">
-        <div class="step-top">
-          <span class="step-num" aria-hidden="true">2</span>
-          <h3 class="step-title">Add context to alerts</h3>
-        </div>
-        <p class="step-body">
-          Fault + where + what changed + first checks. Not 47 generic notifications and a prayer.
+        <div id="paypal-button-container-P-5SH39343XS649853NNFMYB5Y"></div>
+
+        <p class="small" style="margin-top:12px;">
+          By subscribing, you agree to our <a href="terms.html" style="text-decoration:underline;">service terms</a>.
         </p>
-        <ul class="step-bullets">
-          <li>Event + state snapshot</li>
-          <li>Prioritized “check this first”</li>
-          <li>Noise filtering (less spam)</li>
-        </ul>
-      </article>
-
-      <article class="step">
-        <div class="step-top">
-          <span class="step-num" aria-hidden="true">3</span>
-          <h3 class="step-title">Document patterns and fixes</h3>
-        </div>
-        <p class="step-body">
-          Build a “next time” playbook so the fix survives shift changes and turnover.
-        </p>
-        <ul class="step-bullets">
-          <li>Root-cause notes</li>
-          <li>Parts/actions that actually worked</li>
-          <li>Repeat stops drop over time</li>
-        </ul>
-      </article>
-    </div>
-  </div>
-</section>
-
-    <section class="section callout">
-      <h2>Want alerts + clean documentation?</h2>
-      <p>Start with the support request form. We can tag issues as Plant Down or Trending and build patterns from there.</p>
-      <div style="height:10px"></div>
-      <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
     </section>
   </main>
 
@@ -199,6 +211,51 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Show cancellation message if PayPal checkout was canceled
+    const u = new URL(location.href);
+    if (u.searchParams.get("canceled") === "1") {
+      const el = document.getElementById("cancelBox");
+      if (el) el.style.display = "block";
+    }
+  </script>
+
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=ASQeE_5HlQAR5wWswvjhMTtRVm1g3_wdk9GYsumy5yM7ynN8DqIicauQAi2LdKKa7K59-u6uYOMNpnxB&vault=true&intent=subscription"
+    data-sdk-integration-source="button-factory"></script>
+  <script>
+    // PayPal subscription button (single plan)
+    if (window.paypal && document.getElementById('paypal-button-container-P-5SH39343XS649853NNFMYB5Y')) {
+      paypal.Buttons({
+        style: {
+          shape: 'pill',
+          color: 'white',
+          layout: 'vertical',
+          label: 'paypal'
+        },
+        createSubscription: function (data, actions) {
+          return actions.subscription.create({
+            plan_id: 'P-5SH39343XS649853NNFMYB5Y',
+            quantity: 1
+          });
+        },
+        onApprove: function (data, actions) {
+          // Redirect to confirmation page
+          window.location.href =
+            'subscription-confirmed.html?sub=' + encodeURIComponent(data.subscriptionID) +
+            '&plan=' + encodeURIComponent('P-5SH39343XS649853NNFMYB5Y');
+        },
+        onCancel: function (data) {
+          // Redirect back with context (no charges)
+          window.location.href =
+            'condition-monitoring.html?canceled=1&plan=' + encodeURIComponent('P-5SH39343XS649853NNFMYB5Y');
+        },
+        onError: function (err) {
+          console.error('PayPal error:', err);
+          alert('Checkout failed. Please try again.');
+        }
+      }).render('#paypal-button-container-P-5SH39343XS649853NNFMYB5Y');
+    }
   </script>
 </body>
 </html>
