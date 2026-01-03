@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>Checkout | Future Automation LLC</title>
+  <meta name="description" content="Secure PayPal checkout for support." />
+  <style>
+    .checkout-wrap { max-width: 860px; margin: 0 auto; }
+    .ticket-pill{ display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); }
+    .ticket-pill code{ font-weight:800; letter-spacing:.3px; }
+    .price-big{ font-size: 38px; font-weight: 900; margin: 6px 0 2px; line-height: 1.05; }
+    .muted2{ color: var(--muted2); }
+    #paypal-buttons{ margin-top: 14px; }
+    .danger-note{ border:1px solid rgba(255,93,108,.35); background: rgba(255,93,108,.08); padding: 12px 14px; border-radius: 16px; }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" />
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
+        <a class="nav-link active" href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn small" href="request-support.html">Back</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="container checkout-wrap">
+      <div class="hero">
+        <h1>Secure checkout</h1>
+        <p class="muted">Pay the incident fee to start support. No payment = no wrench time. (Yes, I hate it too.)</p>
+      </div>
+
+      <div class="grid two-col" style="align-items:start;">
+        <div class="card">
+          <div class="ticket-pill">
+            <span class="kdot" aria-hidden="true"></span>
+            <span>Ticket</span>
+            <code id="ticket">—</code>
+          </div>
+
+          <div class="price-big" id="amount">$—</div>
+          <div class="small muted2">Upfront incident fee covers the first hour. After-hours rates apply outside normal business hours.</div>
+
+          <div style="height:12px"></div>
+          <div class="danger-note small" id="priorityNote" style="display:none;"></div>
+
+          <div style="height:12px"></div>
+          <div class="note">
+            <strong>What happens next:</strong> once payment clears, you’ll get a confirmation page. If you marked Plant Down, it’s prioritized.
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Pay with PayPal</h2>
+          <p class="small muted">Your card works too — PayPal just runs the checkout.</p>
+
+          <div id="status" class="small muted" role="status" aria-live="polite">Loading checkout…</div>
+          <div id="paypal-buttons"></div>
+
+          <div class="small muted" style="margin-top:10px;">
+            Having trouble? Go back and re-submit the request, or call/text the number you provided.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure checkout • Logged requests • Faster response</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const u = new URL(location.href);
+    const ticketId = u.searchParams.get("ticket") || "";
+    const plantDown = u.searchParams.get("plantDown") === "1";
+
+    const ticketEl = document.getElementById("ticket");
+    const statusEl = document.getElementById("status");
+    const amountEl = document.getElementById("amount");
+    const priorityNote = document.getElementById("priorityNote");
+
+    ticketEl.textContent = ticketId || "MISSING";
+
+    if (plantDown) {
+      priorityNote.style.display = "block";
+      priorityNote.textContent = "Plant Down flagged — you’re in the fast lane.";
+    }
+
+    async function getConfig() {
+      const r = await fetch("/api/paypal-config", { method: "GET" });
+      const j = await r.json();
+      if (!r.ok || !j.ok) throw new Error(j.error || "Missing PayPal config");
+      return j;
+    }
+
+    function loadPayPalScript(clientId, env) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        const base = "https://www.paypal.com/sdk/js";
+        const params = new URLSearchParams({
+          "client-id": clientId,
+          currency: "USD",
+          intent: "capture"
+        });
+
+        // If you set PAYPAL_ENV=sandbox, PayPal still uses the same JS URL.
+        // The environment is selected by the client-id you provide.
+        s.src = `${base}?${params.toString()}`;
+        s.async = true;
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error("Failed to load PayPal SDK"));
+        document.head.appendChild(s);
+      });
+    }
+
+    async function init() {
+      try {
+        if (!ticketId) throw new Error("Missing ticket id");
+
+        const cfg = await getConfig();
+        amountEl.textContent = `$${cfg.incidentFee}`;
+
+        await loadPayPalScript(cfg.clientId, cfg.env);
+
+        if (!window.paypal || !window.paypal.Buttons) throw new Error("PayPal SDK not available");
+
+        statusEl.textContent = "Ready.";
+
+        window.paypal.Buttons({
+          style: { layout: "vertical" },
+          createOrder: async () => {
+            statusEl.textContent = "Creating order…";
+            const r = await fetch("/api/paypal-create-order", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({ ticketId, plantDown })
+            });
+            const j = await r.json();
+            if (!r.ok || !j.ok) throw new Error(j.error || "Order create failed");
+            return j.id;
+          },
+          onApprove: async (data) => {
+            statusEl.textContent = "Capturing payment…";
+            const r = await fetch("/api/paypal-capture-order", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({ orderID: data.orderID, ticketId })
+            });
+            const j = await r.json();
+            if (!r.ok || !j.ok) throw new Error(j.error || "Capture failed");
+
+            statusEl.textContent = "Payment received. Redirecting…";
+            location.href = `/paid.html?ticket=${encodeURIComponent(ticketId)}`;
+          },
+          onError: (err) => {
+            statusEl.textContent = "Checkout error. Please refresh and try again.";
+            console.error(err);
+          }
+        }).render("#paypal-buttons");
+
+      } catch (err) {
+        statusEl.textContent = err.message || "Checkout failed.";
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
