@@ -115,34 +115,72 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="callout">
-        <h2>Simple rollout (no giant project required)</h2>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div>
-              <div class="step-title">Start with your worst repeat offenders</div>
-              <div class="small">Pick the assets that keep tripping, faulting, or eating your weekend.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div>
-              <div class="step-title">Add context to alerts</div>
-              <div class="small">Fault + where + what changed + first checks. Not 47 generic notifications.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div>
-              <div class="step-title">Document patterns and fixes</div>
-              <div class="small">Build a “next time” playbook and reduce repeat stops.</div>
-            </div>
-          </div>
-        </div>
+<section class="section rollout" aria-label="Simple rollout">
+  <div class="rollout-card">
+    <div class="rollout-head">
+      <div>
+        <div class="kicker"><span class="kdot"></span> No giant project required</div>
+        <h2 class="rollout-title">Simple rollout</h2>
+        <p class="rollout-sub">
+          Start small, prove value fast, and build momentum without boiling the ocean.
+        </p>
       </div>
-    </section>
+
+      <div class="rollout-badges" aria-hidden="true">
+        <span class="rollout-badge">1–3 assets first</span>
+        <span class="rollout-badge">alerts w/ context</span>
+        <span class="rollout-badge ok">repeat stops ↓</span>
+      </div>
+    </div>
+
+    <div class="rollout-steps">
+      <article class="step">
+        <div class="step-top">
+          <span class="step-num" aria-hidden="true">1</span>
+          <h3 class="step-title">Start with your worst repeat offenders</h3>
+        </div>
+        <p class="step-body">
+          Pick the assets that keep tripping, faulting, or eating your weekend. We’ll baseline what “normal” looks like.
+        </p>
+        <ul class="step-bullets">
+          <li>Top nuisance stops</li>
+          <li>Trend the “almost downtime”</li>
+          <li>Capture last-known-good context</li>
+        </ul>
+      </article>
+
+      <article class="step">
+        <div class="step-top">
+          <span class="step-num" aria-hidden="true">2</span>
+          <h3 class="step-title">Add context to alerts</h3>
+        </div>
+        <p class="step-body">
+          Fault + where + what changed + first checks. Not 47 generic notifications and a prayer.
+        </p>
+        <ul class="step-bullets">
+          <li>Event + state snapshot</li>
+          <li>Prioritized “check this first”</li>
+          <li>Noise filtering (less spam)</li>
+        </ul>
+      </article>
+
+      <article class="step">
+        <div class="step-top">
+          <span class="step-num" aria-hidden="true">3</span>
+          <h3 class="step-title">Document patterns and fixes</h3>
+        </div>
+        <p class="step-body">
+          Build a “next time” playbook so the fix survives shift changes and turnover.
+        </p>
+        <ul class="step-bullets">
+          <li>Root-cause notes</li>
+          <li>Parts/actions that actually worked</li>
+          <li>Repeat stops drop over time</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
 
     <section class="section callout">
       <h2>Want alerts + clean documentation?</h2>
