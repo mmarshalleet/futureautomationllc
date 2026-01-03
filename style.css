@@ -1,18 +1,21 @@
 /* =========================
    Future Automation LLC
-   Complete style.css
+   style.css (complete + cleaned)
    ========================= */
 
 /* ---- CSS Vars ---- */
 :root{
   --bg: #0B1220;
-  --panel: rgba(255,255,255,.04);
-  --panel2: rgba(0,0,0,.18);
-  --border: rgba(255,255,255,.12);
-  --border2: rgba(255,255,255,.08);
+
   --text: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.70);
   --muted2: rgba(255,255,255,.58);
+
+  --panel: rgba(255,255,255,.03);
+  --panel2: rgba(0,0,0,.16);
+
+  --border: rgba(255,255,255,.12);
+  --border2: rgba(255,255,255,.08);
 
   --brand1: #5b8cff; /* blue */
   --brand2: #7c4dff; /* purple */
@@ -49,6 +52,14 @@ a{ color: inherit; text-decoration: none; }
 ul{ margin: 0; padding-left: 18px; }
 li{ margin: 6px 0; }
 
+/* Make “big SVGs in cards” behave, but DO NOT affect .card-icon */
+.card img,
+.card svg:not(.card-icon svg){
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ---- Layout Helpers ---- */
 .container{
   width: min(var(--max), calc(100% - 40px));
@@ -60,13 +71,17 @@ li{ margin: 6px 0; }
 }
 
 .section-divider{
-  padding: 16px 0 8px;
+  display:flex;
+  justify-content:center;
+  margin: 24px 0;
   opacity: .9;
 }
 .section-divider img{
   width: 100%;
+  max-width: 420px;
+  height: auto;
   border-radius: 14px;
-  opacity: .55;
+  opacity: .60;
 }
 
 /* ---- Topbar ---- */
@@ -114,7 +129,6 @@ li{ margin: 6px 0; }
   background: rgba(255,255,255,.05);
   border-color: rgba(255,255,255,.12);
 }
-
 .nav-cta{ display:flex; align-items:center; }
 
 /* ---- Buttons ---- */
@@ -247,7 +261,7 @@ p{ margin: 0 0 10px; }
   grid-column: span 4;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: rgba(255,255,255,.03);
+  background: var(--panel);
   box-shadow: var(--shadowSoft);
   padding: 16px;
 }
@@ -256,6 +270,7 @@ p{ margin: 0 0 10px; }
 .card ul{ color: rgba(255,255,255,.70); }
 
 .card.mini{ grid-column: span 6; }
+
 .split{
   display:grid;
   grid-template-columns: repeat(12, minmax(0,1fr));
@@ -281,6 +296,42 @@ p{ margin: 0 0 10px; }
   margin-top: 6px;
   background: rgba(91,140,255,.9);
   box-shadow: 0 0 0 4px rgba(91,140,255,.14);
+}
+
+/* ---- Services: Card header with icon ---- */
+.card-head,
+.service-card-head,
+.service-head{
+  display:flex;
+  align-items:flex-start;
+  gap: 12px;
+}
+
+/* iPhone-safe icon box + inline SVG */
+.card-icon{
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
+  display:grid;
+  place-items:center;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+}
+
+.card-icon svg{
+  width: 22px;
+  height: 22px;
+  display:block;
+  max-width: none;      /* prevent generic svg scaling */
+  overflow: visible;    /* stop Safari stroke clipping */
+}
+
+.card-icon svg *{
+  vector-effect: non-scaling-stroke;
 }
 
 /* ---- Results Section ---- */
@@ -537,13 +588,9 @@ p{ margin: 0 0 10px; }
   100%{ opacity:0; transform: translateX(16px) }
 }
 
-/* Hit-zones (tooltips) */
-.fa-hit .hit{
-  fill: transparent;
-  cursor: pointer;
-}
+/* Tooltips */
+.fa-hit .hit{ fill: transparent; cursor: pointer; }
 
-/* Tooltip bubble */
 .fa-tooltip{
   position:absolute;
   z-index: 5;
@@ -580,14 +627,13 @@ p{ margin: 0 0 10px; }
 }
 .fa-tooltip.pinned{ pointer-events: auto; }
 
-/* Hover polish */
 .fa-viz.is-hovering{
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.05),
     0 18px 48px rgba(0,0,0,.28);
 }
 
-/* Mini trend chart overlay */
+/* Mini trend */
 .trend-card{
   position:absolute;
   left: 12px;
@@ -622,7 +668,6 @@ p{ margin: 0 0 10px; }
   color: rgba(255,255,255,.78);
   background: rgba(255,255,255,.04);
 }
-
 .trend-svg{ width:100%; height:auto; display:block; }
 .trend-grid{ stroke: rgba(255,255,255,.08); stroke-width:1; fill:none; }
 
@@ -674,9 +719,7 @@ p{ margin: 0 0 10px; }
   font-weight: 800;
   color: rgba(255,255,255,.70);
 }
-.trend-metric b{
-  color: rgba(255,255,255,.92);
-}
+.trend-metric b{ color: rgba(255,255,255,.92); }
 
 /* ---- Responsive ---- */
 @media (max-width: 980px){
@@ -703,79 +746,3 @@ p{ margin: 0 0 10px; }
     animation: none !important;
   }
 }
-/* --- Services page: keep visuals from going full-kaiju --- */
-
-/* Any image/SVG placed inside cards should never exceed the card */
-.card img,
-.card svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* If you're using a big standalone graphic image in a service card */
-.card .service-img,
-.card .service-graphic,
-.card .hero-graphic {
-  width: min(420px, 100%);
-  margin: 0 auto 14px;
-  display: block;
-  height: auto;
-  object-fit: contain;
-}
-
-/* If your big graphic is an <img> directly inside a card */
-.card > img {
-  width: min(420px, 100%);
-  margin: 0 auto 14px;
-  display: block;
-}
-
-/* Your small icon container (top of each service card) */
-.card-icon {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-}
-
-/* Ensure the inline icon SVG itself stays small */
-.card-icon svg {
-  width: 22px;
-  height: 22px;
-}
-/* --- Section divider control --- */
-.section-divider {
-  display: flex;
-  justify-content: center;
-  margin: 24px 0;
-}
-
-.section-divider img {
-  width: 100%;
-  max-width: 420px;   /* ← key number */
-  height: auto;
-  opacity: 0.6;
-}
-/* iOS-safe inline SVG icons */
-.card-icon{
-  width: 44px;              /* pick your size */
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-  flex: 0 0 44px;           /* prevents flex shrink on iPhone */
-}
-
-.card-icon svg{
-  width: 22px;              /* actual glyph size */
-  height: 22px;
-  display: block;           /* important for Safari */
-}
-
-.card-icon svg *{
-  vector-effect: non-scaling-stroke; /* keeps strokes crisp */
-}
-
