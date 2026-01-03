@@ -109,12 +109,13 @@
 
         <h2>Request details</h2>
 
-        <form id="supportForm" class="support-form" autocomplete="on">
-          <div class="support-grid">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" autocomplete="name" required />
-            </div>
+      <form id="supportForm" class="form">
+  <div id="formSuccess" class="notice ok" style="display:none;">
+    ✅ Request sent. Redirecting…
+  </div>
+  <div id="formError" class="notice err" style="display:none;">
+    ❌ Could not send right now. Please refresh and try again.
+  </div>
 
             <div class="field">
               <label for="company">Company</label>
@@ -191,29 +192,47 @@
       <div class="small">Secure push alerts • Logged requests • Faster response</div>
     </div>
   </footer>
+ <script>
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+  const form = document.getElementById("supportForm");
+  const statusEl = document.getElementById("status");
+  const okBox = document.getElementById("formSuccess");
+  const errBox = document.getElementById("formError");
 
-    const form = document.getElementById("supportForm");
-    const statusEl = document.getElementById("status");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      statusEl.textContent = "Sending...";
+    // Reset UI
+    okBox.style.display = "none";
+    errBox.style.display = "none";
+    statusEl.textContent = "Sending...";
 
-      const fd = new FormData(form);
-      fd.set("type", document.getElementById("plantDown").checked ? "plant_down" : "support");
+    const fd = new FormData(form);
+    const isPlantDown = document.getElementById("plantDown").checked;
+    fd.set("type", isPlantDown ? "plant_down" : "support");
 
-      try {
-        const r = await fetch("/api/notify", { method: "POST", body: fd });
-        if (!r.ok) throw new Error("Request failed");
-        form.reset();
-        statusEl.textContent = "Request sent. We will respond shortly.";
-      } catch (err) {
-        statusEl.textContent = "Could not send right now. Please refresh and try again.";
-      }
-    });
-  </script>
+    try {
+      const r = await fetch("/api/notify", { method: "POST", body: fd });
+
+      if (!r.ok) throw new Error("Request failed");
+
+      // Visible confirmation
+      okBox.style.display = "block";
+      statusEl.textContent = "Request sent.";
+
+      // Reset + redirect
+      form.reset();
+      setTimeout(() => {
+        window.location.href = "thank-you.html";
+      }, 600);
+
+    } catch (err) {
+      errBox.style.display = "block";
+      statusEl.textContent = "";
+    }
+  });
+</script>
+
 </body>
 </html>
