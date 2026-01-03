@@ -888,3 +888,26 @@ p{ margin: 0 0 10px; }
   .rollout-card{ padding: 14px; }
   .step{ grid-column: span 12; }
 }
+.notice{
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin: 0 0 12px 0;
+  font-weight: 800;
+}
+
+.notice.ok{
+  border-color: rgba(37,212,140,.35);
+  background: rgba(37,212,140,.10);
+  color: rgba(255,255,255,.92);
+}
+
+.notice.err{
+  border-color: rgba(255,93,108,.35);
+  background: rgba(255,93,108,.10);
+  color: rgba(255,255,255,.92);
+}
+
+/* Make the inline status more visible too */
+.status{ color: rgba(255,255,255,.78); font-weight: 700; }
