@@ -617,3 +617,222 @@ nav,
     width: 100%;
   }
 }
+/* =========================
+   HOMEPAGE HERO + SVG VIZ FIX
+   Paste at END of style.css
+   ========================= */
+
+/* Alias vars the SVG expects */
+:root{
+  --brand1: var(--brand);
+  --brand2: var(--brand-2);
+  --muted2: rgba(255,255,255,.58);
+}
+
+/* HERO layout (your CSS file is missing these) */
+.hero{ margin-top: 18px; }
+.hero-inner{
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 900px){
+  .hero-inner{ grid-template-columns: 1fr; }
+}
+
+.kicker{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.kdot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--ok);
+  box-shadow: 0 0 0 6px rgba(37,212,140,.10);
+}
+
+.pill-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 12px;
+}
+
+.hero-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* THE SVG / VIZ BOX */
+.hero-visual{ min-width: 0; }
+.fa-viz{
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(700px 280px at 30% 0%, rgba(91,140,255,.12), transparent 60%),
+    radial-gradient(600px 240px at 85% 10%, rgba(124,77,255,.10), transparent 60%),
+    rgba(0,0,0,.25);
+  overflow: hidden;
+  padding: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-deep);
+}
+
+.fa-viz-svg{
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 420px;
+}
+@media (max-width: 600px){
+  .fa-viz-svg{ max-height: 300px; }
+}
+
+/* Grid lines in the SVG */
+.fa-viz-grid path{
+  fill: none;
+  stroke: rgba(255,255,255,.06);
+  stroke-width: 1;
+}
+
+/* Nodes */
+.fa-viz-node rect{
+  fill: rgba(255,255,255,.05);
+  stroke: rgba(255,255,255,.14);
+  stroke-width: 1.2;
+}
+
+.fa-viz-node text{
+  fill: rgba(255,255,255,.92);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.fa-viz-node text.sub{
+  fill: rgba(255,255,255,.62);
+  font-weight: 650;
+  font-size: 14px;
+}
+
+/* Special node (alerts) slightly brighter */
+.fa-viz-alert rect{
+  fill: rgba(37,212,140,.06);
+  stroke: rgba(37,212,140,.22);
+}
+
+/* Flow paths */
+.fa-flow{
+  fill: none;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-dasharray: 9 10;
+  animation: flowMove 2.2s linear infinite;
+  filter: url(#glow);
+}
+
+.fa-flow-a{ stroke: url(#flowA); }
+.fa-flow-b{ stroke: url(#flowB); }
+.fa-flow-ok{ stroke: rgba(37,212,140,.75); }
+.fa-flow-ok2{ stroke: rgba(37,212,140,.55); }
+
+@keyframes flowMove{
+  to{ stroke-dashoffset: -38; }
+}
+
+/* Packets (make them visible + lively) */
+.packet{
+  fill: var(--ok);
+  opacity: .9;
+  filter: url(#glow);
+  animation: pkt 1.6s ease-in-out infinite;
+}
+.p2{ animation-delay: .2s; }
+.p3{ animation-delay: .35s; }
+.p4{ animation-delay: .5s; }
+.p5{ animation-delay: .7s; }
+
+@keyframes pkt{
+  0%,100%{ transform: translateY(0); opacity:.65; }
+  50%{ transform: translateY(-2px); opacity:1; }
+}
+
+/* Pulsing indicator dots on nodes */
+.pulse{ fill: var(--brand1); }
+.pulse2{ fill: var(--brand2); }
+.pulse3{ fill: var(--brand1); }
+.pulse4{ fill: var(--ok); }
+
+.pulse, .pulse2, .pulse3, .pulse4{
+  filter: url(#glow);
+  transform-origin: center;
+  animation: pulseGlow 1.4s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{ opacity:.55; transform: scale(1); }
+  50%{ opacity:1; transform: scale(1.18); }
+}
+
+/* Tooltip hit zones (invisible but clickable) */
+.fa-hit .hit{
+  fill: transparent;
+  cursor: pointer;
+}
+
+/* Trend overlay card */
+.trend-card{
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  width: min(340px, calc(100% - 28px));
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(6,9,15,.72);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.55);
+  padding: 12px 12px 10px;
+  pointer-events: none; /* keeps SVG hit-zones usable */
+}
+
+.trend-head{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.trend-title{
+  font-weight: 850;
+  color: rgba(255,255,255,.9);
+  font-size: 13px;
+}
+
+.trend-pill{
+  font-size: 11px;
+  color: rgba(255,255,255,.65);
+  border: 1px solid rgba(255,255,255,.10);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.trend-grid{ fill: none; stroke: rgba(255,255,255,.10); stroke-width: 1; }
+.trend-area{ fill: url(#trendFill); }
+.trend-line{ fill: none; stroke: rgba(37,212,140,.85); stroke-width: 2.4; filter: url(#trendGlow); }
+.trend-dot{ fill: var(--ok); filter: url(#trendGlow); }
+
+.trend-foot{
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  color: rgba(255,255,255,.72);
+  font-size: 12px;
+}
+.trend-metric b{ color: rgba(255,255,255,.92); }
