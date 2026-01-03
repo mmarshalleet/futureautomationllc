@@ -339,9 +339,25 @@
       <div class="small">Secure push alerts • Logged requests • Faster response</div>
     </div>
   </footer>
-
-  <script>
+ <script>
     document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+ </script>
+    <script>
+  (function(){
+    const tabs = document.querySelectorAll(".playbooks-tabs .tab");
+    const panels = document.querySelectorAll(".playbooks-body .tab-panel");
+
+    function activate(name){
+      tabs.forEach(t => {
+        const on = t.dataset.tab === name;
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach(p => p.classList.toggle("show", p.dataset.panel === name));
+    }
+
+    tabs.forEach(t => t.addEventListener("click", () => activate(t.dataset.tab)));
+  })();
+    </script>
 </body>
 </html>
