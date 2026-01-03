@@ -757,3 +757,25 @@ p{ margin: 0 0 10px; }
   height: auto;
   opacity: 0.6;
 }
+/* iOS-safe inline SVG icons */
+.card-icon{
+  width: 44px;              /* pick your size */
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  flex: 0 0 44px;           /* prevents flex shrink on iPhone */
+}
+
+.card-icon svg{
+  width: 22px;              /* actual glyph size */
+  height: 22px;
+  display: block;           /* important for Safari */
+}
+
+.card-icon svg *{
+  vector-effect: non-scaling-stroke; /* keeps strokes crisp */
+}
+
