@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="logo.svg" />
+  <link rel="alternate icon" href="favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
   <title>Request Support | Future Automation LLC</title>
   <meta name="description" content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." />
@@ -99,92 +99,81 @@
     </div>
   </header>
 
-<main class="container">
-    <section class="section support-wrap">
+<main class="page">
+  <section class="container">
+    <div class="hero">
+      <h1>Request Support</h1>
+      <p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues—send the details and we’ll get eyes on it fast.</p>
+    </div>
+
+    <div class="grid two-col">
+      <div class="card">
+        <h2>What to include</h2>
+        <ul class="bullets">
+          <li>Line / area + what stopped</li>
+          <li>PLC / HMI / drive model (if you know it)</li>
+          <li>Alarms, screenshots, fault codes</li>
+          <li>Best call-back number + site time zone</li>
+        </ul>
+        <div class="note">
+          <strong>Heads up:</strong> If you can’t text photos through the form, submit the request anyway—reply to the confirmation email with attachments.
+        </div>
+      </div>
+
       <div class="card support-card">
-        <h1>Submit a support request.</h1>
-        <p class="muted">Delivered instantly via secure push alert and logged for follow-up.</p>
+        <h2>Support request</h2>
 
-        <div class="hr"></div>
+        <form id="supportForm" class="form">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
 
-        <h2>Request details</h2>
+          <div class="field">
+            <label for="company">Company / Plant</label>
+            <input id="company" name="company" type="text" autocomplete="organization" />
+          </div>
 
-      <form id="supportForm" class="form">
-  <div id="formSuccess" class="notice ok" style="display:none;">
-    ✅ Request sent. Redirecting…
-  </div>
-  <div id="formError" class="notice err" style="display:none;">
-    ❌ Could not send right now. Please refresh and try again.
-  </div>
-
-            <div class="field">
-              <label for="company">Company</label>
-              <input id="company" name="company" autocomplete="organization" />
-            </div>
-
-            <div class="field">
+          <div class="field two">
+            <div>
               <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" />
+              <input id="email" name="email" type="email" autocomplete="email" required />
             </div>
-
-            <div class="field">
-              <label for="location">Location / Plant</label>
-              <input id="location" name="location" placeholder="City, plant name, or line" />
-            </div>
-
-            <div class="field">
-              <label for="asset">Asset / Machine</label>
-              <input id="asset" name="asset" placeholder="Line, machine, PLC, VFD, etc." />
-            </div>
-
-            <div class="field">
-              <div class="toggle-field" role="group" aria-label="Plant down toggle">
-                <p class="toggle-label">Plant Down</p>
-                <div class="toggle-right">
-                  <input id="plantDown" name="plantDown" type="checkbox" />
-                  <span class="toggle-ui" aria-hidden="true"></span>
-                </div>
-              </div>
-            </div>
-
-            <div class="field span-2">
-              <label for="issue">Issue / Symptoms</label>
-              <textarea
-                id="issue"
-                name="issue"
-                rows="6"
-                placeholder="What happened? What have you tried? Include fault codes if you have them."
-                required
-              ></textarea>
-            </div>
-
-            <div class="field span-2">
-              <div class="support-actions">
-                <button class="btn primary" type="submit">Send Request</button>
-                <div id="status" class="small muted" aria-live="polite"></div>
-              </div>
-
-              <p class="small muted" style="margin-top:10px;">
-                Tip: Include fault codes, recent changes, and what has already been tried.
-              </p>
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" />
             </div>
           </div>
+
+          <div class="field">
+            <label for="service">What do you need?</label>
+            <select id="service" name="service" required>
+              <option value="" selected disabled>Select one…</option>
+              <option>Plant-down support</option>
+              <option>VFD / motor troubleshooting</option>
+              <option>PLC/HMI troubleshooting</option>
+              <option>Repeat-stop elimination</option>
+              <option>Retrofit / migration</option>
+              <option>Condition monitoring</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Details</label>
+            <textarea id="message" name="message" rows="7" placeholder="What happened? What have you tried? Any fault codes?" required></textarea>
+          </div>
+
+          <button id="submitBtn" class="btn primary" type="submit">
+            Send request
+          </button>
+
+          <p id="status" class="status" role="status" aria-live="polite"></p>
         </form>
-
-        <div class="hr"></div>
-
-        <h2>What happens next</h2>
-        <ul class="bullets">
-          <li>Your request is delivered instantly via push alert.</li>
-          <li>If Plant Down is enabled, the alert is prioritized.</li>
-          <li>We respond with next steps and triage questions.</li>
-          <li>Request details are logged for follow-up and handoff.</li>
-        </ul>
-
-        <p class="small muted">This keeps communication consistent and easy to track across shifts.</p>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
   <footer class="footer">
     <div class="footer-inner">
@@ -193,43 +182,39 @@
     </div>
   </footer>
  <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-
   const form = document.getElementById("supportForm");
   const statusEl = document.getElementById("status");
-  const okBox = document.getElementById("formSuccess");
-  const errBox = document.getElementById("formError");
+  const btn = document.getElementById("submitBtn");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    statusEl.textContent = "";
+    btn.disabled = true;
+    btn.textContent = "Sending…";
 
-    // Reset UI
-    okBox.style.display = "none";
-    errBox.style.display = "none";
-    statusEl.textContent = "Sending...";
-
-    const fd = new FormData(form);
-    const isPlantDown = document.getElementById("plantDown").checked;
-    fd.set("type", isPlantDown ? "plant_down" : "support");
+    const payload = Object.fromEntries(new FormData(form).entries());
 
     try {
-      const r = await fetch("/api/notify", { method: "POST", body: fd });
+      const res = await fetch("/api/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-      if (!r.ok) throw new Error("Request failed");
+      const data = await res.json().catch(() => ({}));
 
-      // Visible confirmation
-      okBox.style.display = "block";
-      statusEl.textContent = "Request sent.";
+      if (!res.ok) {
+        throw new Error(data.error || "Request failed. Please try again.");
+      }
 
-      // Reset + redirect
+      statusEl.textContent = "Sent. Redirecting…";
       form.reset();
-      setTimeout(() => {
-        window.location.href = "thank-you.html";
-      }, 600);
-
+      setTimeout(() => { window.location.href = "/thank-you.html"; }, 600);
     } catch (err) {
-      errBox.style.display = "block";
-      statusEl.textContent = "";
+      console.error(err);
+      statusEl.textContent = (err && err.message) ? err.message : "Something went wrong. Please try again.";
+      btn.disabled = false;
+      btn.textContent = "Send request";
     }
   });
 </script>

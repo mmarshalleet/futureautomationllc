@@ -1,55 +1,40 @@
 # Future Automation LLC
 
-**Uptime-focused industrial automation support for maintenance teams.**
+Uptime-focused industrial automation support for maintenance teams.
 
-This repository contains the source code for the Future Automation LLC website — a practical, no-nonsense platform built to help maintenance managers and controls technicians get support fast, reduce repeat downtime, and document fixes that actually survive shift change.
+## What this site is
+This repo powers **futureautomationllc.com** — a simple, fast static site hosted on Cloudflare Pages with a few serverless endpoints for forms.
 
----
+## What we do
+- **Plant-down support** (PLCs, HMIs, VFDs, sensors, safety, panels)
+- **Repeat-stop elimination** (find the root cause, make it stick)
+- **Retrofits & migrations** (clean, documented upgrades)
+- **Condition monitoring** (practical rollout, trend-based alerts)
 
-## What We Do
+## Key pages
+- `index.html` – homepage
+- `services.html` – services overview
+- `condition-monitoring.html` – condition monitoring offering
+- `request-support.html` – support request form
+- `equipment.html` – surplus equipment
 
-We focus on the work that keeps production moving:
+## Serverless endpoints (Cloudflare Pages Functions)
+- `functions/api/notify.js`  
+  Receives support requests from the site form and forwards them to email/SMS (depending on your env setup).
 
-- **Plant-down recovery**
-- **Repeat-stop and nuisance trip elimination**
-- **Controls troubleshooting (PLC, HMI, VFD, sensors, safety)**
-- **Targeted retrofits and upgrades**
-- **Standardization and clean documentation**
+## Local dev
+You can preview it with any static server.
 
-The goal isn’t more alarms or dashboards — it’s fewer surprises, faster troubleshooting, and fewer 2 a.m. calls.
+```bash
+# from the repo root
+python3 -m http.server 8787
+```
 
----
+Then open `http://localhost:8787`.
 
-## Who This Is For
+## Deploy
+Push to the default branch and Cloudflare Pages will build and deploy.
 
-- Maintenance managers tired of firefighting the same problems
-- Controls and electrical techs who need clear next steps
-- Plants dealing with recurring faults, nuisance trips, or aging controls
-- Teams that want documentation people actually read and use
-
----
-
-## How Support Works
-
-1. A support request is submitted through the site  
-2. Requests are prioritized (Plant Down vs Trending Issue)  
-3. Triage focuses on **first checks**, not guesswork  
-4. Root cause is documented so the problem doesn’t repeat  
-
-If it’s down, it gets handled fast.  
-If it’s trending, we help you plan the fix before it becomes downtime.
-
----
-
-## Project Structure
-
-```text
-/
-├── index.html                 # Homepage
-├── services.html              # Service playbooks
-├── condition-monitoring.html  # Reliability & monitoring approach
-├── request-support.html       # Support request form
-├── thank-you.html             # Submission confirmation
-├── style.css                  # Global styles
-├── assets/                    # Logos, SVGs, icons
-└── functions/                 # Cloudflare Pages functions / APIs
+## Notes
+- Keep assets in the root for simple paths (`/style.css`, `/logo.svg`, etc.).
+- If you rename pages, update links in the nav/footer so nothing 404s.
