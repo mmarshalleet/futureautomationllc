@@ -48,9 +48,207 @@
       </div>
     </header>
 
-    <div class="section-divider">
-      <img src="assets/panel-divider.svg" alt="" />
+  <section class="playbooks" id="playbooks">
+  <div class="playbooks-head">
+    <p class="eyebrow">What we actually do</p>
+    <h2>Service playbooks built for uptime</h2>
+    <p class="sub">
+      We focus on the stuff that stops production: plant-down recovery, repeat-stop elimination,
+      smart retrofits, and documentation that survives shift change.
+    </p>
+  </div>
+
+  <div class="playbooks-tabs" role="tablist" aria-label="Service categories">
+    <button class="tab active" role="tab" aria-selected="true" data-tab="troubleshooting">Troubleshooting</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="repeatstop">Repeat-stop elimination</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="retrofits">Retrofits</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="standardization">Standardization</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="documentation">Documentation</button>
+  </div>
+
+  <div class="playbooks-body">
+    <!-- TROUBLESHOOTING -->
+    <div class="tab-panel show" role="tabpanel" data-panel="troubleshooting">
+      <div class="cards">
+        <article class="card">
+          <h3>Plant Down Support</h3>
+          <p>Fast triage across PLCs, HMIs, VFDs, sensors, safety, and panels.</p>
+          <ul>
+            <li>Prioritized “first checks” that find root cause fast</li>
+            <li>Get it running → then fix it right</li>
+            <li>Clean handoff notes for maintenance + ops</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Remote Assist (when possible)</h3>
+          <p>Talk through faults, trends, and logic with someone who’s done it in the field.</p>
+          <ul>
+            <li>Screen-share / phone support</li>
+            <li>Alarm/fault path walkthrough</li>
+            <li>Action list you can execute immediately</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Drive & Motor Diagnostics</h3>
+          <p>Fault decoding + quick isolation: drive, motor, wiring, load, or controls.</p>
+          <ul>
+            <li>PF525/523, Lenze, Danfoss, Siemens, etc.</li>
+            <li>Parameter sanity + reset strategy</li>
+            <li>Root cause notes for repeat prevention</li>
+          </ul>
+        </article>
+      </div>
     </div>
+
+    <!-- REPEAT-STOP -->
+    <div class="tab-panel" role="tabpanel" data-panel="repeatstop">
+      <div class="cards">
+        <article class="card">
+          <h3>Top Repeat-Stop List</h3>
+          <p>Identify the top offenders and kill them one by one.</p>
+          <ul>
+            <li>Ranked by downtime + frequency</li>
+            <li>Simple fixes first (wiring/sensors/settings)</li>
+            <li>Permanent countermeasures</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Nuisance Trip Reduction</h3>
+          <p>Stops that aren’t “real faults” get engineered out.</p>
+          <ul>
+            <li>Noise / debounce / filtering</li>
+            <li>Sensor mounting & protection</li>
+            <li>Interlock logic cleanup</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Root Cause Writeups</h3>
+          <p>Short, readable, useful — not a novel nobody reads.</p>
+          <ul>
+            <li>What happened + why</li>
+            <li>Fix + prevention</li>
+            <li>Parts/tools needed next time</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <!-- RETROFITS -->
+    <div class="tab-panel" role="tabpanel" data-panel="retrofits">
+      <div class="cards">
+        <article class="card">
+          <h3>Controls Retrofits</h3>
+          <p>Modernize without turning the plant into a science project.</p>
+          <ul>
+            <li>PLC/HMI refresh plans</li>
+            <li>I/O cleanups + labeling</li>
+            <li>Downtime-friendly cutover strategy</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Drive Upgrades</h3>
+          <p>Replace obsolete drives with a clean, documented swap.</p>
+          <ul>
+            <li>Parameter capture & mapping</li>
+            <li>Wiring verification checklist</li>
+            <li>Test plan + rollback option</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Safety Updates (as needed)</h3>
+          <p>Practical improvements aligned to the machine and reality.</p>
+          <ul>
+            <li>E-stops, guard switches, relays</li>
+            <li>Fault isolation & reset behavior</li>
+            <li>Documentation & labeling</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <!-- STANDARDIZATION -->
+    <div class="tab-panel" role="tabpanel" data-panel="standardization">
+      <div class="cards">
+        <article class="card">
+          <h3>Program Standards</h3>
+          <p>Consistent logic, naming, alarms, and troubleshooting flow.</p>
+          <ul>
+            <li>Tag naming conventions</li>
+            <li>Reusable AOI / blocks</li>
+            <li>Alarm standards that make sense</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Panel Standards</h3>
+          <p>Clean power, clean wiring, clean labeling.</p>
+          <ul>
+            <li>Terminal layout patterns</li>
+            <li>Spare capacity planning</li>
+            <li>Labeling that techs thank you for</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Commissioning Checklists</h3>
+          <p>Repeatable start-ups with fewer “mystery” issues.</p>
+          <ul>
+            <li>I/O verification list</li>
+            <li>Drive/motor checks</li>
+            <li>Safety validation steps</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <!-- DOCUMENTATION -->
+    <div class="tab-panel" role="tabpanel" data-panel="documentation">
+      <div class="cards">
+        <article class="card">
+          <h3>As-Builts That Stay Useful</h3>
+          <p>Updated docs that match the machine you actually have.</p>
+          <ul>
+            <li>Redlines → clean revisions</li>
+            <li>Panel photos + callouts</li>
+            <li>Critical circuits highlighted</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Troubleshooting Notes</h3>
+          <p>“Do this, then this” guides for the top failure modes.</p>
+          <ul>
+            <li>Fault trees for common stops</li>
+            <li>Parameter baselines</li>
+            <li>Spare parts recommendations</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Shift-Change Proof Handoffs</h3>
+          <p>Short, structured notes that stop problems from repeating.</p>
+          <ul>
+            <li>What was observed</li>
+            <li>What was changed</li>
+            <li>What to watch next</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="playbooks-cta">
+    <a class="btn primary" href="request-support.html">Request Plant-Down Help</a>
+    <a class="btn ghost" href="condition-monitoring.html">Condition Monitoring</a>
+  </div>
+</section>
+
 
     <section class="section grid" aria-label="Core services">
       <div class="card">
