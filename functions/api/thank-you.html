@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>Request Sent | Future Automation LLC</title>
+  <meta name="description" content="Support request submitted successfully." />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="services.html">Services</a>
+        <a href="condition-monitoring.html">Condition Monitoring</a>
+        <a href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn small primary" href="request-support.html">New Request</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="kicker"><span class="kdot"></span> Request Sent</div>
+      <h1>Got it — your request is in.</h1>
+      <p class="lead">If this is Plant Down, it’s prioritized. If it’s trending, we’ll help you plan the fix before it becomes downtime.</p>
+
+      <div class="callout" style="margin-top:16px;">
+        <p><strong>Next step:</strong> Keep your phone handy. We’ll respond with first checks and any triage questions.</p>
+      </div>
+
+      <div style="height:14px"></div>
+      <a class="btn primary" href="services.html">See Services</a>
+      <a class="btn" href="request-support.html" style="margin-left:10px;">Submit Another</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure push alerts • Logged requests • Faster response</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
