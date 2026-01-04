@@ -44,9 +44,5 @@ export function paypalApiBase(env) {
     : "https://api-m.paypal.com";
 }
 
-// Backwards-compatible export used by some UI/endpoint code.
-// NOTE: We are removing legacy PayPal flows, but some pages still read `incidentFee`.
-export const PRICING = {
-  ...CONFIG.PRICING,
-  incidentFee: CONFIG.PRICING.standardFee,
-};
+// NOTE: PRICING is exported once (above). A previous duplicate export here broke
+// Cloudflare Functions bundling and caused /api/* to 404/500 at runtime.
