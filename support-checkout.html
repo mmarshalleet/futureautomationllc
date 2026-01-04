@@ -140,7 +140,8 @@
         if (!ticketId) throw new Error("Missing ticket id");
 
         const cfg = await getConfig();
-        amountEl.textContent = `$${cfg.incidentFee}`;
+        const fee = plantDown ? cfg.emergencyFee : cfg.standardFee;
+        amountEl.textContent = "$" + fee;
 
         await loadPayPalScript(cfg.clientId, cfg.env);
 

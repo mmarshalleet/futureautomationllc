@@ -385,14 +385,14 @@
 
         const json = await r.json().catch(() => ({}));
 
-        if (!r.ok || !json.ok || !json.paypalUrl) {
+        if (!r.ok || !json.ok || !json.checkoutUrl) {
           throw new Error(json.error || "Intake failed");
         }
 
-        statusEl.textContent = `Ticket ${json.ticketId || ""} created. Redirecting to PayPal...`;
-        window.location.href = json.paypalUrl;
+        statusEl.textContent = `Ticket ${json.ticketId || ""} created. Redirecting to checkout...`;
+        window.location.href = json.checkoutUrl;
       } catch (err) {
-        statusEl.textContent = "Could not start checkout. Please refresh and try again.";
+        statusEl.textContent = (err && err.message) ? ("Checkout failed: " + err.message) : "Checkout failed. Please refresh and try again.";
         submitBtn.disabled = false;
       }
     });
