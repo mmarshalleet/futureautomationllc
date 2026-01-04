@@ -56,7 +56,7 @@ export async function onRequestPost({ request, env }) {
     const base = paypalApiBase(env);
     const origin = siteOrigin(request);
 
-    const returnUrl = `${origin}/support-success.html?ticket=${encodeURIComponent(ticketId)}`;
+    const returnUrl = `${origin}/paid.html?ticket=${encodeURIComponent(ticketId)}`;
     const cancelUrl = `${origin}/request-support.html`;
 
     const orderRes = await fetch(`${base}/v2/checkout/orders`, {
