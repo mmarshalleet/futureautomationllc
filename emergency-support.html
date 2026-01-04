@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>Emergency Plant-Down Support | Future Automation LLC</title>
+  <meta name="description" content="Emergency plant-down troubleshooting for PLC, VFD, HMI, and communications issues. Local and remote response." />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" />
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link active" href="emergency-support.html">Emergency Support</a>
+        <a class="nav-link" href="remote-support.html">Remote Support</a>
+        <a class="nav-link" href="industries.html">Industries</a>
+        <a class="nav-link" href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="section">
+      <div class="kicker"><span class="kdot"></span> Production stopped or at risk</div>
+      <h1>Emergency Plant-Down Support</h1>
+      <p class="muted">
+        When a line goes down, you don’t need a sales call — you need a fix.
+        Submit an emergency request and we’ll start triage immediately.
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <a class="btn primary" href="request-support.html">Request Emergency Support</a>
+        <a class="btn" href="remote-support.html">Remote Support Details</a>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2>What this is for</h2>
+        <ul class="bullets">
+          <li>Line stopped / repeated E-Stops / nuisance trips</li>
+          <li>PLC faults, corrupted program behavior, sequence failures</li>
+          <li>Drive faults, comm drops, motor control issues</li>
+          <li>HMI alarm storms or devices offline</li>
+          <li>Intermittent problems that only show up under load</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>How it works</h2>
+        <ol class="bullets">
+          <li><strong>Submit the request</strong> with symptoms, photos, fault codes, and a call-back number.</li>
+          <li><strong>Immediate triage</strong> — we confirm what stopped and what changed.</li>
+          <li><strong>Remote first</strong> when possible to reduce response time.</li>
+          <li><strong>Escalate to on-site</strong> if hands-on work is required.</li>
+          <li><strong>Document the fix</strong> so the same failure doesn’t repeat next week.</li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h2>What we need from you</h2>
+        <ul class="bullets">
+          <li>PLC / drive / HMI model (if known)</li>
+          <li>Fault codes, alarms, and screenshots</li>
+          <li>What the line was doing when it failed</li>
+          <li>Any recent changes (even “minor” ones)</li>
+          <li>Best person on-site to coordinate with</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Expectations</h2>
+        <p class="muted">
+          Emergency work moves fast. We’ll be direct about what we know, what we suspect, and what we need checked.
+          If remote access is available, we can usually start faster.
+        </p>
+        <p class="muted" style="margin-top:10px;">
+          Payment is required before support begins (incident-style response).
+          After-hours rates may apply outside normal business hours.
+        </p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Plant down right now?</h2>
+        <p class="muted">Submit the request and include the fault code/screenshot. We’ll start triage immediately.</p>
+        <a class="btn primary" href="request-support.html">Request Emergency Support</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure alerts • Logged requests • Faster response</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
