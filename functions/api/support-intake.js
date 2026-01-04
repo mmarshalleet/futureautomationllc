@@ -1,9 +1,3 @@
-// functions/api/support-intake.js
-// Creates a lightweight support ticket, then returns a PayPal approval URL.
-//
-// Expects application/json from request-support.html.
-// Returns: { ok:true, ticketId, paypalUrl }
-
 import { CONFIG } from "./_config";
 
 function json(data, status = 200) {
