@@ -1,5 +1,21 @@
 // functions/api/support-intake.js
-import { CONFIG, paypalApiBase, siteOrigin } from "./_config.js";
+//
+// PURPOSE
+// -------
+// This endpoint accepts the support request form payload and returns a server-generated
+// ticket id + a checkout URL.
+//
+// Why we do NOT create PayPal orders here:
+// - Keeps this endpoint fast and reliable (no PayPal calls = fewer failures).
+// - The checkout page (support-checkout.html) handles PayPal Smart Buttons,
+//   which then uses /api/paypal-create-order + /api/paypal-capture-order.
+//
+// IMPORTANT
+// ---------
+// Legacy PayPal flows (PAYPAL_BUSINESS / IPN / webscr links) have been removed.
+// This site uses PayPal Checkout (client id + secret) only.
+
+import { CONFIG, siteOrigin } from "./_config.js";
 
 async function readJson(request) {
   const ct = request.headers.get("content-type") || "";
@@ -9,102 +25,48 @@ async function readJson(request) {
   return await request.json();
 }
 
-async function getPayPalAccessToken(env) {
-  if (!env.PAYPAL_CLIENT_ID || !env.PAYPAL_CLIENT_SECRET) {
-    throw new Error("Missing PAYPAL_CLIENT_ID or PAYPAL_CLIENT_SECRET");
-  }
-
-  const auth = btoa(`${env.PAYPAL_CLIENT_ID}:${env.PAYPAL_CLIENT_SECRET}`);
-  const base = paypalApiBase(env);
-
-  const r = await fetch(`${base}/v1/oauth2/token`, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${auth}`,
-      "content-type": "application/x-www-form-urlencoded",
-    },
-    body: "grant_type=client_credentials",
-  });
-
-  const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(`PayPal token error (${r.status}): ${JSON.stringify(j)}`);
-
-  return j.access_token;
+function normalizeBool(v) {
+  return v === true || v === "true" || v === "1" || v === 1 || v === "on";
 }
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request }) {
   try {
     const payload = await readJson(request);
 
-    const pricingTier = (payload.pricingTier || "standard").toString().toLowerCase();
-    const plantDown = payload.plantDown === true || payload.plantDown === "true";
+    // The form uses `requestType` (standard/emergency). Some older code used `pricingTier`.
+    const pricingTier = (payload.pricingTier || payload.requestType || "standard")
+      .toString()
+      .toLowerCase();
 
+    const plantDown = normalizeBool(payload.plantDown);
+
+    // Anything marked plant-down is emergency priority.
     const isEmergency = pricingTier === "emergency" || plantDown;
 
-    const amount = isEmergency
-      ? CONFIG.PRICING.emergencyFee
-      : CONFIG.PRICING.standardFee;
+    // These are used for display on the checkout page.
+    const amount = isEmergency ? CONFIG.PRICING.emergencyFee : CONFIG.PRICING.standardFee;
 
-    const itemName = isEmergency
-      ? "Emergency Plant-Down Support (Initial Incident)"
-      : "Standard Remote Support (Initial Incident)";
-
-    // Ticket id just for your UI text (you can later log it if you want)
+    // Ticket id: short, readable, and URL-safe.
     const ticketId = `FA-${Date.now().toString(36).toUpperCase()}`;
 
-    const token = await getPayPalAccessToken(env);
-    const base = paypalApiBase(env);
     const origin = siteOrigin(request);
-
-    const returnUrl = `${origin}/paid.html?ticket=${encodeURIComponent(ticketId)}`;
-    const cancelUrl = `${origin}/request-support.html`;
-
-    const orderRes = await fetch(`${base}/v2/checkout/orders`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        intent: "CAPTURE",
-        purchase_units: [
-          {
-            description: itemName,
-            custom_id: ticketId,
-            amount: {
-              currency_code: CONFIG.PRICING.currency,
-              value: amount,
-            },
-          },
-        ],
-        application_context: {
-          brand_name: "Future Automation LLC",
-          user_action: "PAY_NOW",
-          return_url: returnUrl,
-          cancel_url: cancelUrl,
-        },
-      }),
-    });
-
-    const order = await orderRes.json().catch(() => ({}));
-    if (!orderRes.ok) {
-      throw new Error(`PayPal order error (${orderRes.status}): ${JSON.stringify(order)}`);
-    }
-
-    const approve = Array.isArray(order.links)
-      ? order.links.find((l) => l.rel === "approve")?.href
-      : null;
-
-    if (!approve) throw new Error("PayPal approve link missing");
+    const checkoutUrl = `${origin}/support-checkout.html?ticket=${encodeURIComponent(ticketId)}&plantDown=${plantDown ? "1" : "0"}`;
 
     return new Response(
-      JSON.stringify({ ok: true, ticketId, paypalUrl: approve }),
-      { headers: { "content-type": "application/json" } }
+      JSON.stringify({
+        ok: true,
+        ticketId,
+        pricingTier: isEmergency ? "emergency" : "standard",
+        amount,
+        currency: CONFIG.PRICING.currency,
+        checkoutUrl,
+      }),
+      { headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } }
     );
   } catch (err) {
     return new Response(
       JSON.stringify({ ok: false, error: err?.message || String(err) }),
-      { status: 500, headers: { "content-type": "application/json" } }
+      { status: 500, headers: { "content-type": "application/json; charset=utf-8" } }
     );
   }
 }

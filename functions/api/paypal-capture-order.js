@@ -1,14 +1,7 @@
 // functions/api/paypal-capture-order.js
 // Captures a PayPal order and logs/alerts on successful payment.
 
-import { PRICING } from "./_config.js";
-
-function paypalApiBase(env) {
-  const ppEnv = (env.PAYPAL_ENV || "live").toString().toLowerCase();
-  return ppEnv.includes("sand")
-    ? "https://api-m.sandbox.paypal.com"
-    : "https://api-m.paypal.com";
-}
+import { PRICING, paypalApiBase } from "./_config.js";
 
 async function getAccessToken(env) {
   if (!env.PAYPAL_CLIENT_ID || !env.PAYPAL_CLIENT_SECRET) {
