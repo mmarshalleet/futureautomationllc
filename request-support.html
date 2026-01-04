@@ -3,226 +3,399 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Request Support | Future Automation LLC</title>
 
-  <meta name="description" content="Request industrial automation support, PLC programming, or emergency plant-down assistance." />
-  <link rel="stylesheet" href="/style.css" />
+  <title>Request Support | Future Automation LLC</title>
+  <meta name="description" content="Request industrial automation support: PLC, VFD, HMI, and plant-down troubleshooting. Local and remote." />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+
+  <style>
+    /* =========================
+       Request Support — Page-local mobile fixes
+       (doesn't rely on global CSS behaving)
+       ========================= */
+
+    .page { max-width: 1080px; margin: 0 auto; padding: 18px 16px 60px; }
+    .hero { margin: 14px 0 16px; }
+    .hero h1 { margin: 0 0 6px; line-height: 1.1; font-size: clamp(28px, 6vw, 48px); }
+    .muted { color: rgba(255,255,255,.72); }
+
+    /* Nav: scrollable pills on mobile, no vertical bloat */
+    @media (max-width: 900px){
+      .topbar-inner { flex-wrap: wrap; gap: 10px; }
+      .brand img { height: 30px; }
+
+      .nav{
+        width: 100%;
+        display:flex !important;
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 10px;
+        padding: 6px 2px 2px;
+      }
+      .nav::-webkit-scrollbar { display:none; }
+
+      .nav-link{
+        flex: 0 0 auto;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.04);
+      }
+      .nav-link.active{
+        border-color: rgba(91,140,255,.65);
+        background: rgba(91,140,255,.12);
+      }
+
+      .nav-cta { display:none; } /* avoid duplicate CTA on mobile */
+    }
+
+    /* Layout: choices + form */
+    .grid-two {
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (min-width: 980px){
+      .grid-two { grid-template-columns: 1fr 1.25fr; gap: 18px; }
+    }
+
+    .cardlike{
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    @media (min-width: 980px){
+      .cardlike { padding: 18px; }
+    }
+
+    /* Support type choices */
+    .choices { display:grid; gap: 12px; }
+    .choice{
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .choice strong{ display:flex; align-items:center; gap:10px; }
+    .choice p{ margin: 6px 0 0; color: rgba(255,255,255,.70); }
+    .choice.active{
+      border-color: rgba(91,140,255,.65);
+      background: rgba(91,140,255,.08);
+    }
+
+    /* Form: single column on mobile, 2-col on desktop */
+    form .row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    @media (min-width: 780px){
+      form .row{ grid-template-columns: 1fr 1fr; }
+    }
+
+    form label{
+      display:block;
+      font-weight: 800;
+      font-size: 13px;
+      color: rgba(255,255,255,.78);
+    }
+
+    input, select, textarea{
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.92);
+      font-size: 16px; /* key: stops iOS zoom */
+      outline: none;
+    }
+    textarea{ resize: vertical; min-height: 140px; }
+
+    .toggles{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0 12px;
+    }
+    @media (min-width: 780px){
+      .toggles{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .toggle{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+    }
+    .toggle span{ font-weight: 800; font-size: 13px; color: rgba(255,255,255,.78); }
+    .toggle input{ width: 18px; height: 18px; margin: 0; }
+
+    .actions{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+      margin-top: 10px;
+    }
+    @media (min-width: 780px){
+      .actions{ flex-direction: row; align-items:center; }
+    }
+    .actions .btn, .actions button{ width: 100%; }
+    @media (min-width: 780px){
+      .actions .btn, .actions button{ width: auto; }
+    }
+
+    .status{ min-height: 1.2em; margin: 0; color: rgba(255,255,255,.75); }
+    .small{ font-size: 13px; color: rgba(255,255,255,.68); }
+    .bullets{ margin: 10px 0 0; padding-left: 18px; color: rgba(255,255,255,.72); }
+    .note{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(91,140,255,.08);
+      color: rgba(255,255,255,.82);
+    }
+  </style>
 </head>
 
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" />
+      </a>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="brand-logo">
-      <img src="/logo.svg" alt="Future Automation LLC" />
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="/">Home</a>
-      <a class="nav-link" href="/services.html">Services</a>
-      <a class="nav-link active" href="/request-support.html">Request Support</a>
-    </div>
-  </div>
-</nav>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="emergency-support.html">Emergency Support</a>
+        <a class="nav-link" href="remote-support.html">Remote Support</a>
+        <a class="nav-link" href="industries.html">Industries</a>
+        <a class="nav-link active" href="request-support.html">Request Support</a>
+      </nav>
 
-<main class="container">
-
-  <h1>Request Support</h1>
-  <p class="muted">Choose the type of support you need. Pricing appears after selection.</p>
-
-  <!-- SUPPORT SELECTION -->
-  <section class="support-choice">
-
-    <div class="choice-card" data-tier="emergency">
-      <h3>🚨 Emergency Plant-Down</h3>
-      <p>Production stopped or at risk. Immediate triage and remote support.</p>
-    </div>
-
-    <div class="choice-card" data-tier="standard">
-      <h3>🛠 Standard Support</h3>
-      <p>Scheduled remote help, PLC logic changes, troubleshooting, fixes.</p>
-    </div>
-
-  </section>
-
-  <!-- SELECTED SUMMARY -->
-  <section id="selectedSummary" class="selected hidden">
-    <strong>Selected:</strong>
-    <span id="selectedText"></span>
-    <p class="muted" id="selectedNote"></p>
-  </section>
-
-  <!-- SUPPORT FORM -->
-  <section class="card">
-
-    <h2>Support Request</h2>
-
-    <form id="supportForm">
-
-      <input type="hidden" name="pricingTier" id="pricingTier" />
-
-      <div class="grid">
-        <label>
-          Request type
-          <select name="requestType" id="requestType" required>
-            <option value="">Select…</option>
-            <option value="plant_down">Plant down troubleshooting</option>
-            <option value="plc">PLC programming / logic changes</option>
-            <option value="hmi">HMI / FactoryTalk</option>
-            <option value="drives">Drives / motors / VFDs</option>
-            <option value="other">Other</option>
-          </select>
-        </label>
-
-        <label>
-          Platform (if known)
-          <input type="text" name="platform" placeholder="Allen-Bradley ControlLogix, MicroLogix, etc." />
-        </label>
-
-        <label>
-          Name
-          <input type="text" name="name" required />
-        </label>
-
-        <label>
-          Company
-          <input type="text" name="company" />
-        </label>
-
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-
-        <label>
-          Phone
-          <input type="tel" name="phone" />
-        </label>
-
-        <label>
-          Location / Plant
-          <input type="text" name="location" />
-        </label>
-
-        <label>
-          Asset / Machine
-          <input type="text" name="asset" />
-        </label>
+      <div class="nav-cta">
+        <a class="btn primary" href="request-support.html">Request Support</a>
       </div>
+    </div>
+  </header>
 
-      <label class="toggle">
-        <span>Plant Down</span>
-        <input type="checkbox" id="plantDown" />
-      </label>
+  <main class="page">
+    <header class="hero">
+      <h1>Request Support</h1>
+      <p class="muted">Choose the type of support you need. Pricing appears after selection.</p>
+    </header>
 
-      <label>
-        Issue / Symptoms
-        <textarea name="details" rows="5" required></textarea>
-      </label>
+    <div class="grid-two">
+      <!-- Left: choice cards -->
+      <section class="cardlike">
+        <div class="choices" role="list">
+          <div class="choice" role="listitem" id="choiceEmergency" tabindex="0">
+            <strong>🚨 Emergency Plant-Down</strong>
+            <p>Production stopped or at risk. Immediate triage and remote support.</p>
+          </div>
 
-      <label class="checkbox">
-        <input type="checkbox" required />
-        I understand payment is required before support begins
-      </label>
+          <div class="choice" role="listitem" id="choiceStandard" tabindex="0">
+            <strong>🛠️ Standard Support</strong>
+            <p>Scheduled remote help, PLC logic changes, troubleshooting, fixes.</p>
+          </div>
+        </div>
 
-      <button type="submit" id="checkoutBtn" class="btn primary" disabled>
-        Continue to Payment
-      </button>
+        <div class="note">
+          <strong>Tip:</strong> Include fault codes, screenshots, and what changed recently (even “small” changes).
+        </div>
 
-      <p class="error" id="errorMsg"></p>
+        <ul class="bullets">
+          <li>PLC / HMI / Drive model (if known)</li>
+          <li>Alarm text + fault codes</li>
+          <li>What the line was doing when it stopped</li>
+          <li>Best number to reach you</li>
+        </ul>
+      </section>
 
-    </form>
+      <!-- Right: form -->
+      <section class="cardlike">
+        <h2 style="margin-top:0;">Support Request</h2>
 
-    <p class="fine-print">
-      Upfront incident fee covers the first hour. After-hours rates apply outside normal business hours.
-    </p>
+        <p class="small" style="margin-top:-4px; margin-bottom:10px;">
+          Selected: <strong id="selectedLabel">None</strong>
+        </p>
 
-  </section>
+        <form id="supportForm">
+          <div class="row">
+            <label>
+              Request type
+              <select id="requestType" name="requestType" required>
+                <option value="">Select…</option>
+                <option value="emergency">Emergency Plant-Down</option>
+                <option value="standard">Standard Support</option>
+              </select>
+            </label>
 
-</main>
+            <label>
+              Platform (if known)
+              <input name="platform" placeholder="Allen-Bradley ControlLogix, Siemens, etc." />
+            </label>
+          </div>
 
-<script>
-  const cards = document.querySelectorAll(".choice-card");
-  const pricingTierInput = document.getElementById("pricingTier");
-  const selectedSummary = document.getElementById("selectedSummary");
-  const selectedText = document.getElementById("selectedText");
-  const selectedNote = document.getElementById("selectedNote");
-  const checkoutBtn = document.getElementById("checkoutBtn");
-  const plantDownToggle = document.getElementById("plantDown");
-  const requestType = document.getElementById("requestType");
-  const errorMsg = document.getElementById("errorMsg");
+          <div class="row">
+            <label>
+              Name
+              <input name="name" autocomplete="name" required />
+            </label>
 
-  let selectedTier = null;
+            <label>
+              Company
+              <input name="company" autocomplete="organization" />
+            </label>
+          </div>
 
-  function selectTier(tier) {
-    selectedTier = tier;
-    pricingTierInput.value = tier;
+          <div class="row">
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
 
-    cards.forEach(c => c.classList.toggle("active", c.dataset.tier === tier));
+            <label>
+              Phone
+              <input name="phone" type="tel" autocomplete="tel" placeholder="Best number to call/text" />
+            </label>
+          </div>
 
-    selectedSummary.classList.remove("hidden");
+          <div class="row">
+            <label>
+              Location / Plant
+              <input name="location" placeholder="City, plant name, or line" />
+            </label>
 
-    if (tier === "emergency") {
-      selectedText.textContent = "Emergency Plant-Down — $795 upfront";
-      selectedNote.textContent = "Immediate response. Initial incident fee.";
-      plantDownToggle.checked = true;
-    } else {
-      selectedText.textContent = "Standard Support — $495 upfront";
-      selectedNote.textContent = "Scheduled remote support and troubleshooting.";
-      plantDownToggle.checked = false;
+            <label>
+              Asset / Machine
+              <input name="asset" placeholder="Line, machine, PLC, VFD, etc." />
+            </label>
+          </div>
+
+          <div class="toggles">
+            <label class="toggle">
+              <span>Plant Down</span>
+              <input id="plantDown" name="plantDown" type="checkbox" />
+            </label>
+
+            <label class="toggle">
+              <span>I understand payment is required before support begins</span>
+              <input id="payAck" name="payAck" type="checkbox" required />
+            </label>
+          </div>
+
+          <label>
+            Issue / Symptoms
+            <textarea name="issue" placeholder="What happened? Fault codes? What have you tried?" required></textarea>
+          </label>
+
+          <div class="actions">
+            <button class="btn primary" type="submit" id="submitBtn">Continue to Payment</button>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+          </div>
+
+          <p class="small" style="margin-top:10px;">
+            Upfront incident fee covers the first hour. After-hours rates may apply outside normal business hours.
+          </p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure alerts • Logged requests • Faster response</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const choiceEmergency = document.getElementById("choiceEmergency");
+    const choiceStandard  = document.getElementById("choiceStandard");
+    const requestType     = document.getElementById("requestType");
+    const selectedLabel   = document.getElementById("selectedLabel");
+    const statusEl        = document.getElementById("status");
+    const form            = document.getElementById("supportForm");
+    const submitBtn       = document.getElementById("submitBtn");
+
+    function setChoice(type){
+      requestType.value = type;
+      choiceEmergency.classList.toggle("active", type === "emergency");
+      choiceStandard.classList.toggle("active", type === "standard");
+      selectedLabel.textContent = type === "emergency" ? "Emergency Plant-Down" : "Standard Support";
     }
 
-    checkoutBtn.disabled = false;
-  }
+    // click + keyboard support
+    choiceEmergency.addEventListener("click", () => setChoice("emergency"));
+    choiceStandard.addEventListener("click", () => setChoice("standard"));
+    choiceEmergency.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setChoice("emergency"); }});
+    choiceStandard.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setChoice("standard"); }});
 
-  cards.forEach(card => {
-    card.addEventListener("click", () => selectTier(card.dataset.tier));
-  });
+    requestType.addEventListener("change", () => {
+      if(requestType.value) setChoice(requestType.value);
+      else {
+        choiceEmergency.classList.remove("active");
+        choiceStandard.classList.remove("active");
+        selectedLabel.textContent = "None";
+      }
+    });
 
-  requestType.addEventListener("change", () => {
-    if (requestType.value === "plant_down") selectTier("emergency");
-  });
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  plantDownToggle.addEventListener("change", () => {
-    if (plantDownToggle.checked) selectTier("emergency");
-  });
+      if (!requestType.value){
+        statusEl.textContent = "Please select a request type.";
+        requestType.focus();
+        return;
+      }
 
-  document.getElementById("supportForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    errorMsg.textContent = "";
+      statusEl.textContent = "Creating ticket...";
+      submitBtn.disabled = true;
 
-    if (!selectedTier) {
-      errorMsg.textContent = "Please select a support type.";
-      return;
-    }
+      const fd = new FormData(form);
+      const payload = Object.fromEntries(fd.entries());
+      payload.plantDown = document.getElementById("plantDown").checked;
 
-    const form = e.target;
-    const payload = Object.fromEntries(new FormData(form));
-    payload.pricingTier = selectedTier;
-    payload.plantDown = plantDownToggle.checked;
+      try {
+        const r = await fetch("/api/support-intake", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-    checkoutBtn.disabled = true;
-    checkoutBtn.textContent = "Starting checkout…";
+        const json = await r.json().catch(() => ({}));
 
-    try {
-      const r = await fetch("/api/support-intake", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+        if (!r.ok || !json.ok || !json.paypalUrl) {
+          throw new Error(json.error || "Intake failed");
+        }
 
-      const j = await r.json();
-
-      if (!j.ok || !j.paypalUrl) throw new Error(j.error || "Checkout failed");
-
-      window.location.href = j.paypalUrl;
-
-    } catch (err) {
-      errorMsg.textContent = err.message;
-      checkoutBtn.disabled = false;
-      checkoutBtn.textContent = "Continue to Payment";
-    }
-  });
-</script>
-
+        statusEl.textContent = `Ticket ${json.ticketId || ""} created. Redirecting to PayPal...`;
+        window.location.href = json.paypalUrl;
+      } catch (err) {
+        statusEl.textContent = "Could not start checkout. Please refresh and try again.";
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
