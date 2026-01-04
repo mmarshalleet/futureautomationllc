@@ -836,3 +836,83 @@ nav,
   font-size: 12px;
 }
 .trend-metric b{ color: rgba(255,255,255,.92); }
+/* =========================
+   Mobile form fix (Request Support)
+   ========================= */
+
+.support-card { padding: 16px; }
+@media (min-width: 780px){
+  .support-card { padding: 22px; }
+}
+
+/* Make rows stack on mobile, 2-col on desktop */
+.form .row{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+@media (min-width: 780px){
+  .form .row{ grid-template-columns: 1fr 1fr; }
+}
+
+/* Stop global label styling from wrecking the form */
+.form label{
+  display:block;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Inputs: readable, tap-friendly, no iOS zoom */
+.form input,
+.form select,
+.form textarea{
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+  font-size: 16px; /* key for iPhone */
+  outline: none;
+}
+
+.form input::placeholder,
+.form textarea::placeholder{
+  color: rgba(255,255,255,.45);
+}
+
+/* Better textarea sizing */
+.form textarea{ min-height: 140px; resize: vertical; }
+
+/* Toggle rows: stack nicely on mobile */
+.form label.toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+}
+
+/* Button/status area: stop weird squish */
+.form .status{ margin: 0; }
+.form button.btn.primary{
+  width: 100%;
+}
+@media (min-width: 520px){
+  .form button.btn.primary{ width: auto; }
+}
+
+/* Title sizing so it doesn’t scream at you on mobile */
+.support-card h1,
+.support-card .h1{
+  font-size: clamp(28px, 6vw, 44px);
+  line-height: 1.1;
+}
