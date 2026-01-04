@@ -1,72 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-  <meta name="theme-color" content="#0B1220" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Payment Received | Future Automation LLC</title>
-  <meta name="description" content="Payment received for support request." />
-  <style>
-    .meta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-    .meta .pill{ border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); padding:8px 12px; border-radius:999px; }
-    .meta code{ font-weight:900; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
-        <img src="logo.svg" alt="Future Automation LLC" style="height:30px;width:auto;display:block" />
-      </a>
-
-      <nav class="nav" aria-label="Primary">
+      <a class="brand" href="index.html"><img src="logo.svg" alt="Future Automation LLC" /></a>
+      <nav class="nav">
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link" href="services.html">Services</a>
         <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
         <a class="nav-link" href="request-support.html">Request Support</a>
       </nav>
-
-      <div class="nav-cta">
-        <a class="btn primary" href="request-support.html">New Request</a>
-      </div>
     </div>
   </header>
 
-  <main class="page">
-    <section class="container">
-      <div class="hero">
-        <h1>Payment received.</h1>
-        <p class="lead">You're officially on the board. We'll reach out using the contact info in your request.</p>
-
-        <div class="meta">
-          <span class="pill">Ticket: <code id="ticket">—</code></span>
-        </div>
-
-        <div class="callout" style="margin-top:16px;">
-          <p><strong>Next step:</strong> Keep your phone handy. If you marked Plant Down, it’s prioritized.</p>
-        </div>
-
-        <div style="height:14px"></div>
-        <a class="btn primary" href="services.html">See Services</a>
-        <a class="btn" href="request-support.html" style="margin-left:10px;">Submit Another</a>
-      </div>
-    </section>
+  <main class="container section">
+    <div class="card">
+      <h2>Payment received.</h2>
+      <p class="lead">We’ve got your request. If this is plant-down, keep your phone handy.</p>
+      <p class="muted">Ticket: <b id="t"></b></p>
+      <a class="btn primary" href="index.html">Back to Home</a>
+    </div>
   </main>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="small">© <span id="year"></span> Future Automation LLC</div>
-      <div class="small">Payment confirmed • Logged requests • Faster response</div>
-    </div>
-  </footer>
-
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const u = new URL(location.href);
-    document.getElementById("ticket").textContent = u.searchParams.get("ticket") || "—";
+    const t = new URLSearchParams(location.search).get("ticket") || "—";
+    document.getElementById("t").textContent = t;
   </script>
 </body>
 </html>
