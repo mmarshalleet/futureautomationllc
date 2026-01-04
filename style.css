@@ -488,6 +488,34 @@ nav,
 }
 
 /* Mobile: keep nav VISIBLE (no hiding
+   on iPhone). This comment was previously unterminated and
+   unintentionally disabled all CSS that followed. */
+
+@media (max-width: 900px){
+  .nav-links,
+  .nav{
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding: 6px 2px 2px;
+  }
+  .nav-links::-webkit-scrollbar,
+  .nav::-webkit-scrollbar{ display:none; }
+
+  .nav-link{
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.04);
+  }
+  .nav-link.active{
+    border-color: rgba(91,140,255,.65);
+    background: rgba(91,140,255,.12);
+    color: var(--text);
+  }
+}
 /* =========================
    iOS SUPPORT FORM FIX
    (request-support.html)
@@ -614,6 +642,110 @@ nav,
 /* Mobile: make the submit button easier to tap */
 @media (max-width: 780px){
   .support-card button.btn{
+    width: 100%;
+  }
+}
+
+/* =========================
+   REQUEST SUPPORT (current markup)
+   Fix mobile layout for request-support.html
+   ========================= */
+
+/* Make the selection cards wrap nicely */
+.support-choice{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 16px 0 18px;
+}
+@media (min-width: 900px){
+  .support-choice{ grid-template-columns: 1fr 1fr; }
+}
+
+.choice-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.30)), var(--bg-panel);
+  border: 1px solid var(--border-hard);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-deep);
+  padding: 16px;
+  cursor: pointer;
+}
+.choice-card p{ margin: 6px 0 0; color: var(--muted); }
+.choice-card.active{
+  border-color: rgba(91,140,255,.65);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 18px 50px rgba(0,0,0,.55);
+}
+
+/* Form grid: stack on mobile, 2-col on desktop */
+#supportForm .grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 900px){
+  #supportForm .grid{ grid-template-columns: 1fr 1fr; }
+}
+
+/* Labels stack text over control (prevents the "everything inline" squish) */
+#supportForm label{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 750;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Inputs/selects/textarea full-width + iOS no-zoom */
+#supportForm input,
+#supportForm select,
+#supportForm textarea{
+  width: 100%;
+  min-width: 0;
+  font-size: 16px; /* stops iOS zoom */
+  line-height: 1.2;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  outline: none;
+}
+#supportForm textarea{ resize: vertical; }
+
+#supportForm input:focus,
+#supportForm select:focus,
+#supportForm textarea:focus{
+  border-color: rgba(91,140,255,.55);
+  box-shadow: 0 0 0 3px rgba(91,140,255,.18);
+}
+
+/* Toggle + checkbox lines should be horizontal and readable */
+#supportForm label.toggle{
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+}
+
+#supportForm label.checkbox{
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+#supportForm label.checkbox input{ width: 18px; height: 18px; margin-top: 2px; }
+
+/* Button: full-width on mobile */
+@media (max-width: 780px){
+  #supportForm .btn,
+  #supportForm button{
     width: 100%;
   }
 }
