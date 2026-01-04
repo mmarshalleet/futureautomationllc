@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>Remote Support | Future Automation LLC</title>
+  <meta name="description" content="Remote PLC, VFD, HMI, and communications troubleshooting with fast triage and clean fixes." />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" />
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="emergency-support.html">Emergency Support</a>
+        <a class="nav-link active" href="remote-support.html">Remote Support</a>
+        <a class="nav-link" href="industries.html">Industries</a>
+        <a class="nav-link" href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="section">
+      <div class="kicker"><span class="kdot"></span> Fast response without travel</div>
+      <h1>Remote Support</h1>
+      <p class="muted">
+        Remote support is the quickest way to diagnose PLC, VFD, HMI, and comms issues —
+        especially intermittent faults and logic/parameter problems.
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <a class="btn primary" href="request-support.html">Request Remote Support</a>
+        <a class="btn" href="emergency-support.html">Plant Down?</a>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Best for</h2>
+        <ul class="bullets">
+          <li>PLC troubleshooting & logic edits</li>
+          <li>Drive faults, parameter verification, control strategy</li>
+          <li>HMI alarms, tag mapping, and visibility issues</li>
+          <li>EtherNet/IP drops and device timeouts</li>
+          <li>Repeat failures you want to stop permanently</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>How a remote session works</h2>
+        <ol class="bullets">
+          <li><strong>Submit the request</strong> with symptoms and contact info.</li>
+          <li><strong>Rapid triage</strong> to identify what stopped and what changed.</li>
+          <li><strong>Connect securely</strong> using your plant-approved method (VPN / remote desktop / on-site tech).</li>
+          <li><strong>Fix + verify</strong> — changes are documented and validated.</li>
+          <li><strong>Handoff</strong> with notes so maintenance can repeat the recovery steps.</li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h2>What we need</h2>
+        <ul class="bullets">
+          <li>PLC/HMI/drive platform (if known)</li>
+          <li>Fault codes and screenshots</li>
+          <li>Someone on-site to confirm field conditions</li>
+          <li>Any recent changes (hardware, wiring, logic, recipes)</li>
+        </ul>
+        <p class="muted" style="margin-top:10px;">
+          If you can’t share screenshots through the form, submit anyway and reply to the confirmation email.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Remote vs on-site</h2>
+        <p class="muted">
+          Remote gets you diagnosis and many fixes fast. On-site is better when the issue is physical:
+          wiring, sensors, safety circuits, motors, mechanical binding, or panel work.
+        </p>
+        <p class="muted" style="margin-top:10px;">
+          If the situation needs hands-on work, we’ll tell you quickly — no wasted time.
+        </p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Start here</h2>
+        <p class="muted">Tell us what stopped, what you’re seeing, and include any fault codes or screenshots.</p>
+        <a class="btn primary" href="request-support.html">Request Remote Support</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure alerts • Logged requests • Faster response</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
