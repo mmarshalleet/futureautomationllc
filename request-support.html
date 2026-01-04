@@ -34,6 +34,40 @@
     }
     .field input, .field textarea{ width:100%; }
 
+    /* Make form fields look consistent across browsers */
+    .form input,
+    .form textarea,
+    .form select{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      outline: none;
+    }
+    .form textarea{ resize: vertical; }
+    .form input::placeholder,
+    .form textarea::placeholder{ color: rgba(255,255,255,.45); }
+    .form input:focus,
+    .form textarea:focus,
+    .form select:focus{
+      border-color: rgba(91,140,255,.7);
+      box-shadow: 0 0 0 4px rgba(91,140,255,.14);
+    }
+    .form select{
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.55) 50%),
+        linear-gradient(135deg, rgba(255,255,255,.55) 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) calc(1em + 2px),
+        calc(100% - 13px) calc(1em + 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 36px;
+    }
+
     .toggle-field{
       display:flex;
       align-items:center;
@@ -103,7 +137,7 @@
         <section class="container">
             <div class="hero">
                 <h1>Request Support</h1>
-                <p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues—send the details and we’ll get eyes on it fast.</p>
+                <p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues, or PLC/HMI changes—send the details and we’ll get eyes on it fast.</p>
             </div>
 
             <div class="grid two-col">
@@ -124,6 +158,34 @@
                     <h2>Support request</h2>
 
                     <form id="supportForm" class="form">
+                        <div class="row">
+                            <label>
+                                Request type
+                                <select id="requestType" name="requestType" required>
+                                    <option value="">Select one…</option>
+                                    <option value="Plant down troubleshooting">Plant down troubleshooting</option>
+                                    <option value="PLC programming / logic change">PLC programming / logic change</option>
+                                    <option value="HMI / FactoryTalk edits">HMI / FactoryTalk edits</option>
+                                    <option value="VFD / drive faults">VFD / drive faults</option>
+                                    <option value="Comms / networks">Comms / networks</option>
+                                    <option value="Condition monitoring setup">Condition monitoring setup</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </label>
+
+                            <label>
+                                Platform (if known)
+                                <select name="platform">
+                                    <option value="">Select one…</option>
+                                    <option value="Allen-Bradley ControlLogix / CompactLogix (Studio 5000)">Allen-Bradley ControlLogix / CompactLogix (Studio 5000)</option>
+                                    <option value="Allen-Bradley MicroLogix">Allen-Bradley MicroLogix</option>
+                                    <option value="FactoryTalk View ME">FactoryTalk View ME</option>
+                                    <option value="FactoryTalk View SE">FactoryTalk View SE</option>
+                                    <option value="Other / Unknown">Other / Unknown</option>
+                                </select>
+                            </label>
+                        </div>
+
                         <div class="row">
                             <label>
                                 Name
@@ -200,13 +262,21 @@
         document.getElementById("year").textContent = new Date().getFullYear();
         const form = document.getElementById("supportForm");
         const statusEl = document.getElementById("status");
+        const requestTypeEl = document.getElementById("requestType");
+        const plantDownEl = document.getElementById("plantDown");
+
+        // Help users: choosing "Plant down" auto-checks the Plant Down toggle.
+        requestTypeEl.addEventListener("change", () => {
+            const v = (requestTypeEl.value || "").toLowerCase();
+            if (v.includes("plant down")) plantDownEl.checked = true;
+        });
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
             statusEl.textContent = "Creating ticket...";
 
             const fd = new FormData(form);
-            const isPlantDown = document.getElementById("plantDown").checked;
+            const isPlantDown = plantDownEl.checked;
 
             const payload = Object.fromEntries(fd.entries());
             payload.plantDown = isPlantDown;
@@ -221,11 +291,8 @@
                 const json = await r.json();
                 if (!r.ok || !json.ok) throw new Error(json.error || "Intake failed");
 
-                const nextUrl = json.checkoutUrl || json.paypalUrl;
-                if (!nextUrl) throw new Error("No checkout URL returned");
-
-                statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to payment...`;
-                window.location.href = nextUrl;
+                statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to PayPal...`;
+                window.location.href = json.paypalUrl;
             } catch (err) {
                 statusEl.textContent = "Could not start checkout. Please refresh and try again.";
             }
