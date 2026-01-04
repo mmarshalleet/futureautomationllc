@@ -1,4 +1,4 @@
-import { CONFIG } from "./_config";
+import { CONFIG } from "_config";
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
