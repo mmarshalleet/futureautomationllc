@@ -110,7 +110,23 @@
       }
     }
     #status{ min-height: 1.2em; }
-  </style>
+  
+    .quickpay-card[aria-pressed="true"]{
+      outline: 2px solid rgba(123,77,255,.9);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      transform: translateY(-1px);
+    }
+    .qp-summary{
+      margin-top: 14px;
+      padding: 14px 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+    }
+    .qp-sum-title{ font-weight: 700; margin-bottom: 4px; }
+    .qp-sum-line{ font-weight: 700; }
+    .qp-sum-note{ margin-top: 6px; color: rgba(255,255,255,.72); font-size: .95rem; }
+</style>
 </head>
 
 <body>
@@ -155,28 +171,33 @@
                 </div>
                  <!-- ===== Quick Pay Buttons ===== -->
 <section class="support-quickpay">
-  <div class="quickpay-grid">
-    <button type="button" class="quickpay-card urgent" data-tier="emergency">
-           <div class="qp-title">Emergency Plant-Down</div>
-           <div class="qp-price">$695 upfront</div>
-           <div class="qp-sub">Fast response • triage + remote support</div>
+  <div class="quickpay-grid" id="tierPicker">
+    <button type="button" class="quickpay-card urgent" data-tier="emergency" aria-pressed="false">
+      <div class="qp-title">Emergency Plant-Down</div>
+      <div class="qp-sub">Fast response • triage + remote support</div>
     </button>
 
-    <button type="button" class="quickpay-card" data-tier="standard">
+    <button type="button" class="quickpay-card" data-tier="standard" aria-pressed="false">
       <div class="qp-title">Standard Support</div>
-      <div class="qp-price">$495 upfront</div>
       <div class="qp-sub">Scheduled remote help • troubleshooting + fixes</div>
     </button>
   </div>
 
+  <div class="qp-summary" id="tierSummary" hidden>
+    <div class="qp-sum-title">Selected:</div>
+    <div class="qp-sum-line" id="tierSummaryLine"></div>
+    <div class="qp-sum-note">Upfront incident fee. If you need ongoing support, use the monthly subscription on the home page.</div>
+  </div>
+
   <p class="qp-note">
-    Monthly subscription is for ongoing support. Use the buttons above for one-time incident support.
+    Choose a support type above. Pricing will appear after selection.
   </p>
 </section>
                 <div class="card support-card">
                     <h2>Support request</h2>
 
                     <form id="supportForm" class="form">
+                        <input type="hidden" name="pricingTier" id="pricingTier" value="">
                         <div class="row">
                             <label>
                                 Request type
@@ -258,7 +279,7 @@
                         </label>
 
                         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px">
-                            <button class="btn primary" type="submit">Continue to Payment</button>
+                            <button class="btn primary" id="submitBtn" type="submit" disabled>Continue to Payment</button>
                             <p class="status" id="status" role="status" aria-live="polite"></p>
                         </div>
 
@@ -279,26 +300,77 @@
     </footer>
   <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+
         const form = document.getElementById("supportForm");
         const statusEl = document.getElementById("status");
         const requestTypeEl = document.getElementById("requestType");
         const plantDownEl = document.getElementById("plantDown");
 
-        // Help users: choosing "Plant down" auto-checks the Plant Down toggle.
+        const tierPicker = document.getElementById("tierPicker");
+        const pricingTierEl = document.getElementById("pricingTier");
+        const submitBtn = document.getElementById("submitBtn");
+        const tierSummary = document.getElementById("tierSummary");
+        const tierSummaryLine = document.getElementById("tierSummaryLine");
+
+        const FEES = {
+          emergency: { amount: 795, label: "Emergency Plant-Down", note: "Fast response • triage + remote support" },
+          standard:  { amount: 495, label: "Standard Support", note: "Scheduled remote help • troubleshooting + fixes" }
+        };
+
+        function setTier(tier){
+          if (!FEES[tier]) return;
+
+          pricingTierEl.value = tier;
+
+          // Toggle pressed state
+          tierPicker.querySelectorAll(".quickpay-card").forEach(btn => {
+            btn.setAttribute("aria-pressed", btn.dataset.tier === tier ? "true" : "false");
+          });
+
+          // Show price AFTER selection (your request)
+          const fee = FEES[tier];
+          tierSummary.hidden = false;
+          tierSummaryLine.textContent = `${fee.label} — $${fee.amount} upfront`;
+
+          // Help users: emergency implies plant-down
+          if (tier === "emergency") {
+            plantDownEl.checked = true;
+            // If they haven't chosen a request type yet, nudge it.
+            if (!requestTypeEl.value) requestTypeEl.value = "Plant down troubleshooting";
+          }
+
+          submitBtn.disabled = false;
+        }
+
+        // Click handlers for tier cards
+        tierPicker.querySelectorAll(".quickpay-card").forEach(btn => {
+          btn.addEventListener("click", () => setTier(btn.dataset.tier));
+        });
+
+        // Choosing "Plant down" auto-selects Emergency
         requestTypeEl.addEventListener("change", () => {
-            const v = (requestTypeEl.value || "").toLowerCase();
-            if (v.includes("plant down")) plantDownEl.checked = true;
+          const v = (requestTypeEl.value || "").toLowerCase();
+          if (v.includes("plant down")) setTier("emergency");
+        });
+
+        // Manual plantDown toggle can also imply emergency if no tier selected
+        plantDownEl.addEventListener("change", () => {
+          if (plantDownEl.checked && !pricingTierEl.value) setTier("emergency");
         });
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
+
+            if (!pricingTierEl.value) {
+              statusEl.textContent = "Select a support type above to continue.";
+              return;
+            }
+
             statusEl.textContent = "Creating ticket...";
 
-            const fd = new FormData(form);
-            const isPlantDown = plantDownEl.checked;
-
-            const payload = Object.fromEntries(fd.entries());
-            payload.plantDown = isPlantDown;
+            // Build payload (JSON) for the Cloudflare Function
+            const payload = Object.fromEntries(new FormData(form).entries());
+            payload.plantDown = !!plantDownEl.checked;
 
             try {
                 const r = await fetch("/api/support-intake", {
@@ -316,6 +388,7 @@
                 statusEl.textContent = "Could not start checkout. Please refresh and try again.";
             }
         });
+
    </script>
 
 </body>
