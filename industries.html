@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>Industries | Future Automation LLC</title>
+  <meta name="description" content="Industrial automation support across manufacturing environments: food, poultry, packaging, utilities, and general manufacturing." />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" />
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="emergency-support.html">Emergency Support</a>
+        <a class="nav-link" href="remote-support.html">Remote Support</a>
+        <a class="nav-link active" href="industries.html">Industries</a>
+        <a class="nav-link" href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="section">
+      <div class="kicker"><span class="kdot"></span> Built for real plants</div>
+      <h1>Industries & Environments</h1>
+      <p class="muted">
+        Controls problems look different depending on the plant. We’re comfortable in high-uptime environments
+        where downtime costs money fast.
+      </p>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Food & Poultry Processing</h2>
+        <p class="muted">
+          Wet environments, aggressive washdown schedules, and nonstop production demands.
+          We focus on fast troubleshooting and repeat-failure prevention.
+        </p>
+        <ul class="bullets">
+          <li>Conveyance, packaging, and processing lines</li>
+          <li>Intermittent sensor/IO faults</li>
+          <li>Drive trips and comm drops</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Manufacturing & Packaging</h2>
+        <p class="muted">
+          Start/stop sequences, safety interlocks, and multi-device coordination.
+          We keep controls stable and operators informed.
+        </p>
+        <ul class="bullets">
+          <li>Sequencing and nuisance downtime</li>
+          <li>HMI alarms and visibility</li>
+          <li>Device networking and stability</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Utilities & Support Systems</h2>
+        <p class="muted">
+          Systems that can’t quietly fail: pumps, blowers, fans, wastewater, and plant utilities.
+          We prioritize reliability and clear alarms.
+        </p>
+        <ul class="bullets">
+          <li>Pump/VFD control and protection</li>
+          <li>Fail-safe logic and permissives</li>
+          <li>Operator clarity</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>General Industrial</h2>
+        <p class="muted">
+          If it runs on a PLC and it’s causing downtime, we can usually help.
+          Remote support is often the fastest path to diagnosis.
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <a class="btn" href="services.html">View Services</a>
+          <a class="btn primary" href="request-support.html">Request Support</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Not sure if it fits?</h2>
+        <p class="muted">Submit a request with the platform and symptoms. We’ll tell you quickly if we’re a match.</p>
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Secure alerts • Logged requests • Faster response</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
