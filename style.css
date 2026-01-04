@@ -916,3 +916,51 @@ nav,
   font-size: clamp(28px, 6vw, 44px);
   line-height: 1.1;
 }
+/* =========================
+   Request Support – Mobile Fix
+   ========================= */
+
+@media (max-width: 768px) {
+
+  /* Force single column layout */
+  .support-form,
+  .support-form .row,
+  .support-form .form-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px;
+  }
+
+  /* Make inputs readable and full width */
+  .support-form input,
+  .support-form select,
+  .support-form textarea {
+    width: 100% !important;
+    min-width: 100% !important;
+    font-size: 16px !important; /* prevents iOS zoom */
+    padding: 12px;
+  }
+
+  /* Fix checkbox rows */
+  .support-form .checkbox-row,
+  .support-form .toggle-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px;
+  }
+
+  /* Center + widen submit button */
+  .support-form button,
+  .support-form .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  /* Reduce wasted header space */
+  h1 {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+
+}
