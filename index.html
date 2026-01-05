@@ -12,11 +12,12 @@
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="index.html">
+    <a class="brand" href="index.html" aria-label="Future Automation LLC home">
       <img src="logo.svg" alt="Future Automation LLC" />
     </a>
-    <nav class="nav">
+    <nav class="nav" aria-label="Primary">
       <a href="services.html">Services</a>
+      <a href="condition-monitoring.html">Condition Monitoring</a>
       <a href="request-support.html" class="btn">Request Support</a>
     </nav>
   </div>
@@ -29,7 +30,15 @@
       I support contractors and maintenance teams when controls work is critical:
       PLC programming, panel design review, commissioning, and plant-down recovery.
     </p>
-    <a href="request-support.html" class="btn btn-primary">Request Controls Support</a>
+
+    <div class="cta-row">
+      <a href="request-support.html" class="btn btn-primary">Request Controls Support</a>
+      <a href="request-support.html#support-type" class="btn">Request a Panel Review</a>
+    </div>
+
+    <p class="micro">
+      Not a “full-service electrical shop.” I’m the escalation layer when it has to work.
+    </p>
   </section>
 
   <section class="panel">
@@ -39,16 +48,62 @@
       <li>Startup is stalling and fingers are pointing</li>
       <li>A plant manager wants answers, not excuses</li>
       <li>Your electricians need a controls backstop</li>
+      <li>Recurring faults nobody can pin down</li>
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h2>What You Get</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Clear diagnosis</h3>
+        <p>Root cause, corrective action, and a plan to keep it from coming back.</p>
+      </div>
+      <div class="card">
+        <h3>Clean, maintainable code</h3>
+        <p>No mystery rungs. No “only one guy understands it” logic.</p>
+      </div>
+      <div class="card">
+        <h3>Panels that pass reality</h3>
+        <p>Design review focused on safety, noise, serviceability, and what fails in the field.</p>
+      </div>
+      <div class="card">
+        <h3>Less downtime</h3>
+        <p>Faster startups, fewer repeat calls, fewer “it worked yesterday” surprises.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Typical Engagements</h2>
+    <ul class="clean-list">
+      <li><strong>Panel design review:</strong> I/O list sanity check, safety chain review, power separation, shielding/grounding, documentation corrections.</li>
+      <li><strong>PLC work:</strong> new routines, cleanup, interlocks, alarms, device integrations, migrations and upgrades.</li>
+      <li><strong>Commissioning support:</strong> startup checklists, bring-up, tuning, and operator handoff.</li>
+      <li><strong>Plant-down escalation:</strong> quick triage → isolate → fix → verify → document.</li>
+      <li><strong>Contractor support:</strong> your team builds it — I make the controls behave so you keep the relationship.</li>
     </ul>
   </section>
 
   <section class="panel">
     <h2>How I Work</h2>
     <p>
-      I’m not a general contractor and I don’t replace your electricians.
-      I step in as a controls specialist to fix problems, validate designs,
-      and get systems running correctly — fast.
+      I’m not here to replace your electricians. I’m here to protect the outcome.
+      I’ll collaborate with your team, document what I change, and leave you with a system that’s easier to maintain.
     </p>
+
+    <div class="callout">
+      <p><strong>Fast response options:</strong> remote troubleshooting, scheduled project support, or on-site commissioning/plant-down help.</p>
+    </div>
+  </section>
+
+  <section class="panel highlight">
+    <h2>Ready when you are</h2>
+    <p>
+      If you have a panel design to sanity-check, a PLC problem that won’t die, or a startup that’s going sideways —
+      send the details and I’ll tell you the fastest path to green.
+    </p>
+    <a href="request-support.html" class="btn btn-primary">Request Support</a>
   </section>
 </main>
 
