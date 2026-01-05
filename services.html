@@ -3,396 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-  <meta name="theme-color" content="#0B1220" />
   <title>Services | Future Automation LLC</title>
-  <meta name="description" content="Uptime-focused industrial automation services for maintenance teams: plant-down support, retrofits, and reliability improvements." />
+  <meta name="description" content="PLC programming, panel design review, commissioning support, and contractor controls assistance." />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
-        <img src="logo.svg" alt="Future Automation LLC" />
-      </a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <img src="logo.svg" alt="Future Automation LLC" />
+    </a>
+    <nav class="nav">
+      <a href="services.html" class="active">Services</a>
+      <a href="request-support.html" class="btn">Request Support</a>
+    </nav>
+  </div>
+</header>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link active" href="services.html">Services</a>
-        <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
-        <a class="nav-link" href="request-support.html">Request Support</a>
-      </nav>
+<main class="page">
+  <h1>Specialist Services</h1>
 
-      <div class="nav-cta">
-        <a class="btn primary" href="request-support.html">Request Support & Pay Now</a>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <header class="section">
-      <div class="kicker"><span class="kdot"></span> Services</div>
-      <h1>Uptime services your maintenance team will actually use.</h1>
-      <p class="lead">
-        We focus on what stops production: plant-down recovery, repeat trips, and documentation that survives shift change.
-      </p>
-
-      <div class="pill-row" style="margin-top:14px;">
-        <span class="pill">Troubleshooting</span>
-        <span class="pill">Repeat-stop elimination</span>
-        <span class="pill">Retrofits</span>
-        <span class="pill">Standardization</span>
-        <span class="pill">Documentation</span>
-      </div>
-    </header>
-
-  <section class="playbooks" id="playbooks">
-  <div class="playbooks-head">
-    <p class="eyebrow">What we actually do</p>
-    <h2>Plant‑Floor Playbook</h2>
-    <p class="sub">
-      We focus on what stops production: plant-down recovery, repeat trips, and documentation that survives shift change.
+  <section class="panel">
+    <h2>PLC Programming & Modifications</h2>
+    <p>
+      Logic development, troubleshooting, cleanup, and migrations.
+      Built for maintainability — not mystery code.
     </p>
-  </div>
+  </section>
 
-  <div class="playbooks-tabs" role="tablist" aria-label="Service categories">
-    <button class="tab active" role="tab" aria-selected="true" data-tab="troubleshooting">Troubleshooting</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="repeatstop">Repeat-stop elimination</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="retrofits">Retrofits</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="standardization">Standardization</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="documentation">Documentation</button>
-  </div>
+  <section class="panel">
+    <h2>Panel Design Review & Correction</h2>
+    <p>
+      Review of schematics, I/O layouts, safety integration, and wiring practices.
+      Catch issues before inspection — or before they cause downtime.
+    </p>
+  </section>
 
-  <div class="playbooks-body">
-    <!-- TROUBLESHOOTING -->
-    <div class="tab-panel show" role="tabpanel" data-panel="troubleshooting">
-      <div class="cards">
-        <article class="card">
-          <h3>Plant Down Support</h3>
-          <p>When it’s down, we move fast: triage across PLCs, HMIs, VFDs, sensors, safety, and panels.</p>
-          <ul>
-            <li>Lock the fault: power, comms, interlocks, and I/O — verified, not guessed.</li>
-            <li>Isolate the root cause and get you running without “try it and see.”</li>
-            <li>Patch it clean and document the fix so it doesn’t come back next shift.</li>
-          </ul>
-          <a class="btn small" href="request-support.html">Request plant‑down help</a>
-    </article>
+  <section class="panel">
+    <h2>Startup & Commissioning Support</h2>
+    <p>
+      On-site or remote support during startup.
+      I help systems run correctly and stay running.
+    </p>
+  </section>
 
-        <article class="card">
-          <h3>Remote Assist (when possible)</h3>
-          <p>Talk through faults, trends, and logic with someone who’s done it in the field.</p>
-          <ul>
-            <li>Screen-share / phone support</li>
-            <li>Alarm/fault path walkthrough</li>
-            <li>Action list you can execute immediately</li>
-          </ul>
-        </article>
+  <section class="panel">
+    <h2>Plant-Down Troubleshooting</h2>
+    <p>
+      Fast diagnosis when production is stopped.
+      Root cause, not guesswork.
+    </p>
+  </section>
 
+  <section class="panel highlight">
+    <h2>Contractor Controls Support</h2>
+    <p>
+      I back up electrical contractors when controls work exceeds general electrical scope.
+      You keep the contract. I make it work.
+    </p>
+  </section>
+</main>
 
-        <article class="card">
-          <h3>PLC Programming & Logic Design</h3>
-          <p>Practical logic changes and clean documentation for Allen‑Bradley systems — focused on uptime, not overengineering.</p>
-          <ul>
-            <li>Studio 5000 Logix Designer (Control/CompactLogix)</li>
-            <li>MicroLogix support and edits</li>
-            <li>Interlocks, sequencing, scaling, and fault handling</li>
-            <li>FactoryTalk View ME/SE / RSView: screen edits, alarms, trends</li>
-            <li>Program backups, version notes, and “next time” runbooks</li>
-          </ul>
-          <a class="btn small" href="request-support.html">Request PLC / HMI help</a>
-        </article>
-
-        <article class="card">
-          <h3>Drive & Motor Diagnostics</h3>
-          <p>Fault decoding + quick isolation: drive, motor, wiring, load, or controls.</p>
-          <ul>
-            <li>PF525/523, Lenze, Danfoss, Siemens, etc.</li>
-            <li>Parameter sanity + reset strategy</li>
-            <li>Root cause notes for repeat prevention</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-
-    <!-- REPEAT-STOP -->
-    <div class="tab-panel" role="tabpanel" data-panel="repeatstop">
-      <div class="cards">
-        <article class="card">
-          <h3>Repeat‑Stop Elimination</h3>
-          <p>Stop the same nuisance fault from stealing another shift. We find the pattern and kill it.</p>
-          <ul>
-            <li>Build a stop-history “kill list” from alarms, trips, and operator notes.</li>
-            <li>Instrument the problem: trending, timestamps, and interlock truth tables.</li>
-            <li>Implement the permanent fix: wiring, logic, parameter, or mechanical interface.</li>
-          </ul>
-          <a class="btn small" href="request-support.html">Eliminate repeat stops</a>
-    </article>
-
-        <article class="card">
-          <h3>Nuisance Trip Reduction</h3>
-          <p>Stops that aren’t “real faults” get engineered out.</p>
-          <ul>
-            <li>Noise / debounce / filtering</li>
-            <li>Sensor mounting & protection</li>
-            <li>Interlock logic cleanup</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3>Root Cause Writeups</h3>
-          <p>Short, readable, useful — not a novel nobody reads.</p>
-          <ul>
-            <li>What happened + why</li>
-            <li>Fix + prevention</li>
-            <li>Parts/tools needed next time</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-
-    <!-- RETROFITS -->
-    <div class="tab-panel" role="tabpanel" data-panel="retrofits">
-      <div class="cards">
-        <article class="card">
-          <h3>Retrofits & Modernization</h3>
-          <p>Upgrade controls without turning the line into a science fair. Clean cutovers, tight rollback plans.</p>
-          <ul>
-            <li>PLC/HMI/VFD migrations with tested I/O maps and tag standards.</li>
-            <li>Safety circuits and device integration done by the book.</li>
-            <li>Commissioning that ends with backups, prints, and a punch‑list that actually closes.</li>
-          </ul>
-          <a class="btn small" href="request-support.html">Plan a retrofit</a>
-    </article>
-
-        <article class="card">
-          <h3>Drive Upgrades</h3>
-          <p>Replace obsolete drives with a clean, documented swap.</p>
-          <ul>
-            <li>Parameter capture & mapping</li>
-            <li>Wiring verification checklist</li>
-            <li>Test plan + rollback option</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3>Safety Updates (as needed)</h3>
-          <p>Practical improvements aligned to the machine and reality.</p>
-          <ul>
-            <li>E-stops, guard switches, relays</li>
-            <li>Fault isolation & reset behavior</li>
-            <li>Documentation & labeling</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-
-    <!-- STANDARDIZATION -->
-    <div class="tab-panel" role="tabpanel" data-panel="standardization">
-      <div class="cards">
-        <article class="card">
-          <h3>Standardization</h3>
-          <p>One way of doing it across the plant. Fewer surprises, faster troubleshooting, smoother training.</p>
-          <ul>
-            <li>Naming, alarm, and HMI standards operators can trust.</li>
-            <li>Parameter baselines for drives and devices — stored and repeatable.</li>
-            <li>Spare parts strategy aligned to what’s really failing.</li>
-          </ul>
-          <a class="btn small" href="request-support.html">Standardize a line</a>
-    </article>
-
-        <article class="card">
-          <h3>Panel Standards</h3>
-          <p>Clean power, clean wiring, clean labeling.</p>
-          <ul>
-            <li>Terminal layout patterns</li>
-            <li>Spare capacity planning</li>
-            <li>Labeling that techs thank you for</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3>Commissioning Checklists</h3>
-          <p>Repeatable start-ups with fewer “mystery” issues.</p>
-          <ul>
-            <li>I/O verification list</li>
-            <li>Drive/motor checks</li>
-            <li>Safety validation steps</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-
-    <!-- DOCUMENTATION -->
-    <div class="tab-panel" role="tabpanel" data-panel="documentation">
-      <div class="cards">
-        <article class="card">
-          <h3>Documentation that Works</h3>
-          <p>Shift‑proof documentation: prints, backups, and maps that match the real world — not a dusty binder.</p>
-          <ul>
-            <li>As‑built electrical prints and I/O maps that reflect current wiring.</li>
-            <li>Controller backups + version notes so you can restore with confidence.</li>
-            <li>Quick-reference runbooks for the “2 AM call” problems.</li>
-          </ul>
-          <a class="btn small" href="request-support.html">Fix our documentation</a>
-    </article>
-
-        <article class="card">
-          <h3>Troubleshooting Notes</h3>
-          <p>“Do this, then this” guides for the top failure modes.</p>
-          <ul>
-            <li>Fault trees for common stops</li>
-            <li>Parameter baselines</li>
-            <li>Spare parts recommendations</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3>Shift-Change Proof Handoffs</h3>
-          <p>Short, structured notes that stop problems from repeating.</p>
-          <ul>
-            <li>What was observed</li>
-            <li>What was changed</li>
-            <li>What to watch next</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </div>
-
-  <div class="playbooks-cta">
-      <a class="btn primary" href="request-support.html">Request Support & Pay Now</a>
-      <a class="btn ghost" href="condition-monitoring.html">Condition Monitoring</a>
-  </div>
-</section>
-
-
-    <section class="section grid" aria-label="Core services">
-      <div class="card">
-        <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M14.5 6.5a4 4 0 0 0 3.9 1l1.1-1.1-2-2 1.1-1.1a4 4 0 0 0-5 3.9L6.4 14.4a2 2 0 0 0 0 2.8l.4.4a2 2 0 0 0 2.8 0L14.5 6.5Z" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 2l-2 4h2l-2 4" stroke="white" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2>Plant Down Support</h2>
-        <p>Fast triage and troubleshooting across PLCs, HMIs, VFDs, sensors, safety, and panels.</p>
-        <ul>
-          <li>Prioritized “first checks”</li>
-          <li>Get it running → then confirm cause</li>
-          <li>Write-up for shift handoff</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M6 5h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="white" stroke-opacity=".85" stroke-width="1.6"/>
-            <path d="M8 9h5M8 12h8M8 15h6" stroke="white" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M18.5 9.5a3.5 3.5 0 0 0-6.2-1.8" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M12.3 7.7H15V5" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2>Retrofits & Upgrades</h2>
-        <p>Modernize aging controls so troubleshooting is faster and the system is maintainable.</p>
-        <ul>
-          <li>VFD / HMI upgrades</li>
-          <li>Panel cleanup + standards</li>
-          <li>Controls refresh planning</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M3 12h3l2-5 3 10 3-8 2 3h5" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="19" cy="7" r="2.5" stroke="white" stroke-opacity=".55" stroke-width="1.6"/>
-            <circle cx="19" cy="7" r="1.2" fill="white" fill-opacity=".75"/>
-          </svg>
-        </div>
-        <h2>Reliability Improvements</h2>
-        <p>Reduce repeat failures and nuisance trips—fix the stuff that keeps coming back.</p>
-        <ul>
-          <li>Recurring stop analysis</li>
-          <li>Nuisance fault reduction</li>
-          <li>Alarm cleanup + better context</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section split" aria-label="Engagement style">
-      <div class="card mini">
-        <h2>What techs get</h2>
-        <ul class="iconlist">
-          <li><span class="bullet"></span> Clear next steps (not “try power cycling it”)</li>
-          <li><span class="bullet"></span> Help interpreting PLC/VFD faults</li>
-          <li><span class="bullet"></span> Guidance on what data to capture</li>
-          <li><span class="bullet"></span> A repeatable “next time” playbook</li>
-        </ul>
-      </div>
-
-      <div class="card mini">
-        <h2>What managers get</h2>
-        <ul class="iconlist">
-          <li><span class="bullet"></span> Less emergency work</li>
-          <li><span class="bullet"></span> Better shift-to-shift handoff</li>
-          <li><span class="bullet"></span> Documentation for chronic issues</li>
-          <li><span class="bullet"></span> Cleaner justification for parts/PM/upgrades</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section callout">
-      <h2>Need help now?</h2>
-      <p>Send a support request. If it’s Plant Down, it gets prioritized.</p>
-      <div style="height:10px"></div>
-      <a class="btn primary" href="request-support.html">Request Support</a>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="small">© <span id="year"></span> Future Automation LLC</div>
-      <div class="small">Secure push alerts • Logged requests • Faster response</div>
-    </div>
-  </footer>
- <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
- </script>
-    <script>
-  (function(){
-    const tabs = document.querySelectorAll(".playbooks-tabs .tab");
-    const panels = document.querySelectorAll(".playbooks-body .tab-panel");
-
-    function activate(name){
-      tabs.forEach(t => {
-        const on = t.dataset.tab === name;
-        t.classList.toggle("active", on);
-        t.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      panels.forEach(p => p.classList.toggle("show", p.dataset.panel === name));
-    }
-
-    function activateFromHash(){
-      const hash = (window.location.hash || "").replace("#","").trim();
-      if (!hash) return;
-      const name = hash;
-      // Only activate known tabs
-      const exists = Array.from(tabs).some(t => t.dataset.tab === name);
-      if (exists) activate(name);
-    }
-
-    tabs.forEach(t => t.addEventListener("click", () => {
-      const name = t.dataset.tab;
-      activate(name);
-      // Keep the URL in sync (deep links)
-      history.replaceState(null, "", `#${name}`);
-    }));
-
-    window.addEventListener("hashchange", activateFromHash);
-    activateFromHash();
-  })();
-    </script>
+<footer class="footer">
+  <p>Future Automation LLC</p>
+</footer>
 </body>
 </html>
