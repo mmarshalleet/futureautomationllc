@@ -1,4 +1,4 @@
-import { CONFIG } from "./_config";
+import { CONFIG } from "./_config.js";
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -30,11 +30,12 @@ function makeTicketId() {
 }
 
 async function getAccessToken(env) {
-  if (!env.PAYPAL_CLIENT_ID || !env.PAYPAL_CLIENT_SECRET) {
+  const secret = env.PAYPAL_CLIENT_SECRET || env.PAYPAL_SECRET;
+  if (!env.PAYPAL_CLIENT_ID || !secret) {
     throw new Error("Missing PAYPAL_CLIENT_ID / PAYPAL_CLIENT_SECRET");
   }
 
-  const auth = btoa(`${env.PAYPAL_CLIENT_ID}:${env.PAYPAL_CLIENT_SECRET}`);
+  const auth = btoa(`${env.PAYPAL_CLIENT_ID}:${secret}`);
   const r = await fetch(`${paypalBase(env)}/v1/oauth2/token`, {
     method: "POST",
     headers: {
@@ -50,6 +51,22 @@ async function getAccessToken(env) {
     throw new Error(msg);
   }
   return j.access_token;
+}
+
+
+async function sendPushover(env, { ticketId, subject, body }) {
+  if (!env.PUSHOVER_APP_TOKEN || !env.PUSHOVER_USER_KEY) return;
+  const msg = `${subject}\n${body}\nTicket: ${ticketId}`;
+  await fetch("https://api.pushover.net/1/messages.json", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      token: env.PUSHOVER_APP_TOKEN,
+      user: env.PUSHOVER_USER_KEY,
+      message: msg,
+      priority: subject.toLowerCase().includes("plant down") ? "1" : "0"
+    })
+  }).catch(() => {});
 }
 
 async function createOrder(env, { amount, itemName, ticketId }) {
@@ -134,6 +151,67 @@ export async function onRequestPost({ request, env }) {
     if (!env.SITE_URL) {
       const url = new URL(request.url);
       env = { ...env, SITE_URL: `${url.protocol}//${url.host}` };
+    }
+
+
+    // If a PayPal subscription has already been approved client-side, we don't create a one-time order.
+    // We simply log/notify and return a success response.
+    
+    // Pay Now (hosted button) flow: payment is handled by PayPal hosted checkout.
+    // We don't create or capture an order here; we just record/notify the request.
+    if (body.payMethod === "paynow_hosted") {
+      const subject = (plantDown || tier === "emergency")
+        ? "Plant Down support request (Pay Now)"
+        : "Support request (Pay Now)";
+
+      const details = [
+        `Ticket: ${ticketId}`,
+        `Name: ${body.name || ""}`,
+        `Company: ${body.company || ""}`,
+        `Email: ${body.email || ""}`,
+        `Phone: ${body.phone || ""}`,
+        `Request: ${body.requestType || ""}`,
+        `Platform: ${body.platform || ""}`,
+        `Location: ${body.location || ""}`,
+        `Asset: ${body.asset || ""}`,
+        `Tier: ${tier || ""}`,
+        `Plant Down: ${plantDown ? "YES" : "no"}`,
+        `Issue: ${body.issue || ""}`,
+        `Hosted Button: ${body.hostedButtonId || ""}`
+      ].join("\n");
+
+      await notify(env, subject, details).catch(() => {});
+      return json({ ok: true, ticketId, redirect: CONFIG.returnPath });
+    }
+
+if (body.subscriptionID) {
+      const subject = (plantDown || tier === "emergency")
+        ? "Plant Down support request (subscription approved)"
+        : "Support request (subscription approved)";
+
+      const details = [
+        `Name: ${body.name || ""}`,
+        `Company: ${body.company || ""}`,
+        `Email: ${body.email || ""}`,
+        `Phone: ${body.phone || ""}`,
+        `Request: ${body.requestType || ""}`,
+        `Platform: ${body.platform || ""}`,
+        `Location: ${body.location || ""}`,
+        `Asset: ${body.asset || ""}`,
+        `Tier: ${tier || ""}`,
+        `Plant Down: ${plantDown ? "YES" : "no"}`,
+        `Issue: ${body.issue || ""}`,
+        `SubscriptionID: ${body.subscriptionID}`
+      ].join("\n");
+
+      await sendPushover(env, { ticketId, subject, body: details });
+
+      return json({
+        ok: true,
+        ticketId,
+        mode: "subscription",
+        redirect: `${env.SITE_URL}${CONFIG.returnPath}?ticket=${encodeURIComponent(ticketId)}`
+      });
     }
 
     const orderRes = await createOrder(env, { amount, itemName, ticketId });

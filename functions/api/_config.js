@@ -1,8 +1,3 @@
-// functions/api/_config.js
-// Single source of truth for pricing + return/cancel URLs.
-// IMPORTANT: Some functions import CONFIG, others import PRICING.
-// We export BOTH so the build can’t break from a refactor.
-
 export const CONFIG = {
   standardFee: "495.00",
   emergencyFee: "795.00",
@@ -10,12 +5,11 @@ export const CONFIG = {
   brandName: "Future Automation LLC",
   // Pages will deploy to prod domain; keep these page paths stable.
   returnPath: "/paid.html",
-  cancelPath: "/request-support.html",
+  cancelPath: "/request-support.html"
 };
 
-// Used by PayPal “create order” endpoints.
-// "incidentFee" is what your PayPal order endpoints currently charge up-front.
+// Compatibility export for existing PayPal functions
 export const PRICING = {
   incidentFee: CONFIG.standardFee,
-  currency: CONFIG.currency,
+  currency: CONFIG.currency
 };
