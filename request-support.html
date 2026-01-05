@@ -1,596 +1,68 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="style.css" rel="stylesheet"/>
-<link href="favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="favicon.ico" rel="alternate icon"/>
-<meta content="#0B1220" name="theme-color"/>
-<title>Request Support | Future Automation LLC</title>
-<meta content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." name="description"/>
-<style>
-    .support-wrap { max-width: 860px; margin: 0 auto; }
-    .support-card { padding: 22px; }
-    .support-form { margin-top: 14px; }
-
-    .support-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    @media (min-width: 780px){
-      .support-grid{ grid-template-columns: 1fr 1fr; }
-      .span-2{ grid-column: 1 / -1; }
-    }
-
-    .field label{
-      display:block;
-      font-weight: 750;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .field input, .field textarea{ width:100%; }
-
-    /* Make form fields look consistent across browsers */
-    .form input,
-    .form textarea,
-    .form select{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      outline: none;
-    }
-    .form textarea{ resize: vertical; }
-    .form input::placeholder,
-    .form textarea::placeholder{ color: rgba(255,255,255,.45); }
-    .form input:focus,
-    .form textarea:focus,
-    .form select:focus{
-      border-color: rgba(91,140,255,.7);
-      box-shadow: 0 0 0 4px rgba(91,140,255,.14);
-    }
-    .form select{
-      appearance: none;
-      background-image:
-        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.55) 50%),
-        linear-gradient(135deg, rgba(255,255,255,.55) 50%, transparent 50%);
-      background-position:
-        calc(100% - 18px) calc(1em + 2px),
-        calc(100% - 13px) calc(1em + 2px);
-      background-size: 5px 5px, 5px 5px;
-      background-repeat: no-repeat;
-      padding-right: 36px;
-    }
-
-    .toggle-field{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-    }
-    .toggle-field .toggle-label{
-      font-weight: 800;
-      font-size: 13px;
-      color: var(--muted);
-      margin: 0;
-    }
-    .toggle-field .toggle-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex: 0 0 auto;
-    }
-    .toggle-field input[type="checkbox"]{
-      width: 18px;
-      height: 18px;
-      margin: 0;
-    }
-
-    .support-actions{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top: 4px;
-    }
-    @media (min-width: 780px){
-      .support-actions{
-        flex-direction:row;
-        align-items:center;
-        justify-content:space-between;
-      }
-    }
-    #status{ min-height: 1.2em; }
-
-    /* Quick pay selector */
-    .support-quickpay{ padding: 0; }
-    .quickpay-grid{ display:grid; grid-template-columns: 1fr; gap: 10px; }
-    @media (min-width: 780px){ .quickpay-grid{ grid-template-columns: 1fr 1fr; } }
-    .quickpay-card{
-      text-align:left;
-      padding: 14px 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      cursor: pointer;
-      transition: transform .08s ease, border-color .12s ease, background .12s ease;
-    }
-    .quickpay-card:hover{ transform: translateY(-1px); border-color: rgba(91,140,255,.35); }
-    .quickpay-card.urgent:hover{ border-color: rgba(255,93,108,.45); }
-    .quickpay-card.is-selected{
-      border-color: rgba(91,140,255,.75);
-      background: linear-gradient(180deg, rgba(91,140,255,.10), rgba(255,255,255,.03));
-      box-shadow: 0 0 0 4px rgba(91,140,255,.12);
-    }
-    .quickpay-card.urgent.is-selected{
-      border-color: rgba(255,93,108,.75);
-      box-shadow: 0 0 0 4px rgba(255,93,108,.12);
-      background: linear-gradient(180deg, rgba(255,93,108,.10), rgba(255,255,255,.03));
-    }
-    .qp-title{ font-weight: 900; letter-spacing: .2px; }
-    .qp-sub{ margin-top: 4px; font-size: 12px; color: rgba(255,255,255,.65); }
-    .qp-summary{ margin-top: 10px; padding: 12px 14px; border-radius: 18px; border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18); }
-    .qp-selected{ font-weight: 850; }
-    .qp-note{ margin-top: 10px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Request Controls Support | Future Automation LLC</title>
+  <meta name="description" content="Request PLC and controls support for projects, startups, or plant-down events." />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 <header class="topbar">
-<div class="topbar-inner">
-<a aria-label="Future Automation LLC home" class="brand" href="index.html">
-<img alt="Future Automation LLC" src="logo.svg"/>
-</a>
-<nav aria-label="Primary" class="nav">
-<a class="nav-link" href="index.html">Home</a>
-<a class="nav-link" href="services.html">Services</a>
-<a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
-<a class="nav-link active" href="request-support.html">Request Support</a>
-</nav>
-<div class="nav-cta">
-<a class="btn small primary" href="request-support.html">Request Support</a>
-</div>
-</div>
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <img src="logo.svg" alt="Future Automation LLC" />
+    </a>
+  </div>
 </header>
-<main class="page">
-<section class="container">
-<div class="hero">
-<h1>Request Support</h1>
-<p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues, or PLC/HMI changes—send the details and we’ll get eyes on it fast.</p>
-</div>
-<div class="grid two-col">
-<div class="card">
-<h2>What to include</h2>
-<ul class="bullets">
-<li>Line / area + what stopped</li>
-<li>PLC / HMI / drive model (if you know it)</li>
-<li>Alarms, screenshots, fault codes</li>
-<li>Best call-back number + site time zone</li>
-</ul>
-<div class="note">
-<strong>Heads up:</strong> If you can’t text photos through the form, submit the request anyway—reply to the confirmation email with attachments.
-                    </div>
-</div>
-<!-- ===== Support Type Selector (price shown after selection) ===== -->
-<section aria-label="Select support type" class="support-quickpay">
-<div class="quickpay-grid">
-<button aria-pressed="false" class="quickpay-card urgent" data-tier="emergency" type="button">
-<div class="qp-title">Emergency Plant-Down</div>
-<div class="qp-sub">Fast response • triage + remote support</div>
-</button>
-<button aria-pressed="false" class="quickpay-card" data-tier="standard" type="button">
-<div class="qp-title">Standard Support</div>
-<div class="qp-sub">Scheduled remote help • troubleshooting + fixes</div>
-</button>
-</div>
-<div class="qp-summary" hidden="" id="tierSummary">
-<div class="qp-selected">Selected: <strong id="tierLabel">—</strong></div>
-<div class="qp-selected">Upfront: <strong id="tierPrice">—</strong></div>
-<div class="small muted">Upfront incident fee covers first hour. After-hours rates apply outside normal business hours.</div>
-</div>
-<p class="qp-note">Monthly subscription is for ongoing support. Use the options above for one-time incident support.</p>
-</section>
-<div class="card support-card">
-<h2>Support request</h2>
-<form class="form" id="supportForm">
-<input id="pricingTier" name="pricingTier" type="hidden" value=""/>
-<div class="row">
-<label>
-                                Request type
-                                <select id="requestType" name="requestType" required="">
-<option value="">Select one…</option>
-<option value="Plant down troubleshooting">Plant down troubleshooting</option>
-<option value="PLC programming / logic change">PLC programming / logic change</option>
-<option value="HMI / FactoryTalk edits">HMI / FactoryTalk edits</option>
-<option value="VFD / drive faults">VFD / drive faults</option>
-<option value="Comms / networks">Comms / networks</option>
-<option value="Condition monitoring setup">Condition monitoring setup</option>
-<option value="Other">Other</option>
-</select>
-</label>
-<label>
-                                Platform (if known)
-                                <select name="platform">
-<option value="">Select one…</option>
-<option value="Allen-Bradley ControlLogix / CompactLogix (Studio 5000)">Allen-Bradley ControlLogix / CompactLogix (Studio 5000)</option>
-<option value="Allen-Bradley MicroLogix">Allen-Bradley MicroLogix</option>
-<option value="FactoryTalk View ME">FactoryTalk View ME</option>
-<option value="FactoryTalk View SE">FactoryTalk View SE</option>
-<option value="Other / Unknown">Other / Unknown</option>
-</select>
-</label>
-</div>
-<div class="row">
-<label>
-                                Name
-                                <input autocomplete="name" name="name" required=""/>
-</label>
-<label>
-                                Company
-                                <input autocomplete="organization" name="company"/>
-</label>
-</div>
-<div class="row">
-<label>
-                                Email
-                                <input autocomplete="email" name="email" required="" type="email"/>
-</label>
-<label>
-                                Phone
-                                <input autocomplete="tel" name="phone" placeholder="Best number to call/text" type="tel"/>
-</label>
-</div>
-<div class="row">
-<label>
-                                Location / Plant
-                                <input name="location" placeholder="City, plant name, or line"/>
-</label>
-<label>
-                                Asset / Machine
-                                <input name="asset" placeholder="Line, machine, PLC, VFD, etc."/>
-</label>
-</div>
-<div class="row">
-<label class="toggle">
-<span>Plant Down</span>
-<input id="plantDown" name="plantDown" type="checkbox"/>
-<span aria-hidden="true" class="toggle-ui"></span>
-</label>
-<label class="toggle">
-<span>I understand payment is required before support begins</span>
-<input id="payAck" name="payAck" required="" type="checkbox"/>
-<span aria-hidden="true" class="toggle-ui"></span>
-</label>
-</div>
-<label>
-                            Issue / Symptoms
-                            <textarea name="issue" placeholder="What happened? What have you tried? Include fault codes if you have them." required="" rows="6"></textarea>
-</label>
-<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px">
-<button class="btn primary" disabled="" id="payBtn" type="submit">Continue to Payment</button>
-<p aria-live="polite" class="status" id="status" role="status"></p>
-</div>
-<p class="small">Choose a support type above. Pricing appears after selection.</p>
-<div class="panel" id="paypalSection" style="display:none;margin-top:14px">
-<h3 style="margin:0 0 10px">Payment</h3>
-<p class="small" style="margin:0 0 12px">
-    Choose <strong>Pay Now</strong> for one-time emergency support, or <strong>Subscribe</strong> for ongoing support.
+
+<main class="page narrow">
+  <h1>Request Controls Support</h1>
+  <p class="lead">
+    Use this form to request PLC or controls assistance.
+    I’ll respond directly.
   </p>
-<div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:start">
-<div class="panel" style="margin:0">
-<div class="small" style="margin:0 0 8px"><strong>Pay Now (One‑time)</strong></div>
-<div id="paypalPayNowButton"></div>
-<p class="small muted" style="margin:10px 0 0">
-        After completing payment, tap the button above to submit your request.
-      </p>
-</div>
-<div class="panel" style="margin:0">
-<div class="small" style="margin:0 0 8px"><strong>Subscribe</strong></div>
-<div id="paypalSubscribeButton"></div>
-<p class="small muted" style="margin:10px 0 0">
-        Approving the subscription will automatically submit your request.
-      </p>
-</div>
-</div>
-<p aria-live="polite" class="status" id="paypalStatus" role="status" style="margin-top:10px"></p>
-</div>
-</form>
-</div>
-</div>
-</section>
+
+  <form class="support-form">
+    <label>
+      Company / Plant
+      <input type="text" required />
+    </label>
+
+    <label>
+      Contact Name
+      <input type="text" required />
+    </label>
+
+    <label>
+      Email
+      <input type="email" required />
+    </label>
+
+    <label>
+      Type of Support
+      <select required>
+        <option value="">Select…</option>
+        <option>PLC Programming</option>
+        <option>Panel Design Review</option>
+        <option>Startup / Commissioning</option>
+        <option>Plant-Down Support</option>
+        <option>Contractor Controls Support</option>
+      </select>
+    </label>
+
+    <label>
+      Brief Description
+      <textarea rows="5" required></textarea>
+    </label>
+
+    <button type="submit" class="btn btn-primary">Submit Request</button>
+  </form>
 </main>
+
 <footer class="footer">
-<div class="footer-inner">
-<div class="small">© <span id="year"></span> Future Automation LLC</div>
-<div class="small">Secure push alerts • Logged requests • Faster response</div>
-</div>
+  <p>Future Automation LLC</p>
 </footer>
-    <script>
-(() => {
-  // Footer year
-  const y = document.getElementById("year");
-  if (y) y.textContent = new Date().getFullYear();
-
-  const form = document.getElementById("supportForm");
-  const statusEl = document.getElementById("status");
-  const requestTypeEl = document.getElementById("requestType");
-  const plantDownEl = document.getElementById("plantDown");
-  const pricingTierEl = document.getElementById("pricingTier");
-  const payAckEl = document.getElementById("payAck");
-  const payBtn = document.getElementById("payBtn");
-
-  const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
-  const tierSummary = document.getElementById("tierSummary");
-  const tierLabel = document.getElementById("tierLabel");
-  const tierPrice = document.getElementById("tierPrice");
-
-  const paypalSection = document.getElementById("paypalSection");
-  const paypalStatusEl = document.getElementById("paypalStatus");
-
-  const PLAN_ID = "P-5SH39343XS649853NNFMYB5Y";
-
-  const PRICES = {
-    emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
-    standard:  { label: "Standard Support",     price: "$495 upfront" }
-  };
-
-  let pendingPayload = null;
-  let pendingTicketId = null;
-
-  let paypalSubLoaded = false;
-  let paypalPayLoaded = false;
-  let payRendered = false;
-  let subRendered = false;
-
-  function setStatus(msg){ if (statusEl) statusEl.textContent = msg || ""; }
-  function setPayPalStatus(msg){ if (paypalStatusEl) paypalStatusEl.textContent = msg || ""; }
-
-  function updatePayBtnState(){
-    if (!payBtn) return;
-    const tierOk = !!pricingTierEl?.value;
-    const ackOk  = !!payAckEl?.checked;
-    payBtn.disabled = !(tierOk && ackOk);
-  }
-
-  function selectTier(tier){
-    if (!PRICES[tier]) return;
-    pricingTierEl.value = tier;
-
-    tierCards.forEach((btn) => {
-      const isSel = btn.dataset.tier === tier;
-      btn.classList.toggle("is-selected", isSel); // <-- your CSS uses is-selected
-      btn.setAttribute("aria-pressed", isSel ? "true" : "false");
-    });
-
-    if (tierSummary) tierSummary.hidden = false;
-    if (tierLabel) tierLabel.textContent = PRICES[tier].label;
-    if (tierPrice) tierPrice.textContent = PRICES[tier].price;
-
-    updatePayBtnState();
-  }
-
-  // Deep-link support
-  (() => {
-    const params = new URLSearchParams(window.location.search || "");
-    const tier = (params.get("tier") || "").toLowerCase();
-    const plantDown = (params.get("plantDown") || "").toLowerCase();
-    if (tier === "emergency" || tier === "standard") selectTier(tier);
-    if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
-      if (plantDownEl) plantDownEl.checked = true;
-      selectTier("emergency");
-    }
-  })();
-
-  tierCards.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tier = btn.dataset.tier;
-      selectTier(tier);
-      if (tier === "emergency" && plantDownEl) plantDownEl.checked = true;
-    });
-  });
-
-  requestTypeEl?.addEventListener("change", () => {
-    const v = (requestTypeEl.value || "").toLowerCase();
-    if (v.includes("plant down")) {
-      if (plantDownEl) plantDownEl.checked = true;
-      selectTier("emergency");
-    }
-  });
-
-  plantDownEl?.addEventListener("change", () => {
-    if (plantDownEl.checked) selectTier("emergency");
-  });
-
-  payAckEl?.addEventListener("change", updatePayBtnState);
-  updatePayBtnState();
-
-  function getPayload(){
-    const fd = new FormData(form);
-    const data = Object.fromEntries(fd.entries());
-    data.plantDown = !!plantDownEl?.checked;
-    data.tier = pricingTierEl?.value || "";
-    if (payAckEl?.checked) data.payAck = "on";
-    return data;
-  }
-
-  function makeTicketId(){
-    const d = new Date();
-    const pad = (n) => String(n).padStart(2,"0");
-    const stamp = `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}${pad(d.getHours())}${pad(d.getMinutes())}`; // 12 digits
-    const rand = Math.random().toString(36).toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5).padEnd(5,"X");
-    return `FA-${stamp}-${rand}`;
-  }
-
-  async function loadPayPalScripts(){
-    // get client id from your function
-    const r = await fetch("/api/paypal-config", { cache: "no-store" });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok || !j.ok) throw new Error(j?.error || "Could not load PayPal config");
-    const clientId = j.clientId;
-
-    // 1) Subscription SDK (namespace paypalSub)
-    if (!paypalSubLoaded){
-      await new Promise((resolve,reject) => {
-        const s = document.createElement("script");
-        const params = new URLSearchParams({
-          "client-id": clientId,
-          "vault": "true",
-          "intent": "subscription",
-          "components": "buttons",
-          "currency": "USD"
-        });
-        s.src = "https://www.paypal.com/sdk/js?" + params.toString();
-        s.async = true;
-        s.setAttribute("data-namespace","paypalSub");
-        s.onload = resolve;
-        s.onerror = () => reject(new Error("Failed to load PayPal subscription SDK"));
-        document.head.appendChild(s);
-      });
-      paypalSubLoaded = true;
-    }
-
-    // 2) Pay Now SDK (namespace paypalPay) — capture flow
-    if (!paypalPayLoaded){
-      await new Promise((resolve,reject) => {
-        const s = document.createElement("script");
-        const params = new URLSearchParams({
-          "client-id": clientId,
-          "intent": "capture",
-          "components": "buttons",
-          "currency": "USD"
-        });
-        s.src = "https://www.paypal.com/sdk/js?" + params.toString();
-        s.async = true;
-        s.setAttribute("data-namespace","paypalPay");
-        s.onload = resolve;
-        s.onerror = () => reject(new Error("Failed to load PayPal Pay Now SDK"));
-        document.head.appendChild(s);
-      });
-      paypalPayLoaded = true;
-    }
-  }
-
-  async function submitIntake(extra){
-    const payload = { ...(pendingPayload || {}), ...(extra || {}) };
-    const rr = await fetch("/api/support-intake", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    const out = await rr.json().catch(() => ({}));
-    if (!rr.ok || !out.ok) throw new Error(out?.error || "Request submission failed");
-    return out;
-  }
-
-  async function renderPayNow(){
-    if (payRendered) return;
-    if (!window.paypalPay?.Buttons) throw new Error("PayPal Pay Now Buttons not available");
-    payRendered = true;
-
-    window.paypalPay.Buttons({
-      style: { layout:"vertical", shape:"rect", label:"pay", color:"gold" },
-
-      createOrder: async () => {
-        setPayPalStatus("Starting checkout…");
-        const r = await fetch("/api/paypal-create-order", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            ticketId: pendingTicketId,
-            plantDown: !!pendingPayload?.plantDown
-          })
-        });
-        const j = await r.json().catch(() => ({}));
-        if (!r.ok || !j.ok) throw new Error(j?.error || "Could not create order");
-        return j.id;
-      },
-
-      onApprove: async (data) => {
-        try{
-          setPayPalStatus("Capturing payment…");
-          const cap = await fetch("/api/paypal-capture-order", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ orderID: data.orderID, ticketId: pendingTicketId })
-          });
-          const cj = await cap.json().catch(() => ({}));
-          if (!cap.ok || !cj.ok) throw new Error(cj?.error || "Payment capture failed");
-
-          setPayPalStatus("Payment approved. Submitting request…");
-          const out = await submitIntake({ payMethod:"paynow", orderID: data.orderID, ticketId: pendingTicketId });
-
-          setPayPalStatus("✅ Submitted. Redirecting…");
-          window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || pendingTicketId));
-        }catch(e){
-          setPayPalStatus(e?.message || String(e));
-        }
-      },
-
-      onCancel: () => setPayPalStatus("Payment canceled."),
-      onError: (err) => setPayPalStatus("PayPal error: " + (err?.message || String(err)))
-    }).render("#paypalPayNowButton");
-  }
-
-  async function renderSubscribe(){
-    if (subRendered) return;
-    if (!window.paypalSub?.Buttons) throw new Error("PayPal subscription Buttons not available");
-    subRendered = true;
-
-    window.paypalSub.Buttons({
-      style: { layout:"vertical", shape:"rect", color:"gold", label:"subscribe" },
-      createSubscription: (data, actions) => {
-        setPayPalStatus("Opening subscription…");
-        return actions.subscription.create({ plan_id: PLAN_ID, quantity: 1 });
-      },
-      onApprove: async (data) => {
-        try{
-          setPayPalStatus("Subscription approved. Submitting request…");
-          const out = await submitIntake({ payMethod:"subscription", subscriptionID: data.subscriptionID, ticketId: pendingTicketId });
-          setPayPalStatus("✅ Submitted. Redirecting…");
-          window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || pendingTicketId));
-        }catch(e){
-          setPayPalStatus(e?.message || String(e));
-        }
-      },
-      onCancel: () => setPayPalStatus("Subscription canceled."),
-      onError: (err) => setPayPalStatus("PayPal error: " + (err?.message || String(err)))
-    }).render("#paypalSubscribeButton");
-  }
-
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    if (!pricingTierEl?.value) return setStatus("Select Emergency or Standard above to continue.");
-    if (!payAckEl?.checked) return setStatus("You must acknowledge payment is required before support begins.");
-
-    setStatus("");
-    pendingPayload = getPayload();
-    pendingTicketId = makeTicketId();
-
-    if (paypalSection) paypalSection.style.display = "block";
-    setPayPalStatus("Loading PayPal…");
-
-    try{
-      await loadPayPalScripts();
-      setPayPalStatus("");
-      await renderPayNow();
-      await renderSubscribe();
-      paypalSection?.scrollIntoView({ behavior:"smooth", block:"start" });
-    }catch(err){
-      setPayPalStatus(err?.message || "Could not start PayPal. Please refresh and try again.");
-    }
-  });
-})();
-</script>
-    
 </body>
 </html>
