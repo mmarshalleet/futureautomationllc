@@ -310,105 +310,136 @@
             <div class="small">Secure push alerts • Logged requests • Faster response</div>
         </div>
     </footer>
-  <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-        const form = document.getElementById("supportForm");
-        const statusEl = document.getElementById("status");
-        const requestTypeEl = document.getElementById("requestType");
-        const plantDownEl = document.getElementById("plantDown");
-        const pricingTierEl = document.getElementById("pricingTier");
-        const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
-        const tierSummary = document.getElementById("tierSummary");
-        const tierLabel = document.getElementById("tierLabel");
-        const tierPrice = document.getElementById("tierPrice");
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-        const PRICES = {
-          emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
-          standard: { label: "Standard Support", price: "$495 upfront" }
-        };
+  const form = document.getElementById("supportForm");
+  const statusEl = document.getElementById("status");
+  const requestTypeEl = document.getElementById("requestType");
+  const plantDownEl = document.getElementById("plantDown");
+  const payAckEl = document.getElementById("payAck");
+  const pricingTierEl = document.getElementById("pricingTier");
+  const payBtn = document.getElementById("payBtn");
 
-        // Allow deep links from the site (e.g., request-support.html?tier=emergency)
-        (function initFromUrl(){
-          const params = new URLSearchParams(window.location.search || "");
-          const tier = (params.get("tier") || "").toLowerCase();
-          const plantDown = (params.get("plantDown") || "").toLowerCase();
-          if (tier && PRICES[tier]) {
-            selectTier(tier);
-            if (tier === "emergency") plantDownEl.checked = true;
-          } else if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
-            selectTier("emergency");
-            plantDownEl.checked = true;
-          }
-        })();
+  const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
+  const tierSummary = document.getElementById("tierSummary");
+  const tierLabel = document.getElementById("tierLabel");
+  const tierPrice = document.getElementById("tierPrice");
 
-        function selectTier(tier){
-          if (!PRICES[tier]) return;
-          pricingTierEl.value = tier;
-          tierCards.forEach(btn => {
-            const isSel = btn.dataset.tier === tier;
-            btn.classList.toggle("is-selected", isSel);
-            btn.setAttribute("aria-pressed", isSel ? "true" : "false");
-          });
-          tierLabel.textContent = PRICES[tier].label;
-          tierPrice.textContent = PRICES[tier].price;
-          tierSummary.hidden = false;
-        }
+  const PRICES = {
+    emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
+    standard: { label: "Standard Support", price: "$495 upfront" }
+  };
 
-        // Hook up the cards
-        tierCards.forEach(btn => {
-          btn.addEventListener("click", () => {
-            const tier = btn.dataset.tier;
-            selectTier(tier);
-            if (tier === "emergency") plantDownEl.checked = true;
-          });
-        });
+  function updatePayBtn(){
+    // Require: pricing tier selected + payment acknowledgment checked
+    const ok = !!pricingTierEl.value && !!payAckEl.checked;
+    payBtn.disabled = !ok;
+  }
 
-        // Help users: choosing "Plant down" auto-checks the Plant Down toggle.
-        requestTypeEl.addEventListener("change", () => {
-            const v = (requestTypeEl.value || "").toLowerCase();
-            if (v.includes("plant down")) {
-              plantDownEl.checked = true;
-              selectTier("emergency");
-            }
-        });
+  // Allow deep links from the site (e.g., request-support.html?tier=emergency)
+  (function initFromUrl(){
+    const params = new URLSearchParams(window.location.search || "");
+    const tier = (params.get("tier") || "").toLowerCase();
+    const plantDown = (params.get("plantDown") || "").toLowerCase();
+    if (tier && PRICES[tier]) {
+      selectTier(tier);
+      if (tier === "emergency") plantDownEl.checked = true;
+    } else if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
+      selectTier("emergency");
+      plantDownEl.checked = true;
+    }
+    updatePayBtn();
+  })();
 
-        plantDownEl.addEventListener("change", () => {
-          if (plantDownEl.checked) selectTier("emergency");
-        });
+  function selectTier(tier){
+    if (!PRICES[tier]) return;
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
+    pricingTierEl.value = tier;
 
-            if (!pricingTierEl.value) {
-              statusEl.textContent = "Select Emergency or Standard above to continue.";
-              return;
-            }
+    tierCards.forEach(btn => {
+      const isSel = btn.dataset.tier === tier;
+      btn.classList.toggle("is-selected", isSel);
+      btn.setAttribute("aria-pressed", isSel ? "true" : "false");
+    });
 
-            statusEl.textContent = "Creating ticket...";
+    tierLabel.textContent = PRICES[tier].label;
+    tierPrice.textContent = PRICES[tier].price;
+    tierSummary.hidden = false;
 
-            const fd = new FormData(form);
-            const isPlantDown = plantDownEl.checked;
+    updatePayBtn();
+  }
 
-            const payload = Object.fromEntries(fd.entries());
-            payload.plantDown = isPlantDown;
+  // Hook up the cards
+  tierCards.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tier = btn.dataset.tier;
+      selectTier(tier);
+      if (tier === "emergency") plantDownEl.checked = true;
+      updatePayBtn();
+    });
+  });
 
-            try {
-                const r = await fetch("/api/support-intake", {
-                    method: "POST",
-                    headers: { "content-type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
+  // Help users: choosing "Plant down" auto-checks the Plant Down toggle + emergency tier.
+  requestTypeEl.addEventListener("change", () => {
+    const v = (requestTypeEl.value || "").toLowerCase();
+    if (v.includes("plant down")) {
+      plantDownEl.checked = true;
+      selectTier("emergency");
+    }
+    updatePayBtn();
+  });
 
-                const json = await r.json().catch(() => ({}));
-                if (!r.ok || !json.ok) throw new Error(json.error || "Intake failed");
+  plantDownEl.addEventListener("change", () => {
+    if (plantDownEl.checked) selectTier("emergency");
+    updatePayBtn();
+  });
 
-                statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to PayPal...`;
-                window.location.href = json.paypalUrl;
-            } catch (err) {
-                statusEl.textContent = "Could not start checkout. Please refresh and try again.";
-            }
-        });
-   </script>
+  payAckEl.addEventListener("change", updatePayBtn);
+
+  // Also enable/disable as required fields get filled (optional but nice)
+  form.addEventListener("input", updatePayBtn);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!pricingTierEl.value) {
+      statusEl.textContent = "Select Emergency or Standard above to continue.";
+      return;
+    }
+    if (!payAckEl.checked) {
+      statusEl.textContent = "Check the payment acknowledgment to continue.";
+      return;
+    }
+
+    statusEl.textContent = "Creating ticket...";
+
+    const fd = new FormData(form);
+    const payload = Object.fromEntries(fd.entries());
+    payload.plantDown = plantDownEl.checked;
+
+    try {
+      const r = await fetch("/api/support-intake", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await r.json().catch(() => ({}));
+      if (!r.ok || !json.ok) throw new Error(json.error || "Intake failed");
+
+      statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to PayPal...`;
+      window.location.href = json.paypalUrl;
+    } catch (err) {
+      statusEl.textContent = "Could not start checkout. Please refresh and try again.";
+      // Handy when you open DevTools:
+      console.error(err);
+    }
+  });
+
+  // Initial state
+  updatePayBtn();
+</script>
 
 </body>
 </html>
