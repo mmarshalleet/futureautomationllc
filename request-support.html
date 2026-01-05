@@ -317,9 +317,7 @@
 <div class="small">Secure push alerts • Logged requests • Faster response</div>
 </div>
 </footer>
-
-
-<script>
+    <script>
 (() => {
   // Footer year
   const y = document.getElementById("year");
@@ -340,10 +338,8 @@
 
   const paypalSection = document.getElementById("paypalSection");
   const paypalStatusEl = document.getElementById("paypalStatus");
-  const payNowSubmitBtn = document.getElementById("payNowSubmitBtn");
 
   const PLAN_ID = "P-5SH39343XS649853NNFMYB5Y";
-  const HOSTED_PAYNOW_ID = "TE4V66GK9S8GU";
 
   const PRICES = {
     emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
@@ -351,35 +347,34 @@
   };
 
   let pendingPayload = null;
-  let paypalSdkLoaded = false;
+  let pendingTicketId = null;
+
+  let paypalSubLoaded = false;
+  let paypalPayLoaded = false;
+  let payRendered = false;
   let subRendered = false;
-  let payNowRendered = false;
 
-  function setStatus(msg) {
-    if (statusEl) statusEl.textContent = msg || "";
-  }
-  function setPayPalStatus(msg) {
-    if (paypalStatusEl) paypalStatusEl.textContent = msg || "";
-  }
+  function setStatus(msg){ if (statusEl) statusEl.textContent = msg || ""; }
+  function setPayPalStatus(msg){ if (paypalStatusEl) paypalStatusEl.textContent = msg || ""; }
 
-  function updatePayBtnState() {
+  function updatePayBtnState(){
     if (!payBtn) return;
     const tierOk = !!pricingTierEl?.value;
     const ackOk  = !!payAckEl?.checked;
     payBtn.disabled = !(tierOk && ackOk);
   }
 
-  function selectTier(tier) {
+  function selectTier(tier){
     if (!PRICES[tier]) return;
     pricingTierEl.value = tier;
 
     tierCards.forEach((btn) => {
       const isSel = btn.dataset.tier === tier;
-      btn.classList.toggle("selected", isSel);
+      btn.classList.toggle("is-selected", isSel); // <-- your CSS uses is-selected
       btn.setAttribute("aria-pressed", isSel ? "true" : "false");
     });
 
-    if (tierSummary) tierSummary.style.display = "block";
+    if (tierSummary) tierSummary.hidden = false;
     if (tierLabel) tierLabel.textContent = PRICES[tier].label;
     if (tierPrice) tierPrice.textContent = PRICES[tier].price;
 
@@ -421,149 +416,184 @@
   payAckEl?.addEventListener("change", updatePayBtnState);
   updatePayBtnState();
 
-  function getPayload() {
+  function getPayload(){
     const fd = new FormData(form);
     const data = Object.fromEntries(fd.entries());
-    // Normalize booleans
     data.plantDown = !!plantDownEl?.checked;
     data.tier = pricingTierEl?.value || "";
-    // Server expects payAck = "on" when checked (from checkbox)
-    // FormData already includes payAck when checked; we ensure it exists
     if (payAckEl?.checked) data.payAck = "on";
     return data;
   }
 
-  async function loadPayPalSdk() {
-    if (paypalSdkLoaded) return true;
+  function makeTicketId(){
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2,"0");
+    const stamp = `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}${pad(d.getHours())}${pad(d.getMinutes())}`; // 12 digits
+    const rand = Math.random().toString(36).toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5).padEnd(5,"X");
+    return `FA-${stamp}-${rand}`;
+  }
 
+  async function loadPayPalScripts(){
+    // get client id from your function
     const r = await fetch("/api/paypal-config", { cache: "no-store" });
     const j = await r.json().catch(() => ({}));
     if (!r.ok || !j.ok) throw new Error(j?.error || "Could not load PayPal config");
-
     const clientId = j.clientId;
-    const params = new URLSearchParams({
-      "client-id": clientId,
-      "vault": "true",
-      "intent": "subscription",
-      "components": "buttons,hosted-buttons",
-      "currency": "USD"
-    });
 
-    await new Promise((resolve, reject) => {
-      const s = document.createElement("script");
-      s.src = "https://www.paypal.com/sdk/js?" + params.toString();
-      s.async = true;
-      s.onload = resolve;
-      s.onerror = () => reject(new Error("Failed to load PayPal SDK"));
-      document.head.appendChild(s);
-    });
+    // 1) Subscription SDK (namespace paypalSub)
+    if (!paypalSubLoaded){
+      await new Promise((resolve,reject) => {
+        const s = document.createElement("script");
+        const params = new URLSearchParams({
+          "client-id": clientId,
+          "vault": "true",
+          "intent": "subscription",
+          "components": "buttons",
+          "currency": "USD"
+        });
+        s.src = "https://www.paypal.com/sdk/js?" + params.toString();
+        s.async = true;
+        s.setAttribute("data-namespace","paypalSub");
+        s.onload = resolve;
+        s.onerror = () => reject(new Error("Failed to load PayPal subscription SDK"));
+        document.head.appendChild(s);
+      });
+      paypalSubLoaded = true;
+    }
 
-    paypalSdkLoaded = true;
-    return true;
+    // 2) Pay Now SDK (namespace paypalPay) — capture flow
+    if (!paypalPayLoaded){
+      await new Promise((resolve,reject) => {
+        const s = document.createElement("script");
+        const params = new URLSearchParams({
+          "client-id": clientId,
+          "intent": "capture",
+          "components": "buttons",
+          "currency": "USD"
+        });
+        s.src = "https://www.paypal.com/sdk/js?" + params.toString();
+        s.async = true;
+        s.setAttribute("data-namespace","paypalPay");
+        s.onload = resolve;
+        s.onerror = () => reject(new Error("Failed to load PayPal Pay Now SDK"));
+        document.head.appendChild(s);
+      });
+      paypalPayLoaded = true;
+    }
   }
 
-  async function renderSubscriptionButton() {
-    if (subRendered) return;
-    if (!window.paypal?.Buttons) throw new Error("PayPal Buttons not available");
+  async function submitIntake(extra){
+    const payload = { ...(pendingPayload || {}), ...(extra || {}) };
+    const rr = await fetch("/api/support-intake", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const out = await rr.json().catch(() => ({}));
+    if (!rr.ok || !out.ok) throw new Error(out?.error || "Request submission failed");
+    return out;
+  }
 
+  async function renderPayNow(){
+    if (payRendered) return;
+    if (!window.paypalPay?.Buttons) throw new Error("PayPal Pay Now Buttons not available");
+    payRendered = true;
+
+    window.paypalPay.Buttons({
+      style: { layout:"vertical", shape:"rect", label:"pay", color:"gold" },
+
+      createOrder: async () => {
+        setPayPalStatus("Starting checkout…");
+        const r = await fetch("/api/paypal-create-order", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            ticketId: pendingTicketId,
+            plantDown: !!pendingPayload?.plantDown
+          })
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j?.error || "Could not create order");
+        return j.id;
+      },
+
+      onApprove: async (data) => {
+        try{
+          setPayPalStatus("Capturing payment…");
+          const cap = await fetch("/api/paypal-capture-order", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ orderID: data.orderID, ticketId: pendingTicketId })
+          });
+          const cj = await cap.json().catch(() => ({}));
+          if (!cap.ok || !cj.ok) throw new Error(cj?.error || "Payment capture failed");
+
+          setPayPalStatus("Payment approved. Submitting request…");
+          const out = await submitIntake({ payMethod:"paynow", orderID: data.orderID, ticketId: pendingTicketId });
+
+          setPayPalStatus("✅ Submitted. Redirecting…");
+          window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || pendingTicketId));
+        }catch(e){
+          setPayPalStatus(e?.message || String(e));
+        }
+      },
+
+      onCancel: () => setPayPalStatus("Payment canceled."),
+      onError: (err) => setPayPalStatus("PayPal error: " + (err?.message || String(err)))
+    }).render("#paypalPayNowButton");
+  }
+
+  async function renderSubscribe(){
+    if (subRendered) return;
+    if (!window.paypalSub?.Buttons) throw new Error("PayPal subscription Buttons not available");
     subRendered = true;
-    window.paypal.Buttons({
-      style: { shape: "rect", color: "gold", layout: "vertical", label: "subscribe" },
+
+    window.paypalSub.Buttons({
+      style: { layout:"vertical", shape:"rect", color:"gold", label:"subscribe" },
       createSubscription: (data, actions) => {
-        setPayPalStatus("Opening PayPal…");
+        setPayPalStatus("Opening subscription…");
         return actions.subscription.create({ plan_id: PLAN_ID, quantity: 1 });
       },
       onApprove: async (data) => {
-        try {
+        try{
           setPayPalStatus("Subscription approved. Submitting request…");
-          const payload = { ...(pendingPayload || {}), subscriptionID: data.subscriptionID };
-
-          const rr = await fetch("/api/support-intake", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(payload)
-          });
-          const out = await rr.json().catch(() => ({}));
-          if (!rr.ok || !out.ok) throw new Error(out?.error || "Intake failed after approval");
-
+          const out = await submitIntake({ payMethod:"subscription", subscriptionID: data.subscriptionID, ticketId: pendingTicketId });
           setPayPalStatus("✅ Submitted. Redirecting…");
-          window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || ""));
-        } catch (e) {
-          setPayPalStatus("Approved, but submission failed: " + (e?.message || String(e)));
+          window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || pendingTicketId));
+        }catch(e){
+          setPayPalStatus(e?.message || String(e));
         }
       },
-      onError: (err) => setPayPalStatus("PayPal error: " + (err?.message || String(err))),
-      onCancel: () => setPayPalStatus("Canceled.")
+      onCancel: () => setPayPalStatus("Subscription canceled."),
+      onError: (err) => setPayPalStatus("PayPal error: " + (err?.message || String(err)))
     }).render("#paypalSubscribeButton");
   }
-
-  function renderPayNowButton() {
-    if (payNowRendered) return;
-    if (!window.paypal?.HostedButtons) {
-      // Hosted Buttons component not available (SDK not loaded with hosted-buttons)
-      throw new Error("PayPal Hosted Buttons not available");
-    }
-
-    payNowRendered = true;
-    window.paypal.HostedButtons({ hostedButtonId: HOSTED_PAYNOW_ID })
-      .render("#paypalPayNowButton")
-      .then(() => {
-        if (payNowSubmitBtn) payNowSubmitBtn.disabled = false;
-      })
-      .catch((e) => {
-        setPayPalStatus("Pay Now button failed: " + (e?.message || String(e)));
-      });
-  }
-
-  payNowSubmitBtn?.addEventListener("click", async () => {
-    try {
-      if (!pendingPayload) throw new Error("Please complete the form and click Continue to Payment first.");
-      setPayPalStatus("Submitting request…");
-      const payload = { ...(pendingPayload || {}), payMethod: "paynow_hosted", hostedButtonId: HOSTED_PAYNOW_ID };
-
-      const r = await fetch("/api/support-intake", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const j = await r.json().catch(() => ({}));
-      if (!r.ok || !j.ok) throw new Error(j?.error || "Request submission failed");
-
-      window.location.href = j.redirect || "/paid.html";
-    } catch (err) {
-      setPayPalStatus(err?.message || String(err));
-    }
-  });
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    if (!pricingTierEl?.value) {
-      setStatus("Select Emergency or Standard above to continue.");
-      return;
-    }
-    if (!payAckEl?.checked) {
-      setStatus("You must acknowledge payment is required before support begins.");
-      return;
-    }
+    if (!pricingTierEl?.value) return setStatus("Select Emergency or Standard above to continue.");
+    if (!payAckEl?.checked) return setStatus("You must acknowledge payment is required before support begins.");
 
     setStatus("");
     pendingPayload = getPayload();
+    pendingTicketId = makeTicketId();
 
     if (paypalSection) paypalSection.style.display = "block";
     setPayPalStatus("Loading PayPal…");
 
-    try {
-      await loadPayPalSdk();
+    try{
+      await loadPayPalScripts();
       setPayPalStatus("");
-      renderPayNowButton();
-      await renderSubscriptionButton();
-      paypalSection?.scrollIntoView({ behavior: "smooth", block: "start" });
-    } catch (err) {
+      await renderPayNow();
+      await renderSubscribe();
+      paypalSection?.scrollIntoView({ behavior:"smooth", block:"start" });
+    }catch(err){
       setPayPalStatus(err?.message || "Could not start PayPal. Please refresh and try again.");
     }
   });
 })();
 </script>
+    
 </body>
 </html>
