@@ -298,7 +298,38 @@
                         </div>
 
                         <p class="small">Choose a support type above. Pricing appears after selection.</p>
-                    </form>
+
+                        <div id="paypalSection" class="panel" style="display:none;margin-top:14px">
+  <h3 style="margin:0 0 10px">Payment</h3>
+  <p class="small" style="margin:0 0 12px">
+    Choose <strong>Pay Now</strong> for one-time emergency support, or <strong>Subscribe</strong> for ongoing support.
+  </p>
+
+  <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:start">
+    <div class="panel" style="margin:0">
+      <div class="small" style="margin:0 0 8px"><strong>Pay Now (One‑time)</strong></div>
+      <div id="paypalPayNowButton"></div>
+      <button id="payNowSubmitBtn" class="btn" type="button" style="margin-top:10px;width:100%" disabled>
+        I paid — submit my request
+      </button>
+      <p class="small muted" style="margin:10px 0 0">
+        After completing payment, tap the button above to submit your request.
+      </p>
+    </div>
+
+    <div class="panel" style="margin:0">
+      <div class="small" style="margin:0 0 8px"><strong>Subscribe</strong></div>
+      <div id="paypalSubscribeButton"></div>
+      <p class="small muted" style="margin:10px 0 0">
+        Approving the subscription will automatically submit your request.
+      </p>
+    </div>
+  </div>
+
+  <p class="status" id="paypalStatus" role="status" aria-live="polite" style="margin-top:10px"></p>
+</div>
+
+</form>
                 </div>
             </div>
         </section>
@@ -310,136 +341,240 @@
             <div class="small">Secure push alerts • Logged requests • Faster response</div>
         </div>
     </footer>
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+  <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+        const form = document.getElementById("supportForm");
+        const statusEl = document.getElementById("status");
+        const requestTypeEl = document.getElementById("requestType");
+        const plantDownEl = document.getElementById("plantDown");
+        const pricingTierEl = document.getElementById("pricingTier");
+        const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
+        const tierSummary = document.getElementById("tierSummary");
+        const tierLabel = document.getElementById("tierLabel");
+        const tierPrice = document.getElementById("tierPrice");
 
-  const form = document.getElementById("supportForm");
-  const statusEl = document.getElementById("status");
-  const requestTypeEl = document.getElementById("requestType");
-  const plantDownEl = document.getElementById("plantDown");
-  const payAckEl = document.getElementById("payAck");
-  const pricingTierEl = document.getElementById("pricingTier");
-  const payBtn = document.getElementById("payBtn");
+        const PRICES = {
+          emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
+          standard: { label: "Standard Support", price: "$495 upfront" }
+        };
 
-  const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
-  const tierSummary = document.getElementById("tierSummary");
-  const tierLabel = document.getElementById("tierLabel");
-  const tierPrice = document.getElementById("tierPrice");
+        // Allow deep links from the site (e.g., request-support.html?tier=emergency)
+        (function initFromUrl(){
+          const params = new URLSearchParams(window.location.search || "");
+          const tier = (params.get("tier") || "").toLowerCase();
+          const plantDown = (params.get("plantDown") || "").toLowerCase();
+          if (tier && PRICES[tier]) {
+            selectTier(tier);
+            if (tier === "emergency") plantDownEl.checked = true;
+          } else if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
+            selectTier("emergency");
+            plantDownEl.checked = true;
+          }
+        })();
 
-  const PRICES = {
-    emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
-    standard: { label: "Standard Support", price: "$495 upfront" }
-  };
+        function selectTier(tier){
+          if (!PRICES[tier]) return;
+          pricingTierEl.value = tier;
+          tierCards.forEach(btn => {
+            const isSel = btn.dataset.tier === tier;
+            btn.classList.toggle("is-selected", isSel);
+            btn.setAttribute("aria-pressed", isSel ? "true" : "false");
+          });
+          tierLabel.textContent = PRICES[tier].label;
+          tierPrice.textContent = PRICES[tier].price;
+          tierSummary.hidden = false;
+        }
 
-  function updatePayBtn(){
-    // Require: pricing tier selected + payment acknowledgment checked
-    const ok = !!pricingTierEl.value && !!payAckEl.checked;
-    payBtn.disabled = !ok;
-  }
+        // Hook up the cards
+        tierCards.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const tier = btn.dataset.tier;
+            selectTier(tier);
+            if (tier === "emergency") plantDownEl.checked = true;
+          });
+        });
 
-  // Allow deep links from the site (e.g., request-support.html?tier=emergency)
-  (function initFromUrl(){
-    const params = new URLSearchParams(window.location.search || "");
-    const tier = (params.get("tier") || "").toLowerCase();
-    const plantDown = (params.get("plantDown") || "").toLowerCase();
-    if (tier && PRICES[tier]) {
-      selectTier(tier);
-      if (tier === "emergency") plantDownEl.checked = true;
-    } else if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
-      selectTier("emergency");
-      plantDownEl.checked = true;
-    }
-    updatePayBtn();
-  })();
+        // Help users: choosing "Plant down" auto-checks the Plant Down toggle.
+        requestTypeEl.addEventListener("change", () => {
+            const v = (requestTypeEl.value || "").toLowerCase();
+            if (v.includes("plant down")) {
+              plantDownEl.checked = true;
+              selectTier("emergency");
+            }
+        });
 
-  function selectTier(tier){
-    if (!PRICES[tier]) return;
+        plantDownEl.addEventListener("change", () => {
+          if (plantDownEl.checked) selectTier("emergency");
+        });
 
-    pricingTierEl.value = tier;
+        
+        const PLAN_ID = "P-5SH39343XS649853NNFMYB5Y";
+        const HOSTED_PAYNOW_ID = "TE4V66GK9S8GU";
 
-    tierCards.forEach(btn => {
-      const isSel = btn.dataset.tier === tier;
-      btn.classList.toggle("is-selected", isSel);
-      btn.setAttribute("aria-pressed", isSel ? "true" : "false");
-    });
+        const paypalSection = document.getElementById("paypalSection");
+        const paypalStatusEl = document.getElementById("paypalStatus");
+        let paypalSdkLoaded = false;
+        let subRendered = false;
+        let payNowRendered = false;
+        let pendingPayload = null;
 
-    tierLabel.textContent = PRICES[tier].label;
-    tierPrice.textContent = PRICES[tier].price;
-    tierSummary.hidden = false;
+        function setPayPalStatus(msg) {
+          if (paypalStatusEl) paypalStatusEl.textContent = msg || "";
+        }
 
-    updatePayBtn();
-  }
+        async function loadPayPalSdk() {
+          if (paypalSdkLoaded) return true;
+          // Get client id + env from server (safe)
+          const r = await fetch("/api/paypal-config", { cache: "no-store" });
+          const j = await r.json().catch(() => ({}));
+          if (!r.ok || !j.ok) {
+            throw new Error(j.error || "Could not load PayPal config");
+          }
 
-  // Hook up the cards
-  tierCards.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const tier = btn.dataset.tier;
-      selectTier(tier);
-      if (tier === "emergency") plantDownEl.checked = true;
-      updatePayBtn();
-    });
-  });
+          const clientId = j.clientId;
+          const params = new URLSearchParams({
+            "client-id": clientId,
+            "vault": "true",
+            "intent": "subscription",
+            "components": "buttons,hosted-buttons",
+            "currency": "USD"
+          });
+          const s = document.createElement("script");
+          s.src = `https://www.paypal.com/sdk/js?${params.toString()}`;
+          s.async = true;
+          await new Promise((resolve, reject) => {
+            s.onload = resolve;
+            s.onerror = () => reject(new Error("PayPal SDK failed to load"));
+            document.head.appendChild(s);
+          });
 
-  // Help users: choosing "Plant down" auto-checks the Plant Down toggle + emergency tier.
-  requestTypeEl.addEventListener("change", () => {
-    const v = (requestTypeEl.value || "").toLowerCase();
-    if (v.includes("plant down")) {
-      plantDownEl.checked = true;
-      selectTier("emergency");
-    }
-    updatePayBtn();
-  });
+          paypalSdkLoaded = true;
+          return true;
+        }
 
-  plantDownEl.addEventListener("change", () => {
-    if (plantDownEl.checked) selectTier("emergency");
-    updatePayBtn();
-  });
+        async function renderSubscriptionButton() {
+          if (subRendered) return;
+          if (!window.paypal || !window.paypal.Buttons) throw new Error("PayPal SDK not ready");
 
-  payAckEl.addEventListener("change", updatePayBtn);
+          subRendered = true;
+          window.paypal.Buttons({
+            style: {
+              shape: 'rect',
+              color: 'gold',
+              layout: 'vertical',
+              label: 'subscribe'
+            },
+            createSubscription: function(data, actions) {
+              setPayPalStatus("Opening PayPal...");
+              return actions.subscription.create({
+                plan_id: PLAN_ID,
+                quantity: 1
+              });
+            },
+            onApprove: async function(data) {
+              try {
+                setPayPalStatus("Subscription approved. Submitting request...");
+                const payload = { ...(pendingPayload || {}), subscriptionID: data.subscriptionID };
+                const rr = await fetch("/api/support-intake", {
+                  method: "POST",
+                  headers: { "content-type": "application/json" },
+                  body: JSON.stringify(payload)
+                });
+                const out = await rr.json().catch(() => ({}));
+                if (!rr.ok || !out.ok) throw new Error(out.error || "Intake failed after approval");
 
-  // Also enable/disable as required fields get filled (optional but nice)
-  form.addEventListener("input", updatePayBtn);
+                setPayPalStatus("✅ Submitted. Redirecting...");
+                window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || ""));
+              } catch (e) {
+                setPayPalStatus("Approved, but submission failed: " + (e.message || String(e)));
+              }
+            },
+            onCancel: function() {
+              setPayPalStatus("Subscription canceled.");
+            },
+            onError: function(err) {
+              setPayPalStatus("PayPal error: " + (err && err.message ? err.message : String(err)));
+            }
+          }).render('#paypalSubscribeButton');
+        }
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+        
+        function renderPayNowButton() {
+          if (payNowRendered) return;
+          if (!window.paypal || !window.paypal.HostedButtons) throw new Error("PayPal Pay Now button not available");
 
-    if (!pricingTierEl.value) {
-      statusEl.textContent = "Select Emergency or Standard above to continue.";
-      return;
-    }
-    if (!payAckEl.checked) {
-      statusEl.textContent = "Check the payment acknowledgment to continue.";
-      return;
-    }
+          payNowRendered = true;
+          const mount = document.getElementById("paypalPayNowButton");
+          if (mount) mount.innerHTML = "";
 
-    statusEl.textContent = "Creating ticket...";
+          window.paypal.HostedButtons({
+            hostedButtonId: HOSTED_PAYNOW_ID
+          }).render("#paypalPayNowButton");
 
-    const fd = new FormData(form);
-    const payload = Object.fromEntries(fd.entries());
-    payload.plantDown = plantDownEl.checked;
+          const submitBtn = document.getElementById("payNowSubmitBtn");
+          if (submitBtn) submitBtn.disabled = false;
+        }
 
-    try {
-      const r = await fetch("/api/support-intake", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+        // Manual submit for Pay Now flow (hosted button has no JS approval callback)
+        document.getElementById("payNowSubmitBtn")?.addEventListener("click", async () => {
+          try {
+            setPayPalStatus("Submitting request…");
+            const payload = { ...(pendingPayload || {}), payMethod: "paynow_hosted", hostedButtonId: HOSTED_PAYNOW_ID };
+            const r = await fetch("/api/support-intake", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+            const j = await r.json().catch(() => ({}));
+            if (!r.ok || !j.ok) throw new Error(j?.error || "Request submission failed");
+            window.location.href = j.redirect || "/paid.html";
+          } catch (err) {
+            setPayPalStatus(String(err));
+          }
+        });
 
-      const json = await r.json().catch(() => ({}));
-      if (!r.ok || !json.ok) throw new Error(json.error || "Intake failed");
+form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-      statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to PayPal...`;
-      window.location.href = json.paypalUrl;
-    } catch (err) {
-      statusEl.textContent = "Could not start checkout. Please refresh and try again.";
-      // Handy when you open DevTools:
-      console.error(err);
-    }
-  });
+            if (!pricingTierEl.value) {
+              statusEl.textContent = "Select Emergency or Standard above to continue.";
+              return;
+            }
 
-  // Initial state
-  updatePayBtn();
-</script>
+            const fd = new FormData(form);
+            const isPlantDown = plantDownEl.checked;
+
+            const payload = Object.fromEntries(fd.entries());
+            payload.plantDown = isPlantDown;
+
+            // Keep the old checkbox field name expected by the server
+            // (payAck will be "on" when checked)
+            pendingPayload = payload;
+
+            statusEl.textContent = "";
+            if (paypalSection) paypalSection.style.display = "block";
+            setPayPalStatus("Loading PayPal...");
+
+            try {
+              await loadPayPalSdk();
+              setPayPalStatus("");
+              renderPayNowButton();
+              await renderSubscriptionButton();
+              document.getElementById("paypalSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            } catch (err) {
+              setPayPalStatus(err.message || "Could not start PayPal subscription. Please refresh and try again.");
+            }
+        });
+const json = await r.json().catch(() => ({}));
+                if (!r.ok || !json.ok) throw new Error(json.error || "Intake failed");
+
+                statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to PayPal...`;
+                window.location.href = json.paypalUrl;
+            } catch (err) {
+                statusEl.textContent = "Could not start checkout. Please refresh and try again.";
+            }
+        });
+   </script>
 
 </body>
 </html>
