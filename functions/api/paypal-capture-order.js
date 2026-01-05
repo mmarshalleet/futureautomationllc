@@ -9,26 +9,22 @@ function paypalApiBase(env) {
     ? "https://api-m.sandbox.paypal.com"
     : "https://api-m.paypal.com";
 }
-
 async function getAccessToken(env) {
-  if (!env.PAYPAL_CLIENT_ID || !env.PAYPAL_CLIENT_SECRET) {
-    throw new Error("Missing PAYPAL_CLIENT_ID or PAYPAL_CLIENT_SECRET");
-  }
-
-  const creds = btoa(`${env.PAYPAL_CLIENT_ID}:${env.PAYPAL_CLIENT_SECRET}`);
+  const secret = env.PAYPAL_CLIENT_SECRET || env.PAYPAL_SECRET;
+  if (!env.PAYPAL_CLIENT_ID || !secret) {
+    throw new Error("Missing PAYPAL_CLIENT_ID or PAYPAL_CLIENT_SECRET/PAYPAL_SECRET");
+}
+  const creds = btoa(`${env.PAYPAL_CLIENT_ID}:${secret}`);
   const r = await fetch(`${paypalApiBase(env)}/v1/oauth2/token`, {
     method: "POST",
     headers: {
-      "authorization": `Basic ${creds}`,
+      authorization: `Basic ${creds}`,
       "content-type": "application/x-www-form-urlencoded",
     },
     body: "grant_type=client_credentials",
   });
-
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) {
-    throw new Error(`PayPal token error (${r.status}): ${JSON.stringify(j)}`);
-  }
+  if (!r.ok || !j.access_token) throw new Error(`PayPal token error (${r.status}): ${JSON.stringify(j)}`);
   return j.access_token;
 }
 
