@@ -1,16 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="alternate icon" href="favicon.ico" />
-  <meta name="theme-color" content="#0B1220" />
-  <title>Request Support | Future Automation LLC</title>
-  <meta name="description" content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." />
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="style.css" rel="stylesheet"/>
+<link href="favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="favicon.ico" rel="alternate icon"/>
+<meta content="#0B1220" name="theme-color"/>
+<title>Request Support | Future Automation LLC</title>
+<meta content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." name="description"/>
+<style>
     .support-wrap { max-width: 860px; margin: 0 auto; }
     .support-card { padding: 22px; }
     .support-form { margin-top: 14px; }
@@ -144,437 +144,426 @@
     .qp-note{ margin-top: 10px; }
   </style>
 </head>
-
 <body>
-    <header class="topbar">
-        <div class="topbar-inner">
-            <a class="brand" href="index.html" aria-label="Future Automation LLC home">
-                <img src="logo.svg" alt="Future Automation LLC" />
-            </a>
-
-            <nav class="nav" aria-label="Primary">
-                <a class="nav-link" href="index.html">Home</a>
-                <a class="nav-link" href="services.html">Services</a>
-                <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
-                <a class="nav-link active" href="request-support.html">Request Support</a>
-            </nav>
-
-            <div class="nav-cta">
-                <a class="btn small primary" href="request-support.html">Request Support</a>
-            </div>
-        </div>
-    </header>
-
-    <main class="page">
-        <section class="container">
-            <div class="hero">
-                <h1>Request Support</h1>
-                <p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues, or PLC/HMI changes—send the details and we’ll get eyes on it fast.</p>
-            </div>
-
-            <div class="grid two-col">
-                <div class="card">
-                    <h2>What to include</h2>
-                    <ul class="bullets">
-                        <li>Line / area + what stopped</li>
-                        <li>PLC / HMI / drive model (if you know it)</li>
-                        <li>Alarms, screenshots, fault codes</li>
-                        <li>Best call-back number + site time zone</li>
-                    </ul>
-                    <div class="note">
-                        <strong>Heads up:</strong> If you can’t text photos through the form, submit the request anyway—reply to the confirmation email with attachments.
+<header class="topbar">
+<div class="topbar-inner">
+<a aria-label="Future Automation LLC home" class="brand" href="index.html">
+<img alt="Future Automation LLC" src="logo.svg"/>
+</a>
+<nav aria-label="Primary" class="nav">
+<a class="nav-link" href="index.html">Home</a>
+<a class="nav-link" href="services.html">Services</a>
+<a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
+<a class="nav-link active" href="request-support.html">Request Support</a>
+</nav>
+<div class="nav-cta">
+<a class="btn small primary" href="request-support.html">Request Support</a>
+</div>
+</div>
+</header>
+<main class="page">
+<section class="container">
+<div class="hero">
+<h1>Request Support</h1>
+<p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues, or PLC/HMI changes—send the details and we’ll get eyes on it fast.</p>
+</div>
+<div class="grid two-col">
+<div class="card">
+<h2>What to include</h2>
+<ul class="bullets">
+<li>Line / area + what stopped</li>
+<li>PLC / HMI / drive model (if you know it)</li>
+<li>Alarms, screenshots, fault codes</li>
+<li>Best call-back number + site time zone</li>
+</ul>
+<div class="note">
+<strong>Heads up:</strong> If you can’t text photos through the form, submit the request anyway—reply to the confirmation email with attachments.
                     </div>
-                </div>
-                <!-- ===== Support Type Selector (price shown after selection) ===== -->
-                <section class="support-quickpay" aria-label="Select support type">
-                  <div class="quickpay-grid">
-                    <button type="button" class="quickpay-card urgent" data-tier="emergency" aria-pressed="false">
-                      <div class="qp-title">Emergency Plant-Down</div>
-                      <div class="qp-sub">Fast response • triage + remote support</div>
-                    </button>
-
-                    <button type="button" class="quickpay-card" data-tier="standard" aria-pressed="false">
-                      <div class="qp-title">Standard Support</div>
-                      <div class="qp-sub">Scheduled remote help • troubleshooting + fixes</div>
-                    </button>
-                  </div>
-
-                  <div id="tierSummary" class="qp-summary" hidden>
-                    <div class="qp-selected">Selected: <strong id="tierLabel">—</strong></div>
-                    <div class="qp-selected">Upfront: <strong id="tierPrice">—</strong></div>
-                    <div class="small muted">Upfront incident fee covers first hour. After-hours rates apply outside normal business hours.</div>
-                  </div>
-
-                  <p class="qp-note">Monthly subscription is for ongoing support. Use the options above for one-time incident support.</p>
-                </section>
-                <div class="card support-card">
-                    <h2>Support request</h2>
-
-                    <form id="supportForm" class="form">
-                        <input type="hidden" id="pricingTier" name="pricingTier" value="" />
-                        <div class="row">
-                            <label>
+</div>
+<!-- ===== Support Type Selector (price shown after selection) ===== -->
+<section aria-label="Select support type" class="support-quickpay">
+<div class="quickpay-grid">
+<button aria-pressed="false" class="quickpay-card urgent" data-tier="emergency" type="button">
+<div class="qp-title">Emergency Plant-Down</div>
+<div class="qp-sub">Fast response • triage + remote support</div>
+</button>
+<button aria-pressed="false" class="quickpay-card" data-tier="standard" type="button">
+<div class="qp-title">Standard Support</div>
+<div class="qp-sub">Scheduled remote help • troubleshooting + fixes</div>
+</button>
+</div>
+<div class="qp-summary" hidden="" id="tierSummary">
+<div class="qp-selected">Selected: <strong id="tierLabel">—</strong></div>
+<div class="qp-selected">Upfront: <strong id="tierPrice">—</strong></div>
+<div class="small muted">Upfront incident fee covers first hour. After-hours rates apply outside normal business hours.</div>
+</div>
+<p class="qp-note">Monthly subscription is for ongoing support. Use the options above for one-time incident support.</p>
+</section>
+<div class="card support-card">
+<h2>Support request</h2>
+<form class="form" id="supportForm">
+<input id="pricingTier" name="pricingTier" type="hidden" value=""/>
+<div class="row">
+<label>
                                 Request type
-                                <select id="requestType" name="requestType" required>
-                                    <option value="">Select one…</option>
-                                    <option value="Plant down troubleshooting">Plant down troubleshooting</option>
-                                    <option value="PLC programming / logic change">PLC programming / logic change</option>
-                                    <option value="HMI / FactoryTalk edits">HMI / FactoryTalk edits</option>
-                                    <option value="VFD / drive faults">VFD / drive faults</option>
-                                    <option value="Comms / networks">Comms / networks</option>
-                                    <option value="Condition monitoring setup">Condition monitoring setup</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </label>
-
-                            <label>
+                                <select id="requestType" name="requestType" required="">
+<option value="">Select one…</option>
+<option value="Plant down troubleshooting">Plant down troubleshooting</option>
+<option value="PLC programming / logic change">PLC programming / logic change</option>
+<option value="HMI / FactoryTalk edits">HMI / FactoryTalk edits</option>
+<option value="VFD / drive faults">VFD / drive faults</option>
+<option value="Comms / networks">Comms / networks</option>
+<option value="Condition monitoring setup">Condition monitoring setup</option>
+<option value="Other">Other</option>
+</select>
+</label>
+<label>
                                 Platform (if known)
                                 <select name="platform">
-                                    <option value="">Select one…</option>
-                                    <option value="Allen-Bradley ControlLogix / CompactLogix (Studio 5000)">Allen-Bradley ControlLogix / CompactLogix (Studio 5000)</option>
-                                    <option value="Allen-Bradley MicroLogix">Allen-Bradley MicroLogix</option>
-                                    <option value="FactoryTalk View ME">FactoryTalk View ME</option>
-                                    <option value="FactoryTalk View SE">FactoryTalk View SE</option>
-                                    <option value="Other / Unknown">Other / Unknown</option>
-                                </select>
-                            </label>
-                        </div>
-
-                        <div class="row">
-                            <label>
+<option value="">Select one…</option>
+<option value="Allen-Bradley ControlLogix / CompactLogix (Studio 5000)">Allen-Bradley ControlLogix / CompactLogix (Studio 5000)</option>
+<option value="Allen-Bradley MicroLogix">Allen-Bradley MicroLogix</option>
+<option value="FactoryTalk View ME">FactoryTalk View ME</option>
+<option value="FactoryTalk View SE">FactoryTalk View SE</option>
+<option value="Other / Unknown">Other / Unknown</option>
+</select>
+</label>
+</div>
+<div class="row">
+<label>
                                 Name
-                                <input name="name" autocomplete="name" required />
-                            </label>
-                            <label>
+                                <input autocomplete="name" name="name" required=""/>
+</label>
+<label>
                                 Company
-                                <input name="company" autocomplete="organization" />
-                            </label>
-                        </div>
-
-                        <div class="row">
-                            <label>
+                                <input autocomplete="organization" name="company"/>
+</label>
+</div>
+<div class="row">
+<label>
                                 Email
-                                <input name="email" type="email" autocomplete="email" required />
-                            </label>
-                            <label>
+                                <input autocomplete="email" name="email" required="" type="email"/>
+</label>
+<label>
                                 Phone
-                                <input name="phone" type="tel" autocomplete="tel" placeholder="Best number to call/text" />
-                            </label>
-                        </div>
-
-                        <div class="row">
-                            <label>
+                                <input autocomplete="tel" name="phone" placeholder="Best number to call/text" type="tel"/>
+</label>
+</div>
+<div class="row">
+<label>
                                 Location / Plant
-                                <input name="location" placeholder="City, plant name, or line" />
-                            </label>
-                            <label>
+                                <input name="location" placeholder="City, plant name, or line"/>
+</label>
+<label>
                                 Asset / Machine
-                                <input name="asset" placeholder="Line, machine, PLC, VFD, etc." />
-                            </label>
-                        </div>
-
-                        <div class="row">
-                            <label class="toggle">
-                                <span>Plant Down</span>
-                                <input id="plantDown" name="plantDown" type="checkbox" />
-                                <span class="toggle-ui" aria-hidden="true"></span>
-                            </label>
-
-                            <label class="toggle">
-                                <span>I understand payment is required before support begins</span>
-                                <input id="payAck" name="payAck" type="checkbox" required />
-                                <span class="toggle-ui" aria-hidden="true"></span>
-                            </label>
-                        </div>
-
-                        <label>
+                                <input name="asset" placeholder="Line, machine, PLC, VFD, etc."/>
+</label>
+</div>
+<div class="row">
+<label class="toggle">
+<span>Plant Down</span>
+<input id="plantDown" name="plantDown" type="checkbox"/>
+<span aria-hidden="true" class="toggle-ui"></span>
+</label>
+<label class="toggle">
+<span>I understand payment is required before support begins</span>
+<input id="payAck" name="payAck" required="" type="checkbox"/>
+<span aria-hidden="true" class="toggle-ui"></span>
+</label>
+</div>
+<label>
                             Issue / Symptoms
-                            <textarea name="issue" rows="6" placeholder="What happened? What have you tried? Include fault codes if you have them." required></textarea>
-                        </label>
-
-                        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px">
-                            <button id="payBtn" class="btn primary" type="submit" disabled>Continue to Payment</button>
-                            <p class="status" id="status" role="status" aria-live="polite"></p>
-                        </div>
-
-                        <p class="small">Choose a support type above. Pricing appears after selection.</p>
-
-                        <div id="paypalSection" class="panel" style="display:none;margin-top:14px">
-  <h3 style="margin:0 0 10px">Payment</h3>
-  <p class="small" style="margin:0 0 12px">
+                            <textarea name="issue" placeholder="What happened? What have you tried? Include fault codes if you have them." required="" rows="6"></textarea>
+</label>
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px">
+<button class="btn primary" disabled="" id="payBtn" type="submit">Continue to Payment</button>
+<p aria-live="polite" class="status" id="status" role="status"></p>
+</div>
+<p class="small">Choose a support type above. Pricing appears after selection.</p>
+<div class="panel" id="paypalSection" style="display:none;margin-top:14px">
+<h3 style="margin:0 0 10px">Payment</h3>
+<p class="small" style="margin:0 0 12px">
     Choose <strong>Pay Now</strong> for one-time emergency support, or <strong>Subscribe</strong> for ongoing support.
   </p>
-
-  <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:start">
-    <div class="panel" style="margin:0">
-      <div class="small" style="margin:0 0 8px"><strong>Pay Now (One‑time)</strong></div>
-      <div id="paypalPayNowButton"></div>
-      <button id="payNowSubmitBtn" class="btn" type="button" style="margin-top:10px;width:100%" disabled>
+<div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:start">
+<div class="panel" style="margin:0">
+<div class="small" style="margin:0 0 8px"><strong>Pay Now (One‑time)</strong></div>
+<div id="paypalPayNowButton"></div>
+<button class="btn" disabled="" id="payNowSubmitBtn" style="margin-top:10px;width:100%" type="button">
         I paid — submit my request
       </button>
-      <p class="small muted" style="margin:10px 0 0">
+<p class="small muted" style="margin:10px 0 0">
         After completing payment, tap the button above to submit your request.
       </p>
-    </div>
-
-    <div class="panel" style="margin:0">
-      <div class="small" style="margin:0 0 8px"><strong>Subscribe</strong></div>
-      <div id="paypalSubscribeButton"></div>
-      <p class="small muted" style="margin:10px 0 0">
+</div>
+<div class="panel" style="margin:0">
+<div class="small" style="margin:0 0 8px"><strong>Subscribe</strong></div>
+<div id="paypalSubscribeButton"></div>
+<p class="small muted" style="margin:10px 0 0">
         Approving the subscription will automatically submit your request.
       </p>
-    </div>
-  </div>
-
-  <p class="status" id="paypalStatus" role="status" aria-live="polite" style="margin-top:10px"></p>
 </div>
-
+</div>
+<p aria-live="polite" class="status" id="paypalStatus" role="status" style="margin-top:10px"></p>
+</div>
 </form>
-                </div>
-            </div>
-        </section>
-    </main>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="footer-inner">
+<div class="small">© <span id="year"></span> Future Automation LLC</div>
+<div class="small">Secure push alerts • Logged requests • Faster response</div>
+</div>
+</footer>
 
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="small">© <span id="year"></span> Future Automation LLC</div>
-            <div class="small">Secure push alerts • Logged requests • Faster response</div>
-        </div>
-    </footer>
-  <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-        const form = document.getElementById("supportForm");
-        const statusEl = document.getElementById("status");
-        const requestTypeEl = document.getElementById("requestType");
-        const plantDownEl = document.getElementById("plantDown");
-        const pricingTierEl = document.getElementById("pricingTier");
-        const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
-        const tierSummary = document.getElementById("tierSummary");
-        const tierLabel = document.getElementById("tierLabel");
-        const tierPrice = document.getElementById("tierPrice");
 
-        const PRICES = {
-          emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
-          standard: { label: "Standard Support", price: "$495 upfront" }
-        };
+<script>
+(() => {
+  // Footer year
+  const y = document.getElementById("year");
+  if (y) y.textContent = new Date().getFullYear();
 
-        // Allow deep links from the site (e.g., request-support.html?tier=emergency)
-        (function initFromUrl(){
-          const params = new URLSearchParams(window.location.search || "");
-          const tier = (params.get("tier") || "").toLowerCase();
-          const plantDown = (params.get("plantDown") || "").toLowerCase();
-          if (tier && PRICES[tier]) {
-            selectTier(tier);
-            if (tier === "emergency") plantDownEl.checked = true;
-          } else if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
-            selectTier("emergency");
-            plantDownEl.checked = true;
-          }
-        })();
+  const form = document.getElementById("supportForm");
+  const statusEl = document.getElementById("status");
+  const requestTypeEl = document.getElementById("requestType");
+  const plantDownEl = document.getElementById("plantDown");
+  const pricingTierEl = document.getElementById("pricingTier");
+  const payAckEl = document.getElementById("payAck");
+  const payBtn = document.getElementById("payBtn");
 
-        function selectTier(tier){
-          if (!PRICES[tier]) return;
-          pricingTierEl.value = tier;
-          tierCards.forEach(btn => {
-            const isSel = btn.dataset.tier === tier;
-            btn.classList.toggle("is-selected", isSel);
-            btn.setAttribute("aria-pressed", isSel ? "true" : "false");
+  const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
+  const tierSummary = document.getElementById("tierSummary");
+  const tierLabel = document.getElementById("tierLabel");
+  const tierPrice = document.getElementById("tierPrice");
+
+  const paypalSection = document.getElementById("paypalSection");
+  const paypalStatusEl = document.getElementById("paypalStatus");
+  const payNowSubmitBtn = document.getElementById("payNowSubmitBtn");
+
+  const PLAN_ID = "P-5SH39343XS649853NNFMYB5Y";
+  const HOSTED_PAYNOW_ID = "TE4V66GK9S8GU";
+
+  const PRICES = {
+    emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
+    standard:  { label: "Standard Support",     price: "$495 upfront" }
+  };
+
+  let pendingPayload = null;
+  let paypalSdkLoaded = false;
+  let subRendered = false;
+  let payNowRendered = false;
+
+  function setStatus(msg) {
+    if (statusEl) statusEl.textContent = msg || "";
+  }
+  function setPayPalStatus(msg) {
+    if (paypalStatusEl) paypalStatusEl.textContent = msg || "";
+  }
+
+  function updatePayBtnState() {
+    if (!payBtn) return;
+    const tierOk = !!pricingTierEl?.value;
+    const ackOk  = !!payAckEl?.checked;
+    payBtn.disabled = !(tierOk && ackOk);
+  }
+
+  function selectTier(tier) {
+    if (!PRICES[tier]) return;
+    pricingTierEl.value = tier;
+
+    tierCards.forEach((btn) => {
+      const isSel = btn.dataset.tier === tier;
+      btn.classList.toggle("selected", isSel);
+      btn.setAttribute("aria-pressed", isSel ? "true" : "false");
+    });
+
+    if (tierSummary) tierSummary.style.display = "block";
+    if (tierLabel) tierLabel.textContent = PRICES[tier].label;
+    if (tierPrice) tierPrice.textContent = PRICES[tier].price;
+
+    updatePayBtnState();
+  }
+
+  // Deep-link support
+  (() => {
+    const params = new URLSearchParams(window.location.search || "");
+    const tier = (params.get("tier") || "").toLowerCase();
+    const plantDown = (params.get("plantDown") || "").toLowerCase();
+    if (tier === "emergency" || tier === "standard") selectTier(tier);
+    if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
+      if (plantDownEl) plantDownEl.checked = true;
+      selectTier("emergency");
+    }
+  })();
+
+  tierCards.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tier = btn.dataset.tier;
+      selectTier(tier);
+      if (tier === "emergency" && plantDownEl) plantDownEl.checked = true;
+    });
+  });
+
+  requestTypeEl?.addEventListener("change", () => {
+    const v = (requestTypeEl.value || "").toLowerCase();
+    if (v.includes("plant down")) {
+      if (plantDownEl) plantDownEl.checked = true;
+      selectTier("emergency");
+    }
+  });
+
+  plantDownEl?.addEventListener("change", () => {
+    if (plantDownEl.checked) selectTier("emergency");
+  });
+
+  payAckEl?.addEventListener("change", updatePayBtnState);
+  updatePayBtnState();
+
+  function getPayload() {
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd.entries());
+    // Normalize booleans
+    data.plantDown = !!plantDownEl?.checked;
+    data.tier = pricingTierEl?.value || "";
+    // Server expects payAck = "on" when checked (from checkbox)
+    // FormData already includes payAck when checked; we ensure it exists
+    if (payAckEl?.checked) data.payAck = "on";
+    return data;
+  }
+
+  async function loadPayPalSdk() {
+    if (paypalSdkLoaded) return true;
+
+    const r = await fetch("/api/paypal-config", { cache: "no-store" });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.ok) throw new Error(j?.error || "Could not load PayPal config");
+
+    const clientId = j.clientId;
+    const params = new URLSearchParams({
+      "client-id": clientId,
+      "vault": "true",
+      "intent": "subscription",
+      "components": "buttons,hosted-buttons",
+      "currency": "USD"
+    });
+
+    await new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = "https://www.paypal.com/sdk/js?" + params.toString();
+      s.async = true;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error("Failed to load PayPal SDK"));
+      document.head.appendChild(s);
+    });
+
+    paypalSdkLoaded = true;
+    return true;
+  }
+
+  async function renderSubscriptionButton() {
+    if (subRendered) return;
+    if (!window.paypal?.Buttons) throw new Error("PayPal Buttons not available");
+
+    subRendered = true;
+    window.paypal.Buttons({
+      style: { shape: "rect", color: "gold", layout: "vertical", label: "subscribe" },
+      createSubscription: (data, actions) => {
+        setPayPalStatus("Opening PayPal…");
+        return actions.subscription.create({ plan_id: PLAN_ID, quantity: 1 });
+      },
+      onApprove: async (data) => {
+        try {
+          setPayPalStatus("Subscription approved. Submitting request…");
+          const payload = { ...(pendingPayload || {}), subscriptionID: data.subscriptionID };
+
+          const rr = await fetch("/api/support-intake", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(payload)
           });
-          tierLabel.textContent = PRICES[tier].label;
-          tierPrice.textContent = PRICES[tier].price;
-          tierSummary.hidden = false;
+          const out = await rr.json().catch(() => ({}));
+          if (!rr.ok || !out.ok) throw new Error(out?.error || "Intake failed after approval");
+
+          setPayPalStatus("✅ Submitted. Redirecting…");
+          window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || ""));
+        } catch (e) {
+          setPayPalStatus("Approved, but submission failed: " + (e?.message || String(e)));
         }
+      },
+      onError: (err) => setPayPalStatus("PayPal error: " + (err?.message || String(err))),
+      onCancel: () => setPayPalStatus("Canceled.")
+    }).render("#paypalSubscribeButton");
+  }
 
-        // Hook up the cards
-        tierCards.forEach(btn => {
-          btn.addEventListener("click", () => {
-            const tier = btn.dataset.tier;
-            selectTier(tier);
-            if (tier === "emergency") plantDownEl.checked = true;
-          });
-        });
+  function renderPayNowButton() {
+    if (payNowRendered) return;
+    if (!window.paypal?.HostedButtons) {
+      // Hosted Buttons component not available (SDK not loaded with hosted-buttons)
+      throw new Error("PayPal Hosted Buttons not available");
+    }
 
-        // Help users: choosing "Plant down" auto-checks the Plant Down toggle.
-        requestTypeEl.addEventListener("change", () => {
-            const v = (requestTypeEl.value || "").toLowerCase();
-            if (v.includes("plant down")) {
-              plantDownEl.checked = true;
-              selectTier("emergency");
-            }
-        });
+    payNowRendered = true;
+    window.paypal.HostedButtons({ hostedButtonId: HOSTED_PAYNOW_ID })
+      .render("#paypalPayNowButton")
+      .then(() => {
+        if (payNowSubmitBtn) payNowSubmitBtn.disabled = false;
+      })
+      .catch((e) => {
+        setPayPalStatus("Pay Now button failed: " + (e?.message || String(e)));
+      });
+  }
 
-        plantDownEl.addEventListener("change", () => {
-          if (plantDownEl.checked) selectTier("emergency");
-        });
+  payNowSubmitBtn?.addEventListener("click", async () => {
+    try {
+      if (!pendingPayload) throw new Error("Please complete the form and click Continue to Payment first.");
+      setPayPalStatus("Submitting request…");
+      const payload = { ...(pendingPayload || {}), payMethod: "paynow_hosted", hostedButtonId: HOSTED_PAYNOW_ID };
 
-        
-        const PLAN_ID = "P-5SH39343XS649853NNFMYB5Y";
-        const HOSTED_PAYNOW_ID = "TE4V66GK9S8GU";
+      const r = await fetch("/api/support-intake", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j?.error || "Request submission failed");
 
-        const paypalSection = document.getElementById("paypalSection");
-        const paypalStatusEl = document.getElementById("paypalStatus");
-        let paypalSdkLoaded = false;
-        let subRendered = false;
-        let payNowRendered = false;
-        let pendingPayload = null;
+      window.location.href = j.redirect || "/paid.html";
+    } catch (err) {
+      setPayPalStatus(err?.message || String(err));
+    }
+  });
 
-        function setPayPalStatus(msg) {
-          if (paypalStatusEl) paypalStatusEl.textContent = msg || "";
-        }
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        async function loadPayPalSdk() {
-          if (paypalSdkLoaded) return true;
-          // Get client id + env from server (safe)
-          const r = await fetch("/api/paypal-config", { cache: "no-store" });
-          const j = await r.json().catch(() => ({}));
-          if (!r.ok || !j.ok) {
-            throw new Error(j.error || "Could not load PayPal config");
-          }
+    if (!pricingTierEl?.value) {
+      setStatus("Select Emergency or Standard above to continue.");
+      return;
+    }
+    if (!payAckEl?.checked) {
+      setStatus("You must acknowledge payment is required before support begins.");
+      return;
+    }
 
-          const clientId = j.clientId;
-          const params = new URLSearchParams({
-            "client-id": clientId,
-            "vault": "true",
-            "intent": "subscription",
-            "components": "buttons,hosted-buttons",
-            "currency": "USD"
-          });
-          const s = document.createElement("script");
-          s.src = `https://www.paypal.com/sdk/js?${params.toString()}`;
-          s.async = true;
-          await new Promise((resolve, reject) => {
-            s.onload = resolve;
-            s.onerror = () => reject(new Error("PayPal SDK failed to load"));
-            document.head.appendChild(s);
-          });
+    setStatus("");
+    pendingPayload = getPayload();
 
-          paypalSdkLoaded = true;
-          return true;
-        }
+    if (paypalSection) paypalSection.style.display = "block";
+    setPayPalStatus("Loading PayPal…");
 
-        async function renderSubscriptionButton() {
-          if (subRendered) return;
-          if (!window.paypal || !window.paypal.Buttons) throw new Error("PayPal SDK not ready");
-
-          subRendered = true;
-          window.paypal.Buttons({
-            style: {
-              shape: 'rect',
-              color: 'gold',
-              layout: 'vertical',
-              label: 'subscribe'
-            },
-            createSubscription: function(data, actions) {
-              setPayPalStatus("Opening PayPal...");
-              return actions.subscription.create({
-                plan_id: PLAN_ID,
-                quantity: 1
-              });
-            },
-            onApprove: async function(data) {
-              try {
-                setPayPalStatus("Subscription approved. Submitting request...");
-                const payload = { ...(pendingPayload || {}), subscriptionID: data.subscriptionID };
-                const rr = await fetch("/api/support-intake", {
-                  method: "POST",
-                  headers: { "content-type": "application/json" },
-                  body: JSON.stringify(payload)
-                });
-                const out = await rr.json().catch(() => ({}));
-                if (!rr.ok || !out.ok) throw new Error(out.error || "Intake failed after approval");
-
-                setPayPalStatus("✅ Submitted. Redirecting...");
-                window.location.href = out.redirect || ("/paid.html?ticket=" + encodeURIComponent(out.ticketId || ""));
-              } catch (e) {
-                setPayPalStatus("Approved, but submission failed: " + (e.message || String(e)));
-              }
-            },
-            onCancel: function() {
-              setPayPalStatus("Subscription canceled.");
-            },
-            onError: function(err) {
-              setPayPalStatus("PayPal error: " + (err && err.message ? err.message : String(err)));
-            }
-          }).render('#paypalSubscribeButton');
-        }
-
-        
-        function renderPayNowButton() {
-          if (payNowRendered) return;
-          if (!window.paypal || !window.paypal.HostedButtons) throw new Error("PayPal Pay Now button not available");
-
-          payNowRendered = true;
-          const mount = document.getElementById("paypalPayNowButton");
-          if (mount) mount.innerHTML = "";
-
-          window.paypal.HostedButtons({
-            hostedButtonId: HOSTED_PAYNOW_ID
-          }).render("#paypalPayNowButton");
-
-          const submitBtn = document.getElementById("payNowSubmitBtn");
-          if (submitBtn) submitBtn.disabled = false;
-        }
-
-        // Manual submit for Pay Now flow (hosted button has no JS approval callback)
-        document.getElementById("payNowSubmitBtn")?.addEventListener("click", async () => {
-          try {
-            setPayPalStatus("Submitting request…");
-            const payload = { ...(pendingPayload || {}), payMethod: "paynow_hosted", hostedButtonId: HOSTED_PAYNOW_ID };
-            const r = await fetch("/api/support-intake", {
-              method: "POST",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify(payload)
-            });
-            const j = await r.json().catch(() => ({}));
-            if (!r.ok || !j.ok) throw new Error(j?.error || "Request submission failed");
-            window.location.href = j.redirect || "/paid.html";
-          } catch (err) {
-            setPayPalStatus(String(err));
-          }
-        });
-
-form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            if (!pricingTierEl.value) {
-              statusEl.textContent = "Select Emergency or Standard above to continue.";
-              return;
-            }
-
-            const fd = new FormData(form);
-            const isPlantDown = plantDownEl.checked;
-
-            const payload = Object.fromEntries(fd.entries());
-            payload.plantDown = isPlantDown;
-
-            // Keep the old checkbox field name expected by the server
-            // (payAck will be "on" when checked)
-            pendingPayload = payload;
-
-            statusEl.textContent = "";
-            if (paypalSection) paypalSection.style.display = "block";
-            setPayPalStatus("Loading PayPal...");
-
-            try {
-              await loadPayPalSdk();
-              setPayPalStatus("");
-              renderPayNowButton();
-              await renderSubscriptionButton();
-              document.getElementById("paypalSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
-            } catch (err) {
-              setPayPalStatus(err.message || "Could not start PayPal subscription. Please refresh and try again.");
-            }
-        });
-const json = await r.json().catch(() => ({}));
-                if (!r.ok || !json.ok) throw new Error(json.error || "Intake failed");
-
-                statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to PayPal...`;
-                window.location.href = json.paypalUrl;
-            } catch (err) {
-                statusEl.textContent = "Could not start checkout. Please refresh and try again.";
-            }
-        });
-   </script>
-
+    try {
+      await loadPayPalSdk();
+      setPayPalStatus("");
+      renderPayNowButton();
+      await renderSubscriptionButton();
+      paypalSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (err) {
+      setPayPalStatus(err?.message || "Could not start PayPal. Please refresh and try again.");
+    }
+  });
+})();
+</script>
 </body>
 </html>
