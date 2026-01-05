@@ -150,6 +150,20 @@ a:hover{
   box-shadow: 0 14px 40px rgba(91,140,255,.45);
 }
 
+.btn.danger{
+  background: linear-gradient(180deg, var(--danger), #d63f50);
+  border-color: rgba(255,93,108,.65);
+  box-shadow:
+    0 10px 30px rgba(255,93,108,.28),
+    inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.btn.danger:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(255,93,108,.35);
+  text-decoration: none;
+}
+
 /* ---- Headings ---- */
 h1, h2, h3{
   margin: 0 0 10px;
@@ -207,6 +221,81 @@ h3{ font-size: 18px; }
   border: 1px solid var(--border-soft);
   color: var(--muted);
 }
+
+
+/* ---- Credibility Strip ---- */
+.cred-strip{
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cred-item{
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: rgba(255,255,255,.03);
+}
+
+.cred-k{
+  display: block;
+  font-size: 11px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 4px;
+}
+
+.cred-v{
+  display: block;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* ---- Service Lanes ---- */
+.service-lanes{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.lane{
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.28)), var(--bg-panel);
+  border: 1px solid var(--border-hard);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-deep);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 168px;
+}
+
+.lane h2{ font-size: 20px; margin-bottom: 6px; }
+
+.lane .lane-actions{ margin-top: 10px; }
+
+.lane.emergency{
+  border-color: rgba(255,93,108,.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 18px 50px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,93,108,.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.lane.emergency::before{
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(680px 220px at 20% 0%, rgba(255,93,108,.20), transparent 60%);
+  pointer-events: none;
+}
+
+.lane.emergency > *{ position: relative; }
 
 /* ---- Badges (Plant-floor status) ---- */
 .badge{
@@ -324,6 +413,9 @@ h3{ font-size: 18px; }
   }
 
   .proof-inner{ grid-template-columns: 1fr; }
+
+  .cred-strip{ grid-template-columns: 1fr 1fr; }
+  .service-lanes{ grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px){
@@ -488,34 +580,6 @@ nav,
 }
 
 /* Mobile: keep nav VISIBLE (no hiding
-   on iPhone). This comment was previously unterminated and
-   unintentionally disabled all CSS that followed. */
-
-@media (max-width: 900px){
-  .nav-links,
-  .nav{
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 10px;
-    padding: 6px 2px 2px;
-  }
-  .nav-links::-webkit-scrollbar,
-  .nav::-webkit-scrollbar{ display:none; }
-
-  .nav-link{
-    flex: 0 0 auto;
-    padding: 10px 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.10);
-    background: rgba(255,255,255,.04);
-  }
-  .nav-link.active{
-    border-color: rgba(91,140,255,.65);
-    background: rgba(91,140,255,.12);
-    color: var(--text);
-  }
-}
 /* =========================
    iOS SUPPORT FORM FIX
    (request-support.html)
@@ -642,110 +706,6 @@ nav,
 /* Mobile: make the submit button easier to tap */
 @media (max-width: 780px){
   .support-card button.btn{
-    width: 100%;
-  }
-}
-
-/* =========================
-   REQUEST SUPPORT (current markup)
-   Fix mobile layout for request-support.html
-   ========================= */
-
-/* Make the selection cards wrap nicely */
-.support-choice{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  margin: 16px 0 18px;
-}
-@media (min-width: 900px){
-  .support-choice{ grid-template-columns: 1fr 1fr; }
-}
-
-.choice-card{
-  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.30)), var(--bg-panel);
-  border: 1px solid var(--border-hard);
-  border-radius: var(--radius);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-deep);
-  padding: 16px;
-  cursor: pointer;
-}
-.choice-card p{ margin: 6px 0 0; color: var(--muted); }
-.choice-card.active{
-  border-color: rgba(91,140,255,.65);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 18px 50px rgba(0,0,0,.55);
-}
-
-/* Form grid: stack on mobile, 2-col on desktop */
-#supportForm .grid{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-@media (min-width: 900px){
-  #supportForm .grid{ grid-template-columns: 1fr 1fr; }
-}
-
-/* Labels stack text over control (prevents the "everything inline" squish) */
-#supportForm label{
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-weight: 750;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Inputs/selects/textarea full-width + iOS no-zoom */
-#supportForm input,
-#supportForm select,
-#supportForm textarea{
-  width: 100%;
-  min-width: 0;
-  font-size: 16px; /* stops iOS zoom */
-  line-height: 1.2;
-  padding: 12px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-  color: var(--text);
-  outline: none;
-}
-#supportForm textarea{ resize: vertical; }
-
-#supportForm input:focus,
-#supportForm select:focus,
-#supportForm textarea:focus{
-  border-color: rgba(91,140,255,.55);
-  box-shadow: 0 0 0 3px rgba(91,140,255,.18);
-}
-
-/* Toggle + checkbox lines should be horizontal and readable */
-#supportForm label.toggle{
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.03);
-}
-
-#supportForm label.checkbox{
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 10px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-#supportForm label.checkbox input{ width: 18px; height: 18px; margin-top: 2px; }
-
-/* Button: full-width on mobile */
-@media (max-width: 780px){
-  #supportForm .btn,
-  #supportForm button{
     width: 100%;
   }
 }
@@ -968,131 +928,3 @@ nav,
   font-size: 12px;
 }
 .trend-metric b{ color: rgba(255,255,255,.92); }
-/* =========================
-   Mobile form fix (Request Support)
-   ========================= */
-
-.support-card { padding: 16px; }
-@media (min-width: 780px){
-  .support-card { padding: 22px; }
-}
-
-/* Make rows stack on mobile, 2-col on desktop */
-.form .row{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin: 0 0 12px;
-}
-@media (min-width: 780px){
-  .form .row{ grid-template-columns: 1fr 1fr; }
-}
-
-/* Stop global label styling from wrecking the form */
-.form label{
-  display:block;
-  font-size: 13px;
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--muted);
-  margin: 0;
-}
-
-/* Inputs: readable, tap-friendly, no iOS zoom */
-.form input,
-.form select,
-.form textarea{
-  width: 100%;
-  margin-top: 6px;
-  padding: 12px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.05);
-  color: var(--text);
-  font-size: 16px; /* key for iPhone */
-  outline: none;
-}
-
-.form input::placeholder,
-.form textarea::placeholder{
-  color: rgba(255,255,255,.45);
-}
-
-/* Better textarea sizing */
-.form textarea{ min-height: 140px; resize: vertical; }
-
-/* Toggle rows: stack nicely on mobile */
-.form label.toggle{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-}
-
-/* Button/status area: stop weird squish */
-.form .status{ margin: 0; }
-.form button.btn.primary{
-  width: 100%;
-}
-@media (min-width: 520px){
-  .form button.btn.primary{ width: auto; }
-}
-
-/* Title sizing so it doesn’t scream at you on mobile */
-.support-card h1,
-.support-card .h1{
-  font-size: clamp(28px, 6vw, 44px);
-  line-height: 1.1;
-}
-/* =========================
-   Request Support – Mobile Fix
-   ========================= */
-
-@media (max-width: 768px) {
-
-  /* Force single column layout */
-  .support-form,
-  .support-form .row,
-  .support-form .form-row {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px;
-  }
-
-  /* Make inputs readable and full width */
-  .support-form input,
-  .support-form select,
-  .support-form textarea {
-    width: 100% !important;
-    min-width: 100% !important;
-    font-size: 16px !important; /* prevents iOS zoom */
-    padding: 12px;
-  }
-
-  /* Fix checkbox rows */
-  .support-form .checkbox-row,
-  .support-form .toggle-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px;
-  }
-
-  /* Center + widen submit button */
-  .support-form button,
-  .support-form .btn {
-    width: 100%;
-    padding: 14px;
-    font-size: 16px;
-  }
-
-  /* Reduce wasted header space */
-  h1 {
-    font-size: 28px;
-    line-height: 1.1;
-  }
-
-}

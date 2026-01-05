@@ -3,399 +3,412 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Request Support | Future Automation LLC</title>
-  <meta name="description" content="Request industrial automation support: PLC, VFD, HMI, and plant-down troubleshooting. Local and remote." />
-
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
   <meta name="theme-color" content="#0B1220" />
+  <title>Request Support | Future Automation LLC</title>
+  <meta name="description" content="Submit a support request. Delivered instantly via secure push alert and logged for follow-up." />
 
   <style>
-    /* =========================
-       Request Support — Page-local mobile fixes
-       (doesn't rely on global CSS behaving)
-       ========================= */
+    .support-wrap { max-width: 860px; margin: 0 auto; }
+    .support-card { padding: 22px; }
+    .support-form { margin-top: 14px; }
 
-    .page { max-width: 1080px; margin: 0 auto; padding: 18px 16px 60px; }
-    .hero { margin: 14px 0 16px; }
-    .hero h1 { margin: 0 0 6px; line-height: 1.1; font-size: clamp(28px, 6vw, 48px); }
-    .muted { color: rgba(255,255,255,.72); }
-
-    /* Nav: scrollable pills on mobile, no vertical bloat */
-    @media (max-width: 900px){
-      .topbar-inner { flex-wrap: wrap; gap: 10px; }
-      .brand img { height: 30px; }
-
-      .nav{
-        width: 100%;
-        display:flex !important;
-        overflow-x:auto;
-        -webkit-overflow-scrolling: touch;
-        gap: 10px;
-        padding: 6px 2px 2px;
-      }
-      .nav::-webkit-scrollbar { display:none; }
-
-      .nav-link{
-        flex: 0 0 auto;
-        padding: 10px 14px;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,.10);
-        background: rgba(255,255,255,.04);
-      }
-      .nav-link.active{
-        border-color: rgba(91,140,255,.65);
-        background: rgba(91,140,255,.12);
-      }
-
-      .nav-cta { display:none; } /* avoid duplicate CTA on mobile */
-    }
-
-    /* Layout: choices + form */
-    .grid-two {
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      align-items: start;
-    }
-    @media (min-width: 980px){
-      .grid-two { grid-template-columns: 1fr 1.25fr; gap: 18px; }
-    }
-
-    .cardlike{
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 16px;
-      padding: 16px;
-    }
-    @media (min-width: 980px){
-      .cardlike { padding: 18px; }
-    }
-
-    /* Support type choices */
-    .choices { display:grid; gap: 12px; }
-    .choice{
-      background: rgba(0,0,0,.18);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 16px;
-      padding: 14px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .choice strong{ display:flex; align-items:center; gap:10px; }
-    .choice p{ margin: 6px 0 0; color: rgba(255,255,255,.70); }
-    .choice.active{
-      border-color: rgba(91,140,255,.65);
-      background: rgba(91,140,255,.08);
-    }
-
-    /* Form: single column on mobile, 2-col on desktop */
-    form .row{
+    .support-grid{
       display:grid;
       grid-template-columns: 1fr;
       gap: 12px;
-      margin-bottom: 12px;
-    }
-    @media (min-width: 780px){
-      form .row{ grid-template-columns: 1fr 1fr; }
     }
 
-    form label{
+    @media (min-width: 780px){
+      .support-grid{ grid-template-columns: 1fr 1fr; }
+      .span-2{ grid-column: 1 / -1; }
+    }
+
+    .field label{
       display:block;
-      font-weight: 800;
+      font-weight: 750;
       font-size: 13px;
-      color: rgba(255,255,255,.78);
+      color: var(--muted);
     }
+    .field input, .field textarea{ width:100%; }
 
-    input, select, textarea{
+    /* Make form fields look consistent across browsers */
+    .form input,
+    .form textarea,
+    .form select{
       width: 100%;
-      margin-top: 6px;
       padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
-      color: rgba(255,255,255,.92);
-      font-size: 16px; /* key: stops iOS zoom */
-      outline: none;
-    }
-    textarea{ resize: vertical; min-height: 140px; }
-
-    .toggles{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin: 10px 0 12px;
-    }
-    @media (min-width: 780px){
-      .toggles{ grid-template-columns: 1fr 1fr; }
-    }
-
-    .toggle{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.03);
+      color: var(--text);
+      outline: none;
     }
-    .toggle span{ font-weight: 800; font-size: 13px; color: rgba(255,255,255,.78); }
-    .toggle input{ width: 18px; height: 18px; margin: 0; }
+    .form textarea{ resize: vertical; }
+    .form input::placeholder,
+    .form textarea::placeholder{ color: rgba(255,255,255,.45); }
+    .form input:focus,
+    .form textarea:focus,
+    .form select:focus{
+      border-color: rgba(91,140,255,.7);
+      box-shadow: 0 0 0 4px rgba(91,140,255,.14);
+    }
+    .form select{
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.55) 50%),
+        linear-gradient(135deg, rgba(255,255,255,.55) 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) calc(1em + 2px),
+        calc(100% - 13px) calc(1em + 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 36px;
+    }
 
-    .actions{
+    .toggle-field{
       display:flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: stretch;
-      margin-top: 10px;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
     }
-    @media (min-width: 780px){
-      .actions{ flex-direction: row; align-items:center; }
+    .toggle-field .toggle-label{
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
     }
-    .actions .btn, .actions button{ width: 100%; }
-    @media (min-width: 780px){
-      .actions .btn, .actions button{ width: auto; }
+    .toggle-field .toggle-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex: 0 0 auto;
+    }
+    .toggle-field input[type="checkbox"]{
+      width: 18px;
+      height: 18px;
+      margin: 0;
     }
 
-    .status{ min-height: 1.2em; margin: 0; color: rgba(255,255,255,.75); }
-    .small{ font-size: 13px; color: rgba(255,255,255,.68); }
-    .bullets{ margin: 10px 0 0; padding-left: 18px; color: rgba(255,255,255,.72); }
-    .note{
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(91,140,255,.08);
-      color: rgba(255,255,255,.82);
+    .support-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top: 4px;
     }
+    @media (min-width: 780px){
+      .support-actions{
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+      }
+    }
+    #status{ min-height: 1.2em; }
+
+    /* Quick pay selector */
+    .support-quickpay{ padding: 0; }
+    .quickpay-grid{ display:grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width: 780px){ .quickpay-grid{ grid-template-columns: 1fr 1fr; } }
+    .quickpay-card{
+      text-align:left;
+      padding: 14px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .08s ease, border-color .12s ease, background .12s ease;
+    }
+    .quickpay-card:hover{ transform: translateY(-1px); border-color: rgba(91,140,255,.35); }
+    .quickpay-card.urgent:hover{ border-color: rgba(255,93,108,.45); }
+    .quickpay-card.is-selected{
+      border-color: rgba(91,140,255,.75);
+      background: linear-gradient(180deg, rgba(91,140,255,.10), rgba(255,255,255,.03));
+      box-shadow: 0 0 0 4px rgba(91,140,255,.12);
+    }
+    .quickpay-card.urgent.is-selected{
+      border-color: rgba(255,93,108,.75);
+      box-shadow: 0 0 0 4px rgba(255,93,108,.12);
+      background: linear-gradient(180deg, rgba(255,93,108,.10), rgba(255,255,255,.03));
+    }
+    .qp-title{ font-weight: 900; letter-spacing: .2px; }
+    .qp-sub{ margin-top: 4px; font-size: 12px; color: rgba(255,255,255,.65); }
+    .qp-summary{ margin-top: 10px; padding: 12px 14px; border-radius: 18px; border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18); }
+    .qp-selected{ font-weight: 850; }
+    .qp-note{ margin-top: 10px; }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
-        <img src="logo.svg" alt="Future Automation LLC" />
-      </a>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+                <img src="logo.svg" alt="Future Automation LLC" />
+            </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="services.html">Services</a>
-        <a class="nav-link" href="emergency-support.html">Emergency Support</a>
-        <a class="nav-link" href="remote-support.html">Remote Support</a>
-        <a class="nav-link" href="industries.html">Industries</a>
-        <a class="nav-link active" href="request-support.html">Request Support</a>
-      </nav>
+            <nav class="nav" aria-label="Primary">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="services.html">Services</a>
+                <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
+                <a class="nav-link active" href="request-support.html">Request Support</a>
+            </nav>
 
-      <div class="nav-cta">
-        <a class="btn primary" href="request-support.html">Request Support</a>
-      </div>
-    </div>
-  </header>
-
-  <main class="page">
-    <header class="hero">
-      <h1>Request Support</h1>
-      <p class="muted">Choose the type of support you need. Pricing appears after selection.</p>
+            <div class="nav-cta">
+                <a class="btn small primary" href="request-support.html">Request Support</a>
+            </div>
+        </div>
     </header>
 
-    <div class="grid-two">
-      <!-- Left: choice cards -->
-      <section class="cardlike">
-        <div class="choices" role="list">
-          <div class="choice" role="listitem" id="choiceEmergency" tabindex="0">
-            <strong>🚨 Emergency Plant-Down</strong>
-            <p>Production stopped or at risk. Immediate triage and remote support.</p>
-          </div>
+    <main class="page">
+        <section class="container">
+            <div class="hero">
+                <h1>Request Support</h1>
+                <p class="muted">Plant down, nuisance trips, VFD faults, weird comms issues, or PLC/HMI changes—send the details and we’ll get eyes on it fast.</p>
+            </div>
 
-          <div class="choice" role="listitem" id="choiceStandard" tabindex="0">
-            <strong>🛠️ Standard Support</strong>
-            <p>Scheduled remote help, PLC logic changes, troubleshooting, fixes.</p>
-          </div>
+            <div class="grid two-col">
+                <div class="card">
+                    <h2>What to include</h2>
+                    <ul class="bullets">
+                        <li>Line / area + what stopped</li>
+                        <li>PLC / HMI / drive model (if you know it)</li>
+                        <li>Alarms, screenshots, fault codes</li>
+                        <li>Best call-back number + site time zone</li>
+                    </ul>
+                    <div class="note">
+                        <strong>Heads up:</strong> If you can’t text photos through the form, submit the request anyway—reply to the confirmation email with attachments.
+                    </div>
+                </div>
+                <!-- ===== Support Type Selector (price shown after selection) ===== -->
+                <section class="support-quickpay" aria-label="Select support type">
+                  <div class="quickpay-grid">
+                    <button type="button" class="quickpay-card urgent" data-tier="emergency" aria-pressed="false">
+                      <div class="qp-title">Emergency Plant-Down</div>
+                      <div class="qp-sub">Fast response • triage + remote support</div>
+                    </button>
+
+                    <button type="button" class="quickpay-card" data-tier="standard" aria-pressed="false">
+                      <div class="qp-title">Standard Support</div>
+                      <div class="qp-sub">Scheduled remote help • troubleshooting + fixes</div>
+                    </button>
+                  </div>
+
+                  <div id="tierSummary" class="qp-summary" hidden>
+                    <div class="qp-selected">Selected: <strong id="tierLabel">—</strong></div>
+                    <div class="qp-selected">Upfront: <strong id="tierPrice">—</strong></div>
+                    <div class="small muted">Upfront incident fee covers first hour. After-hours rates apply outside normal business hours.</div>
+                  </div>
+
+                  <p class="qp-note">Monthly subscription is for ongoing support. Use the options above for one-time incident support.</p>
+                </section>
+                <div class="card support-card">
+                    <h2>Support request</h2>
+
+                    <form id="supportForm" class="form">
+                        <input type="hidden" id="pricingTier" name="pricingTier" value="" />
+                        <div class="row">
+                            <label>
+                                Request type
+                                <select id="requestType" name="requestType" required>
+                                    <option value="">Select one…</option>
+                                    <option value="Plant down troubleshooting">Plant down troubleshooting</option>
+                                    <option value="PLC programming / logic change">PLC programming / logic change</option>
+                                    <option value="HMI / FactoryTalk edits">HMI / FactoryTalk edits</option>
+                                    <option value="VFD / drive faults">VFD / drive faults</option>
+                                    <option value="Comms / networks">Comms / networks</option>
+                                    <option value="Condition monitoring setup">Condition monitoring setup</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </label>
+
+                            <label>
+                                Platform (if known)
+                                <select name="platform">
+                                    <option value="">Select one…</option>
+                                    <option value="Allen-Bradley ControlLogix / CompactLogix (Studio 5000)">Allen-Bradley ControlLogix / CompactLogix (Studio 5000)</option>
+                                    <option value="Allen-Bradley MicroLogix">Allen-Bradley MicroLogix</option>
+                                    <option value="FactoryTalk View ME">FactoryTalk View ME</option>
+                                    <option value="FactoryTalk View SE">FactoryTalk View SE</option>
+                                    <option value="Other / Unknown">Other / Unknown</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="row">
+                            <label>
+                                Name
+                                <input name="name" autocomplete="name" required />
+                            </label>
+                            <label>
+                                Company
+                                <input name="company" autocomplete="organization" />
+                            </label>
+                        </div>
+
+                        <div class="row">
+                            <label>
+                                Email
+                                <input name="email" type="email" autocomplete="email" required />
+                            </label>
+                            <label>
+                                Phone
+                                <input name="phone" type="tel" autocomplete="tel" placeholder="Best number to call/text" />
+                            </label>
+                        </div>
+
+                        <div class="row">
+                            <label>
+                                Location / Plant
+                                <input name="location" placeholder="City, plant name, or line" />
+                            </label>
+                            <label>
+                                Asset / Machine
+                                <input name="asset" placeholder="Line, machine, PLC, VFD, etc." />
+                            </label>
+                        </div>
+
+                        <div class="row">
+                            <label class="toggle">
+                                <span>Plant Down</span>
+                                <input id="plantDown" name="plantDown" type="checkbox" />
+                                <span class="toggle-ui" aria-hidden="true"></span>
+                            </label>
+
+                            <label class="toggle">
+                                <span>I understand payment is required before support begins</span>
+                                <input id="payAck" name="payAck" type="checkbox" required />
+                                <span class="toggle-ui" aria-hidden="true"></span>
+                            </label>
+                        </div>
+
+                        <label>
+                            Issue / Symptoms
+                            <textarea name="issue" rows="6" placeholder="What happened? What have you tried? Include fault codes if you have them." required></textarea>
+                        </label>
+
+                        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px">
+                            <button id="payBtn" class="btn primary" type="submit" disabled>Continue to Payment</button>
+                            <p class="status" id="status" role="status" aria-live="polite"></p>
+                        </div>
+
+                        <p class="small">Choose a support type above. Pricing appears after selection.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="small">© <span id="year"></span> Future Automation LLC</div>
+            <div class="small">Secure push alerts • Logged requests • Faster response</div>
         </div>
-
-        <div class="note">
-          <strong>Tip:</strong> Include fault codes, screenshots, and what changed recently (even “small” changes).
-        </div>
-
-        <ul class="bullets">
-          <li>PLC / HMI / Drive model (if known)</li>
-          <li>Alarm text + fault codes</li>
-          <li>What the line was doing when it stopped</li>
-          <li>Best number to reach you</li>
-        </ul>
-      </section>
-
-      <!-- Right: form -->
-      <section class="cardlike">
-        <h2 style="margin-top:0;">Support Request</h2>
-
-        <p class="small" style="margin-top:-4px; margin-bottom:10px;">
-          Selected: <strong id="selectedLabel">None</strong>
-        </p>
-
-        <form id="supportForm">
-          <div class="row">
-            <label>
-              Request type
-              <select id="requestType" name="requestType" required>
-                <option value="">Select…</option>
-                <option value="emergency">Emergency Plant-Down</option>
-                <option value="standard">Standard Support</option>
-              </select>
-            </label>
-
-            <label>
-              Platform (if known)
-              <input name="platform" placeholder="Allen-Bradley ControlLogix, Siemens, etc." />
-            </label>
-          </div>
-
-          <div class="row">
-            <label>
-              Name
-              <input name="name" autocomplete="name" required />
-            </label>
-
-            <label>
-              Company
-              <input name="company" autocomplete="organization" />
-            </label>
-          </div>
-
-          <div class="row">
-            <label>
-              Email
-              <input name="email" type="email" autocomplete="email" required />
-            </label>
-
-            <label>
-              Phone
-              <input name="phone" type="tel" autocomplete="tel" placeholder="Best number to call/text" />
-            </label>
-          </div>
-
-          <div class="row">
-            <label>
-              Location / Plant
-              <input name="location" placeholder="City, plant name, or line" />
-            </label>
-
-            <label>
-              Asset / Machine
-              <input name="asset" placeholder="Line, machine, PLC, VFD, etc." />
-            </label>
-          </div>
-
-          <div class="toggles">
-            <label class="toggle">
-              <span>Plant Down</span>
-              <input id="plantDown" name="plantDown" type="checkbox" />
-            </label>
-
-            <label class="toggle">
-              <span>I understand payment is required before support begins</span>
-              <input id="payAck" name="payAck" type="checkbox" required />
-            </label>
-          </div>
-
-          <label>
-            Issue / Symptoms
-            <textarea name="issue" placeholder="What happened? Fault codes? What have you tried?" required></textarea>
-          </label>
-
-          <div class="actions">
-            <button class="btn primary" type="submit" id="submitBtn">Continue to Payment</button>
-            <p class="status" id="status" role="status" aria-live="polite"></p>
-          </div>
-
-          <p class="small" style="margin-top:10px;">
-            Upfront incident fee covers the first hour. After-hours rates may apply outside normal business hours.
-          </p>
-        </form>
-      </section>
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="small">© <span id="year"></span> Future Automation LLC</div>
-      <div class="small">Secure alerts • Logged requests • Faster response</div>
-    </div>
-  </footer>
-
+    </footer>
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+        document.getElementById("year").textContent = new Date().getFullYear();
+        const form = document.getElementById("supportForm");
+        const statusEl = document.getElementById("status");
+        const requestTypeEl = document.getElementById("requestType");
+        const plantDownEl = document.getElementById("plantDown");
+        const pricingTierEl = document.getElementById("pricingTier");
+        const tierCards = Array.from(document.querySelectorAll(".quickpay-card"));
+        const tierSummary = document.getElementById("tierSummary");
+        const tierLabel = document.getElementById("tierLabel");
+        const tierPrice = document.getElementById("tierPrice");
 
-    const choiceEmergency = document.getElementById("choiceEmergency");
-    const choiceStandard  = document.getElementById("choiceStandard");
-    const requestType     = document.getElementById("requestType");
-    const selectedLabel   = document.getElementById("selectedLabel");
-    const statusEl        = document.getElementById("status");
-    const form            = document.getElementById("supportForm");
-    const submitBtn       = document.getElementById("submitBtn");
+        const PRICES = {
+          emergency: { label: "Emergency Plant-Down", price: "$795 upfront" },
+          standard: { label: "Standard Support", price: "$495 upfront" }
+        };
 
-    function setChoice(type){
-      requestType.value = type;
-      choiceEmergency.classList.toggle("active", type === "emergency");
-      choiceStandard.classList.toggle("active", type === "standard");
-      selectedLabel.textContent = type === "emergency" ? "Emergency Plant-Down" : "Standard Support";
-    }
+        // Allow deep links from the site (e.g., request-support.html?tier=emergency)
+        (function initFromUrl(){
+          const params = new URLSearchParams(window.location.search || "");
+          const tier = (params.get("tier") || "").toLowerCase();
+          const plantDown = (params.get("plantDown") || "").toLowerCase();
+          if (tier && PRICES[tier]) {
+            selectTier(tier);
+            if (tier === "emergency") plantDownEl.checked = true;
+          } else if (plantDown === "1" || plantDown === "true" || plantDown === "yes") {
+            selectTier("emergency");
+            plantDownEl.checked = true;
+          }
+        })();
 
-    // click + keyboard support
-    choiceEmergency.addEventListener("click", () => setChoice("emergency"));
-    choiceStandard.addEventListener("click", () => setChoice("standard"));
-    choiceEmergency.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setChoice("emergency"); }});
-    choiceStandard.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setChoice("standard"); }});
-
-    requestType.addEventListener("change", () => {
-      if(requestType.value) setChoice(requestType.value);
-      else {
-        choiceEmergency.classList.remove("active");
-        choiceStandard.classList.remove("active");
-        selectedLabel.textContent = "None";
-      }
-    });
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      if (!requestType.value){
-        statusEl.textContent = "Please select a request type.";
-        requestType.focus();
-        return;
-      }
-
-      statusEl.textContent = "Creating ticket...";
-      submitBtn.disabled = true;
-
-      const fd = new FormData(form);
-      const payload = Object.fromEntries(fd.entries());
-      payload.plantDown = document.getElementById("plantDown").checked;
-
-      try {
-        const r = await fetch("/api/support-intake", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await r.json().catch(() => ({}));
-
-        if (!r.ok || !json.ok || !json.checkoutUrl) {
-          throw new Error(json.error || "Intake failed");
+        function selectTier(tier){
+          if (!PRICES[tier]) return;
+          pricingTierEl.value = tier;
+          tierCards.forEach(btn => {
+            const isSel = btn.dataset.tier === tier;
+            btn.classList.toggle("is-selected", isSel);
+            btn.setAttribute("aria-pressed", isSel ? "true" : "false");
+          });
+          tierLabel.textContent = PRICES[tier].label;
+          tierPrice.textContent = PRICES[tier].price;
+          tierSummary.hidden = false;
         }
 
-        statusEl.textContent = `Ticket ${json.ticketId || ""} created. Redirecting to checkout...`;
-        window.location.href = json.checkoutUrl;
-      } catch (err) {
-        statusEl.textContent = (err && err.message) ? ("Checkout failed: " + err.message) : "Checkout failed. Please refresh and try again.";
-        submitBtn.disabled = false;
-      }
-    });
-  </script>
+        // Hook up the cards
+        tierCards.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const tier = btn.dataset.tier;
+            selectTier(tier);
+            if (tier === "emergency") plantDownEl.checked = true;
+          });
+        });
+
+        // Help users: choosing "Plant down" auto-checks the Plant Down toggle.
+        requestTypeEl.addEventListener("change", () => {
+            const v = (requestTypeEl.value || "").toLowerCase();
+            if (v.includes("plant down")) {
+              plantDownEl.checked = true;
+              selectTier("emergency");
+            }
+        });
+
+        plantDownEl.addEventListener("change", () => {
+          if (plantDownEl.checked) selectTier("emergency");
+        });
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            if (!pricingTierEl.value) {
+              statusEl.textContent = "Select Emergency or Standard above to continue.";
+              return;
+            }
+
+            statusEl.textContent = "Creating ticket...";
+
+            const fd = new FormData(form);
+            const isPlantDown = plantDownEl.checked;
+
+            const payload = Object.fromEntries(fd.entries());
+            payload.plantDown = isPlantDown;
+
+            try {
+                const r = await fetch("/api/support-intake", {
+                    method: "POST",
+                    headers: { "content-type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const json = await r.json().catch(() => ({}));
+                if (!r.ok || !json.ok) throw new Error(json.error || "Intake failed");
+
+                statusEl.textContent = `Ticket ${json.ticketId} created. Redirecting to PayPal...`;
+                window.location.href = json.paypalUrl;
+            } catch (err) {
+                statusEl.textContent = "Could not start checkout. Please refresh and try again.";
+            }
+        });
+   </script>
+
 </body>
 </html>
