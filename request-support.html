@@ -12,7 +12,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
 
-  <!-- Page-local overrides (fix mobile + stop global form CSS from breaking layout) -->
+  <!-- Page-local overrides: mobile-safe form layout + hardened tier cards -->
   <style>
     .support-form { max-width: 820px; margin: 0 auto; }
 
@@ -71,66 +71,67 @@
       padding-right: 36px;
     }
 
-   /* Tier selector — hardened against global label styles */
-.tier-select{
-  margin-top: 16px;
-  display:flex;
-  flex-direction: column;
-  gap: 10px;
-}
-@media (min-width: 820px){
-  .tier-select{ flex-direction: row; }
-  .tier-card{ flex: 1; }
-}
+    /* Tier selector — avoids global label/layout rules (this is what fixed “missing text”) */
+    .tier-select{
+      margin-top: 16px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @media (min-width: 820px){
+      .tier-select{ flex-direction: row; }
+      .tier-card{ flex: 1; }
+    }
 
-.tier-card{
-  display:flex;
-  gap: 12px;
-  align-items:flex-start;
-  padding: 12px 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.03);
-  cursor: pointer;
-  user-select: none;
-  min-width: 0;
-  text-align: left;
-}
+    .tier-card{
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      cursor: pointer;
+      user-select: none;
+      min-width: 0;
+      text-align: left;
+    }
 
-.tier-card input[type="radio"]{
-  margin-top: 4px;
-  width: 18px;
-  height: 18px;
-  flex: 0 0 auto;
-}
+    .tier-card input[type="radio"]{
+      margin-top: 4px;
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
 
-.tier-card .tier-text{
-  flex: 1 1 auto;
-  min-width: 0;
-}
+    .tier-card .tier-text{
+      flex: 1 1 auto;
+      min-width: 0;
+    }
 
-.tier-card strong{
-  display:block;
-  font-weight: 900;
-  white-space: normal;
-  color: var(--text);
-}
+    .tier-card strong{
+      display:block;
+      font-weight: 900;
+      white-space: normal;
+      color: var(--text);
+      line-height: 1.2;
+    }
 
-.tier-card .sub{
-  display:block;
-  margin-top: 4px;
-  font-size: 12px;
-  color: rgba(255,255,255,.65);
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
+    .tier-card .sub{
+      display:block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: rgba(255,255,255,.65);
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
 
-.tier-card.is-selected{
-  border-color: rgba(91,140,255,.75);
-  box-shadow: 0 0 0 4px rgba(91,140,255,.12);
-  background: linear-gradient(180deg, rgba(91,140,255,.10), rgba(255,255,255,.03));
-}
-    
+    .tier-card.is-selected{
+      border-color: rgba(91,140,255,.75);
+      box-shadow: 0 0 0 4px rgba(91,140,255,.12);
+      background: linear-gradient(180deg, rgba(91,140,255,.10), rgba(255,255,255,.03));
+    }
+
     #continueBtn{ margin-top: 14px; }
     @media (max-width: 520px){ #continueBtn{ width: 100%; } }
 
@@ -200,7 +201,7 @@
 
         <div class="field full">
           <label>Type of Support</label>
-          <select name="requestType" required>
+          <select id="requestType" name="requestType" required>
             <option value="">Select…</option>
             <option>Plant-Down / Emergency</option>
             <option>PLC / HMI Troubleshooting</option>
@@ -216,31 +217,23 @@
         </div>
       </div>
 
- <!-- Tier select -->
-<div class="tier-select" aria-label="Select support tier">
-  <div class="tier-card" data-tier="PLANT_DOWN" role="button" tabindex="0" aria-pressed="false">
-    <input type="radio" name="tierChoice" value="PLANT_DOWN" />
-    <div class="tier-text">
-      <strong>Plant-Down / Emergency Support</strong>
-      <div class="sub">Immediate response and escalation.</div>
-    </div>
-  </div>
+      <!-- Tier select -->
+      <div class="tier-select" aria-label="Select support tier">
+        <div class="tier-card" data-tier="PLANT_DOWN" role="button" tabindex="0" aria-pressed="false">
+          <input type="radio" name="tierChoice" value="PLANT_DOWN" />
+          <div class="tier-text">
+            <strong>Plant-Down / Emergency Support</strong>
+            <div class="sub">Immediate response and escalation.</div>
+          </div>
+        </div>
 
-  <div class="tier-card" data-tier="STANDARD" role="button" tabindex="0" aria-pressed="false">
-    <input type="radio" name="tierChoice" value="STANDARD" />
-    <div class="tier-text">
-      <strong>Standard Remote Support</strong>
-      <div class="sub">Scheduled troubleshooting and diagnostics.</div>
-    </div>
-  </div>
-</div>
-        <label class="tier-option">
+        <div class="tier-card" data-tier="STANDARD" role="button" tabindex="0" aria-pressed="false">
           <input type="radio" name="tierChoice" value="STANDARD" />
-          <span class="tier-text">
+          <div class="tier-text">
             <strong>Standard Remote Support</strong>
-            <span class="sub">Scheduled troubleshooting and diagnostics.</span>
-          </span>
-        </label>
+            <div class="sub">Scheduled troubleshooting and diagnostics.</div>
+          </div>
+        </div>
       </div>
 
       <button id="continueBtn" type="submit" class="btn-primary" disabled>
@@ -261,7 +254,10 @@
   const btn = document.getElementById('continueBtn');
   const statusEl = document.getElementById('status');
 
+  const requestTypeEl = document.getElementById('requestType');
   const tierRadios = document.querySelectorAll('input[name="tierChoice"]');
+  const tierCards = document.querySelectorAll('.tier-card');
+
   const pricingTierEl = document.getElementById('pricingTier');
   const plantDownEl = document.getElementById('plantDown');
 
@@ -270,67 +266,81 @@
     statusEl.className = "status-line" + (kind ? (" " + kind) : "");
   }
 
+  function syncTierUI() {
+    tierCards.forEach(card => {
+      const radio = card.querySelector('input[type="radio"]');
+      const selected = !!radio && radio.checked;
+      card.classList.toggle('is-selected', selected);
+      card.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    });
+  }
+
+  function applyTierValue(tierChoice) {
+    if (tierChoice === "PLANT_DOWN") {
+      pricingTierEl.value = "emergency";
+      plantDownEl.value = "true";
+      return;
+    }
+    if (tierChoice === "STANDARD") {
+      pricingTierEl.value = "standard";
+      plantDownEl.value = "false";
+      return;
+    }
+    pricingTierEl.value = "";
+    plantDownEl.value = "false";
+  }
+
   function updateTierState() {
     const selected = [...tierRadios].find(r => r.checked);
     if (!selected) {
       btn.disabled = true;
-      pricingTierEl.value = "";
-      plantDownEl.value = "false";
+      applyTierValue("");
+      syncTierUI();
       return;
     }
 
     btn.disabled = false;
-
-    if (selected.value === "PLANT_DOWN") {
-      pricingTierEl.value = "emergency";
-      plantDownEl.value = "true";
-    } else {
-      pricingTierEl.value = "standard";
-      plantDownEl.value = "false";
-    }
+    applyTierValue(selected.value);
+    syncTierUI();
   }
+
+  // Clickable cards
+  tierCards.forEach(card => {
+    const radio = card.querySelector('input[type="radio"]');
+    card.addEventListener('click', () => {
+      radio.checked = true;
+      radio.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
 
   tierRadios.forEach(r => r.addEventListener('change', () => {
     updateTierState();
-    setStatus(""); // clear any prior error
+    setStatus("");
   }));
-const tierCards = document.querySelectorAll('.tier-card');
 
-function syncTierUI() {
-  tierCards.forEach(card => {
-    const v = card.dataset.tier;
-    const radio = card.querySelector('input[type="radio"]');
-    const selected = radio.checked;
-    card.classList.toggle('is-selected', selected);
-    card.setAttribute('aria-pressed', selected ? 'true' : 'false');
-  });
-}
-
-tierCards.forEach(card => {
-  const radio = card.querySelector('input[type="radio"]');
-
-  card.addEventListener('click', () => {
-    radio.checked = true;
-    radio.dispatchEvent(new Event('change', { bubbles: true }));
-    syncTierUI();
-  });
-
-  card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      card.click();
+  // Auto-select Emergency if "Plant-Down / Emergency" is chosen in the dropdown
+  requestTypeEl.addEventListener('change', () => {
+    const v = (requestTypeEl.value || "").toLowerCase();
+    if (v.includes("plant-down") || v.includes("plant down")) {
+      const emergency = [...tierRadios].find(r => r.value === "PLANT_DOWN");
+      if (emergency && !emergency.checked) {
+        emergency.checked = true;
+        emergency.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     }
   });
-});
 
-tierRadios.forEach(r => r.addEventListener('change', syncTierUI));
-syncTierUI();
   updateTierState();
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Hard stop if tier not selected
     if (btn.disabled) {
       setStatus("Select Plant-Down or Standard to continue.", "bad");
       return;
