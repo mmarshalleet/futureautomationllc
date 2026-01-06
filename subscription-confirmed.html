@@ -4,18 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="theme-color" content="#0B1220" />
     <meta name="theme-color" content="#0B1220" />
     <title>Subscription Confirmed | Future Automation LLC</title>
 </head>
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" />
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
+        <a class="nav-link" href="industries.html">Industries</a>
+        <a class="nav-link" href="request-support.html">Request Support</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
+    </div>
+  </header>
+
     <main class="container">
         <section class="section">
             <h1>Subscription confirmed.</h1>
-            <p class="lead">You�re active. We�ll contact you shortly to start onboarding.</p>
+            <p class="lead">You're active. We'll contact you shortly to start onboarding.</p>
             <p class="small" id="meta"></p>
-            <a class="btn primary" href="/condition-monitoring.html">Back to Condition Monitoring</a>
+            <a class="btn primary" href="condition-monitoring.html">Back to Condition Monitoring</a>
         </section>
     </main>
 
@@ -24,25 +42,7 @@
     const sub = u.searchParams.get("sub");
     const plan = u.searchParams.get("plan");
     document.getElementById("meta").textContent =
-      (sub ? `Subscription ID: ${sub}` : "") + (plan ? ` � Plan: ${plan}` : "");
+      (sub ? `Subscription ID: ${sub}` : "") + (plan ? ` — Plan: ${plan}` : "");
     </script>
-<footer class="footer">
-  <div class="footer-inner">
-    <div>
-      <div class="small">© <span id="year"></span> Future Automation LLC</div>
-      <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
-    </div>
-    <div class="small-links" aria-label="Footer links">
-      <a href="services.html">Services</a>
-      <a href="condition-monitoring.html">Condition Monitoring</a>
-      <a href="industries.html">Industries</a>
-      <a href="terms.html">Terms</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
 </body>
 </html>

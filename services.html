@@ -3,106 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Services | Future Automation LLC</title>
-  <meta name="description" content="PLC programming, panel design review, commissioning support, and contractor controls assistance." />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>Services | Future Automation LLC</title>
+  <meta name="description" content="PLC programming, panel design review, commissioning support, and controls troubleshooting for maintenance teams and contractors." />
 </head>
 
 <body>
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="index.html">
-      <img src="logo.svg" alt="Future Automation LLC" />
-    </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="services.html" class="nav-link active">Services</a>
-      <a href="condition-monitoring.html" class="nav-link">Condition Monitoring</a>
-      <a href="industries.html" class="nav-link">Industries</a>
-      <a href="request-support.html" class="btn">Request Support</a>
-    </nav>
-  </div>
-</header>
+    <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+        <img src="logo.svg" alt="Future Automation LLC" />
+      </a>
 
-<main class="page">
-  <h1>Specialist Services</h1>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link active" href="services.html">Services</a>
+        <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
+        <a class="nav-link" href="industries.html">Industries</a>
+        <a class="nav-link" href="request-support.html">Request Support</a>
+      </nav>
 
-  <section class="panel split">
-    <div class="split-grid">
-      <div>
-        <h2>PLC / HMI Programming</h2>
-        <p>
-          Add features, fix logic, clean up legacy code, or build a new program from scratch — with documentation your maintenance team can follow.
-        </p>
-        <ul class="clean-list">
-          <li>ControlLogix / CompactLogix (Studio 5000)</li>
-          <li>FactoryTalk View ME/SE, Ignition, PanelView Plus</li>
-          <li>I/O checkout, device integration, and commissioning support</li>
-          <li>Alarm cleanup, trends, recipes, and operator-friendly screens</li>
-        </ul>
-        <div class="pills">
-          <span class="pill">Studio 5000</span>
-          <span class="pill">FactoryTalk</span>
-          <span class="pill">Ignition</span>
-          <span class="pill">HMI Standards</span>
-        </div>
-      </div>
-      <div class="media-card">
-        <img src="assets/graphics/plc-hmi-programming.webp" alt="PLC/HMI programming support graphic" loading="lazy" />
+      <div class="nav-cta">
+        <a class="btn primary" href="request-support.html">Request Support</a>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section class="panel">
-    <h2>Panel Design Review & Correction</h2>
-    <p>
-      Review of schematics, I/O layouts, safety integration, and wiring practices.
-      Catch issues before inspection — or before they cause downtime.
-    </p>
-  </section>
+  <main class="container">
+    <header class="section">
+      <div class="kicker"><span class="kdot"></span> Controls help that ships</div>
+      <h1>Services</h1>
+      <p class="lead">PLC/HMI/VFD troubleshooting, commissioning support, and controls work that reduces repeat downtime.</p>
+    </header>
 
-  <section class="panel">
-    <h2>Startup & Commissioning Support</h2>
-    <p>
-      On-site or remote support during startup.
-      I help systems run correctly and stay running.
-    </p>
-  </section>
+    <section class="grid" aria-label="Services">
+      <article class="card">
+        <h2>PLC programming & modifications</h2>
+        <p class="muted">New routines, cleanup, interlocks, alarms, device integrations, migrations, and upgrades — built for maintainability.</p>
+        <ul class="bullets">
+          <li>Logic edits and debug under load</li>
+          <li>Clean handoff notes for maintenance</li>
+          <li>Repeat-fault elimination (not band-aids)</li>
+        </ul>
+      </article>
 
-  <section class="panel">
-    <h2>Plant-Down Troubleshooting</h2>
-    <p>
-      Fast diagnosis when production is stopped.
-      Root cause, not guesswork.
-    </p>
-  </section>
+      <article class="card">
+        <h2>Plant-down troubleshooting</h2>
+        <p class="muted">Rapid triage when production is stopped or at risk: isolate → fix → verify → document.</p>
+        <ul class="bullets">
+          <li>PLC faults, comms drops, sequence failures</li>
+          <li>Drive/VFD faults and control strategy issues</li>
+          <li>HMI alarms, tags, visibility problems</li>
+        </ul>
+      </article>
 
-  <section class="panel highlight">
-    <h2>Contractor Controls Support</h2>
-    <p>
-      I back up electrical contractors when controls work exceeds general electrical scope.
-      You keep the contract. I make it work.
-    </p>
-  </section>
-</main>
+      <article class="card">
+        <h2>Startup & commissioning support</h2>
+        <p class="muted">On-site or remote bring-up support with checklists, tuning, and operator handoff.</p>
+        <ul class="bullets">
+          <li>Bring-up and troubleshooting</li>
+          <li>Parameter verification and tuning</li>
+          <li>Commissioning notes for follow-up</li>
+        </ul>
+      </article>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div>
+      <article class="card">
+        <h2>Panel design review & correction</h2>
+        <p class="muted">Review of schematics, IO layouts, safety integration, and wiring practices — aimed at what fails in the field.</p>
+        <ul class="bullets">
+          <li>IO list sanity check</li>
+          <li>Noise, grounding, separation, serviceability</li>
+          <li>Corrections before inspection or downtime</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Contractor controls support</h2>
+        <p class="muted">Backstop for electrical contractors when controls scope exceeds general electrical work.</p>
+        <ul class="bullets">
+          <li>Protect the relationship with the customer</li>
+          <li>Controls issues get solved without finger-pointing</li>
+          <li>Documented changes, clean handoff</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Condition monitoring</h2>
+        <p class="muted">Use existing plant data to catch patterns early and stop repeat failures.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <a class="btn" href="condition-monitoring.html">How it works</a>
+          <a class="btn primary" href="request-support.html">Request a consult</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Start a request</h2>
+        <p class="muted">Send symptoms, fault codes, and who to contact. Payment happens after submission.</p>
+        <a class="btn primary" href="request-support.html">Request Support</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
       <div class="small">© <span id="year"></span> Future Automation LLC</div>
       <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
     </div>
-    <div class="small-links" aria-label="Footer links">
-      <a href="services.html">Services</a>
-      <a href="condition-monitoring.html">Condition Monitoring</a>
-      <a href="industries.html">Industries</a>
-      <a href="terms.html">Terms</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
