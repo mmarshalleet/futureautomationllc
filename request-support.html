@@ -11,17 +11,131 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
+
+  <!-- Page-local overrides to fix form layout on mobile (won't affect other pages) -->
+  <style>
+    .support-form { max-width: 780px; margin: 0 auto; }
+
+    /* Grid */
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 820px){
+      .form-grid{ grid-template-columns: 1fr 1fr; }
+      .field.full{ grid-column: 1 / -1; }
+    }
+
+    /* Labels + inputs (override any older global form styles) */
+    .support-form .field label{
+      display:block !important;
+      margin: 0 0 6px 0 !important;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: .2px;
+    }
+
+    .support-form input,
+    .support-form select,
+    .support-form textarea{
+      width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      outline: none;
+    }
+
+    .support-form textarea{ resize: vertical; min-height: 120px; }
+
+    .support-form input::placeholder,
+    .support-form textarea::placeholder{
+      color: rgba(255,255,255,.45);
+    }
+
+    .support-form input:focus,
+    .support-form textarea:focus,
+    .support-form select:focus{
+      border-color: rgba(91,140,255,.75);
+      box-shadow: 0 0 0 4px rgba(91,140,255,.14);
+    }
+
+    /* Make select look consistent (iOS) */
+    .support-form select{
+      appearance: none;
+      -webkit-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.55) 50%),
+        linear-gradient(135deg, rgba(255,255,255,.55) 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) calc(1em + 2px),
+        calc(100% - 13px) calc(1em + 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 36px;
+    }
+
+    /* Tier selector */
+    .tier-select{
+      margin-top: 16px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @media (min-width: 820px){
+      .tier-select{ flex-direction: row; }
+      .tier-option{ flex: 1; }
+    }
+
+    .tier-option{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tier-option input[type="radio"]{
+      margin-top: 4px;
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .tier-option strong{ display:block; font-weight: 900; }
+    .tier-option .sub{ display:block; margin-top: 4px; font-size: 12px; color: rgba(255,255,255,.65); }
+
+    /* Button */
+    #continueBtn{
+      margin-top: 14px;
+      width: auto;
+    }
+    @media (max-width: 520px){
+      #continueBtn{ width: 100%; }
+    }
+
+    /* Keep the page content from feeling cramped */
+    .panel { padding: 18px; }
+  </style>
 </head>
 
 <body>
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="index.html">
+    <a class="brand" href="index.html" aria-label="Future Automation LLC home">
       <img src="logo.svg" alt="Future Automation LLC" />
     </a>
 
-    <nav class="nav">
+    <nav class="nav" aria-label="Primary">
       <a class="nav-link" href="index.html">Home</a>
       <a class="nav-link" href="services.html">Services</a>
       <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
@@ -32,20 +146,17 @@
 </header>
 
 <main class="page">
-
   <section class="hero compact">
     <h1>Request Support</h1>
-    <p class="muted">
-      Plant-down response, PLC/HMI troubleshooting, and industrial controls support.
-    </p>
+    <p class="muted">Plant-down response, PLC/HMI troubleshooting, and industrial controls support.</p>
   </section>
 
   <section class="panel">
-
     <form class="support-form" id="supportForm">
 
-      <!-- Hidden auto-tag -->
+      <!-- Auto-tag -->
       <input type="hidden" name="request_priority" id="requestPriority" value="" />
+      <input type="hidden" name="support_tier" id="supportTierHidden" value="" />
 
       <div class="form-grid">
 
@@ -88,39 +199,31 @@
 
       </div>
 
-      <!-- Support Tier -->
-      <div class="tier-select">
-
+      <!-- Tier select (auto tag PLANT_DOWN vs STANDARD) -->
+      <div class="tier-select" aria-label="Select support tier">
         <label class="tier-option">
           <input type="radio" name="supportTier" value="PLANT_DOWN" />
           <span>
-            <strong>Plant-Down / Emergency Support</strong><br />
-            Immediate response and escalation.
+            <strong>Plant-Down / Emergency Support</strong>
+            <span class="sub">Immediate response and escalation.</span>
           </span>
         </label>
 
         <label class="tier-option">
           <input type="radio" name="supportTier" value="STANDARD" />
           <span>
-            <strong>Standard Remote Support</strong><br />
-            Scheduled troubleshooting and diagnostics.
+            <strong>Standard Remote Support</strong>
+            <span class="sub">Scheduled troubleshooting and diagnostics.</span>
           </span>
         </label>
-
       </div>
 
-      <button
-        id="continueBtn"
-        type="submit"
-        class="btn-primary"
-        disabled>
+      <button id="continueBtn" type="submit" class="btn-primary" disabled>
         Continue to Payment
       </button>
 
     </form>
-
   </section>
-
 </main>
 
 <footer class="footer">
@@ -131,22 +234,22 @@
   const tierRadios = document.querySelectorAll('input[name="supportTier"]');
   const submitBtn = document.getElementById('continueBtn');
   const priorityField = document.getElementById('requestPriority');
+  const tierHidden = document.getElementById('supportTierHidden');
 
   function updateButtonState() {
     const selected = [...tierRadios].find(r => r.checked);
     if (selected) {
       submitBtn.disabled = false;
-      priorityField.value = selected.value;
+      priorityField.value = selected.value;  // PLANT_DOWN or STANDARD
+      tierHidden.value = selected.value;
     } else {
       submitBtn.disabled = true;
       priorityField.value = '';
+      tierHidden.value = '';
     }
   }
 
-  tierRadios.forEach(radio => {
-    radio.addEventListener('change', updateButtonState);
-  });
-
+  tierRadios.forEach(r => r.addEventListener('change', updateButtonState));
   updateButtonState();
 </script>
 
