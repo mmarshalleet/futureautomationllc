@@ -294,7 +294,37 @@
     updateTierState();
     setStatus(""); // clear any prior error
   }));
+const tierCards = document.querySelectorAll('.tier-card');
 
+function syncTierUI() {
+  tierCards.forEach(card => {
+    const v = card.dataset.tier;
+    const radio = card.querySelector('input[type="radio"]');
+    const selected = radio.checked;
+    card.classList.toggle('is-selected', selected);
+    card.setAttribute('aria-pressed', selected ? 'true' : 'false');
+  });
+}
+
+tierCards.forEach(card => {
+  const radio = card.querySelector('input[type="radio"]');
+
+  card.addEventListener('click', () => {
+    radio.checked = true;
+    radio.dispatchEvent(new Event('change', { bubbles: true }));
+    syncTierUI();
+  });
+
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      card.click();
+    }
+  });
+});
+
+tierRadios.forEach(r => r.addEventListener('change', syncTierUI));
+syncTierUI();
   updateTierState();
 
   form.addEventListener('submit', async (e) => {
