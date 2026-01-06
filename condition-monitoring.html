@@ -19,12 +19,11 @@
       </a>
 
       <nav class="nav" aria-label="Primary">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="services.html" class="nav-link">Services</a>
-      <a href="condition-monitoring.html" class="nav-link active">Condition Monitoring</a>
-      <a href="industries.html" class="nav-link">Industries</a>
-      <a href="request-support.html" class="btn">Request Support</a>
-    </nav>
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="services.html">Services</a>
+        <a class="nav-link active" href="condition-monitoring.html">Condition Monitoring</a>
+        <a class="nav-link" href="request-support.html">Request Support</a>
+      </nav>
 
       <div class="nav-cta">
         <a class="btn primary" href="request-support.html">Request Support & Pay Now</a>
@@ -60,58 +59,57 @@
           <h2>Stop failures before they stop production.</h2>
           <p class="lead">Monthly subscription. Cancel anytime. Built for motors, drives, and critical assets.</p>
 
+          
           <div class="pricing-grid">
               <article class="price-card">
                   <div class="price-top">
-                      <h3 class="price-title">Starter</h3>
-                      <div class="price-tag">$249 <small>/mo</small></div>
+                      <h3 class="price-title">Condition Monitoring Subscription</h3>
+                      <div class="price-tag"><span class="badge steel">Pricing shown at checkout</span></div>
                   </div>
-                  <span class="badge steel">Baseline coverage</span>
                   <ul class="price-bullets">
-                      <li>Periodic data review</li>
-                      <li>Threshold alerts</li>
-                      <li>Monthly health summary</li>
+                      <li>Early warning on repeat faults and developing trends</li>
+                      <li>Actionable context (what changed, where to start)</li>
+                      <li>Monthly health summary and recommendations</li>
                   </ul>
                   <div class="price-actions">
-                      <a class="btn primary" href="https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-5SH39343XS649853NNFMYB5Y">Start Now</a>
+                      <a class="btn primary" href="https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-5SH39343XS649853NNFMYB5Y">Start Subscription</a>
                   </div>
-                  <div class="price-foot">Best for: one line or a small critical list.</div>
+                  <div class="price-foot">Best for: a critical list of motors, drives, and assets that keep causing downtime.</div>
               </article>
 
               <article class="price-card">
                   <div class="price-top">
-                      <h3 class="price-title">Standard</h3>
-                      <div class="price-tag">$449 <small>/mo</small></div>
+                      <h3 class="price-title">Expanded Coverage</h3>
+                      <div class="price-tag"><span class="badge hot">Most common upgrade</span></div>
                   </div>
-                  <span class="badge hot">Most popular</span>
                   <ul class="price-bullets">
-                      <li>Everything in Starter</li>
-                      <li>Failure trend analysis</li>
-                      <li>Recommendations + call support</li>
+                      <li>More assets and lines included</li>
+                      <li>Deeper trend and failure-pattern analysis</li>
+                      <li>Quarterly reliability review (failures + fixes)</li>
                   </ul>
                   <div class="price-actions">
-                      <a class="btn primary" href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&business=YOUR_PAYPAL&item_name=Condition%20Monitoring%20Standard&a3=449.00&p3=1&t3=M&src=1&sra=1&no_shipping=1&currency_code=USD">Start Standard</a>
+                      <a class="btn primary" href="request-support.html?requestType=Condition%20monitoring%20setup">Request Expanded Coverage</a>
                   </div>
-                  <div class="price-foot">Best for: motors/drives/gearboxes that like to ruin weekends.</div>
+                  <div class="price-foot">Best for: plants that want fewer surprises and fewer repeat stops.</div>
               </article>
 
               <article class="price-card">
                   <div class="price-top">
-                      <h3 class="price-title">Premium</h3>
-                      <div class="price-tag">$749 <small>/mo</small></div>
+                      <h3 class="price-title">Plant Reliability Partner</h3>
+                      <div class="price-tag"><span class="badge steel">Priority response</span></div>
                   </div>
-                  <span class="badge steel">Priority response</span>
                   <ul class="price-bullets">
-                      <li>Priority alerts</li>
-                      <li>Quarterly reliability review</li>
-                      <li>Discounted emergency support</li>
+                      <li>Multi-line or multi-site coverage</li>
+                      <li>Priority alert review and escalation</li>
+                      <li>Support coordination with maintenance leadership</li>
                   </ul>
                   <div class="price-actions">
-                      <a class="btn primary" href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&business=YOUR_PAYPAL&item_name=Condition%20Monitoring%20Premium&a3=749.00&p3=1&t3=M&src=1&sra=1&no_shipping=1&currency_code=USD">Start Premium</a>
+                      <a class="btn primary" href="request-support.html?requestType=Condition%20monitoring%20setup">Request Partner Coverage</a>
                   </div>
-                  <div class="price-foot">Best for: plants that are serious about uptime.</div>
+                  <div class="price-foot">Best for: aggressive uptime targets and leadership visibility.</div>
               </article>
           </div>
+</div>
       </section>
 
       <section class="section split" aria-label="Signal types">
@@ -250,23 +248,11 @@
   </main>
 
   <footer class="footer">
-  <div class="footer-inner">
-    <div>
+    <div class="footer-inner">
       <div class="small">© <span id="year"></span> Future Automation LLC</div>
-      <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
+      <div class="small">Secure push alerts • Logged requests • Faster response</div>
     </div>
-    <div class="small-links" aria-label="Footer links">
-      <a href="services.html">Services</a>
-      <a href="condition-monitoring.html">Condition Monitoring</a>
-      <a href="industries.html">Industries</a>
-      <a href="terms.html">Terms</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+  </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
