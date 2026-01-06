@@ -54,27 +54,29 @@ async function getAccessToken(env) {
   return j.access_token;
 }
 
-async function sendPushover(env, { ticketId, title, message, priority }) {
+async function sendPushover(env, { ticketId, subject, body, priority }) {
   if (!env.PUSHOVER_APP_TOKEN || !env.PUSHOVER_USER_KEY) return;
 
+  const msg = `${subject}\n${body}\nTicket: ${ticketId}`;
   await fetch("https://api.pushover.net/1/messages.json", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       token: env.PUSHOVER_APP_TOKEN,
       user: env.PUSHOVER_USER_KEY,
-      title,
-      message: `${message}\nTicket: ${ticketId}`,
+      message: msg,
       priority: String(priority ?? 0)
     })
   }).catch(() => {});
 }
 
-async function createOrder(env, { amount, itemName, ticketId }) {
+async function createOrder(env, { amount, itemName, ticketId, requestUrl }) {
   const token = await getAccessToken(env);
-  const baseUrl = (env.SITE_URL || "").replace(/\/$/, "");
 
-  return await fetch(`${paypalBase(env)}/v2/checkout/orders`, {
+  // Build absolute URLs for PayPal redirects
+  const baseUrl = (env.SITE_URL || `${new URL(requestUrl).origin}`).replace(/\/$/, "");
+
+  const r = await fetch(`${paypalBase(env)}/v2/checkout/orders`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -88,7 +90,7 @@ async function createOrder(env, { amount, itemName, ticketId }) {
           description: itemName,
           amount: {
             currency_code: CONFIG.currency,
-            value: amount
+            value: String(amount)
           }
         }
       ],
@@ -100,6 +102,19 @@ async function createOrder(env, { amount, itemName, ticketId }) {
       }
     })
   });
+
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) {
+    const msg = j?.message || j?.name || "Could not create PayPal order";
+    throw new Error(msg);
+  }
+
+  const approve = Array.isArray(j?.links) ? j.links.find((l) => l.rel === "approve") : null;
+  if (!approve?.href) {
+    throw new Error("PayPal approval link missing.");
+  }
+
+  return { paypalUrl: approve.href };
 }
 
 export async function onRequestOptions() {
@@ -120,17 +135,17 @@ export async function onRequestPost({ request, env }) {
 
     if (ct.includes("application/json")) {
       body = await request.json().catch(() => ({}));
-    } else {
+    } else if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
       const fd = await request.formData();
       body = Object.fromEntries(fd.entries());
     }
 
     // Required fields
-    if (!body?.email || !body?.name || !body?.requestType || !body?.issue) {
+    if (!body || !body.email || !body.name || !body.requestType || !body.issue) {
       return json({ ok: false, error: "Missing required fields" }, 400);
     }
 
-    // Normalize tier + plant-down
+    // Tier normalization
     const tier = String(body.pricingTier || "standard").toLowerCase();
     const plantDown =
       body.plantDown === true ||
@@ -147,50 +162,37 @@ export async function onRequestPost({ request, env }) {
 
     const ticketId = makeTicketId();
 
-    // Ensure SITE_URL exists for PayPal return/cancel URLs
-    if (!env.SITE_URL) {
-      const url = new URL(request.url);
-      env = { ...env, SITE_URL: `${url.protocol}//${url.host}` };
-    }
-
-    // Send Pushover immediately when request is created
-    const title = plantDown ? "PLANT DOWN — Support Request" : "Support Request";
+    // Pushover alert
+    const subject = isEmergency ? "PLANT DOWN — Support Request" : "Support Request";
     const msg = [
-      `Name: ${body.name || ""}`,
+      `Name: ${body.name}`,
       body.company ? `Company: ${body.company}` : null,
-      `Email: ${body.email || ""}`,
+      `Email: ${body.email}`,
       body.phone ? `Phone: ${body.phone}` : null,
-      `Request: ${body.requestType || ""}`,
-      body.location ? `Location: ${body.location}` : null,
-      body.asset ? `Asset: ${body.asset}` : null,
-      `Issue: ${body.issue || ""}`,
-      `Tier: ${plantDown ? "PLANT_DOWN" : "STANDARD"}`
+      `Type: ${body.requestType}`,
+      `Tier: ${isEmergency ? "PLANT_DOWN" : "STANDARD"}`,
+      "",
+      "Issue:",
+      String(body.issue || "").slice(0, 1200)
     ].filter(Boolean).join("\n");
 
     await sendPushover(env, {
       ticketId,
-      title,
-      message: msg,
-      priority: plantDown ? 1 : 0
+      subject,
+      body: msg,
+      priority: isEmergency ? 1 : 0
     });
 
-    // Create PayPal order and return approval URL
-    const orderRes = await createOrder(env, { amount, itemName, ticketId });
-    const orderJson = await orderRes.json().catch(() => ({}));
-    if (!orderRes.ok) {
-      const msg = orderJson?.message || orderJson?.name || "Could not create PayPal order";
-      return json({ ok: false, error: msg, details: orderJson }, 502);
-    }
+    // PayPal checkout
+    const { paypalUrl } = await createOrder(env, {
+      amount,
+      itemName,
+      ticketId,
+      requestUrl: request.url
+    });
 
-    const approve = Array.isArray(orderJson?.links)
-      ? orderJson.links.find((l) => l.rel === "approve")
-      : null;
+    return json({ ok: true, ticketId, paypalUrl });
 
-    if (!approve?.href) {
-      return json({ ok: false, error: "PayPal approval link missing", details: orderJson }, 502);
-    }
-
-    return json({ ok: true, ticketId, paypalUrl: approve.href });
   } catch (err) {
     return json({ ok: false, error: err?.message || "Server error" }, 500);
   }
