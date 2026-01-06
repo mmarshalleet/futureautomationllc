@@ -71,7 +71,7 @@
       padding-right: 36px;
     }
 
-    /* Tier selector — FIXED (text stays inside cards) */
+    /*w Tier selector — FIXED (text stays inside cards) */
     .tier-select{
       margin-top: 16px;
       display:flex;
@@ -206,16 +206,24 @@
         </div>
       </div>
 
-      <!-- Tier select -->
-      <div class="tier-select" aria-label="Select support tier">
-        <label class="tier-option">
-          <input type="radio" name="tierChoice" value="PLANT_DOWN" />
-          <span class="tier-text">
-            <strong>Plant-Down / Emergency Support</strong>
-            <span class="sub">Immediate response and escalation.</span>
-          </span>
-        </label>
+ <!-- Tier select -->
+<div class="tier-select" aria-label="Select support tier">
+  <div class="tier-card" data-tier="PLANT_DOWN" role="button" tabindex="0" aria-pressed="false">
+    <input type="radio" name="tierChoice" value="PLANT_DOWN" />
+    <div class="tier-text">
+      <strong>Plant-Down / Emergency Support</strong>
+      <div class="sub">Immediate response and escalation.</div>
+    </div>
+  </div>
 
+  <div class="tier-card" data-tier="STANDARD" role="button" tabindex="0" aria-pressed="false">
+    <input type="radio" name="tierChoice" value="STANDARD" />
+    <div class="tier-text">
+      <strong>Standard Remote Support</strong>
+      <div class="sub">Scheduled troubleshooting and diagnostics.</div>
+    </div>
+  </div>
+</div>
         <label class="tier-option">
           <input type="radio" name="tierChoice" value="STANDARD" />
           <span class="tier-text">
