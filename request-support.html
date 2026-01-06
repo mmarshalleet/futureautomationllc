@@ -5,161 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Request Support | Future Automation LLC</title>
 
-  <meta name="description" content="Request industrial automation support including plant-down response, PLC/HMI troubleshooting, and controls diagnostics." />
+  <meta name="description" content="Request industrial automation support: plant-down response, PLC/HMI troubleshooting, VFD diagnostics, and controls commissioning." />
   <meta name="theme-color" content="#0B1220" />
 
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
-
-  <!-- HARD OVERRIDES — stops global CSS from breaking this page -->
-  <style>
-    .support-form { max-width: 820px; margin: 0 auto; }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    @media (min-width: 820px){
-      .form-grid{ grid-template-columns: 1fr 1fr; }
-      .field.full{ grid-column: 1 / -1; }
-    }
-
-    .support-form label{
-      display:block !important;
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .support-form input,
-    .support-form select,
-    .support-form textarea{
-      width: 100% !important;
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-    }
-
-    .support-form textarea{
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    /* ==== TIER CARDS — NO FLEX, NO LABELS, NO INHERITANCE ==== */
-    .tier-select{
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .tier-card{
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 16px;
-      padding: 14px;
-      background: rgba(255,255,255,.03);
-    }
-
-    .tier-card input{
-      margin-right: 10px;
-      transform: scale(1.2);
-    }
-
-    .tier-header{
-      display:flex;
-      align-items:center;
-      margin-bottom: 6px;
-    }
-
-    .tier-title{
-      font-weight: 900;
-      color: var(--text);
-    }
-
-    .tier-sub{
-      font-size: 12px;
-      color: rgba(255,255,255,.65);
-      line-height: 1.4;
-      margin-left: 28px;
-    }
-
-    .tier-card.selected{
-      border-color: rgba(91,140,255,.75);
-      box-shadow: 0 0 0 4px rgba(91,140,255,.12);
-    }
-
-    #continueBtn{
-      margin-top: 16px;
-      width: 100%;
-    }
-
-    .status-line{
-      margin-top: 10px;
-      font-size: 13px;
-    }
-    .status-line.bad{ color: #ff5d6c; }
-    .status-line.good{ color: #25d48c; }
-  </style>
 </head>
 
 <body>
-
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="index.html">
+    <a class="brand" href="index.html" aria-label="Future Automation LLC home">
       <img src="logo.svg" alt="Future Automation LLC" />
     </a>
-    <nav class="nav">
+
+    <nav class="nav" aria-label="Primary">
       <a class="nav-link" href="index.html">Home</a>
       <a class="nav-link" href="services.html">Services</a>
       <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
       <a class="nav-link" href="industries.html">Industries</a>
-      <a class="nav-link nav-cta active" href="request-support.html">Request Support</a>
+      <a class="nav-link active" href="request-support.html">Request Support</a>
     </nav>
+
+    <div class="nav-cta">
+      <a class="btn primary" href="request-support.html">Request Support</a>
+    </div>
   </div>
 </header>
 
 <main class="page">
   <section class="hero compact">
     <h1>Request Support</h1>
-    <p class="muted">Plant-down response, PLC/HMI troubleshooting, and industrial controls support.</p>
+    <p class="muted">
+      Get a direct response from a controls specialist. No runaround, no "we'll circle back" — just the fastest path to green.
+    </p>
   </section>
 
   <section class="panel">
-    <form class="support-form" id="supportForm">
-
-      <input type="hidden" name="pricingTier" id="pricingTier" />
+    <form class="support-form" id="supportForm" novalidate>
+      <!-- These hidden fields are used by your checkout / intake flow -->
+      <input type="hidden" name="pricingTier" id="pricingTier" value="" />
       <input type="hidden" name="plantDown" id="plantDown" value="false" />
 
       <div class="form-grid">
         <div class="field">
-          <label>Company / Plant</label>
-          <input name="company" required />
+          <label for="company">Company / Plant</label>
+          <input id="company" name="company" autocomplete="organization" required />
         </div>
 
         <div class="field">
-          <label>Contact Name</label>
-          <input name="name" required />
+          <label for="name">Contact Name</label>
+          <input id="name" name="name" autocomplete="name" required />
         </div>
 
         <div class="field">
-          <label>Email</label>
-          <input type="email" name="email" required />
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" autocomplete="email" required />
         </div>
 
         <div class="field">
-          <label>Phone (optional)</label>
-          <input name="phone" />
+          <label for="phone">Phone (optional)</label>
+          <input id="phone" name="phone" autocomplete="tel" inputmode="tel" />
         </div>
 
         <div class="field full">
-          <label>Type of Support</label>
-          <select name="requestType" required>
+          <label for="requestType">Type of Support</label>
+          <select id="requestType" name="requestType" required>
             <option value="">Select…</option>
             <option>Plant-Down / Emergency</option>
             <option>PLC / HMI Troubleshooting</option>
@@ -170,35 +82,34 @@
         </div>
 
         <div class="field full">
-          <label>Brief Description</label>
-          <textarea name="issue" required></textarea>
+          <label for="issue">Brief Description</label>
+          <textarea id="issue" name="issue" required placeholder="What’s down, what changed, and what you’ve already tried (if anything)?"></textarea>
         </div>
       </div>
 
-      <!-- TIER CARDS -->
-      <div class="tier-select">
-        <div class="tier-card" data-tier="emergency">
+      <div class="tier-select" aria-label="Select support tier">
+        <label class="tier-card" for="tier-emergency">
           <div class="tier-header">
-            <input type="radio" name="tier" />
+            <input id="tier-emergency" type="radio" name="tier" value="emergency" />
             <div class="tier-title">Plant-Down / Emergency Support</div>
           </div>
-          <div class="tier-sub">Immediate response and escalation.</div>
-        </div>
+          <div class="tier-sub">Immediate response and escalation for critical downtime.</div>
+        </label>
 
-        <div class="tier-card" data-tier="standard">
+        <label class="tier-card" for="tier-standard">
           <div class="tier-header">
-            <input type="radio" name="tier" />
+            <input id="tier-standard" type="radio" name="tier" value="standard" />
             <div class="tier-title">Standard Remote Support</div>
           </div>
-          <div class="tier-sub">Scheduled troubleshooting and diagnostics.</div>
-        </div>
+          <div class="tier-sub">Scheduled troubleshooting, diagnostics, and code changes.</div>
+        </label>
       </div>
 
-      <button id="continueBtn" class="btn-primary" disabled>
+      <button id="continueBtn" class="btn primary" type="submit" disabled>
         Continue to Payment
       </button>
 
-      <div id="status" class="status-line"></div>
+      <div id="status" class="status-line" role="status" aria-live="polite"></div>
     </form>
   </section>
 </main>
@@ -208,24 +119,93 @@
 </footer>
 
 <script>
-  const cards = document.querySelectorAll('.tier-card');
+  // Request Support page behavior
+  // - Keeps radios from inheriting "100% width" styling
+  // - Enables Continue button once a tier is selected
+  // - Stores the selected tier in hidden fields used by your checkout flow
+
+  const form = document.getElementById('supportForm');
+  const cards = Array.from(document.querySelectorAll('.tier-card'));
+  const radios = Array.from(document.querySelectorAll('input[name="tier"]'));
   const btn = document.getElementById('continueBtn');
   const pricingTier = document.getElementById('pricingTier');
   const plantDown = document.getElementById('plantDown');
+  const status = document.getElementById('status');
 
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      cards.forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      card.querySelector('input').checked = true;
+  function setSelected(tier){
+    cards.forEach(c => c.classList.remove('selected'));
+    const picked = cards.find(c => c.htmlFor === `tier-${tier}`);
+    if (picked) picked.classList.add('selected');
 
-      const tier = card.dataset.tier;
-      pricingTier.value = tier;
-      plantDown.value = tier === 'emergency' ? 'true' : 'false';
+    pricingTier.value = tier;
+    plantDown.value = (tier === 'emergency') ? 'true' : 'false';
+
+    btn.disabled = false;
+    status.textContent = '';
+    status.className = 'status-line';
+  }
+
+  radios.forEach(r => {
+    r.addEventListener('change', () => setSelected(r.value));
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Basic client-side validation so you don't send junk to the API.
+    // Server-side validation still happens in /functions/api/support-intake.js
+    const required = ['company','name','email','requestType','issue'];
+    const missing = required.filter(id => !document.getElementById(id).value.trim());
+
+    if (!pricingTier.value){
+      status.textContent = 'Select a support tier to continue.';
+      status.className = 'status-line bad';
+      return;
+    }
+
+    if (missing.length){
+      status.textContent = 'Fill out the required fields above, then continue to payment.';
+      status.className = 'status-line bad';
+      return;
+    }
+
+    // Submit to your Cloudflare Function which creates the PayPal order and returns the approval link.
+    btn.disabled = true;
+    status.textContent = 'Creating checkout…';
+    status.className = 'status-line';
+
+    try {
+      const payload = {
+        company: document.getElementById('company').value.trim(),
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        requestType: document.getElementById('requestType').value,
+        issue: document.getElementById('issue').value.trim(),
+        pricingTier: pricingTier.value,
+        plantDown: plantDown.value
+      };
+
+      const r = await fetch('/api/support-intake', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok || !j.paypalUrl) {
+        throw new Error(j.error || 'Could not start checkout. Please try again.');
+      }
+
+      status.textContent = 'Redirecting to PayPal…';
+      status.className = 'status-line good';
+      window.location.href = j.paypalUrl;
+    } catch (err) {
+      status.textContent = err?.message || 'Checkout failed. Please try again.';
+      status.className = 'status-line bad';
       btn.disabled = false;
-    });
+    }
   });
 </script>
-
 </body>
 </html>

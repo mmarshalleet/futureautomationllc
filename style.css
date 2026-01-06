@@ -580,6 +580,111 @@ nav,
 }
 
 /* Mobile: keep nav VISIBLE (no hiding) */
+
+/* =========================
+   REQUEST SUPPORT FORM
+   iOS-safe, no weird radio stretching
+   ========================= */
+
+.support-form{ max-width: 860px; margin: 0 auto; }
+
+.support-form .form-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 820px){
+  .support-form .form-grid{ grid-template-columns: 1fr 1fr; }
+  .support-form .field.full{ grid-column: 1 / -1; }
+}
+
+.support-form label{
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+/* Inputs/controls (exclude radios/checkboxes so they don't explode in Safari) */
+.support-form input:not([type="radio"]):not([type="checkbox"]),
+.support-form select,
+.support-form textarea{
+  width: 100%;
+  min-width: 0;
+  font-size: 16px; /* prevents iOS zoom-on-focus */
+  line-height: 1.2;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  outline: none;
+}
+
+.support-form textarea{ min-height: 120px; resize: vertical; }
+
+.support-form input:focus,
+.support-form select:focus,
+.support-form textarea:focus{
+  border-color: rgba(91,140,255,.55);
+  box-shadow: 0 0 0 3px rgba(91,140,255,.18);
+}
+
+/* Tier cards */
+.tier-select{
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.tier-card{
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(255,255,255,.03);
+  cursor: pointer;
+}
+
+.tier-card .tier-header{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tier-card input[type="radio"]{
+  width: auto;
+  margin: 0;
+  transform: scale(1.15);
+  accent-color: var(--brand);
+}
+
+.tier-title{ font-weight: 900; color: var(--text); }
+
+.tier-sub{
+  font-size: 12px;
+  color: rgba(255,255,255,.65);
+  line-height: 1.4;
+  margin-left: 28px;
+}
+
+.tier-card.selected{
+  border-color: rgba(91,140,255,.75);
+  box-shadow: 0 0 0 4px rgba(91,140,255,.12);
+}
+
+
+/* Continue button is a normal .btn; make it full-width like a mobile CTA */
+.support-form #continueBtn{
+  margin-top: 16px;
+  width: 100%;
+}
+
+.status-line{ margin-top: 10px; font-size: 13px; }
+.status-line.bad{ color: var(--danger); }
+.status-line.good{ color: var(--ok); }
 /* =========================
    iOS SUPPORT FORM FIX
    (request-support.html)
