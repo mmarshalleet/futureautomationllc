@@ -1033,3 +1033,183 @@ nav,
   font-size: 12px;
 }
 .trend-metric b{ color: rgba(255,255,255,.92); }
+
+/* =========================
+   Homepage — Use Case cards
+   ========================= */
+
+/* Clean bullets used across pages (request support + homepage use cases) */
+.bullets{
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+.bullets li{
+  margin: 7px 0;
+  color: rgba(255,255,255,.78);
+}
+
+/* Use case grid (responsive, iOS-safe) */
+.case-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+@media (max-width: 900px){
+  .case-grid{ grid-template-columns: 1fr; }
+}
+
+.case-card{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 18px;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 0 18px 55px rgba(0,0,0,.45);
+}
+
+.case-card h3{
+  margin: 12px 14px 4px;
+}
+
+.case-card p{
+  margin: 0 14px 8px;
+}
+
+.case-card .bullets{
+  margin: 0 14px 14px;
+}
+
+.case-media{
+  height: 146px;
+  background-image:
+    linear-gradient(180deg, rgba(11,18,32,.08), rgba(11,18,32,.85)),
+    var(--bg);
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* =========================
+   Homepage — Proof / Deliverables strip
+   ========================= */
+
+.proof-strip{
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(650px 220px at 20% 0%, rgba(91,140,255,.14), transparent 60%),
+    radial-gradient(520px 220px at 85% 20%, rgba(37,212,140,.10), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.26)),
+    rgba(0,0,0,.18);
+  box-shadow: 0 22px 70px rgba(0,0,0,.45);
+}
+
+.proof-head{
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.proof-head h2{ margin: 0; }
+
+.proof-grid{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 1100px){
+  .proof-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px){
+  .proof-strip{ padding: 14px; }
+  .proof-grid{ grid-template-columns: 1fr; }
+}
+
+.proof-item{
+  min-width: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  padding: 12px;
+}
+
+.proof-title{
+  font-weight: 900;
+  letter-spacing: .02em;
+  margin-bottom: 6px;
+}
+
+.proof-sub{
+  color: rgba(255,255,255,.70);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+
+/* =========================
+   OEM familiarity blocks
+   ========================= */
+
+.proof-foot{
+  margin: 12px 0 0;
+  color: rgba(255,255,255,.75);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.oem-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+@media (max-width: 900px){
+  .oem-grid{ grid-template-columns: 1fr; }
+}
+
+.oem-card{
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.oem-card h3{
+  margin: 0 0 8px;
+  font-size: 14px;
+  letter-spacing: .02em;
+}
+
+.oem-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.oem-list li{
+  padding: 8px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.16);
+  color: rgba(255,255,255,.86);
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+.micro-case{
+  margin-top: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  padding: 12px 14px;
+}
+
+.micro-case p{ margin: 0; color: rgba(255,255,255,.82); }

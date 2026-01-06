@@ -48,6 +48,45 @@
     </p>
   </section>
 
+  <!-- Proof strip: deliverables that create confidence for maintenance managers + contractors -->
+  <section class="proof-strip" aria-label="Proof and deliverables">
+    <div class="proof-head">
+      <h2>Proof / Deliverables</h2>
+      <p class="muted">
+        You don’t just get a fix — you get artifacts your team can use on the next outage.
+      </p>
+    </div>
+
+    <div class="proof-grid">
+      <div class="proof-item">
+        <div class="proof-title">IO Map + Device Inventory</div>
+        <div class="proof-sub">Tagged IO, drives, comms, panels, and what talks to what.</div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-title">Backups + Restore Procedure</div>
+        <div class="proof-sub">Program/HMI backups, versions, and a step-by-step recovery note.</div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-title">Cutover Plan + Rollback</div>
+        <div class="proof-sub">Migration steps that won’t wreck production — plus a way back if needed.</div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-title">Change Log + “What Changed” Notes</div>
+        <div class="proof-sub">Every edit documented so the next tech isn’t guessing in the dark.</div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-title">Troubleshooting Notes</div>
+        <div class="proof-sub">Clear “start here” steps tied to real symptoms, faults, and interlocks.</div>
+      </div>
+    </div>
+
+    <p class="proof-foot">Delivered as a handoff packet you can keep in the panel — or hand to the next shift, contractor, or integrator without starting over.</p>
+  </section>
+
   <section class="panel">
     <h2>When to Bring Us In</h2>
     <ul class="clean-list">
@@ -92,6 +131,105 @@
     </ul>
   </section>
 
+  <section class="panel">
+    <h2>Use Case Examples</h2>
+    <p class="muted" style="margin-top:-6px;">
+      Real problems we solve for contractors and maintenance managers — with documentation and a clean handoff.
+    </p>
+
+    <div class="case-grid">
+      <article class="case-card">
+        <div class="case-media" style="--bg:url('assets/graphics/controllogix-studio5000.webp')"></div>
+        <h3>PLC Migration + Upgrade Path</h3>
+        <p class="small muted">SLC / PLC-5 → ControlLogix, CompactLogix, or modernized architecture.</p>
+        <ul class="bullets">
+          <li>IO mapping + cutover plan that won’t wreck production</li>
+          <li>Functional testing and staged startup support</li>
+          <li>Operator and maintenance notes (what changed + why)</li>
+        </ul>
+      </article>
+
+      <article class="case-card">
+        <div class="case-media" style="--bg:url('assets/graphics/plc-hmi-programming.webp')"></div>
+        <h3>Reverse Engineering + System Mapping</h3>
+        <p class="small muted">When the prints are wrong (or don’t exist) and nobody wants to touch it.</p>
+        <ul class="bullets">
+          <li>Network + device inventory (drives, IO, comms, HMIs)</li>
+          <li>Logic “truth map” (what actually drives what)</li>
+          <li>Tagged documentation so the next tech isn’t guessing</li>
+        </ul>
+      </article>
+
+      <article class="case-card">
+        <div class="case-media" style="--bg:url('assets/graphics/ignition-factorytalk.webp')"></div>
+        <h3>Redundancy + “Failure Isn’t an Option” Controls</h3>
+        <p class="small muted">Reduce single points of failure and make recovery predictable.</p>
+        <ul class="bullets">
+          <li>Safe fallbacks (manual modes, bypass logic, degraded operation)</li>
+          <li>Alarms that point to action — not noise</li>
+          <li>Spare strategy + backups + restore procedure</li>
+        </ul>
+      </article>
+
+      <article class="case-card">
+        <div class="case-media" style="--bg:url('assets/graphics/hmi-screen-development.webp')"></div>
+        <h3>HMI Cleanup + Operator-Focused Screens</h3>
+        <p class="small muted">Faster troubleshooting, fewer wrong-button incidents, cleaner alarms.</p>
+        <ul class="bullets">
+          <li>Standardized navigation + fault drill-down</li>
+          <li>Trend/diagnostic screens for the stuff that actually fails</li>
+          <li>Commissioning support and “how to use it” handoff</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+
+
+  <section class="panel">
+    <h2>OEM Platforms We Troubleshoot Regularly</h2>
+    <p class="muted" style="margin-top:-6px;">
+      Prior hands-on experience with common failure modes, IO layouts, safety chains, and startup quirks.
+      <strong>OEM familiarity doesn’t limit support</strong> — it shortens diagnosis time when these platforms are in the plant.
+    </p>
+
+    <div class="oem-grid" aria-label="OEM platforms">
+      <div class="oem-card">
+        <h3>Poultry + Food Processing</h3>
+        <ul class="oem-list">
+          <li>Meyn</li>
+          <li>Foodmate</li>
+          <li>Marel</li>
+          <li>Wolf</li>
+        </ul>
+      </div>
+
+      <div class="oem-card">
+        <h3>Packaging + Sealers</h3>
+        <ul class="oem-list">
+          <li>MULTIVAC</li>
+          <li>Cryovac</li>
+          <li>CVP</li>
+          <li>Phoenix</li>
+        </ul>
+      </div>
+
+      <div class="oem-card">
+        <h3>Labeling + Weighing</h3>
+        <ul class="oem-list">
+          <li>OSSID</li>
+          <li>Weightech</li>
+          <li>…and more</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="micro-case" role="note">
+      <p><strong>Example (anonymized):</strong> A line “would run forward but not reverse” after a changeover.
+      Inputs looked fine. The real culprit was an interlock path inhibiting output under a specific safety/sequence state.
+      We traced it, corrected the logic/handshake, verified in production, then left a one-page recovery note so it wouldn’t come back.</p>
+    </div>
+  </section>
   <section class="panel">
     <h2>How the Work Gets Done</h2>
     <p>
