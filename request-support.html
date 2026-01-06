@@ -12,7 +12,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
 
-  <!-- Page-local overrides: mobile-safe form layout + hardened tier cards -->
+  <!-- HARD OVERRIDES — stops global CSS from breaking this page -->
   <style>
     .support-form { max-width: 820px; margin: 0 auto; }
 
@@ -26,124 +26,84 @@
       .field.full{ grid-column: 1 / -1; }
     }
 
-    .support-form .field label{
+    .support-form label{
       display:block !important;
-      margin: 0 0 6px 0 !important;
       font-size: 13px;
-      font-weight: 850;
+      font-weight: 800;
       color: var(--muted);
-      letter-spacing: .2px;
+      margin-bottom: 6px;
     }
 
     .support-form input,
     .support-form select,
     .support-form textarea{
       width: 100% !important;
-      box-sizing: border-box !important;
-      padding: 12px 12px;
+      padding: 12px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.03);
       color: var(--text);
-      outline: none;
     }
 
-    .support-form textarea{ resize: vertical; min-height: 120px; }
-
-    .support-form input:focus,
-    .support-form textarea:focus,
-    .support-form select:focus{
-      border-color: rgba(91,140,255,.75);
-      box-shadow: 0 0 0 4px rgba(91,140,255,.14);
+    .support-form textarea{
+      min-height: 120px;
+      resize: vertical;
     }
 
-    .support-form select{
-      appearance: none;
-      -webkit-appearance: none;
-      background-image:
-        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.55) 50%),
-        linear-gradient(135deg, rgba(255,255,255,.55) 50%, transparent 50%);
-      background-position:
-        calc(100% - 18px) calc(1em + 2px),
-        calc(100% - 13px) calc(1em + 2px);
-      background-size: 5px 5px, 5px 5px;
-      background-repeat: no-repeat;
-      padding-right: 36px;
-    }
-
-    /* Tier selector — avoid global label/layout rules */
+    /* ==== TIER CARDS — NO FLEX, NO LABELS, NO INHERITANCE ==== */
     .tier-select{
-      margin-top: 16px;
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    @media (min-width: 820px){
-      .tier-select{ flex-direction: row; }
-      .tier-card{ flex: 1; }
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
 
     .tier-card{
-      display:flex;
-      gap: 12px;
-      align-items:flex-start;
-      padding: 12px 12px;
-      border-radius: 16px;
       border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 14px;
       background: rgba(255,255,255,.03);
-      cursor: pointer;
-      user-select: none;
-      min-width: 0;
-      text-align: left;
     }
 
-    .tier-card input[type="radio"]{
-      margin-top: 4px;
-      width: 18px;
-      height: 18px;
-      flex: 0 0 auto;
+    .tier-card input{
+      margin-right: 10px;
+      transform: scale(1.2);
     }
 
-    .tier-card .tier-text{
-      flex: 1 1 auto;
-      min-width: 0;
+    .tier-header{
+      display:flex;
+      align-items:center;
+      margin-bottom: 6px;
     }
 
-    .tier-card strong{
-      display:block;
+    .tier-title{
       font-weight: 900;
-      white-space: normal;
       color: var(--text);
-      line-height: 1.2;
     }
 
-    .tier-card .sub{
-      display:block;
-      margin-top: 4px;
+    .tier-sub{
       font-size: 12px;
       color: rgba(255,255,255,.65);
-      white-space: normal;
-      overflow-wrap: anywhere;
+      line-height: 1.4;
+      margin-left: 28px;
     }
 
-    .tier-card.is-selected{
+    .tier-card.selected{
       border-color: rgba(91,140,255,.75);
       box-shadow: 0 0 0 4px rgba(91,140,255,.12);
-      background: linear-gradient(180deg, rgba(91,140,255,.10), rgba(255,255,255,.03));
     }
 
-    #continueBtn{ margin-top: 14px; }
-    @media (max-width: 520px){ #continueBtn{ width: 100%; } }
-
-    .panel { padding: 18px; }
+    #continueBtn{
+      margin-top: 16px;
+      width: 100%;
+    }
 
     .status-line{
       margin-top: 10px;
       font-size: 13px;
-      color: rgba(255,255,255,.70);
     }
-    .status-line.bad{ color: rgba(255,93,108,.95); }
-    .status-line.good{ color: rgba(37,212,140,.95); }
+    .status-line.bad{ color: #ff5d6c; }
+    .status-line.good{ color: #25d48c; }
   </style>
 </head>
 
@@ -151,11 +111,10 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="index.html" aria-label="Future Automation LLC home">
+    <a class="brand" href="index.html">
       <img src="logo.svg" alt="Future Automation LLC" />
     </a>
-
-    <nav class="nav" aria-label="Primary">
+    <nav class="nav">
       <a class="nav-link" href="index.html">Home</a>
       <a class="nav-link" href="services.html">Services</a>
       <a class="nav-link" href="condition-monitoring.html">Condition Monitoring</a>
@@ -174,19 +133,18 @@
   <section class="panel">
     <form class="support-form" id="supportForm">
 
-      <!-- Auto-tag fields sent to /api/support-intake -->
-      <input type="hidden" name="pricingTier" id="pricingTier" value="" />
+      <input type="hidden" name="pricingTier" id="pricingTier" />
       <input type="hidden" name="plantDown" id="plantDown" value="false" />
 
       <div class="form-grid">
         <div class="field">
           <label>Company / Plant</label>
-          <input type="text" name="company" required />
+          <input name="company" required />
         </div>
 
         <div class="field">
           <label>Contact Name</label>
-          <input type="text" name="name" required />
+          <input name="name" required />
         </div>
 
         <div class="field">
@@ -196,12 +154,12 @@
 
         <div class="field">
           <label>Phone (optional)</label>
-          <input type="tel" name="phone" />
+          <input name="phone" />
         </div>
 
         <div class="field full">
           <label>Type of Support</label>
-          <select id="requestType" name="requestType" required>
+          <select name="requestType" required>
             <option value="">Select…</option>
             <option>Plant-Down / Emergency</option>
             <option>PLC / HMI Troubleshooting</option>
@@ -213,34 +171,34 @@
 
         <div class="field full">
           <label>Brief Description</label>
-          <textarea name="issue" rows="4" required></textarea>
+          <textarea name="issue" required></textarea>
         </div>
       </div>
 
-      <!-- Tier select -->
-      <div class="tier-select" aria-label="Select support tier">
-        <div class="tier-card" data-tier="PLANT_DOWN" role="button" tabindex="0" aria-pressed="false">
-          <input type="radio" name="tierChoice" value="PLANT_DOWN" />
-          <div class="tier-text">
-            <strong>Plant-Down / Emergency Support</strong>
-            <div class="sub">Immediate response and escalation.</div>
+      <!-- TIER CARDS -->
+      <div class="tier-select">
+        <div class="tier-card" data-tier="emergency">
+          <div class="tier-header">
+            <input type="radio" name="tier" />
+            <div class="tier-title">Plant-Down / Emergency Support</div>
           </div>
+          <div class="tier-sub">Immediate response and escalation.</div>
         </div>
 
-        <div class="tier-card" data-tier="STANDARD" role="button" tabindex="0" aria-pressed="false">
-          <input type="radio" name="tierChoice" value="STANDARD" />
-          <div class="tier-text">
-            <strong>Standard Remote Support</strong>
-            <div class="sub">Scheduled troubleshooting and diagnostics.</div>
+        <div class="tier-card" data-tier="standard">
+          <div class="tier-header">
+            <input type="radio" name="tier" />
+            <div class="tier-title">Standard Remote Support</div>
           </div>
+          <div class="tier-sub">Scheduled troubleshooting and diagnostics.</div>
         </div>
       </div>
 
-      <button id="continueBtn" type="submit" class="btn-primary" disabled>
+      <button id="continueBtn" class="btn-primary" disabled>
         Continue to Payment
       </button>
 
-      <div id="status" class="status-line" role="status" aria-live="polite"></div>
+      <div id="status" class="status-line"></div>
     </form>
   </section>
 </main>
@@ -250,132 +208,22 @@
 </footer>
 
 <script>
-  const form = document.getElementById('supportForm');
+  const cards = document.querySelectorAll('.tier-card');
   const btn = document.getElementById('continueBtn');
-  const statusEl = document.getElementById('status');
+  const pricingTier = document.getElementById('pricingTier');
+  const plantDown = document.getElementById('plantDown');
 
-  const requestTypeEl = document.getElementById('requestType');
-  const tierRadios = document.querySelectorAll('input[name="tierChoice"]');
-  const tierCards = document.querySelectorAll('.tier-card');
-
-  const pricingTierEl = document.getElementById('pricingTier');
-  const plantDownEl = document.getElementById('plantDown');
-
-  function setStatus(msg, kind = "") {
-    statusEl.textContent = msg || "";
-    statusEl.className = "status-line" + (kind ? (" " + kind) : "");
-  }
-
-  function syncTierUI() {
-    tierCards.forEach(card => {
-      const radio = card.querySelector('input[type="radio"]');
-      const selected = !!radio && radio.checked;
-      card.classList.toggle('is-selected', selected);
-      card.setAttribute('aria-pressed', selected ? 'true' : 'false');
-    });
-  }
-
-  function applyTierValue(tierChoice) {
-    if (tierChoice === "PLANT_DOWN") {
-      pricingTierEl.value = "emergency";
-      plantDownEl.value = "true";
-      return;
-    }
-    if (tierChoice === "STANDARD") {
-      pricingTierEl.value = "standard";
-      plantDownEl.value = "false";
-      return;
-    }
-    pricingTierEl.value = "";
-    plantDownEl.value = "false";
-  }
-
-  function updateTierState() {
-    const selected = [...tierRadios].find(r => r.checked);
-    if (!selected) {
-      btn.disabled = true;
-      applyTierValue("");
-      syncTierUI();
-      return;
-    }
-
-    btn.disabled = false;
-    applyTierValue(selected.value);
-    syncTierUI();
-  }
-
-  // Clickable cards
-  tierCards.forEach(card => {
-    const radio = card.querySelector('input[type="radio"]');
+  cards.forEach(card => {
     card.addEventListener('click', () => {
-      radio.checked = true;
-      radio.dispatchEvent(new Event('change', { bubbles: true }));
-    });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        card.click();
-      }
-    });
-  });
+      cards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      card.querySelector('input').checked = true;
 
-  tierRadios.forEach(r => r.addEventListener('change', () => {
-    updateTierState();
-    setStatus("");
-  }));
-
-  // Auto-select Emergency if "Plant-Down / Emergency" is chosen in the dropdown
-  requestTypeEl.addEventListener('change', () => {
-    const v = (requestTypeEl.value || "").toLowerCase();
-    if (v.includes("plant-down") || v.includes("plant down")) {
-      const emergency = [...tierRadios].find(r => r.value === "PLANT_DOWN");
-      if (emergency && !emergency.checked) {
-        emergency.checked = true;
-        emergency.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-    }
-  });
-
-  updateTierState();
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (btn.disabled) {
-      setStatus("Select Plant-Down or Standard to continue.", "bad");
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = "Creating checkout…";
-    setStatus("Sending request and generating PayPal checkout…");
-
-    try {
-      const fd = new FormData(form);
-
-      const r = await fetch("/api/support-intake", {
-        method: "POST",
-        body: fd
-      });
-
-      const j = await r.json().catch(() => ({}));
-      if (!r.ok || !j.ok) {
-        throw new Error(j.error || "Request failed.");
-      }
-
-      if (!j.paypalUrl) {
-        throw new Error("PayPal approval link missing.");
-      }
-
-      setStatus("Redirecting to PayPal…", "good");
-      window.location.href = j.paypalUrl;
-
-    } catch (err) {
-      console.error(err);
-      setStatus(err.message || "Something went wrong. Try again.", "bad");
+      const tier = card.dataset.tier;
+      pricingTier.value = tier;
+      plantDown.value = tier === 'emergency' ? 'true' : 'false';
       btn.disabled = false;
-      btn.textContent = "Continue to Payment";
-    }
+    });
   });
 </script>
 
