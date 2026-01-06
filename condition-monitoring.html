@@ -19,11 +19,12 @@
       </a>
 
       <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="services.html">Services</a>
-        <a class="nav-link active" href="condition-monitoring.html">Condition Monitoring</a>
-        <a class="nav-link" href="request-support.html">Request Support</a>
-      </nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="condition-monitoring.html" class="nav-link active">Condition Monitoring</a>
+      <a href="industries.html" class="nav-link">Industries</a>
+      <a href="request-support.html" class="btn">Request Support</a>
+    </nav>
 
       <div class="nav-cta">
         <a class="btn primary" href="request-support.html">Request Support & Pay Now</a>
@@ -249,11 +250,23 @@
   </main>
 
   <footer class="footer">
-    <div class="footer-inner">
+  <div class="footer-inner">
+    <div>
       <div class="small">© <span id="year"></span> Future Automation LLC</div>
-      <div class="small">Secure push alerts • Logged requests • Faster response</div>
+      <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
     </div>
-  </footer>
+    <div class="small-links" aria-label="Footer links">
+      <a href="services.html">Services</a>
+      <a href="condition-monitoring.html">Condition Monitoring</a>
+      <a href="industries.html">Industries</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();

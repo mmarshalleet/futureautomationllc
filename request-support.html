@@ -6,14 +6,23 @@
   <title>Request Controls Support | Future Automation LLC</title>
   <meta name="description" content="Request PLC and controls support for projects, startups, or plant-down events." />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0B1220" />
 </head>
 
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="index.html">
+    <a class="brand" href="index.html" aria-label="Future Automation LLC home">
       <img src="logo.svg" alt="Future Automation LLC" />
     </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="condition-monitoring.html" class="nav-link">Condition Monitoring</a>
+      <a href="industries.html" class="nav-link">Industries</a>
+      <a href="request-support.html" class="btn">Request Support</a>
+    </nav>
   </div>
 </header>
 
@@ -62,7 +71,22 @@
 </main>
 
 <footer class="footer">
-  <p>Future Automation LLC</p>
+  <div class="footer-inner">
+    <div>
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
+    </div>
+    <div class="small-links" aria-label="Footer links">
+      <a href="services.html">Services</a>
+      <a href="condition-monitoring.html">Condition Monitoring</a>
+      <a href="industries.html">Industries</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

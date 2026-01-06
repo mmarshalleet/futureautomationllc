@@ -16,8 +16,10 @@
       <img src="logo.svg" alt="Future Automation LLC" />
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="services.html">Services</a>
-      <a href="condition-monitoring.html">Condition Monitoring</a>
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="condition-monitoring.html" class="nav-link">Condition Monitoring</a>
+      <a href="industries.html" class="nav-link">Industries</a>
       <a href="request-support.html" class="btn">Request Support</a>
     </nav>
   </div>
@@ -25,21 +27,38 @@
 
 <main class="page">
   <section class="hero">
-    <h1>Controls & PLC Specialist — Contract / Project Based</h1>
-    <p class="lead">
-      I support contractors and maintenance teams when controls work is critical:
-      PLC programming, panel design review, commissioning, and plant-down recovery.
-    </p>
+  <div class="hero-inner">
+    <div>
+      <h1>Controls & PLC Specialist — Contract / Project Based</h1>
+      <p class="lead">
+        I support contractor agencies and maintenance teams when controls work is critical:
+        PLC/HMI programming, panel design review, commissioning, and plant-down recovery.
+      </p>
 
-    <div class="cta-row">
-      <a href="request-support.html" class="btn btn-primary">Request Controls Support</a>
-      <a href="request-support.html#support-type" class="btn">Request a Panel Review</a>
+      <div class="cta-row">
+        <a href="request-support.html" class="btn btn-primary">Request Controls Support</a>
+        <a href="request-support.html#support-type" class="btn">Request a Panel Review</a>
+      </div>
+
+      <div class="badge-row" aria-label="Tooling and platforms">
+        <span class="badge">ControlLogix / Studio 5000</span>
+        <span class="badge">FactoryTalk View</span>
+        <span class="badge">Ignition</span>
+        <span class="badge">PowerFlex / VFDs</span>
+        <span class="badge">Commissioning Support</span>
+      </div>
+
+      <p class="micro">
+        Not a “full-service electrical shop.” I’m the escalation layer when it has to work —
+        and I document what I change so your team can own it after I leave.
+      </p>
     </div>
 
-    <p class="micro">
-      Not a “full-service electrical shop.” I’m the escalation layer when it has to work.
-    </p>
-  </section>
+    <div class="media-card" aria-label="PLC/HMI programming">
+      <img src="assets/graphics/plc-hmi-programming.webp" alt="PLC/HMI programming and support graphic" loading="lazy" />
+    </div>
+  </div>
+</section>
 
   <section class="panel">
     <h2>When to Bring Me In</h2>
@@ -85,7 +104,35 @@
     </ul>
   </section>
 
-  <section class="panel">
+  
+  <section class="panel split">
+    <div class="split-grid">
+      <div>
+        <h2>PLC/HMI Programming That Survives Shift Change</h2>
+        <p>
+          Clean structure, consistent naming, and operator-first screens — so maintenance can troubleshoot without calling a wizard.
+        </p>
+        <ul class="clean-list">
+          <li>Readable routines, clear alarms, and sane interlocks</li>
+          <li>HMI screens built for fast diagnosis (not pretty guesswork)</li>
+          <li>Backups, change notes, and “what to check next time” documentation</li>
+          <li>Remote support ready (VPN/secure access friendly)</li>
+        </ul>
+        <div class="pills">
+          <span class="pill">I/O checkout</span>
+          <span class="pill">Device integration</span>
+          <span class="pill">Recipes / trends</span>
+          <span class="pill">Alarm rationalization</span>
+          <span class="pill">Startup support</span>
+        </div>
+      </div>
+      <div class="media-card">
+        <img src="assets/graphics/controllogix-studio5000.webp" alt="ControlLogix and Studio 5000 programming graphic" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+<section class="panel">
     <h2>How I Work</h2>
     <p>
       I’m not here to replace your electricians. I’m here to protect the outcome.
@@ -108,7 +155,22 @@
 </main>
 
 <footer class="footer">
-  <p>Future Automation LLC — Controls & PLC Specialist</p>
+  <div class="footer-inner">
+    <div>
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
+    </div>
+    <div class="small-links" aria-label="Footer links">
+      <a href="services.html">Services</a>
+      <a href="condition-monitoring.html">Condition Monitoring</a>
+      <a href="industries.html">Industries</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

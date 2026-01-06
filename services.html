@@ -14,8 +14,11 @@
     <a class="brand" href="index.html">
       <img src="logo.svg" alt="Future Automation LLC" />
     </a>
-    <nav class="nav">
-      <a href="services.html" class="active">Services</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="services.html" class="nav-link active">Services</a>
+      <a href="condition-monitoring.html" class="nav-link">Condition Monitoring</a>
+      <a href="industries.html" class="nav-link">Industries</a>
       <a href="request-support.html" class="btn">Request Support</a>
     </nav>
   </div>
@@ -24,12 +27,30 @@
 <main class="page">
   <h1>Specialist Services</h1>
 
-  <section class="panel">
-    <h2>PLC Programming & Modifications</h2>
-    <p>
-      Logic development, troubleshooting, cleanup, and migrations.
-      Built for maintainability — not mystery code.
-    </p>
+  <section class="panel split">
+    <div class="split-grid">
+      <div>
+        <h2>PLC / HMI Programming</h2>
+        <p>
+          Add features, fix logic, clean up legacy code, or build a new program from scratch — with documentation your maintenance team can follow.
+        </p>
+        <ul class="clean-list">
+          <li>ControlLogix / CompactLogix (Studio 5000)</li>
+          <li>FactoryTalk View ME/SE, Ignition, PanelView Plus</li>
+          <li>I/O checkout, device integration, and commissioning support</li>
+          <li>Alarm cleanup, trends, recipes, and operator-friendly screens</li>
+        </ul>
+        <div class="pills">
+          <span class="pill">Studio 5000</span>
+          <span class="pill">FactoryTalk</span>
+          <span class="pill">Ignition</span>
+          <span class="pill">HMI Standards</span>
+        </div>
+      </div>
+      <div class="media-card">
+        <img src="assets/graphics/plc-hmi-programming.webp" alt="PLC/HMI programming support graphic" loading="lazy" />
+      </div>
+    </div>
   </section>
 
   <section class="panel">
@@ -66,7 +87,22 @@
 </main>
 
 <footer class="footer">
-  <p>Future Automation LLC</p>
+  <div class="footer-inner">
+    <div>
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
+    </div>
+    <div class="small-links" aria-label="Footer links">
+      <a href="services.html">Services</a>
+      <a href="condition-monitoring.html">Condition Monitoring</a>
+      <a href="industries.html">Industries</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

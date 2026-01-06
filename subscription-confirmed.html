@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0B1220" />
     <meta name="theme-color" content="#0B1220" />
     <title>Subscription Confirmed | Future Automation LLC</title>
 </head>
@@ -24,5 +26,23 @@
     document.getElementById("meta").textContent =
       (sub ? `Subscription ID: ${sub}` : "") + (plan ? ` � Plan: ${plan}` : "");
     </script>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="small">© <span id="year"></span> Future Automation LLC</div>
+      <div class="small">Controls • PLC/HMI • VFD • Commissioning • Plant-down support</div>
+    </div>
+    <div class="small-links" aria-label="Footer links">
+      <a href="services.html">Services</a>
+      <a href="condition-monitoring.html">Condition Monitoring</a>
+      <a href="industries.html">Industries</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
