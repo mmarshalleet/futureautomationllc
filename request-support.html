@@ -71,56 +71,66 @@
       padding-right: 36px;
     }
 
-    /*w Tier selector — FIXED (text stays inside cards) */
-    .tier-select{
-      margin-top: 16px;
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    @media (min-width: 820px){
-      .tier-select{ flex-direction: row; }
-      .tier-option{ flex: 1; }
-    }
+   /* Tier selector — hardened against global label styles */
+.tier-select{
+  margin-top: 16px;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+@media (min-width: 820px){
+  .tier-select{ flex-direction: row; }
+  .tier-card{ flex: 1; }
+}
 
-    .tier-option{
-      display:flex;
-      gap: 12px;
-      align-items:flex-start;
-      padding: 12px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      cursor: pointer;
-      user-select: none;
-      min-width: 0;
-    }
+.tier-card{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  padding: 12px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+  text-align: left;
+}
 
-    .tier-option input[type="radio"]{
-      margin-top: 4px;
-      width: 18px;
-      height: 18px;
-      flex: 0 0 auto;
-    }
+.tier-card input[type="radio"]{
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
 
-    .tier-option .tier-text{
-      flex: 1;
-      min-width: 0;
-      display:block;
-    }
-    .tier-option .tier-text strong{
-      display:block;
-      font-weight: 900;
-      white-space: normal;
-    }
-    .tier-option .tier-text .sub{
-      display:block;
-      margin-top: 4px;
-      font-size: 12px;
-      color: rgba(255,255,255,.65);
-      white-space: normal;
-    }
+.tier-card .tier-text{
+  flex: 1 1 auto;
+  min-width: 0;
+}
 
+.tier-card strong{
+  display:block;
+  font-weight: 900;
+  white-space: normal;
+  color: var(--text);
+}
+
+.tier-card .sub{
+  display:block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255,255,255,.65);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.tier-card.is-selected{
+  border-color: rgba(91,140,255,.75);
+  box-shadow: 0 0 0 4px rgba(91,140,255,.12);
+  background: linear-gradient(180deg, rgba(91,140,255,.10), rgba(255,255,255,.03));
+}
+    
     #continueBtn{ margin-top: 14px; }
     @media (max-width: 520px){ #continueBtn{ width: 100%; } }
 
