@@ -5,7 +5,8 @@ function json(data, status = 200) {
     status,
     headers: {
       "content-type": "application/json; charset=utf-8",
-      "cache-control": "no-store"
+      "cache-control": "no-store",
+      "access-control-allow-origin": "*"
     }
   });
 }
@@ -53,27 +54,24 @@ async function getAccessToken(env) {
   return j.access_token;
 }
 
-
-async function sendPushover(env, { ticketId, subject, body }) {
+async function sendPushover(env, { ticketId, title, message, priority }) {
   if (!env.PUSHOVER_APP_TOKEN || !env.PUSHOVER_USER_KEY) return;
-  const msg = `${subject}\n${body}\nTicket: ${ticketId}`;
+
   await fetch("https://api.pushover.net/1/messages.json", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       token: env.PUSHOVER_APP_TOKEN,
       user: env.PUSHOVER_USER_KEY,
-      message: msg,
-      priority: subject.toLowerCase().includes("plant down") ? "1" : "0"
+      title,
+      message: `${message}\nTicket: ${ticketId}`,
+      priority: String(priority ?? 0)
     })
   }).catch(() => {});
 }
 
 async function createOrder(env, { amount, itemName, ticketId }) {
   const token = await getAccessToken(env);
-
-  // Build absolute URLs based on current request host
-  // We allow overriding with SITE_URL env var for safety.
   const baseUrl = (env.SITE_URL || "").replace(/\/$/, "");
 
   return await fetch(`${paypalBase(env)}/v2/checkout/orders`, {
@@ -105,7 +103,6 @@ async function createOrder(env, { amount, itemName, ticketId }) {
 }
 
 export async function onRequestOptions() {
-  // Same-origin from your site, but this avoids preflight weirdness.
   return new Response(null, {
     status: 204,
     headers: {
@@ -123,23 +120,26 @@ export async function onRequestPost({ request, env }) {
 
     if (ct.includes("application/json")) {
       body = await request.json().catch(() => ({}));
-    } else if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
+    } else {
       const fd = await request.formData();
       body = Object.fromEntries(fd.entries());
     }
 
-    // Basic guardrails
-    if (!body || !body.email || !body.name || !body.requestType) {
+    // Required fields
+    if (!body?.email || !body?.name || !body?.requestType || !body?.issue) {
       return json({ ok: false, error: "Missing required fields" }, 400);
     }
-    if (String(body.payAck || "").toLowerCase() !== "on" && body.payAck !== true) {
-      return json({ ok: false, error: "Payment acknowledgment required" }, 400);
-    }
 
-    const tier = (body.pricingTier || "").toLowerCase();
-    const plantDown = body.plantDown === true || body.plantDown === "on";
+    // Normalize tier + plant-down
+    const tier = String(body.pricingTier || "standard").toLowerCase();
+    const plantDown =
+      body.plantDown === true ||
+      body.plantDown === "true" ||
+      body.plantDown === "on" ||
+      tier === "emergency";
 
     const isEmergency = tier === "emergency" || plantDown;
+
     const amount = isEmergency ? CONFIG.emergencyFee : CONFIG.standardFee;
     const itemName = isEmergency
       ? "Emergency Plant-Down Support (Initial Incident)"
@@ -147,73 +147,34 @@ export async function onRequestPost({ request, env }) {
 
     const ticketId = makeTicketId();
 
-    // Ensure return/cancel URLs work even without SITE_URL by deriving from request
+    // Ensure SITE_URL exists for PayPal return/cancel URLs
     if (!env.SITE_URL) {
       const url = new URL(request.url);
       env = { ...env, SITE_URL: `${url.protocol}//${url.host}` };
     }
 
+    // Send Pushover immediately when request is created
+    const title = plantDown ? "PLANT DOWN — Support Request" : "Support Request";
+    const msg = [
+      `Name: ${body.name || ""}`,
+      body.company ? `Company: ${body.company}` : null,
+      `Email: ${body.email || ""}`,
+      body.phone ? `Phone: ${body.phone}` : null,
+      `Request: ${body.requestType || ""}`,
+      body.location ? `Location: ${body.location}` : null,
+      body.asset ? `Asset: ${body.asset}` : null,
+      `Issue: ${body.issue || ""}`,
+      `Tier: ${plantDown ? "PLANT_DOWN" : "STANDARD"}`
+    ].filter(Boolean).join("\n");
 
-    // If a PayPal subscription has already been approved client-side, we don't create a one-time order.
-    // We simply log/notify and return a success response.
-    
-    // Pay Now (hosted button) flow: payment is handled by PayPal hosted checkout.
-    // We don't create or capture an order here; we just record/notify the request.
-    if (body.payMethod === "paynow_hosted") {
-      const subject = (plantDown || tier === "emergency")
-        ? "Plant Down support request (Pay Now)"
-        : "Support request (Pay Now)";
+    await sendPushover(env, {
+      ticketId,
+      title,
+      message: msg,
+      priority: plantDown ? 1 : 0
+    });
 
-      const details = [
-        `Ticket: ${ticketId}`,
-        `Name: ${body.name || ""}`,
-        `Company: ${body.company || ""}`,
-        `Email: ${body.email || ""}`,
-        `Phone: ${body.phone || ""}`,
-        `Request: ${body.requestType || ""}`,
-        `Platform: ${body.platform || ""}`,
-        `Location: ${body.location || ""}`,
-        `Asset: ${body.asset || ""}`,
-        `Tier: ${tier || ""}`,
-        `Plant Down: ${plantDown ? "YES" : "no"}`,
-        `Issue: ${body.issue || ""}`,
-        `Hosted Button: ${body.hostedButtonId || ""}`
-      ].join("\n");
-
-      await notify(env, subject, details).catch(() => {});
-      return json({ ok: true, ticketId, redirect: CONFIG.returnPath });
-    }
-
-if (body.subscriptionID) {
-      const subject = (plantDown || tier === "emergency")
-        ? "Plant Down support request (subscription approved)"
-        : "Support request (subscription approved)";
-
-      const details = [
-        `Name: ${body.name || ""}`,
-        `Company: ${body.company || ""}`,
-        `Email: ${body.email || ""}`,
-        `Phone: ${body.phone || ""}`,
-        `Request: ${body.requestType || ""}`,
-        `Platform: ${body.platform || ""}`,
-        `Location: ${body.location || ""}`,
-        `Asset: ${body.asset || ""}`,
-        `Tier: ${tier || ""}`,
-        `Plant Down: ${plantDown ? "YES" : "no"}`,
-        `Issue: ${body.issue || ""}`,
-        `SubscriptionID: ${body.subscriptionID}`
-      ].join("\n");
-
-      await sendPushover(env, { ticketId, subject, body: details });
-
-      return json({
-        ok: true,
-        ticketId,
-        mode: "subscription",
-        redirect: `${env.SITE_URL}${CONFIG.returnPath}?ticket=${encodeURIComponent(ticketId)}`
-      });
-    }
-
+    // Create PayPal order and return approval URL
     const orderRes = await createOrder(env, { amount, itemName, ticketId });
     const orderJson = await orderRes.json().catch(() => ({}));
     if (!orderRes.ok) {
