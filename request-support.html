@@ -12,11 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
 
-  <!-- Page-local overrides to fix form layout on mobile (won't affect other pages) -->
+  <!-- Page-local overrides (fix mobile + stop global form CSS from breaking layout) -->
   <style>
-    .support-form { max-width: 780px; margin: 0 auto; }
+    .support-form { max-width: 820px; margin: 0 auto; }
 
-    /* Grid */
     .form-grid{
       display:grid;
       grid-template-columns: 1fr;
@@ -27,12 +26,11 @@
       .field.full{ grid-column: 1 / -1; }
     }
 
-    /* Labels + inputs (override any older global form styles) */
     .support-form .field label{
       display:block !important;
       margin: 0 0 6px 0 !important;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 850;
       color: var(--muted);
       letter-spacing: .2px;
     }
@@ -52,11 +50,6 @@
 
     .support-form textarea{ resize: vertical; min-height: 120px; }
 
-    .support-form input::placeholder,
-    .support-form textarea::placeholder{
-      color: rgba(255,255,255,.45);
-    }
-
     .support-form input:focus,
     .support-form textarea:focus,
     .support-form select:focus{
@@ -64,7 +57,6 @@
       box-shadow: 0 0 0 4px rgba(91,140,255,.14);
     }
 
-    /* Make select look consistent (iOS) */
     .support-form select{
       appearance: none;
       -webkit-appearance: none;
@@ -79,7 +71,7 @@
       padding-right: 36px;
     }
 
-    /* Tier selector */
+    /* Tier selector — FIXED (text stays inside cards) */
     .tier-select{
       margin-top: 16px;
       display:flex;
@@ -93,7 +85,7 @@
 
     .tier-option{
       display:flex;
-      gap: 10px;
+      gap: 12px;
       align-items:flex-start;
       padding: 12px 12px;
       border-radius: 16px;
@@ -101,6 +93,7 @@
       background: rgba(255,255,255,.03);
       cursor: pointer;
       user-select: none;
+      min-width: 0;
     }
 
     .tier-option input[type="radio"]{
@@ -110,20 +103,36 @@
       flex: 0 0 auto;
     }
 
-    .tier-option strong{ display:block; font-weight: 900; }
-    .tier-option .sub{ display:block; margin-top: 4px; font-size: 12px; color: rgba(255,255,255,.65); }
-
-    /* Button */
-    #continueBtn{
-      margin-top: 14px;
-      width: auto;
+    .tier-option .tier-text{
+      flex: 1;
+      min-width: 0;
+      display:block;
     }
-    @media (max-width: 520px){
-      #continueBtn{ width: 100%; }
+    .tier-option .tier-text strong{
+      display:block;
+      font-weight: 900;
+      white-space: normal;
+    }
+    .tier-option .tier-text .sub{
+      display:block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: rgba(255,255,255,.65);
+      white-space: normal;
     }
 
-    /* Keep the page content from feeling cramped */
+    #continueBtn{ margin-top: 14px; }
+    @media (max-width: 520px){ #continueBtn{ width: 100%; } }
+
     .panel { padding: 18px; }
+
+    .status-line{
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,.70);
+    }
+    .status-line.bad{ color: rgba(255,93,108,.95); }
+    .status-line.good{ color: rgba(37,212,140,.95); }
   </style>
 </head>
 
@@ -154,12 +163,11 @@
   <section class="panel">
     <form class="support-form" id="supportForm">
 
-      <!-- Auto-tag -->
-      <input type="hidden" name="request_priority" id="requestPriority" value="" />
-      <input type="hidden" name="support_tier" id="supportTierHidden" value="" />
+      <!-- Auto-tag fields sent to /api/support-intake -->
+      <input type="hidden" name="pricingTier" id="pricingTier" value="" />
+      <input type="hidden" name="plantDown" id="plantDown" value="false" />
 
       <div class="form-grid">
-
         <div class="field">
           <label>Company / Plant</label>
           <input type="text" name="company" required />
@@ -182,7 +190,7 @@
 
         <div class="field full">
           <label>Type of Support</label>
-          <select name="support_type" required>
+          <select name="requestType" required>
             <option value="">Select…</option>
             <option>Plant-Down / Emergency</option>
             <option>PLC / HMI Troubleshooting</option>
@@ -194,24 +202,23 @@
 
         <div class="field full">
           <label>Brief Description</label>
-          <textarea name="description" rows="4" required></textarea>
+          <textarea name="issue" rows="4" required></textarea>
         </div>
-
       </div>
 
-      <!-- Tier select (auto tag PLANT_DOWN vs STANDARD) -->
+      <!-- Tier select -->
       <div class="tier-select" aria-label="Select support tier">
         <label class="tier-option">
-          <input type="radio" name="supportTier" value="PLANT_DOWN" />
-          <span>
+          <input type="radio" name="tierChoice" value="PLANT_DOWN" />
+          <span class="tier-text">
             <strong>Plant-Down / Emergency Support</strong>
             <span class="sub">Immediate response and escalation.</span>
           </span>
         </label>
 
         <label class="tier-option">
-          <input type="radio" name="supportTier" value="STANDARD" />
-          <span>
+          <input type="radio" name="tierChoice" value="STANDARD" />
+          <span class="tier-text">
             <strong>Standard Remote Support</strong>
             <span class="sub">Scheduled troubleshooting and diagnostics.</span>
           </span>
@@ -222,6 +229,7 @@
         Continue to Payment
       </button>
 
+      <div id="status" class="status-line" role="status" aria-live="polite"></div>
     </form>
   </section>
 </main>
@@ -231,26 +239,86 @@
 </footer>
 
 <script>
-  const tierRadios = document.querySelectorAll('input[name="supportTier"]');
-  const submitBtn = document.getElementById('continueBtn');
-  const priorityField = document.getElementById('requestPriority');
-  const tierHidden = document.getElementById('supportTierHidden');
+  const form = document.getElementById('supportForm');
+  const btn = document.getElementById('continueBtn');
+  const statusEl = document.getElementById('status');
 
-  function updateButtonState() {
+  const tierRadios = document.querySelectorAll('input[name="tierChoice"]');
+  const pricingTierEl = document.getElementById('pricingTier');
+  const plantDownEl = document.getElementById('plantDown');
+
+  function setStatus(msg, kind = "") {
+    statusEl.textContent = msg || "";
+    statusEl.className = "status-line" + (kind ? (" " + kind) : "");
+  }
+
+  function updateTierState() {
     const selected = [...tierRadios].find(r => r.checked);
-    if (selected) {
-      submitBtn.disabled = false;
-      priorityField.value = selected.value;  // PLANT_DOWN or STANDARD
-      tierHidden.value = selected.value;
+    if (!selected) {
+      btn.disabled = true;
+      pricingTierEl.value = "";
+      plantDownEl.value = "false";
+      return;
+    }
+
+    btn.disabled = false;
+
+    if (selected.value === "PLANT_DOWN") {
+      pricingTierEl.value = "emergency";
+      plantDownEl.value = "true";
     } else {
-      submitBtn.disabled = true;
-      priorityField.value = '';
-      tierHidden.value = '';
+      pricingTierEl.value = "standard";
+      plantDownEl.value = "false";
     }
   }
 
-  tierRadios.forEach(r => r.addEventListener('change', updateButtonState));
-  updateButtonState();
+  tierRadios.forEach(r => r.addEventListener('change', () => {
+    updateTierState();
+    setStatus(""); // clear any prior error
+  }));
+
+  updateTierState();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Hard stop if tier not selected
+    if (btn.disabled) {
+      setStatus("Select Plant-Down or Standard to continue.", "bad");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Creating checkout…";
+    setStatus("Sending request and generating PayPal checkout…");
+
+    try {
+      const fd = new FormData(form);
+
+      const r = await fetch("/api/support-intake", {
+        method: "POST",
+        body: fd
+      });
+
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) {
+        throw new Error(j.error || "Request failed.");
+      }
+
+      if (!j.paypalUrl) {
+        throw new Error("PayPal approval link missing.");
+      }
+
+      setStatus("Redirecting to PayPal…", "good");
+      window.location.href = j.paypalUrl;
+
+    } catch (err) {
+      console.error(err);
+      setStatus(err.message || "Something went wrong. Try again.", "bad");
+      btn.disabled = false;
+      btn.textContent = "Continue to Payment";
+    }
+  });
 </script>
 
 </body>
