@@ -11,6 +11,13 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
+
+  <!-- Page-local layout tweaks: keep the flow simple + mobile-friendly -->
+  <style>
+    .form-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
+    .btn[aria-disabled="true"]{ opacity:.55; pointer-events:none; }
+    .helper{ margin-top: 10px; color: var(--muted2); font-size: 12px; }
+  </style>
 </head>
 
 <body>
@@ -105,9 +112,19 @@
         </label>
       </div>
 
-      <button id="continueBtn" class="btn primary" type="submit" disabled>
-        Continue to Payment
-      </button>
+      <div class="form-actions">
+        <button id="submitBtn" class="btn primary" type="submit" disabled>
+          Submit Support Request
+        </button>
+
+        <a id="payBtn" class="btn" href="support-checkout.html" aria-disabled="true">
+          Emergency? Pay &amp; Escalate
+        </a>
+      </div>
+
+      <div class="helper">
+        Submit the request first. If this is truly Plant Down and you need priority response, use “Pay &amp; Escalate” after you get your ticket.
+      </div>
 
       <div id="status" class="status-line" role="status" aria-live="polite"></div>
     </form>
@@ -127,7 +144,8 @@
   const form = document.getElementById('supportForm');
   const cards = Array.from(document.querySelectorAll('.tier-card'));
   const radios = Array.from(document.querySelectorAll('input[name="tier"]'));
-  const btn = document.getElementById('continueBtn');
+  const btn = document.getElementById('submitBtn');
+  const payBtn = document.getElementById('payBtn');
   const pricingTier = document.getElementById('pricingTier');
   const plantDown = document.getElementById('plantDown');
   const status = document.getElementById('status');
@@ -141,6 +159,8 @@
     plantDown.value = (tier === 'emergency') ? 'true' : 'false';
 
     btn.disabled = false;
+    // Pay button is only enabled AFTER we successfully submit and receive a ticket.
+    payBtn.setAttribute('aria-disabled', 'true');
     status.textContent = '';
     status.className = 'status-line';
   }
@@ -158,20 +178,20 @@
     const missing = required.filter(id => !document.getElementById(id).value.trim());
 
     if (!pricingTier.value){
-      status.textContent = 'Select a support tier to continue.';
+      status.textContent = 'Select Plant-Down or Standard so I can prioritize correctly.';
       status.className = 'status-line bad';
       return;
     }
 
     if (missing.length){
-      status.textContent = 'Fill out the required fields above, then continue to payment.';
+      status.textContent = 'Fill out the required fields above, then submit the request.';
       status.className = 'status-line bad';
       return;
     }
 
-    // Submit to your Cloudflare Function which creates the PayPal order and returns the approval link.
+    // Submit to your Cloudflare Function (sends notifications + returns a ticket id).
     btn.disabled = true;
-    status.textContent = 'Creating checkout…';
+    status.textContent = 'Submitting request…';
     status.className = 'status-line';
 
     try {
@@ -183,7 +203,8 @@
         requestType: document.getElementById('requestType').value,
         issue: document.getElementById('issue').value.trim(),
         pricingTier: pricingTier.value,
-        plantDown: plantDown.value
+        plantDown: plantDown.value,
+        skipPayment: true
       };
 
       const r = await fetch('/api/support-intake', {
@@ -193,15 +214,20 @@
       });
 
       const j = await r.json().catch(() => ({}));
-      if (!r.ok || !j.ok || !j.paypalUrl) {
-        throw new Error(j.error || 'Could not start checkout. Please try again.');
+      if (!r.ok || !j.ok || !j.ticketId) {
+        throw new Error(j.error || 'Could not submit request. Please try again.');
       }
 
-      status.textContent = 'Redirecting to PayPal…';
+      const isPD = (plantDown.value === 'true') || (j.plantDown === true);
+      const checkoutUrl = `/support-checkout.html?ticket=${encodeURIComponent(j.ticketId)}${isPD ? '&plantDown=1' : ''}`;
+
+      payBtn.href = checkoutUrl;
+      payBtn.removeAttribute('aria-disabled');
+
+      status.textContent = `Request submitted. Ticket: ${j.ticketId}. You can pay now to start work, or wait for a reply.`;
       status.className = 'status-line good';
-      window.location.href = j.paypalUrl;
     } catch (err) {
-      status.textContent = err?.message || 'Checkout failed. Please try again.';
+      status.textContent = err?.message || 'Submit failed. Please try again.';
       status.className = 'status-line bad';
       btn.disabled = false;
     }
