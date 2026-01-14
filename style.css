@@ -102,7 +102,7 @@ a:hover{
 }
 
 .brand img{
-  height: 66px;
+  height: 36px;
   width: auto;
   display: block;
 }
@@ -566,7 +566,7 @@ nav,
 /* Logo sizing */
 .brand-logo img,
 .brand img{
-  height: 32px;
+  height: 56px;
   width: auto;
   display: block;
 }
