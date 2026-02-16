@@ -678,3 +678,258 @@ h3{ font-size: 18px; line-height: 1.25; }
 /* Legacy footer support (some pages just have <footer><p>... ) */
 .footer p{ margin: 0; padding: 18px; text-align: center; color: var(--muted); }
 }
+
+
+/* =========================================================
+   2026 Aesthetic Upgrade — darker, sharper, more credible
+   (Overrides only — safe to drop in without breaking JS)
+   ========================================================= */
+
+/* Darker base + higher contrast */
+:root{
+  --bg0:#05070d;
+  --bg1:#070b14;
+  --ink:rgba(255,255,255,.93);
+  --ink2:rgba(255,255,255,.76);
+  --ink3:rgba(255,255,255,.58);
+  --edge:rgba(255,255,255,.14);
+  --edge2:rgba(255,255,255,.09);
+  --steel:rgba(255,255,255,.045);
+  --steel2:rgba(255,255,255,.03);
+  --glow1:rgba(91,140,255,.22);
+  --glow2:rgba(124,77,255,.18);
+}
+
+/* No diagonal patterns — just a clean, deep plant-floor vibe */
+body{
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 700px at 18% -10%, var(--glow1), transparent 60%),
+    radial-gradient(1000px 650px at 110% 10%, var(--glow2), transparent 55%),
+    radial-gradient(900px 500px at 40% 120%, rgba(37,212,140,.10), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%),
+    var(--bg0) !important;
+  background-attachment: fixed;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(800px 450px at 50% 0%, rgba(255,255,255,.05), transparent 60%),
+    radial-gradient(900px 650px at 50% 110%, rgba(0,0,0,.65), transparent 55%);
+  opacity:.85;
+  z-index:-1;
+}
+
+/* Type: tighter, bolder, more industrial */
+h1,h2,h3{
+  letter-spacing:-0.02em;
+  text-shadow: 0 10px 40px rgba(0,0,0,.55);
+}
+h1{ font-weight: 850; }
+h2{ font-weight: 800; }
+h3{ font-weight: 750; }
+.kicker, .eyebrow{
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink3);
+}
+
+/* Header / nav */
+header{
+  backdrop-filter: blur(10px);
+}
+.topbar{
+  border-bottom: 1px solid var(--edge2);
+  background: rgba(5,7,13,.72);
+}
+.topbar::after{
+  content:"";
+  display:block;
+  height:2px;
+  background: linear-gradient(90deg, transparent, rgba(91,140,255,.55), rgba(124,77,255,.55), transparent);
+  opacity:.65;
+}
+nav a{
+  color:var(--ink2);
+}
+nav a:hover{
+  color:var(--ink);
+}
+nav .active{
+  color:var(--ink);
+  border-color: rgba(91,140,255,.55) !important;
+}
+
+/* Mobile nav: don’t wrap into chaos — scroll instead */
+@media (max-width: 760px){
+  nav{
+    overflow-x:auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar{ display:none; }
+  nav ul{
+    flex-wrap:nowrap !important;
+    gap:10px !important;
+    padding-bottom:6px;
+  }
+  nav a{
+    white-space:nowrap;
+    padding:10px 12px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:999px;
+    background: rgba(255,255,255,.02);
+  }
+}
+
+/* Buttons: more punch + better states */
+.btn{
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+}
+.btn.primary{
+  border-color: rgba(91,140,255,.55);
+  background: linear-gradient(180deg, rgba(91,140,255,.28), rgba(124,77,255,.18));
+  box-shadow: 0 18px 55px rgba(0,0,0,.55), 0 0 0 1px rgba(91,140,255,.22) inset;
+}
+.btn.primary:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 22px 70px rgba(0,0,0,.62), 0 0 0 1px rgba(91,140,255,.30) inset;
+}
+.btn.ghost:hover{
+  background: rgba(255,255,255,.06);
+}
+
+/* Cards / panels: “steel” look */
+.card, .panel, .callout, .split, .rollout{
+  background: linear-gradient(180deg, var(--steel), var(--steel2)) !important;
+  border:1px solid var(--edge2) !important;
+  box-shadow: 0 20px 55px rgba(0,0,0,.55);
+}
+.card:hover, .panel:hover{
+  border-color: rgba(255,255,255,.16) !important;
+  transform: translateY(-1px);
+}
+
+/* Proof strip: make it feel like hard metrics */
+.proof-strip{
+  border:1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+}
+.proof-strip strong{
+  font-variant-numeric: tabular-nums;
+  letter-spacing:-0.02em;
+}
+
+/* Grids: tighten spacing (services “playbook” feels punchier) */
+.grid{
+  gap:14px !important;
+}
+.grid .card{
+  padding:18px !important;
+}
+.grid .card p{
+  color:var(--ink2);
+}
+
+/* Dividers / section rhythm */
+.section, .panel{
+  scroll-margin-top: 88px;
+}
+.hr, hr{
+  border-color: rgba(255,255,255,.10) !important;
+}
+
+/* Footers */
+footer{
+  border-top:1px solid rgba(255,255,255,.10);
+  background: rgba(5,7,13,.85);
+}
+
+
+/* =========================================================
+   Field Results block
+   ========================================================= */
+.field-results{
+  margin-top: 18px;
+}
+.field-head{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom: 14px;
+}
+.field-head h2{
+  margin:0;
+  letter-spacing:.2px;
+}
+.result-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.result-card{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.result-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom: 10px;
+}
+.result-card h3{
+  margin: 6px 0 10px;
+  font-size: 1.05rem;
+}
+.result-card .metric{
+  font-size: .85rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.result-card .mini{
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.result-card .mini li{ margin: 6px 0; }
+
+.field-cta{
+  margin-top: 14px;
+  background: linear-gradient(90deg, rgba(91,140,255,.14), rgba(124,77,255,.10));
+  border: 1px solid rgba(91,140,255,.28);
+  border-radius: var(--radius2);
+  padding: 14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+}
+.field-cta-title{
+  font-weight: 700;
+  letter-spacing: .2px;
+  margin-bottom: 2px;
+}
+.field-cta-actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px){
+  .result-grid{ grid-template-columns: 1fr; }
+  .field-cta{ flex-direction: column; align-items: flex-start; }
+  .field-cta-actions{ justify-content: flex-start; }
+  .result-top{ align-items:flex-start; flex-direction: column; }
+  .result-card .metric{ white-space: normal; }
+}
