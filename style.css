@@ -362,7 +362,7 @@ section{margin: 18px 0}
     var(--bg);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 92% auto;   /* keep full width-ish without cropping */
+  background-size: 100% auto;   /* keep full width-ish without cropping */
   margin-bottom: 12px;
 }
 
