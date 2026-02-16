@@ -933,3 +933,79 @@ footer{
   .result-top{ align-items:flex-start; flex-direction: column; }
   .result-card .metric{ white-space: normal; }
 }
+/* =========================
+   Contrast + Text Fixes
+   ========================= */
+
+/* Increase base readability */
+body{
+  color: rgba(255,255,255,.94);
+}
+
+/* Muted should still be readable */
+.muted,
+.small.muted,
+.proof-sub,
+.proof-foot,
+.mini,
+.micro{
+  color: rgba(255,255,255,.78) !important;
+}
+
+/* Ensure panel text never fades */
+.panel p,
+.card p,
+.result-card p,
+.case-card p{
+  color: rgba(255,255,255,.88);
+}
+
+/* Headings stay crisp */
+h1, h2, h3{
+  color: #ffffff;
+}
+
+/* Proof grid items */
+.proof-item{
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.06),
+    rgba(0,0,0,.35)
+  );
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+/* Result cards */
+.result-card{
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.06),
+    rgba(0,0,0,.40)
+  );
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+/* Case card media overlays */
+.case-media{
+  background-blend-mode: overlay;
+  position: relative;
+}
+
+.case-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.35),
+    rgba(0,0,0,.65)
+  );
+}
+
+/* Prevent accidental opacity inheritance */
+.panel,
+.card,
+.result-card,
+.case-card{
+  opacity: 1;
+}
