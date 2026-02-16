@@ -1009,3 +1009,158 @@ h1, h2, h3{
 .case-card{
   opacity: 1;
 }
+/* =========================
+   Minimal / High-End Override
+   Paste at END of style.css
+   ========================= */
+
+:root{
+  /* calmer neutrals */
+  --bg: #070A10;
+  --bg2:#0A0F18;
+  --panel: rgba(255,255,255,.04);
+  --panel2: rgba(255,255,255,.03);
+  --border: rgba(255,255,255,.12);
+  --border-soft: rgba(255,255,255,.10);
+
+  /* readable text */
+  --text: rgba(255,255,255,.93);
+  --muted: rgba(255,255,255,.72);
+  --muted2: rgba(255,255,255,.58);
+
+  /* brand: keep, but quieter */
+  --brand1:#6A8DFF;
+  --brand2:#8B5CFF;
+
+  /* tighter radius */
+  --radius: 14px;
+  --radius2: 18px;
+
+  /* softer shadow */
+  --shadow: 0 18px 50px rgba(0,0,0,.55);
+}
+
+/* Background: simple, premium, no “pattern” */
+body{
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(106,141,255,.10), transparent 60%),
+    radial-gradient(1000px 500px at 90% 0%, rgba(139,92,255,.08), transparent 55%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+}
+
+/* Kill accidental container opacity (common “invisible text” culprit) */
+.panel, .card, .result-card, .case-card, .proof-item{
+  opacity: 1 !important;
+}
+
+/* Text hierarchy */
+h1{ letter-spacing: -0.02em; line-height: 1.08; }
+h2{ letter-spacing: -0.01em; line-height: 1.15; }
+h3{ letter-spacing: -0.01em; line-height: 1.2; }
+p{ line-height: 1.62; }
+
+/* Muted text must still be readable */
+.muted, .small.muted, .micro, .mini,
+.proof-sub, .proof-foot{
+  color: var(--muted) !important;
+}
+
+/* Links: subtle underline on hover only */
+a{
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Panels/cards: cleaner, less glossy */
+.panel, .card, .result-card, .case-card, .proof-item{
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius2);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* Dividers: thin and quiet */
+.hr, .divider, .panel-divider, .section-divider{
+  opacity: .65;
+  filter: none !important;
+}
+
+/* Buttons: less “neon”, more “equipment-grade” */
+.btn, button, .button{
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: .01em;
+  border: 1px solid var(--border-soft);
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+  box-shadow: none;
+}
+
+.btn:hover, button:hover, .button:hover{
+  background: rgba(255,255,255,.075);
+}
+
+.btn.primary, .button.primary{
+  background: linear-gradient(135deg, rgba(106,141,255,.95), rgba(139,92,255,.92));
+  border: 1px solid rgba(255,255,255,.16);
+  color: #0A0F18;
+}
+
+.btn.primary:hover, .button.primary:hover{
+  filter: brightness(1.03);
+}
+
+/* Proof / Field Results block: calm and crisp */
+.field-results,
+.proof-grid,
+.results-grid{
+  gap: 14px;
+}
+
+.result-card h3,
+.case-card h3{
+  margin-bottom: 6px;
+}
+
+.result-card p,
+.case-card p{
+  color: rgba(255,255,255,.84);
+}
+
+/* Nav: premium + readable */
+.topbar{
+  background: rgba(6,9,15,.55);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(10px);
+}
+
+.nav-link{
+  color: rgba(255,255,255,.82);
+  font-weight: 800;
+}
+
+.nav-link:hover{
+  color: #fff;
+}
+
+/* Mobile nav panel: keep it sharp */
+.mobile-nav{
+  background: rgba(6,9,15,.94) !important;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.mobile-link{
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+}
+
+/* Reduce excessive glow if present anywhere */
+.glow, .neon, .shine, .hero-glow{
+  filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
