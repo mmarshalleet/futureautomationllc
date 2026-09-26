@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Request Support | Future Automation LLC</title>
 
-  <meta name="description" content="Request industrial automation support: plant-down response, PLC/HMI troubleshooting, VFD diagnostics, and controls commissioning." />
+  <meta name="description" content="Request industrial automation support: Studio 5000, RSLogix 500, CX-One, PanelView ME/SE, Pro-face, Linux HMI, plant-down response." />
   <meta name="theme-color" content="#0B1220" />
 
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="favicon.ico" />
 
-  <!-- Page-local layout tweaks: keep the flow simple + mobile-friendly -->
   <style>
     .form-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
     .btn[aria-disabled="true"]{ opacity:.55; pointer-events:none; }
@@ -45,13 +44,12 @@
   <section class="hero compact">
     <h1>Request Support</h1>
     <p class="muted">
-      Get a direct response from a controls specialist. No runaround, no "we'll circle back" — just the fastest path to green.
+      Custom PLC logic and HMI recoveries — Studio 5000, RSLogix 500, CX-One, PanelView ME/SE, Pro-face, Linux. Cables on the truck.
     </p>
   </section>
 
   <section class="panel">
     <form class="support-form" id="supportForm" novalidate>
-      <!-- These hidden fields are used by your checkout / intake flow -->
       <input type="hidden" name="pricingTier" id="pricingTier" value="" />
       <input type="hidden" name="plantDown" id="plantDown" value="false" />
 
@@ -81,6 +79,8 @@
           <select id="requestType" name="requestType" required>
             <option value="">Select…</option>
             <option>Plant-Down / Emergency</option>
+            <option>Custom PLC logic</option>
+            <option>HMI recover / convert</option>
             <option>PLC / HMI Troubleshooting</option>
             <option>VFD / Motion</option>
             <option>Commissioning / Startup</option>
@@ -88,9 +88,34 @@
           </select>
         </div>
 
+        <div class="field">
+          <label for="plcPlatform">PLC platform</label>
+          <select id="plcPlatform" name="plcPlatform">
+            <option value="">Select…</option>
+            <option>Studio 5000 / ControlLogix / CompactLogix</option>
+            <option>RSLogix 500 / SLC / MicroLogix</option>
+            <option>Omron CX-One</option>
+            <option>Siemens (STARTER / drives)</option>
+            <option>Other / unknown</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="hmiType">HMI</label>
+          <select id="hmiType" name="hmiType">
+            <option value="">Select…</option>
+            <option>PanelView — View Studio ME</option>
+            <option>PanelView — View Studio SE</option>
+            <option>Pro-face / Schneider</option>
+            <option>Custom Linux</option>
+            <option>Banner / pushbutton software</option>
+            <option>None / unknown</option>
+          </select>
+        </div>
+
         <div class="field full">
           <label for="issue">Brief Description</label>
-          <textarea id="issue" name="issue" required placeholder="What’s down, what changed, and what you’ve already tried (if anything)?"></textarea>
+          <textarea id="issue" name="issue" required placeholder="What’s down, CPU/HMI type, what changed, and what you already tried."></textarea>
         </div>
       </div>
 
@@ -108,7 +133,7 @@
             <input id="tier-standard" type="radio" name="tier" value="standard" />
             <div class="tier-title">Standard Remote Support</div>
           </div>
-          <div class="tier-sub">Scheduled troubleshooting, diagnostics, and code changes.</div>
+          <div class="tier-sub">Scheduled troubleshooting, custom logic, and HMI recoveries.</div>
         </label>
       </div>
 
@@ -118,12 +143,12 @@
         </button>
 
         <a id="payBtn" class="btn" href="support-checkout.html" aria-disabled="true">
-          Emergency? Pay &amp; Escalate
+          Emergency? Pay & Escalate
         </a>
       </div>
 
       <div class="helper">
-        Submit the request first. If this is truly Plant Down and you need priority response, use “Pay &amp; Escalate” after you get your ticket.
+        Submit the request first. If this is truly Plant Down and you need priority response, use “Pay & Escalate” after you get your ticket.
       </div>
 
       <div id="status" class="status-line" role="status" aria-live="polite"></div>
@@ -136,11 +161,6 @@
 </footer>
 
 <script>
-  // Request Support page behavior
-  // - Keeps radios from inheriting "100% width" styling
-  // - Enables Continue button once a tier is selected
-  // - Stores the selected tier in hidden fields used by your checkout flow
-
   const form = document.getElementById('supportForm');
   const cards = Array.from(document.querySelectorAll('.tier-card'));
   const radios = Array.from(document.querySelectorAll('input[name="tier"]'));
@@ -154,12 +174,9 @@
     cards.forEach(c => c.classList.remove('selected'));
     const picked = cards.find(c => c.htmlFor === `tier-${tier}`);
     if (picked) picked.classList.add('selected');
-
     pricingTier.value = tier;
     plantDown.value = (tier === 'emergency') ? 'true' : 'false';
-
     btn.disabled = false;
-    // Pay button is only enabled AFTER we successfully submit and receive a ticket.
     payBtn.setAttribute('aria-disabled', 'true');
     status.textContent = '';
     status.className = 'status-line';
@@ -171,9 +188,6 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-
-    // Basic client-side validation so you don't send junk to the API.
-    // Server-side validation still happens in /functions/api/support-intake.js
     const required = ['company','name','email','requestType','issue'];
     const missing = required.filter(id => !document.getElementById(id).value.trim());
 
@@ -189,7 +203,6 @@
       return;
     }
 
-    // Submit to your Cloudflare Function (sends notifications + returns a ticket id).
     btn.disabled = true;
     status.textContent = 'Submitting request…';
     status.className = 'status-line';
@@ -201,6 +214,8 @@
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim(),
         requestType: document.getElementById('requestType').value,
+        plcPlatform: document.getElementById('plcPlatform').value,
+        hmiType: document.getElementById('hmiType').value,
         issue: document.getElementById('issue').value.trim(),
         pricingTier: pricingTier.value,
         plantDown: plantDown.value,
