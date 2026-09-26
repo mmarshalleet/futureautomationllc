@@ -72,8 +72,6 @@ async function sendPushover(env, { ticketId, subject, body, priority }) {
 
 async function createOrder(env, { amount, itemName, ticketId, requestUrl }) {
   const token = await getAccessToken(env);
-
-  // Build absolute URLs for PayPal redirects
   const baseUrl = (env.SITE_URL || `${new URL(requestUrl).origin}`).replace(/\/$/, "");
 
   const r = await fetch(`${paypalBase(env)}/v2/checkout/orders`, {
@@ -140,12 +138,10 @@ export async function onRequestPost({ request, env }) {
       body = Object.fromEntries(fd.entries());
     }
 
-    // Required fields
     if (!body || !body.email || !body.name || !body.requestType || !body.issue) {
       return json({ ok: false, error: "Missing required fields" }, 400);
     }
 
-    // Tier normalization
     const tier = String(body.pricingTier || "standard").toLowerCase();
     const plantDown =
       body.plantDown === true ||
@@ -155,6 +151,12 @@ export async function onRequestPost({ request, env }) {
 
     const isEmergency = tier === "emergency" || plantDown;
 
+    const skipPayment =
+      body.skipPayment === true ||
+      body.skipPayment === "true" ||
+      body.skipPayment === "1" ||
+      body.skipPayment === "on";
+
     const amount = isEmergency ? CONFIG.emergencyFee : CONFIG.standardFee;
     const itemName = isEmergency
       ? "Emergency Plant-Down Support (Initial Incident)"
@@ -162,7 +164,6 @@ export async function onRequestPost({ request, env }) {
 
     const ticketId = makeTicketId();
 
-    // Pushover alert
     const subject = isEmergency ? "PLANT DOWN — Support Request" : "Support Request";
     const msg = [
       `Name: ${body.name}`,
@@ -170,6 +171,8 @@ export async function onRequestPost({ request, env }) {
       `Email: ${body.email}`,
       body.phone ? `Phone: ${body.phone}` : null,
       `Type: ${body.requestType}`,
+      body.plcPlatform ? `PLC: ${body.plcPlatform}` : null,
+      body.hmiType ? `HMI: ${body.hmiType}` : null,
       `Tier: ${isEmergency ? "PLANT_DOWN" : "STANDARD"}`,
       "",
       "Issue:",
@@ -183,7 +186,10 @@ export async function onRequestPost({ request, env }) {
       priority: isEmergency ? 1 : 0
     });
 
-    // PayPal checkout
+    if (skipPayment) {
+      return json({ ok: true, ticketId, plantDown: isEmergency });
+    }
+
     const { paypalUrl } = await createOrder(env, {
       amount,
       itemName,
