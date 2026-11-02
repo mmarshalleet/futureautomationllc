@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>/</loc></url>
-  <url><loc>/services.html</loc></url>
-  <url><loc>/condition-monitoring.html</loc></url>
-  <url><loc>/request-support.html</loc></url>
+  <url><loc>https://futureautomationllc.com/</loc></url>
+  <url><loc>https://futureautomationllc.com/services</loc></url>
+  <url><loc>https://futureautomationllc.com/condition-monitoring</loc></url>
+  <url><loc>https://futureautomationllc.com/industries</loc></url>
+  <url><loc>https://futureautomationllc.com/request-support</loc></url>
+  <url><loc>https://futureautomationllc.com/remote-support</loc></url>
+  <url><loc>https://futureautomationllc.com/emergency-support</loc></url>
+  <url><loc>https://futureautomationllc.com/terms</loc></url>
 </urlset>
