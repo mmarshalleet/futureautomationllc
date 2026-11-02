@@ -415,12 +415,89 @@ section{margin: 18px 0}
 }
 .callout p{margin:0; color: var(--muted)}
 
+/* ---------- Parts store ---------- */
+.parts-bar{
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  background: rgba(91,140,255,.08);
+}
+.parts-bar-inner{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 8px 20px;
+  text-align: center;
+  font-size: .92rem;
+  font-weight: 700;
+}
+.parts-bar a{
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.parts-bar a:hover{ color: #c5d4ff; }
+
 /* ---------- Footer ---------- */
 .footer{
   border-top: 1px solid rgba(255,255,255,.08);
-  padding: 24px 20px;
-  text-align:center;
+  padding: 28px 20px 32px;
+  text-align: left;
   color: var(--muted2);
+}
+.footer-inner{
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr .95fr 1.15fr;
+  gap: 22px 28px;
+}
+.footer-name{
+  margin: 0 0 6px;
+  color: var(--text);
+  font-weight: 800;
+}
+.footer-tag{ margin: 0; color: var(--muted); font-size: .95rem; }
+.footer-label{
+  margin: 0 0 8px;
+  color: var(--text);
+  font-weight: 800;
+  font-size: .95rem;
+}
+.contact-dl{ margin: 0; }
+.contact-dl div{
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 14px;
+  margin: 7px 0;
+}
+.contact-dl dt{
+  margin: 0;
+  color: var(--muted2);
+  font-weight: 700;
+}
+.contact-dl dd{ margin: 0; color: var(--text); }
+.contact-dl a{
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer-links{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.footer-links a{
+  color: var(--muted);
+  font-weight: 700;
+  font-size: .95rem;
+}
+.footer-links a:hover{ color: var(--text); }
+.footer-copy{
+  max-width: var(--max);
+  margin: 16px auto 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: var(--muted2);
+  font-size: .92rem;
 }
 
 /* ---------- Responsive ---------- */
@@ -430,6 +507,10 @@ section{margin: 18px 0}
   .result-grid{grid-template-columns: 1fr}
   .oem-grid{grid-template-columns: 1fr}
   .case-grid{grid-template-columns: 1fr}
+}
+
+@media (max-width: 800px){
+  .footer-inner{ grid-template-columns: 1fr; }
 }
 
 @media (max-width: 780px){
